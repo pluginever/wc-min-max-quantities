@@ -48,6 +48,7 @@ class Frontend {
 	private function includes() {
 		require_once dirname( __FILE__ ) . '/template-functions.php';
 		require_once dirname( __FILE__ ) . '/class-shortcode.php';
+		require_once dirname( __FILE__ ) . '/class-user-cart.php';
 	}
 
 	/**
@@ -67,6 +68,7 @@ class Frontend {
 	 */
 	protected function instance() {
 		new ShortCode();
+		new User_Cart();
 	}
 
 	/**

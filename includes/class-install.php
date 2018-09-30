@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 namespace Pluginever\WCMinMaxQuantities;
 
@@ -139,50 +138,3 @@ class Install {
 
 
 }
-=======
-namespace Pluginever\WCMinMaxQuantities;
-
-class Install{
-
-	/**
-	 * Constructor for the class wc-min-max-quantities
-	 *
-	 * Sets up all the appropriate hooks and actions
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		register_activation_hook( WPWMMQ_FILE, array( $this, 'activate' ) );
-		register_deactivation_hook( WPWMMQ_FILE, array( $this, 'deactivate' ) );
-
-    }
-
-    /**
-	 * Executes during plugin activation
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	function activate() {
-
-
-	}
-
-	/**
-	 * Executes during plugin deactivation
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	function deactivate() {
-
-	}
-
-
-
-}
->>>>>>> 94ffb4fd46f9efa650d12ce92becaf4397de0fa5
