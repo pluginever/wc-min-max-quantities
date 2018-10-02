@@ -11,7 +11,7 @@ class MetaBox {
 		woocommerce_wp_text_input(
 			array(
 				'id'          => 'simple_product_min_quantity',
-				'label'       => __( 'Product Minimum Quantity', 'woocommerce' ),
+				'label'       => __( 'Product Minimum Quantity', 'wc-min-max-quantities' ),
 				'type'        => 'number',
 				'min'		  => '0'
 			)
@@ -19,10 +19,19 @@ class MetaBox {
 		woocommerce_wp_text_input(
 			array(
 				'id'          => 'simple_product_max_quantity',
-				'label'       => __( 'Product Maximum Quantity', 'woocommerce' ),
+				'label'       => __( 'Product Maximum Quantity', 'wc-min-max-quantities' ),
 				'type'        => 'number',
 			)
 		);
+		woocommerce_wp_checkbox(
+			array(
+				'id'          => 'check_status',
+				'label'       => __( 'Status', 'wc-min-max-quantities' ),
+				'default'     => '0',
+				'desc'        => __('Ignore Global Rules'),
+			)
+		);
+		
 	}
 
 	public function save_product_data_tab(){
@@ -30,14 +39,11 @@ class MetaBox {
 		$product_id       = get_the_id($product);
 		$product_min_q    = isset($_POST['simple_product_min_quantity']) ? $_POST['simple_product_min_quantity'] : null;
 		$product_max_q    = isset($_POST['simple_product_max_quantity']) ? $_POST['simple_product_max_quantity'] : null;
+		$check_status     = isset($_POST['check_status']) ? $_POST['check_status'] : 'no';
+		error_log($check_status);
 
-		if( empty($product_min_q) || empty($product_max_q) ){
-			return;
-		}
-		if($product_min_q > $product_max_q || $product_min_q == $product_max_q){
-			return;
-		}
 		update_post_meta( $product_id, 'simple_product_min_quantity', $product_min_q);
 		update_post_meta( $product_id, 'simple_product_max_quantity', $product_max_q);
+		update_post_meta( $product_id, 'check_status', $check_status);
 	}
 }
