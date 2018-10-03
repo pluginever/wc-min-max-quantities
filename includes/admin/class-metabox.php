@@ -30,7 +30,7 @@ class MetaBox {
 		woocommerce_wp_checkbox(
 			array(
 				'id'          => 'check_status',
-				'label'       => __( 'Ignore Global Rules', 'wc-min-max-quantities' ),
+				'label'       => __( 'Ignore Global Min/Max Rules', 'wc-min-max-quantities' ),
 				'default'     => '0',
 				'desc_tip'    => 'true',
 				'description' => __('Exclude this product from minimum order quantity/value rules.',
