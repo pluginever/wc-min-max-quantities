@@ -205,7 +205,6 @@ final class WCMinMaxQuantities {
         //core includes
 		include_once WPWMMQ_INCLUDES . '/core-functions.php';
 		include_once WPWMMQ_INCLUDES . '/class-install.php';
-		include_once WPWMMQ_INCLUDES . '/class-post-types.php';
 
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
@@ -255,7 +254,7 @@ final class WCMinMaxQuantities {
     }
 
     public function plugin_init() {
-        new \Pluginever\WCMinMaxQuantities\PostTypes();
+       
     }
 
     /**

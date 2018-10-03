@@ -45,8 +45,6 @@ class Admin {
 	public function includes() {
 		require_once dirname( __FILE__ ) . '/class-admin-menu.php';
 		require_once dirname( __FILE__ ) . '/class-metabox.php';
-		//require_once dirname( __FILE__ ) . '/class-settings-api.php';
-		//require_once dirname( __FILE__ ) . '/class-settings.php';
 		require_once dirname( __FILE__ ) . '/class-minmax-settings.php';
 	}
 
@@ -65,7 +63,6 @@ class Admin {
 	protected function instance() {
 		new Admin_Menu();
 		new MetaBox();
-		//new Settings();
 		new Minmax_Settings();
 	}
 
