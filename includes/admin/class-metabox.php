@@ -13,7 +13,9 @@ class MetaBox {
 				'id'          => 'simple_product_min_quantity',
 				'label'       => __( 'Product Minimum Quantity', 'wc-min-max-quantities' ),
 				'type'        => 'number',
-				'min'		  => '0'
+				'min'		  => '0',
+				'desc_tip'    => 'true',
+				'description' => __('Enter a quantity to prevent  user from buying this product if the have fewer 					than the allowed quantity in their cart.', 'wc-min-max-quantities'),
 			)
 		);
 		woocommerce_wp_text_input(
@@ -21,14 +23,18 @@ class MetaBox {
 				'id'          => 'simple_product_max_quantity',
 				'label'       => __( 'Product Maximum Quantity', 'wc-min-max-quantities' ),
 				'type'        => 'number',
+				'desc_tip'    => 'true',
+				'description' => __('Enter a quantity to prevent  user from buying this product if the have more					than the allowed quantity in their cart.', 'wc-min-max-quantities'),
 			)
 		);
 		woocommerce_wp_checkbox(
 			array(
 				'id'          => 'check_status',
-				'label'       => __( 'Status', 'wc-min-max-quantities' ),
+				'label'       => __( 'Ignore Global Rules', 'wc-min-max-quantities' ),
 				'default'     => '0',
-				'desc'        => __('Ignore Global Rules'),
+				'desc_tip'    => 'true',
+				'description' => __('Exclude this product from minimum order quantity/value rules.',
+									'wc-min-max-quantities'),
 			)
 		);
 		
@@ -40,7 +46,6 @@ class MetaBox {
 		$product_min_q    = isset($_POST['simple_product_min_quantity']) ? $_POST['simple_product_min_quantity'] : null;
 		$product_max_q    = isset($_POST['simple_product_max_quantity']) ? $_POST['simple_product_max_quantity'] : null;
 		$check_status     = isset($_POST['check_status']) ? $_POST['check_status'] : 'no';
-		error_log($check_status);
 
 		update_post_meta( $product_id, 'simple_product_min_quantity', $product_min_q);
 		update_post_meta( $product_id, 'simple_product_max_quantity', $product_max_q);

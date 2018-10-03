@@ -49,9 +49,9 @@ class User_Cart {
 			}
 		}
 
-		if(empty($min_product_quantity) || empty($max_product_quantity) || empty($min_cart_price) || empty($max_cart_price)){
-			return;
-		}
+		// if(empty($min_product_quantity) || empty($max_product_quantity) || empty($min_cart_price) || empty($max_cart_price)){
+		// 	return;
+		// }
 
 		global $woocommerce; 
 
@@ -62,14 +62,12 @@ class User_Cart {
 		$items                                = WC()->cart->get_cart();
 		foreach( $items as $item ){
 		    $product_id                       = $item['product_id'];
-		    $qty 							  = $item['quantity'];
-		    
+		    $qty 							  = $item['quantity'];	    
 		    $single_product_min_quantity      = (int) get_post_meta( $product_id, 'simple_product_min_quantity', true );
 		    $single_product_max_quantity      = (int) get_post_meta( $product_id, 'simple_product_max_quantity', true );
-		    // $single_product_check             = get_post_meta( $product_id, 'check_status', true );
-		    // var_dump($single_product_check);
+		    $single_product_check             = get_post_meta( $product_id, 'check_status', true );
 		   
-		    // if($single_product_check == '' || $single_product_check == 'no' ){
+		    if($single_product_check == '' || $single_product_check == 'no' ){
 
 		   		if(!empty($single_product_min_quantity) || $single_product_min_quantity != ''){
 			    	if( $qty   < $single_product_min_quantity ){
@@ -87,17 +85,12 @@ class User_Cart {
 		    		return;
 		    	}
 
-		    	if( $min_product_quantity == $total_cart_quantity ){
-		    		add_action( 'woocommerce_proceed_to_checkout', array($this, 'woocommerce_button_proceed_to_checkout'), 10);
-		    		return;
-		    	}
-
-		    	if( $total_cart_quantity   < $min_product_quantity ){
+		    	if( $total_cart_quantity < $min_product_quantity ){
 		    		wc_add_notice( sprintf( __( "Minimum amount is %s ", 'woocommerce' ), $min_product_quantity ), 'error' );
 		    		return;
 		    	}
 
-		    	if( $total_cart_quantity   > $max_product_quantity ){
+		    	if( $total_cart_quantity > $max_product_quantity ){
 		    		wc_add_notice( sprintf( __( "Maximum amount is %s ", 'woocommerce' ), $max_product_quantity ), 'error' );
 		    		return;
 		    	}
@@ -112,28 +105,37 @@ class User_Cart {
 		    		return;
 		    	}
 
+		    	if( $min_product_quantity == $total_cart_quantity ){
+		    		add_action( 'woocommerce_proceed_to_checkout', array($this, 'woocommerce_button_proceed_to_checkout'), 10);
+		    		return;
+		    	}
 
-		   // } else {
-		   // 	return;
-		   // }
-		    
+		    	if(($total_cart_quantity < $min_product_quantity) || ($total_cart_quantity > $max_product_quantity) || ($total_amount_quantity < $min_cart_price) || ($total_amount_quantity > $max_cart_price)){
+	    				
+			    } else { 
+			    	
+			    	add_action( 'woocommerce_proceed_to_checkout', array($this, 'woocommerce_button_proceed_to_checkout'), 10);
+			    }
+		    } else {
+		   		if(!empty($single_product_min_quantity) || $single_product_min_quantity != ''){
+			    	if( $qty   < $single_product_min_quantity ){
+			    		wc_add_notice( sprintf( __( "Single Product Minimum Quantity is %s ", 'woocommerce' ), $single_product_min_quantity ), 'error' );
+			    	}
+	    		}
 
-	    	
+	    		if(!empty($single_product_max_quantity) || $single_product_max_quantity != ''){
+			    	if( $qty   > $single_product_max_quantity ){
+			    		wc_add_notice( sprintf( __( "Single Product Maximum Quantity is %s ", 'woocommerce' ), $single_product_max_quantity ), 'error' );
+			    	}
+	    		}
 
-
-
-
-
-		}
-
-		if(($total_cart_quantity < $min_product_quantity) || ($total_cart_quantity > $max_product_quantity) || ($total_amount_quantity < $min_cart_price) || ($total_amount_quantity > $max_cart_price) || ($qty   > $single_product_max_quantity) || ($qty   < $single_product_min_quantity)){
-	    		
-	    		
-	    } else {
-	    		add_action( 'woocommerce_proceed_to_checkout', array($this, 'woocommerce_button_proceed_to_checkout'), 10);
-	    }
-
-    	    	
+	    		if(($qty > $single_product_max_quantity) || ($qty < $single_product_min_quantity)){
+	    					
+			    } else { 
+			    	add_action( 'woocommerce_proceed_to_checkout', array($this, 'woocommerce_button_proceed_to_checkout'), 10);
+			    }
+		    }
+		}    	    	
 	}
 	public function woocommerce_button_proceed_to_checkout(){
 		?>
