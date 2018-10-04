@@ -144,7 +144,7 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				options: {
-					potFilename: 'wc-variation-swatches.pot',
+					potFilename: 'wc-minmax-quantities.pot',
 					exclude: [
 						'apigen/.*',
 						'vendor/.*',
@@ -158,7 +158,7 @@ module.exports = function (grunt) {
 		// Check textdomain errors.
 		checktextdomain: {
 			options: {
-				text_domain: 'wc-variation-swatches',
+				text_domain: 'wc-minmax-quantities',
 				keywords: [
 					'__:1,2d',
 					'_e:1,2d',
