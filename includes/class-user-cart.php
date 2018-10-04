@@ -66,17 +66,17 @@ class User_Cart {
 		    		return;
 		    	}
 
-		    	if( $total_cart_quantity > $max_product_quantity ){
+		    	if( !empty($max_product_quantity) && $total_cart_quantity > $max_product_quantity ){
 		    		wc_add_notice( sprintf( __( "Quantity of products in cart must be not more than %s ", 'wc-min-max-quantities' ), $max_product_quantity ), 'error' );
 		    		return;
 		    	}
 
-		    	if( $total_amount_quantity < $min_cart_price ){
-		    		wc_add_notice( sprintf( __( "Minimum cart total should be %s or more", 'wc-min-max-quantities' ), $min_cart_price ), 'error' );
+		    	if( !empty($min_cart_price) && $total_amount_quantity < $min_cart_price ){
+		    		wc_add_notice( sprintf( __( "Minimum cart total should be %s%s or more", 'wc-min-max-quantities' ), $min_cart_price,get_woocommerce_currency() ), 'error' );
 		    		return;
 		    	}
 
-		    	if( $total_amount_quantity > $max_cart_price ){
+		    	if( !empty($max_cart_price) && $total_amount_quantity > $max_cart_price ){
 		    		wc_add_notice( sprintf( __( "Maximum cart total is %s ", 'wc-min-max-quantities' ), $max_cart_price ), 'error' );
 		    		return;
 		    	}
