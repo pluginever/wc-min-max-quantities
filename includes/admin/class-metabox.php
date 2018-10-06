@@ -16,7 +16,7 @@ class MetaBox {
 				'min'      => '0',
 				'desc_tip' => 'true',
 
-				'description' => __( 'Enter a quantity to prevent  user from buying this product if the have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+				'description' => __( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
 
 			)
 		);
@@ -26,7 +26,7 @@ class MetaBox {
 				'label'       => __( 'Product Maximum Quantity', 'wc-minmax-quantities' ),
 				'type'        => 'number',
 				'desc_tip'    => 'true',
-				'description' => __( 'Enter a quantity to prevent  user from buying this product if the have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+				'description' => __( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
 			)
 		);
 		woocommerce_wp_checkbox(
