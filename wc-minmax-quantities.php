@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WC Min Max Quantities
- * Plugin URI:  https://www.pluginever.com
+ * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
  * Description: The Best WordPress Plugin ever made!
  * Version:     1.0.0
  * Author:      pluginever
