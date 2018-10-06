@@ -50,7 +50,7 @@ class Admin {
 	private function init_hooks() {
 		add_action( 'admin_init', array( $this, 'buffer' ), 1 );
 		add_action( 'init', array( $this, 'includes' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		//add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 
@@ -61,7 +61,7 @@ class Admin {
 	 */
 	protected function instance() {
 		new MetaBox();
-		new MinMax_Settings();
+		new Settings();
 	}
 
 	/**

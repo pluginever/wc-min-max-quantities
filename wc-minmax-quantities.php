@@ -66,14 +66,6 @@ final class WCMinMaxQuantities {
      */
     protected static $instance = null;
 
-
-    /**
-     * Holds various class instances
-     *
-     * @var array
-     */
-    private $container = array();
-
     /**
      * Main WCMinMaxQuantities Instance.
      *
@@ -107,34 +99,9 @@ final class WCMinMaxQuantities {
      * @since 1.0
      */
     public function __wakeup() {
-        _doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-minmax-quantities' ), '2.1' );
+        _doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-minmax-quantities' ), '1.0.0' );
     }
 
-    /**
-     * Magic getter to bypass referencing plugin.
-     *
-     * @param $prop
-     *
-     * @return mixed
-     */
-    public function __get( $prop ) {
-        if ( array_key_exists( $prop, $this->container ) ) {
-            return $this->container[ $prop ];
-        }
-
-        return $this->{$prop};
-    }
-
-    /**
-     * Magic isset to bypass referencing plugin.
-     *
-     * @param $prop
-     *
-     * @return mixed
-     */
-    public function __isset( $prop ) {
-        return isset( $this->{$prop} ) || isset( $this->container[ $prop ] );
-    }
 
     /**
      * EverProjects Constructor.
@@ -145,7 +112,7 @@ final class WCMinMaxQuantities {
         $this->includes();
         $this->init_hooks();
         $this->plugin_init();
-        do_action( 'wc_min_max_quantities_loaded' );
+        do_action( 'wc_minmax_quantities_loaded' );
     }
 
     /**
@@ -182,7 +149,7 @@ final class WCMinMaxQuantities {
      *
      * @param  string $type admin, ajax, cron or frontend.
      *
-     * @return bool
+     * @return string
      */
     private function is_request( $type ) {
         switch ( $type ) {
@@ -286,9 +253,9 @@ final class WCMinMaxQuantities {
 
 }
 
-function wc_min_max_quantities(){
+function wc_minmax_quantities(){
     return WCMinMaxQuantities::instance();
 }
 
 //fire off the plugin
-wc_min_max_quantities();
+wc_minmax_quantities();

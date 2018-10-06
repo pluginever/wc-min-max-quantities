@@ -2,7 +2,7 @@
 
 namespace Pluginever\WCMinMaxQuantities\Admin;
 
-class MinMax_Settings {
+class Settings {
 
 	public function __construct() {
 		add_filter( 'woocommerce_get_settings_products', array( $this, 'min_max_all_settings' ), 10, 2 );
@@ -12,33 +12,33 @@ class MinMax_Settings {
 
 		$fields = array();
 		// Add Title to the Settings
-		$fields[] = array( 'name' => __( 'Min/Max Quantities', 'wc-min-max-quantities' ), 'type' => 'title', 'id' => 'wc_min_max_quantities_simple' );
+		$fields[] = array( 'name' => __( 'Min/Max Quantities', 'wc-minmax-quantities' ), 'type' => 'title', 'id' => 'wc_minmax_quantities_simple' );
 		// Add first checkbox option
 		$fields[] = array(
-			'name' => __( 'Minimum Order Quantity', 'wc-min-max-quantities' ),
+			'name' => __( 'Minimum Order Quantity', 'wc-minmax-quantities' ),
 			'id'   => 'min_product_quantity',
 			'type' => 'number',
 
 		);
 		$fields[] = array(
-			'name' => __( 'Maximum Order Quantity', 'wc-min-max-quantities' ),
+			'name' => __( 'Maximum Order Quantity', 'wc-minmax-quantities' ),
 			'id'   => 'max_product_quantity',
 			'type' => 'number',
 
 		);
 		$fields[] = array(
-			'name' => __( 'Minimum Order Value', 'wc-min-max-quantities' ),
+			'name' => __( 'Minimum Order Value', 'wc-minmax-quantities' ),
 			'id'   => 'min_cart_price',
 			'type' => 'number',
 
 		);
 		$fields[] = array(
-			'name' => __( 'Maximum Order Value', 'wc-min-max-quantities' ),
+			'name' => __( 'Maximum Order Value', 'wc-minmax-quantities' ),
 			'id'   => 'max_cart_price',
 			'type' => 'number',
 		);
 
-		$fields[] = array( 'type' => 'sectionend', 'id' => 'wc_min_max_quantities_simple' );
+		$fields[] = array( 'type' => 'sectionend', 'id' => 'wc_minmax_quantities_simple' );
 
 		return $fields;
 	}
