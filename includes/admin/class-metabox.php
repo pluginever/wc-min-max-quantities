@@ -11,7 +11,7 @@ class MetaBox {
 		woocommerce_wp_text_input(
 			array(
 				'id'       => '_minmax_product_min_quantity',
-				'label'    => __( 'Product Minimum Quantity', 'wc-minmax-quantities' ),
+				'label'    => __( 'Product Min Quantity', 'wc-minmax-quantities' ),
 				'type'     => 'number',
 				'min'      => '0',
 				'desc_tip' => 'true',
@@ -23,7 +23,7 @@ class MetaBox {
 		woocommerce_wp_text_input(
 			array(
 				'id'          => '_minmax_product_max_quantity',
-				'label'       => __( 'Product Maximum Quantity', 'wc-minmax-quantities' ),
+				'label'       => __( 'Product Max Quantity', 'wc-minmax-quantities' ),
 				'type'        => 'number',
 				'desc_tip'    => 'true',
 				'description' => __( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
@@ -32,7 +32,7 @@ class MetaBox {
 		woocommerce_wp_checkbox(
 			array(
 				'id'          => '_minmax_ignore_global',
-				'label'       => __( 'Ignore Global Rules', 'wc-minmax-quantities' ),
+				'label'       => __( 'Ignore Global MinMax Rules', 'wc-minmax-quantities' ),
 				'default'     => '0',
 				'desc_tip'    => 'true',
 				'description' => __( 'Exclude this product from global minimum/maximum order quantity/value rules.',
