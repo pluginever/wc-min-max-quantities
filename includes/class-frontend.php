@@ -78,8 +78,8 @@ class Frontend {
 	 */
 	public function enqueue_scripts( $hook ) {
 		$suffix = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
-		wp_register_style('wc-minmax-quantities', WPWMMQ_ASSETS_URL."/css/frontend{$suffix}.css", [], WPWMMQ_VERSION);
-		wp_register_script('wc-minmax-quantities', WPWMMQ_ASSETS_URL."/js/frontend/frontend{$suffix}.js", ['jquery'], WPWMMQ_VERSION, true);
+		wp_register_style('wc-minmax-quantities', WMMQ_ASSETS_URL."/css/frontend{$suffix}.css", [], WMMQ_VERSION);
+		wp_register_script('wc-minmax-quantities', WMMQ_ASSETS_URL."/js/frontend/frontend{$suffix}.js", ['jquery'], WMMQ_VERSION, true);
 		wp_localize_script('wc-minmax-quantities', 'wpwmmq', 
 		[
 			'ajaxurl' => admin_url( 'admin-ajax.php' ), 

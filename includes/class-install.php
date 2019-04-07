@@ -34,7 +34,7 @@ class Install {
 	 */
 	private static function create_options() {
 		//save db version
-		update_option( 'wpcp_version', WPWMMQ_VERSION );
+		update_option( 'wpcp_version', WC_MINMAX_VERSION );
 
 		//save install date
 		$installed = get_option( 'wc_minmax_quantitiess_install_date', '' );

@@ -37,7 +37,7 @@ class WCMinMaxQuantities_Upgrades {
             return false;
         }
 
-        if ( version_compare( $this->get_version(), 'WPWMMQ_VERSION', '<' ) ) {
+        if ( version_compare( $this->get_version(), 'WMMQ_VERSION', '<' ) ) {
             return true;
         }
 
@@ -60,6 +60,6 @@ class WCMinMaxQuantities_Upgrades {
             }
         }
 
-        update_option( '_version', 'WPWMMQ_VERSION' );
+        update_option( '_version', 'WMMQ_VERSION' );
     }
 }
