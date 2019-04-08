@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool|string|array
  */
 
+
 function wc_minmax_quantities_get_settings( $key, $default = false, $section = 'wc_minmax_quantity_general_settings' ) {
 	$settings = get_option( $section, [] );
 
@@ -35,11 +36,11 @@ function wc_minmax_quantities_get_notice_message( $args ) {
 
 	extract( wp_parse_args( $args, array(
 		'type'      => 'min_qty',
-		'min_qty'   => false,
-		'max_qty'   => false,
-		'min_price' => false,
-		'max_price' => false,
-		'name'      => false,
+		'min_qty'   => '',
+		'max_qty'   => '',
+		'min_price' => '',
+		'max_price' => '',
+		'name'      => '',
 	) ) );
 
 	switch ( $type ) {
@@ -94,25 +95,23 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 		}
 
 		//=== Check minimum quantity ===
-		if ( ! empty( $min_quantity ) ) {
-			if ( $qty < $min_quantity ) {
-				wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-					'type'    => 'min_qty',
-					'min_qty' => $min_quantity,
-					'name'    => $product_name,
-				) ), 'error' );
-			}
+		if ( ! empty( $min_quantity ) && $qty < $min_quantity ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'    => 'min_qty',
+				'min_qty' => $min_quantity,
+				'name'    => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
 		}
 
 		//=== Check maximum quantity ===
-		if ( ! empty( $max_quantity ) ) {
-			if ( $qty > $max_quantity ) {
-				wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-					'type'    => 'max_qty',
-					'max_qty' => $max_quantity,
-					'name'    => $product_name,
-				) ), 'error' );
-			}
+		if ( ! empty( $max_quantity && $qty > $max_quantity ) ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'    => 'max_qty',
+				'max_qty' => $max_quantity,
+				'name'    => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
 		}
 
 		//=== Check minimum Price ===
@@ -122,6 +121,7 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 				'min_price' => $min_price,
 				'name'      => $product_name,
 			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
 		}
 
 		//=== Check maximum Price ===
@@ -131,15 +131,27 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 				'max_price' => $max_price,
 				'name'      => $product_name,
 			) ), 'error' );
-		}
-
-		if ( empty( $total_quantity ) || empty( $total_amount ) ) {
-			return;
+			wc_min_max_quantities_hide_checkout_btn();
 		}
 
 	}
 }
 
 add_action( 'woocommerce_check_cart_items', 'wc_min_max_quantities_proceed_to_checkout_conditions' );
+
+/**
+ * Hide checkout button if the hide option is checked in the settings.
+ */
+
+function wc_min_max_quantities_hide_checkout_btn() {
+
+	$hide = wc_minmax_quantities_get_settings( 'hide_checkout', 'on' );
+
+	if ( 'on' != $hide ) {
+		return;
+	}
+	remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+}
+
 
 

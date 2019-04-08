@@ -54,31 +54,38 @@ class WC_MINMAX_Settings {
 
 				array(
 					'label' => __( 'Minimum Order Quantity', 'wc-minmax-quantities' ),
-					'desc' => __( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'min_product_quantity',
 					'type'  => 'number',
 					'min'   => 0,
 				),
 				array(
 					'label' => __( 'Maximum Order Quantity', 'wc-minmax-quantities' ),
-					'desc' => __( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'max_product_quantity',
 					'type'  => 'number',
 					'min'   => 0,
 				),
 				array(
 					'label' => __( 'Minimum Order Price', 'wc-minmax-quantities' ),
-					'desc' => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'min_cart_price',
 					'type'  => 'number',
 					'min'   => 0,
 				),
 				array(
 					'label' => __( 'Maximum Order Price', 'wc-minmax-quantities' ),
-					'desc' => __( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'max_cart_price',
 					'type'  => 'number',
 					'min'   => 0,
+				),
+				array(
+					'label'   => __( 'Hide Checkout Button', 'wc-minmax-quantities' ),
+					'desc'    => __( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
+					'name'    => 'hide_checkout',
+					'type'    => 'checkbox',
+					'default' => 'on',
 				)
 
 			),
