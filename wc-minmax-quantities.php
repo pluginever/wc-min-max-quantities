@@ -44,20 +44,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /**
- * Main WCMinMaxQuantities Class.
+ * Main WC_MINMAX Class.
  *
- * @class WCMinMaxQuantities
+ * @class WC_MINMAX
  */
 final class WC_MINMAX {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var WCMinMaxQuantities
+	 * @var WC_MINMAX
 	 * @since 1.0.0
 	 */
 	protected static $instance = null;
 	/**
-	 * WCMinMaxQuantities version.
+	 * WC_MINMAX version.
 	 *
 	 * @var string
 	 */
@@ -70,13 +70,13 @@ final class WC_MINMAX {
 	private $min_php = '5.6.0';
 
 	/**
-	 * Main WCMinMaxQuantities Instance.
+	 * Main WC_MINMAX Instance.
 	 *
-	 * Ensures only one instance of WCMinMaxQuantities is loaded or can be loaded.
+	 * Ensures only one instance of WC_MINMAX is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @return WCMinMaxQuantities - Main instance.
+	 * @return WC_MINMAX - Main instance.
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
