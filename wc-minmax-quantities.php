@@ -3,16 +3,16 @@
  * Plugin Name: WC Min Max Quantities
  * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
  * Description: The Best WordPress Plugin ever made!
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wc-minmax-quantities
  * Domain Path: /i18n/languages/
- *
+ * Tested up to: 5.1.1
  * WC requires at least: 3.0.0
- * WC tested up to: 3.4.5
+ * WC tested up to: 3.5.7
  */
 
 /**
@@ -44,18 +44,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /**
- * Main WCMinMaxQuantities Class.
+ * Main WC_MINMAX Class.
  *
- * @class WCMinMaxQuantities
+ * @class WC_MINMAX
  */
-final class WCMinMaxQuantities {
+final class WC_MINMAX {
 	/**
-	 * WCMinMaxQuantities version.
+	 * The single instance of the class.
+	 *
+	 * @var WC_MINMAX
+	 * @since 1.0.0
+	 */
+	protected static $instance = null;
+	/**
+	 * WC_MINMAX version.
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.0';
-
+	public $version = '1.0.1';
 	/**
 	 * Minimum PHP version required
 	 *
@@ -64,21 +70,13 @@ final class WCMinMaxQuantities {
 	private $min_php = '5.6.0';
 
 	/**
-	 * The single instance of the class.
+	 * Main WC_MINMAX Instance.
 	 *
-	 * @var WCMinMaxQuantities
-	 * @since 1.0.0
-	 */
-	protected static $instance = null;
-
-	/**
-	 * Main WCMinMaxQuantities Instance.
-	 *
-	 * Ensures only one instance of WCMinMaxQuantities is loaded or can be loaded.
+	 * Ensures only one instance of WC_MINMAX is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @return WCMinMaxQuantities - Main instance.
+	 * @return WC_MINMAX - Main instance.
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -139,15 +137,36 @@ final class WCMinMaxQuantities {
 	 */
 	private function define_constants() {
 		//$upload_dir = wp_upload_dir( null, false );
-		define( 'WPWMMQ_VERSION', $this->version );
-		define( 'WPWMMQ_FILE', __FILE__ );
-		define( 'WPWMMQ_PATH', dirname( WPWMMQ_FILE ) );
-		define( 'WPWMMQ_INCLUDES', WPWMMQ_PATH . '/includes' );
-		define( 'WPWMMQ_URL', plugins_url( '', WPWMMQ_FILE ) );
-		define( 'WPWMMQ_ASSETS_URL', WPWMMQ_URL . '/assets' );
-		define( 'WPWMMQ_TEMPLATES_DIR', WPWMMQ_PATH . '/templates' );
+		define( 'WC_MINMAX_VERSION', $this->version );
+		define( 'WC_MINMAX_FILE', __FILE__ );
+		define( 'WC_MINMAX_PATH', dirname( WC_MINMAX_FILE ) );
+		define( 'WC_MINMAX_INCLUDES', WC_MINMAX_PATH . '/includes' );
+		define( 'WC_MINMAX_URL', plugins_url( '', WC_MINMAX_INCLUDES ) );
+		define( 'WC_MINMAX_ASSETS_URL', WC_MINMAX_URL . '/assets' );
+		define( 'WC_MINMAX_TEMPLATES_DIR', WC_MINMAX_PATH . '/templates' );
 	}
 
+	/**
+	 * Include required core files used in admin and on the frontend.
+	 */
+	public function includes() {
+		//core includes
+		include_once WC_MINMAX_INCLUDES . '/core-functions.php';
+		include_once WC_MINMAX_INCLUDES . '/class-install.php';
+
+		//admin includes
+		if ( $this->is_request( 'admin' ) ) {
+			require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
+		}
+
+		//frontend includes
+		if ( $this->is_request( 'frontend' ) ) {
+			//include_once WC_MINMAX_INCLUDES . '/class-frontend.php';
+		}
+
+	}
 
 	/**
 	 * What type of request is this?
@@ -169,27 +188,6 @@ final class WCMinMaxQuantities {
 		}
 	}
 
-
-	/**
-	 * Include required core files used in admin and on the frontend.
-	 */
-	public function includes() {
-		//core includes
-		include_once WPWMMQ_INCLUDES . '/core-functions.php';
-		include_once WPWMMQ_INCLUDES . '/class-install.php';
-
-		//admin includes
-		if ( $this->is_request( 'admin' ) ) {
-			include_once WPWMMQ_INCLUDES . '/admin/class-admin.php';
-		}
-
-		//frontend includes
-		if ( $this->is_request( 'frontend' ) ) {
-			include_once WPWMMQ_INCLUDES . '/class-frontend.php';
-		}
-
-	}
-
 	/**
 	 * Hook into actions and filters.
 	 *
@@ -200,6 +198,10 @@ final class WCMinMaxQuantities {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+	}
+
+	public function plugin_init() {
+
 	}
 
 	/**
@@ -225,17 +227,13 @@ final class WCMinMaxQuantities {
 		return $links;
 	}
 
-	public function plugin_init() {
-
-	}
-
 	/**
 	 * Get the plugin url.
 	 *
 	 * @return string
 	 */
 	public function plugin_url() {
-		return untrailingslashit( plugins_url( '/', WPWMMQ_FILE ) );
+		return untrailingslashit( plugins_url( '/', WC_MINMAX_FILE ) );
 	}
 
 	/**
@@ -244,7 +242,7 @@ final class WCMinMaxQuantities {
 	 * @return string
 	 */
 	public function plugin_path() {
-		return untrailingslashit( plugin_dir_path( WPWMMQ_FILE ) );
+		return untrailingslashit( plugin_dir_path( WC_MINMAX_FILE ) );
 	}
 
 	/**
@@ -253,16 +251,16 @@ final class WCMinMaxQuantities {
 	 * @return string
 	 */
 	public function template_path() {
-		return WPWMMQ_TEMPLATES_DIR;
+		return WC_MINMAX_TEMPLATES_DIR;
 	}
 
 }
 
 function wc_minmax_quantities() {
-	return WCMinMaxQuantities::instance();
+	return WC_MINMAX::instance();
 }
 
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-//fire off the plugin
+	//fire off the plugin
 	wc_minmax_quantities();
 }

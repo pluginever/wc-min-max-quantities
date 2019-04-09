@@ -12,7 +12,7 @@ WC Min Max Quantities for WooCommerce is an extension that enhances control over
 
  
 == Description ==
-WC Min Max Quantities for WooCommerce is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
+WC Min Max Quantities for WooCommerce is an extension that allows you to set minimum and maximum allowable product quantities and price per product and order. 
  
 = How Min Max Quantities for WooCommerce will benefit you: =
 &#9989;	Make custom packages for various occasions.
@@ -49,4 +49,12 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 = 1.0.0 (7th October, 2018) =
 * Initial Release
 
+= 1.0.1 (9th April, 2019) =
+* Fix WC settings disappear
+* Fix Checkout page hide checkout button On failed requirements
+* Enhance Single product Min/Max Price
+* Enhance Add checkout show/hide settings
+* Enhance New dedicated settings page
+* Compatibility with WC
+* Compatibility with WP
  
