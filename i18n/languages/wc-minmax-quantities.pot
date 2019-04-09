@@ -1,109 +1,128 @@
-# Copyright (C) 2018 manikmist09
+# Copyright (C) 2019 pluginever
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Min Max Quantities 1.0.0\n"
+"Project-Id-Version: WC Min Max Quantities 1.0.1\n"
 "Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/wc-minmax-quantities\n"
-"POT-Creation-Date: 2018-10-06 13:53:56+00:00\n"
+"https://wordpress.org/support/plugin/wc-min-max-quantities\n"
+"POT-Creation-Date: 2019-04-09 06:42:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n1.0.2\n"
 
-#: build/includes/admin/class-metabox.php:14
-#: includes/admin/class-metabox.php:14
-msgid "Product Minimum Quantity"
+#: includes/admin/class-settings-api.php:367
+msgid "Choose File"
 msgstr ""
 
-#: build/includes/admin/class-metabox.php:19
-#: includes/admin/class-metabox.php:19
+#: includes/admin/class-settings.php:35
+msgid "General Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:56
+msgid "Minimum Order Quantity"
+msgstr ""
+
+#: includes/admin/class-settings.php:57
 msgid ""
 "Enter a quantity to prevent  user from buying this product if they have "
 "fewer than the allowed quantity in their cart."
 msgstr ""
 
-#: build/includes/admin/class-metabox.php:26
-#: includes/admin/class-metabox.php:26
-msgid "Product Maximum Quantity"
+#: includes/admin/class-settings.php:63
+msgid "Maximum Order Quantity"
 msgstr ""
 
-#: build/includes/admin/class-metabox.php:29
-#: includes/admin/class-metabox.php:29
+#: includes/admin/class-settings.php:64
 msgid ""
 "Enter a quantity to prevent  user from buying this product if they have "
 "more than the allowed quantity in their cart."
 msgstr ""
 
-#: build/includes/admin/class-metabox.php:35
-#: includes/admin/class-metabox.php:35
-msgid "Ignore Global Rules"
+#: includes/admin/class-settings.php:70
+msgid "Minimum Order Price"
 msgstr ""
 
-#: build/includes/admin/class-metabox.php:38
-#: includes/admin/class-metabox.php:38
-msgid "Exclude this product from global minimum/maximum order quantity/value rules."
+#: includes/admin/class-settings.php:71
+msgid ""
+"Enter an amount of Price to prevent  users from buying, if they have lower "
+"than the allowed price in their cart."
 msgstr ""
 
-#: build/includes/admin/class-minmax-settings.php:15
-#: includes/admin/class-minmax-settings.php:15
-msgid "Min/Max Quantities"
+#: includes/admin/class-settings.php:77
+msgid "Maximum Order Price"
 msgstr ""
 
-#: build/includes/admin/class-minmax-settings.php:18
-#: includes/admin/class-minmax-settings.php:18
-msgid "Minimum Order Quantity"
+#: includes/admin/class-settings.php:78
+msgid ""
+"Enter an amount of Price to prevent users from buying, if they have more "
+"than the allowed price in their cart."
 msgstr ""
 
-#: build/includes/admin/class-minmax-settings.php:24
-#: includes/admin/class-minmax-settings.php:24
-msgid "Maximum Order Quantity"
+#: includes/admin/class-settings.php:84
+msgid "Hide Checkout Button"
 msgstr ""
 
-#: build/includes/admin/class-minmax-settings.php:30
-#: includes/admin/class-minmax-settings.php:30
-msgid "Minimum Order Value"
+#: includes/admin/class-settings.php:85
+msgid "Hide checkout button if Min/Max condition not passed."
 msgstr ""
 
-#: build/includes/admin/class-minmax-settings.php:36
-#: includes/admin/class-minmax-settings.php:36
-msgid "Maximum Order Value"
+#: includes/admin/class-settings.php:101
+msgid "WooCommerce Min Max Quantities"
 msgstr ""
 
-#: build/includes/class-user-cart.php:50 build/includes/class-user-cart.php:106
-#: includes/class-user-cart.php:50 includes/class-user-cart.php:106
+#: includes/admin/class-settings.php:102
+msgid "Min Max Quantities"
+msgstr ""
+
+#: includes/admin/class-settings.php:112
+msgid "WC Min Max Settings"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:12
+msgid "Product Min Quantity"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:21
+msgid "Product Max Quantity"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:30
+msgid "Product Min Price"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:39
+msgid "Product Max Price"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:48
+msgid "Ignore Global MinMax Rules"
+msgstr ""
+
+#: includes/core-functions.php:48
 msgid "You have to buy at least %s quantities of %s"
 msgstr ""
 
-#: build/includes/class-user-cart.php:57 build/includes/class-user-cart.php:115
-#: includes/class-user-cart.php:57 includes/class-user-cart.php:115
+#: includes/core-functions.php:50
 msgid "You can't buy more than %s quantities of %s"
 msgstr ""
 
-#: build/includes/class-user-cart.php:66 includes/class-user-cart.php:66
-msgid "Quantity of products in cart must be %s or more "
+#: includes/core-functions.php:52
+msgid "Minimum cart total price should be %s or more"
 msgstr ""
 
-#: build/includes/class-user-cart.php:73 includes/class-user-cart.php:73
-msgid "Quantity of products in cart must not be more than %s "
+#: includes/core-functions.php:54
+msgid "Maximum cart total price can not be more than %s "
 msgstr ""
 
-#: build/includes/class-user-cart.php:80 includes/class-user-cart.php:80
-msgid "Minimum cart total should be %s or more"
-msgstr ""
-
-#: build/includes/class-user-cart.php:87 includes/class-user-cart.php:87
-msgid "Maximum cart total can not be more than %s "
-msgstr ""
-
-#: build/wc-minmax-quantities.php:93 wc-minmax-quantities.php:91
+#: wc-minmax-quantities.php:96
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: build/wc-minmax-quantities.php:102 wc-minmax-quantities.php:100
+#: wc-minmax-quantities.php:105
 msgid "Unserializing instances of this class is forbidden."
 msgstr ""
 
@@ -112,7 +131,7 @@ msgid "WC Min Max Quantities"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://manik.me"
+msgid "https://www.pluginever.com/wc-minmax-qunatities"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -120,5 +139,9 @@ msgid "The Best WordPress Plugin ever made!"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "manikmist09"
+msgid "pluginever"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.pluginever.com"
 msgstr ""

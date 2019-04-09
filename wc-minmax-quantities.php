@@ -3,16 +3,16 @@
  * Plugin Name: WC Min Max Quantities
  * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
  * Description: The Best WordPress Plugin ever made!
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wc-minmax-quantities
  * Domain Path: /i18n/languages/
- *
+ * Tested up to: 5.1.1
  * WC requires at least: 3.0.0
- * WC tested up to: 3.4.5
+ * WC tested up to: 3.5.7
  */
 
 /**
@@ -61,7 +61,7 @@ final class WC_MINMAX {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.0';
+	public $version = '1.0.1';
 	/**
 	 * Minimum PHP version required
 	 *
