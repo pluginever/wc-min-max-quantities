@@ -49,8 +49,7 @@ fi
 #remove build dir
 echo "Removing Build directory"
 rm -r "$SRC_DIR/build" > /dev/null 2>&1
-echo "Running release process"
-grunt release  > /dev/null 2>&1
+
 echo "Creating build"
 grunt build > /dev/null 2>&1
 

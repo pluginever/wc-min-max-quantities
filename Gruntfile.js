@@ -110,8 +110,6 @@ module.exports = function (grunt) {
 		concat: {
 			admin: {
 				files: {
-					// '<%= dirs.css %>/admin.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin.css'],
-					// '<%= dirs.css %>/admin-rtl.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin-rtl.css']
 				}
 			}
 		},
@@ -342,10 +340,9 @@ module.exports = function (grunt) {
 			'i18n'
 		]);
 
-	grunt.registerTask('zip',
+	grunt.registerTask('build',
 		[
 			'clean',
-			'copy',
-			'compress'
+			'copy'
 		]);
 };

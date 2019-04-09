@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WC Min Max Quantities
  * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
- * Description: The Best WordPress Plugin ever made!
+ * Description: The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
  * Version:     1.0.1
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com

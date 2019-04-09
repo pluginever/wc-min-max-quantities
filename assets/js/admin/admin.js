@@ -8,7 +8,6 @@
 
 /*jslint browser: true */
 /*global jQuery:false */
-
 jQuery(document).ready(function ($, window, document, undefined) {
     'use strict';
     $.wc_min_max_quantities = {

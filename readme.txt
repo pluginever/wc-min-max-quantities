@@ -1,9 +1,9 @@
-=== WC Min Max Quantities ===
+===WooCommerce Min Max Quantities===
 Contributors: manikmist09
 Tags: WooCommerce, Products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, wc, wc min and max quantity for woocommerce,pluginever
 Requires at least: 3.0.1
-Tested up to: 4.9.8
-Requires PHP: 5.2.4
+Tested up to: 5.1.1
+Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ WC Min Max Quantities for WooCommerce is an extension that enhances control over
 
  
 == Description ==
-WC Min Max Quantities for WooCommerce is an extension that allows you to set minimum and maximum allowable product quantities and price per product and order. 
+WooCommerce Min Max Quantities is an extension that allows you to set minimum and maximum allowable product quantities and price per product and order that can be purchased. 
  
 = How Min Max Quantities for WooCommerce will benefit you: =
 &#9989;	Make custom packages for various occasions.

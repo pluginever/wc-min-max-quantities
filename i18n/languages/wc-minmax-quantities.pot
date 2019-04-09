@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WC Min Max Quantities 1.0.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/wc-min-max-quantities\n"
-"POT-Creation-Date: 2019-04-09 06:42:46+00:00\n"
+"POT-Creation-Date: 2019-04-09 07:30:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,115 +14,135 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n1.0.2\n"
 
+#: build/includes/admin/class-settings-api.php:367
 #: includes/admin/class-settings-api.php:367
 msgid "Choose File"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:35
 #: includes/admin/class-settings.php:35
 msgid "General Settings"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:56
 #: includes/admin/class-settings.php:56
 msgid "Minimum Order Quantity"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:57
 #: includes/admin/class-settings.php:57
 msgid ""
 "Enter a quantity to prevent  user from buying this product if they have "
 "fewer than the allowed quantity in their cart."
 msgstr ""
 
+#: build/includes/admin/class-settings.php:63
 #: includes/admin/class-settings.php:63
 msgid "Maximum Order Quantity"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:64
 #: includes/admin/class-settings.php:64
 msgid ""
 "Enter a quantity to prevent  user from buying this product if they have "
 "more than the allowed quantity in their cart."
 msgstr ""
 
+#: build/includes/admin/class-settings.php:70
 #: includes/admin/class-settings.php:70
 msgid "Minimum Order Price"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:71
 #: includes/admin/class-settings.php:71
 msgid ""
 "Enter an amount of Price to prevent  users from buying, if they have lower "
 "than the allowed price in their cart."
 msgstr ""
 
+#: build/includes/admin/class-settings.php:77
 #: includes/admin/class-settings.php:77
 msgid "Maximum Order Price"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:78
 #: includes/admin/class-settings.php:78
 msgid ""
 "Enter an amount of Price to prevent users from buying, if they have more "
 "than the allowed price in their cart."
 msgstr ""
 
+#: build/includes/admin/class-settings.php:84
 #: includes/admin/class-settings.php:84
 msgid "Hide Checkout Button"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:85
 #: includes/admin/class-settings.php:85
 msgid "Hide checkout button if Min/Max condition not passed."
 msgstr ""
 
+#: build/includes/admin/class-settings.php:101
 #: includes/admin/class-settings.php:101
 msgid "WooCommerce Min Max Quantities"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:102
 #: includes/admin/class-settings.php:102
 msgid "Min Max Quantities"
 msgstr ""
 
+#: build/includes/admin/class-settings.php:112
 #: includes/admin/class-settings.php:112
 msgid "WC Min Max Settings"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:12
 #: includes/admin/metabox-functions.php:12
 msgid "Product Min Quantity"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:21
 #: includes/admin/metabox-functions.php:21
 msgid "Product Max Quantity"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:30
 #: includes/admin/metabox-functions.php:30
 msgid "Product Min Price"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:39
 #: includes/admin/metabox-functions.php:39
 msgid "Product Max Price"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:48
 #: includes/admin/metabox-functions.php:48
 msgid "Ignore Global MinMax Rules"
 msgstr ""
 
-#: includes/core-functions.php:48
+#: build/includes/core-functions.php:48 includes/core-functions.php:48
 msgid "You have to buy at least %s quantities of %s"
 msgstr ""
 
-#: includes/core-functions.php:50
+#: build/includes/core-functions.php:50 includes/core-functions.php:50
 msgid "You can't buy more than %s quantities of %s"
 msgstr ""
 
-#: includes/core-functions.php:52
+#: build/includes/core-functions.php:52 includes/core-functions.php:52
 msgid "Minimum cart total price should be %s or more"
 msgstr ""
 
-#: includes/core-functions.php:54
+#: build/includes/core-functions.php:54 includes/core-functions.php:54
 msgid "Maximum cart total price can not be more than %s "
 msgstr ""
 
-#: wc-minmax-quantities.php:96
+#: build/wc-minmax-quantities.php:96 wc-minmax-quantities.php:96
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wc-minmax-quantities.php:105
+#: build/wc-minmax-quantities.php:105 wc-minmax-quantities.php:105
 msgid "Unserializing instances of this class is forbidden."
 msgstr ""
 
@@ -135,7 +155,9 @@ msgid "https://www.pluginever.com/wc-minmax-qunatities"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "The Best WordPress Plugin ever made!"
+msgid ""
+"The plugin allows you to Set minimum and maximum allowable product "
+"quantities and price per product and order."
 msgstr ""
 
 #. Author of the plugin/theme
