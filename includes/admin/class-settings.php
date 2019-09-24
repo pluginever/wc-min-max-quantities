@@ -68,15 +68,29 @@ class WC_MINMAX_Settings {
 				),
 				array(
 					'label' => __( 'Minimum Order Price', 'wc-minmax-quantities' ),
-					'desc'  => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed product price in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'min_cart_price',
 					'type'  => 'number',
 					'min'   => 0,
 				),
 				array(
 					'label' => __( 'Maximum Order Price', 'wc-minmax-quantities' ),
-					'desc'  => __( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart.', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed product price in their cart.', 'wc-minmax-quantities' ),
 					'name'  => 'max_cart_price',
+					'type'  => 'number',
+					'min'   => 0,
+				),
+				array(
+					'label' => __( 'Minimum Cart Total', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart total.', 'wc-minmax-quantities' ),
+					'name'  => 'min_cart_total_price',
+					'type'  => 'number',
+					'min'   => 0,
+				),
+				array(
+					'label' => __( 'Maximum Cart Total', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart total.', 'wc-minmax-quantities' ),
+					'name'  => 'max_cart_total_price',
 					'type'  => 'number',
 					'min'   => 0,
 				),
@@ -87,7 +101,6 @@ class WC_MINMAX_Settings {
 					'type'    => 'checkbox',
 					'default' => 'on',
 				)
-
 			),
 
 		);

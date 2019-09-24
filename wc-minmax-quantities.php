@@ -160,12 +160,6 @@ final class WC_MINMAX {
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
-
-		//frontend includes
-		if ( $this->is_request( 'frontend' ) ) {
-			//include_once WC_MINMAX_INCLUDES . '/class-frontend.php';
-		}
-
 	}
 
 	/**
@@ -175,7 +169,8 @@ final class WC_MINMAX {
 	 *
 	 * @return string
 	 */
-	private function is_request( $type ) {
+
+	private function is_request($type) {
 		switch ( $type ) {
 			case 'admin':
 				return is_admin();
