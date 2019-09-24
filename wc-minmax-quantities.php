@@ -3,16 +3,16 @@
  * Plugin Name: WC Min Max Quantities
  * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
  * Description: The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wc-minmax-quantities
  * Domain Path: /i18n/languages/
- * Tested up to: 5.1.1
+ * Tested up to: 5.2.3
  * WC requires at least: 3.0.0
- * WC tested up to: 3.5.7
+ * WC tested up to: 3.7.0
  */
 
 /**
