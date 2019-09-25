@@ -33,6 +33,10 @@ class WC_MINMAX_Settings {
 			array(
 				'id'    => 'wc_minmax_quantity_general_settings',
 				'title' => __( 'General Settings', 'wc-minmax-quantities' )
+			),
+			array(
+				'id'    => 'wc_minmax_quantity_advanced_settings',
+				'title' => __( 'Advanced Settings', 'wc-minmax-quantities' )
 			)
 
 		);
@@ -81,6 +85,15 @@ class WC_MINMAX_Settings {
 					'min'   => 0,
 				),
 				array(
+					'label'   => __( 'Hide Checkout Button', 'wc-minmax-quantities' ),
+					'desc'    => __( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
+					'name'    => 'hide_checkout',
+					'type'    => 'checkbox',
+					'default' => 'on',
+				)
+			),
+			'wc_minmax_quantity_advanced_settings' => array(
+				array(
 					'label' => __( 'Minimum Cart Total', 'wc-minmax-quantities' ),
 					'desc'  => __( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart total.', 'wc-minmax-quantities' ),
 					'name'  => 'min_cart_total_price',
@@ -94,15 +107,7 @@ class WC_MINMAX_Settings {
 					'type'  => 'number',
 					'min'   => 0,
 				),
-				array(
-					'label'   => __( 'Hide Checkout Button', 'wc-minmax-quantities' ),
-					'desc'    => __( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
-					'name'    => 'hide_checkout',
-					'type'    => 'checkbox',
-					'default' => 'on',
-				)
-			),
-
+			)
 		);
 
 		return apply_filters( 'wc_minmax_quantity_settings_fields', $settings_fields );
