@@ -52,10 +52,18 @@ final class WC_MINMAX {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var WC_MINMAX
 	 * @since 1.0.0
+	 *
+	 * @var WC_MINMAX
 	 */
 	protected static $instance = null;
+
+	/**
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	public $plugin_name = 'WooCommerce Min Max Quantities';
 	/**
 	 * WC_MINMAX version.
 	 *
@@ -70,13 +78,24 @@ final class WC_MINMAX {
 	private $min_php = '5.6.0';
 
 	/**
+	 * admin notices
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $notices = array();
+
+	/**
 	 * Main WC_MINMAX Instance.
 	 *
 	 * Ensures only one instance of WC_MINMAX is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
-	 * @static
 	 * @return WC_MINMAX - Main instance.
+	 *
+	 * @static
+	 * @since 1.0.0
+	 *
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -87,35 +106,21 @@ final class WC_MINMAX {
 		return self::$instance;
 	}
 
-	/**
-	 * Cloning is forbidden.
-	 *
-	 * @since 1.0
-	 */
-	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wc-minmax-quantities' ), '1.0.0' );
-	}
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 *
-	 * @since 1.0
-	 */
-	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-minmax-quantities' ), '1.0.0' );
-	}
-
 
 	/**
 	 * EverProjects Constructor.
 	 */
 	public function setup() {
-		$this->check_environment();
-		$this->define_constants();
-		$this->includes();
-		$this->init_hooks();
-		$this->plugin_init();
-		do_action( 'wc_minmax_quantities_loaded' );
+		add_action( 'init', array( $this, 'localization_setup' ) );
+		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
+
+		if ( $this->is_plugin_compatible() ) {
+			$this->check_environment();
+			$this->define_constants();
+			$this->includes();
+			$this->init_hooks();
+			do_action( 'wc_minmax_quantities_loaded' );
+		}
 	}
 
 	/**
@@ -132,11 +137,12 @@ final class WC_MINMAX {
 	/**
 	 * Define EverProjects Constants.
 	 *
-	 * @since 1.0.0
 	 * @return void
+	 *
+	 * @since 1.0.0
+	 *
 	 */
 	private function define_constants() {
-		//$upload_dir = wp_upload_dir( null, false );
 		define( 'WC_MINMAX_VERSION', $this->version );
 		define( 'WC_MINMAX_FILE', __FILE__ );
 		define( 'WC_MINMAX_PATH', dirname( WC_MINMAX_FILE ) );
@@ -165,12 +171,12 @@ final class WC_MINMAX {
 	/**
 	 * What type of request is this?
 	 *
-	 * @param  string $type admin, ajax, cron or frontend.
+	 * @param string $type admin, ajax, cron or frontend.
 	 *
 	 * @return string
 	 */
 
-	private function is_request($type) {
+	private function is_request( $type ) {
 		switch ( $type ) {
 			case 'admin':
 				return is_admin();
@@ -189,36 +195,116 @@ final class WC_MINMAX {
 	 * @since 2.3
 	 */
 	private function init_hooks() {
-		// Localize our plugin
-		add_action( 'init', array( $this, 'localization_setup' ) );
-
-		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 	}
 
-	public function plugin_init() {
-
-	}
 
 	/**
 	 * Initialize plugin for localization
 	 *
+	 * @return void
 	 * @since 1.0.0
 	 *
-	 * @return void
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wc-minmax-quantities', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
+	 * Determines if the plugin compatible.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	protected function is_plugin_compatible() {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			$this->add_notice( 'notice-error', sprintf(
+				'<strong>%s</strong> requires <strong>WooCommerce</strong> installed and active.',
+				$this->plugin_name
+			) );
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Adds an admin notice to be displayed.
+	 *
+	 * @param string $class the notice class
+	 * @param string $message the notice message body
+	 *
+	 * @since 1.0.0
+	 *
+	 */
+	public function add_notice( $class, $message ) {
+
+		$notices = get_option( sanitize_key( $this->plugin_name ), [] );
+		if ( is_string( $message ) && is_string( $class ) && ! wp_list_filter( $notices, array( 'message' => $message ) ) ) {
+
+			$notices[] = array(
+				'message' => $message,
+				'class'   => $class
+			);
+
+			update_option( sanitize_key( $this->plugin_name ), $notices );
+		}
+
+	}
+
+	/**
+	 * Displays any admin notices added
+	 *
+	 * @since 1.0.0
+	 *
+	 * @internal
+	 */
+	public function admin_notices() {
+		$notices = (array) array_merge( $this->notices, get_option( sanitize_key( $this->plugin_name ), [] ) );
+		foreach ( $notices as $notice_key => $notice ) :
+			?>
+			<div class="notice notice-<?php echo sanitize_html_class( $notice['class'] ); ?>">
+				<p><?php echo wp_kses( $notice['message'], array(
+						'a'      => array( 'href' => array() ),
+						'strong' => array()
+					) ); ?></p>
+			</div>
+			<?php
+			update_option( sanitize_key( $this->plugin_name ), [] );
+		endforeach;
+	}
+
+	/**
+	 * Determines if the pro version installed.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	public static function is_pro_installed() {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		return is_plugin_active( 'wc-min-max-quantities-pro/wc-minmax-quantities-pro.php' ) == true;
+	}
+
+	/**
 	 * Plugin action links
 	 *
-	 * @param  array $links
+	 * @param array $links
 	 *
 	 * @return array
+	 * @since 1.0.0
+	 *
 	 */
 	public function plugin_action_links( $links ) {
-		//$links[] = '<a href="' . admin_url( 'admin.php?page=' ) . '">' . __( 'Settings', '' ) . '</a>';
+		$links[] = '<a href="' . admin_url( 'admin.php?page=wc-minmax-quantities' ) . '">' . __( 'Settings', 'wc-minmax-quantities' ) . '</a>';
+		if ( ! self::is_pro_installed() ) {
+			$links['Upgrade'] = '<a target="_blank" href="https://www.pluginever.com/plugins/wc-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
+		}
+
 		return $links;
 	}
 
@@ -226,6 +312,8 @@ final class WC_MINMAX {
 	 * Get the plugin url.
 	 *
 	 * @return string
+	 * @since 1.0.0
+	 *
 	 */
 	public function plugin_url() {
 		return untrailingslashit( plugins_url( '/', WC_MINMAX_FILE ) );
@@ -235,6 +323,8 @@ final class WC_MINMAX {
 	 * Get the plugin path.
 	 *
 	 * @return string
+	 * @since 1.0.0
+	 *
 	 */
 	public function plugin_path() {
 		return untrailingslashit( plugin_dir_path( WC_MINMAX_FILE ) );
@@ -255,7 +345,5 @@ function wc_minmax_quantities() {
 	return WC_MINMAX::instance();
 }
 
-if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-	//fire off the plugin
-	wc_minmax_quantities();
-}
+wc_minmax_quantities();
+
