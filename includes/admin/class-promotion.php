@@ -30,7 +30,7 @@ class WC_MINMAX_Promotion {
 		<div class="notice notice-info is-dismissible" id="wc_minmax-promotional-offer-notice">
 			<p>Thank you for installing
 				<strong><a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" target="_blank">WC Min Max Quantities</a></strong>,
-				Use the coupon code <strong>WCMINMAXFREE2PRO</strong> for 20% discount on PRO.
+				Use the coupon code <strong>WCMINMAXFREE2PRO</strong> for 10% discount on PRO.
 				<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin_activation_notice&utm_medium=link&utm_campaign=wc-minmax-numbers&utm_content=Get%20the%20Offer" target="_blank" style="text-decoration: none;">
 					<span class="dashicons dashicons-smiley" style="margin-left: 10px;"></span> Get the Offer</a></p>
 			<span class="dashicons dashicons-megaphone"></span>
