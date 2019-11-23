@@ -2,7 +2,7 @@
 Contributors: manikmist09, pluginever
 Tags: WooCommerce, Products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, wc, wc min and max quantity for woocommerce,pluginever
 Requires at least: 3.0.1
-Tested up to: 5.2.4
+Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -59,6 +59,9 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 2. General settings
  
 == Changelog ==
+= 1.0.5 (23rd November, 2019) =
+* Compatibility with WP v5.3
+* Compatibility with WC v3.8
 
 = 1.0.4 (31th October, 2019) =
 * Compatibility with WP v5.2.4
