@@ -1,18 +1,18 @@
 <?php
 /**
  * Plugin Name: WC Min Max Quantities
- * Plugin URI:  https://www.pluginever.com/wc-minmax-qunatities
+ * Plugin URI:  https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  * Description: The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version:     1.0.4
+ * Version:     1.0.3
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wc-minmax-quantities
  * Domain Path: /i18n/languages/
- * Tested up to: 5.2.4
+ * Tested up to: 5.3
  * WC requires at least: 3.0.0
- * WC tested up to: 3.7.1
+ * WC tested up to: 3.8
  */
 
 /**
@@ -69,7 +69,7 @@ final class WC_MINMAX {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.4';
+	public $version = '1.0.5';
 	/**
 	 * Minimum PHP version required
 	 *
@@ -165,6 +165,11 @@ final class WC_MINMAX {
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
+		}
+
+		//admin
+		if ( ! $this->is_pro_installed() ) {
+			require_once( WC_MINMAX_INCLUDES . '/admin/class-promotion.php' );
 		}
 	}
 
@@ -302,7 +307,7 @@ final class WC_MINMAX {
 	public function plugin_action_links( $links ) {
 		$links[] = '<a href="' . admin_url( 'admin.php?page=wc-minmax-quantities' ) . '">' . __( 'Settings', 'wc-minmax-quantities' ) . '</a>';
 		if ( ! self::is_pro_installed() ) {
-			$links['Upgrade'] = '<a target="_blank" href="https://www.pluginever.com/plugins/wc-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
+			$links['Upgrade'] = '<a target="_blank" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
 		}
 
 		return $links;
