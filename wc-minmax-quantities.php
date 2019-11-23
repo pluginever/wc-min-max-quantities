@@ -166,6 +166,11 @@ final class WC_MINMAX {
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
+
+		//admin
+		if ( ! $this->is_pro_installed() ) {
+			require_once( WC_MINMAX_INCLUDES . '/admin/class-promotion.php' );
+		}
 	}
 
 	/**
@@ -302,7 +307,7 @@ final class WC_MINMAX {
 	public function plugin_action_links( $links ) {
 		$links[] = '<a href="' . admin_url( 'admin.php?page=wc-minmax-quantities' ) . '">' . __( 'Settings', 'wc-minmax-quantities' ) . '</a>';
 		if ( ! self::is_pro_installed() ) {
-			$links['Upgrade'] = '<a target="_blank" href="https://www.pluginever.com/plugins/wc-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
+			$links['Upgrade'] = '<a target="_blank" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
 		}
 
 		return $links;
