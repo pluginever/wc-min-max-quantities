@@ -70,12 +70,6 @@ final class WC_MINMAX {
 	 * @var string
 	 */
 	public $version = '1.0.5';
-	/**
-	 * Minimum PHP version required
-	 *
-	 * @var string
-	 */
-	private $min_php = '5.6.0';
 
 	/**
 	 * admin notices
@@ -111,27 +105,11 @@ final class WC_MINMAX {
 	 * EverProjects Constructor.
 	 */
 	public function setup() {
+		$this->define_constants();
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
-
-		if ( $this->is_plugin_compatible() ) {
-			$this->check_environment();
-			$this->define_constants();
-			$this->includes();
-			$this->init_hooks();
-			do_action( 'wc_minmax_quantities_loaded' );
-		}
-	}
-
-	/**
-	 * Ensure theme and server variable compatibility
-	 */
-	public function check_environment() {
-		if ( version_compare( PHP_VERSION, $this->min_php, '<=' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-
-			wp_die( "Unsupported PHP version Min required PHP Version:{$this->min_php}" );
-		}
+		add_action( 'plugins_loaded', array( $this, 'includes' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 	}
 
 	/**
@@ -156,6 +134,9 @@ final class WC_MINMAX {
 	 * Include required core files used in admin and on the frontend.
 	 */
 	public function includes() {
+		if ( ! $this->is_wc_installed() ) {
+			return;
+		}
 		//core includes
 		include_once WC_MINMAX_INCLUDES . '/core-functions.php';
 		include_once WC_MINMAX_INCLUDES . '/class-install.php';
@@ -171,6 +152,8 @@ final class WC_MINMAX {
 		if ( ! $this->is_pro_installed() ) {
 			require_once( WC_MINMAX_INCLUDES . '/admin/class-promotion.php' );
 		}
+
+		do_action( 'wc_minmax_quantities_loaded' );
 	}
 
 	/**
@@ -194,15 +177,6 @@ final class WC_MINMAX {
 		}
 	}
 
-	/**
-	 * Hook into actions and filters.
-	 *
-	 * @since 2.3
-	 */
-	private function init_hooks() {
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
-	}
-
 
 	/**
 	 * Initialize plugin for localization
@@ -213,27 +187,6 @@ final class WC_MINMAX {
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wc-minmax-quantities', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-
-	/**
-	 * Determines if the plugin compatible.
-	 *
-	 * @return bool
-	 * @since 1.0.0
-	 *
-	 */
-	protected function is_plugin_compatible() {
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			$this->add_notice( 'notice-error', sprintf(
-				'<strong>%s</strong> requires <strong>WooCommerce</strong> installed and active.',
-				$this->plugin_name
-			) );
-
-			return false;
-		}
-
-		return true;
 	}
 
 	/**
@@ -280,6 +233,19 @@ final class WC_MINMAX {
 			<?php
 			update_option( sanitize_key( $this->plugin_name ), [] );
 		endforeach;
+	}
+
+	/**
+	 * Determines if the woocommerce installed.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	public function is_wc_installed() {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		return is_plugin_active( 'woocommerce/woocommerce.php' ) == true;
 	}
 
 	/**
@@ -342,6 +308,10 @@ final class WC_MINMAX {
 	 */
 	public function template_path() {
 		return WC_MINMAX_TEMPLATES_DIR;
+	}
+
+	public function init_plugin() {
+
 	}
 
 }
