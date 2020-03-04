@@ -45,7 +45,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_checkbox(
 		array(
 			'id'      => '_minmax_ignore_global',
-			'label'   => __( 'Ignore Global MinMax Rules', 'wc-minmax-quantities' ),
+			'label'   => __( 'Ignore Global Min-Max Rules', 'wc-minmax-quantities' ),
 			'default' => '0',
 		)
 	);
