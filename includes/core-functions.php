@@ -69,83 +69,82 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 
 	global $woocommerce;
 
-	if( apply_filters('wc_min_max_quantities_allow_global_rule', true )){
-		$total_quantity = $woocommerce->cart->cart_contents_count;
+	if ( apply_filters( 'wc_min_max_quantities_allow_global_rule', true ) ) {
+		$total_quantity       = $woocommerce->cart->cart_contents_count;
 		$total_amount         = floatval( WC()->cart->cart_contents_total );
 		$min_cart_total_price = wc_minmax_quantities_get_settings( 'min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 		$max_cart_total_price = wc_minmax_quantities_get_settings( 'max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 
 
-
-
 	}
 //	error_log($total_quantity);
-//	$items = WC()->cart->get_cart();
-//
-//	foreach ( $items as $item ) {
-//
-//		$product_id    = $item['product_id'];
-//		$qty           = $item['quantity'];
-//		$product_name  = $item['data']->get_title();
-//		$subtotal      = $item['line_subtotal'];
-//		$ignore_global = get_post_meta( $product_id, '_minmax_ignore_global', true );
-//		$total_amount  = $subtotal;
-//		$min_quantity  = wc_minmax_quantities_get_settings( 'min_product_quantity', 0 );
-//		$max_quantity  = wc_minmax_quantities_get_settings( 'max_product_quantity', 0 );
-//		$min_price     = wc_minmax_quantities_get_settings( 'min_cart_price', 0 );
-//		$max_price     = wc_minmax_quantities_get_settings( 'max_cart_price', 0 );
-//
-//		if ( $ignore_global == 'yes' ) {
-//			$min_quantity = (int) get_post_meta( $product_id, '_minmax_product_min_quantity', true );
-//			$max_quantity = (int) get_post_meta( $product_id, '_minmax_product_max_quantity', true );
-//			$min_price    = (int) get_post_meta( $product_id, '_minmax_product_min_price', true );
-//			$max_price    = (int) get_post_meta( $product_id, '_minmax_product_max_price', true );
-//
-//		}
-//
-//		//=== Check minimum quantity ===
-//		if ( ! empty( $min_quantity ) && $qty < $min_quantity ) {
-//			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-//				'type'    => 'min_qty',
-//				'min_qty' => $min_quantity,
-//				'name'    => $product_name,
-//			) ), 'error' );
-//			wc_min_max_quantities_hide_checkout_btn();
-//		}
-//
-//		//=== Check maximum quantity ===
-//		if ( ! empty( $max_quantity && $qty > $max_quantity ) ) {
-//			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-//				'type'    => 'max_qty',
-//				'max_qty' => $max_quantity,
-//				'name'    => $product_name,
-//			) ), 'error' );
-//			wc_min_max_quantities_hide_checkout_btn();
-//		}
-//
-//		//=== Check minimum Price ===
-//		if ( ! empty( $min_price ) && $total_amount < $min_price ) {
-//			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-//				'type'      => 'min_price',
-//				'min_price' => $min_price,
-//				'name'      => $product_name,
-//			) ), 'error' );
-//			wc_min_max_quantities_hide_checkout_btn();
-//		}
-//
-//		//=== Check maximum Price ===
-//		if ( ! empty( $max_price ) && $total_amount > $max_price ) {
-//			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
-//				'type'      => 'max_price',
-//				'max_price' => $max_price,
-//				'name'      => $product_name,
-//			) ), 'error' );
-//			wc_min_max_quantities_hide_checkout_btn();
-//		}
-//
-//	}
+	$items = WC()->cart->get_cart();
+
+	foreach ( $items as $item ) {
+
+		$product_id    = $item['product_id'];
+		$qty           = $item['quantity'];
+		$product_name  = $item['data']->get_title();
+		$subtotal      = $item['line_subtotal'];
+		$ignore_global = get_post_meta( $product_id, '_minmax_ignore_global', true );
+		$total_amount  = $subtotal;
+		$min_quantity  = wc_minmax_quantities_get_settings( 'min_product_quantity', 0 );
+		$max_quantity  = wc_minmax_quantities_get_settings( 'max_product_quantity', 0 );
+		$min_price     = wc_minmax_quantities_get_settings( 'min_cart_price', 0 );
+		$max_price     = wc_minmax_quantities_get_settings( 'max_cart_price', 0 );
+
+		if ( $ignore_global == 'yes' ) {
+			$min_quantity = (int) get_post_meta( $product_id, '_minmax_product_min_quantity', true );
+			$max_quantity = (int) get_post_meta( $product_id, '_minmax_product_max_quantity', true );
+			$min_price    = (int) get_post_meta( $product_id, '_minmax_product_min_price', true );
+			$max_price    = (int) get_post_meta( $product_id, '_minmax_product_max_price', true );
+
+		}
+
+		//=== Check minimum quantity ===
+		if ( ! empty( $min_quantity ) && $qty < $min_quantity ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'    => 'min_qty',
+				'min_qty' => $min_quantity,
+				'name'    => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
+		}
+
+		//=== Check maximum quantity ===
+		if ( ! empty( $max_quantity && $qty > $max_quantity ) ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'    => 'max_qty',
+				'max_qty' => $max_quantity,
+				'name'    => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
+		}
+
+		//=== Check minimum Price ===
+		if ( ! empty( $min_price ) && $total_amount < $min_price ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'      => 'min_price',
+				'min_price' => $min_price,
+				'name'      => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
+		}
+
+		//=== Check maximum Price ===
+		if ( ! empty( $max_price ) && $total_amount > $max_price ) {
+			wc_add_notice( wc_minmax_quantities_get_notice_message( array(
+				'type'      => 'max_price',
+				'max_price' => $max_price,
+				'name'      => $product_name,
+			) ), 'error' );
+			wc_min_max_quantities_hide_checkout_btn();
+		}
+
+	}
 
 	//for cart total
+
 	$total_amount         = floatval( WC()->cart->cart_contents_total );
 	$min_cart_total_price = wc_minmax_quantities_get_settings( 'min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	$max_cart_total_price = wc_minmax_quantities_get_settings( 'max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );

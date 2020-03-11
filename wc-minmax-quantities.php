@@ -3,16 +3,16 @@
  * Plugin Name: WooCommerce Min Max Quantities
  * Plugin URI:  https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  * Description: The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version:     1.0.6
+ * Version:     1.0.7
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wc-minmax-quantities
  * Domain Path: /i18n/languages/
- * Tested up to: 5.3.1
+ * Tested up to: 5.3.2
  * WC requires at least: 3.0.0
- * WC tested up to: 3.8.1
+ * WC tested up to: 4.0.0
  */
 
 /**
@@ -108,6 +108,7 @@ final class WC_MINMAX {
 		$this->define_constants();
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
+		add_action( 'admin_notices', array( $this, 'woocommerce_admin_notices' ) );
 		add_action( 'plugins_loaded', array( $this, 'includes' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 	}
@@ -135,6 +136,7 @@ final class WC_MINMAX {
 	 */
 	public function includes() {
 		if ( ! $this->is_wc_installed() ) {
+
 			return;
 		}
 		//core includes
@@ -224,16 +226,17 @@ final class WC_MINMAX {
 		$notices = (array) array_merge( $this->notices, get_option( sanitize_key( $this->plugin_name ), [] ) );
 		foreach ( $notices as $notice_key => $notice ) :
 			?>
-			<div class="notice notice-<?php echo sanitize_html_class( $notice['class'] ); ?>">
-				<p><?php echo wp_kses( $notice['message'], array(
+            <div class="notice notice-<?php echo sanitize_html_class( $notice['class'] ); ?>">
+                <p><?php echo wp_kses( $notice['message'], array(
 						'a'      => array( 'href' => array() ),
 						'strong' => array()
 					) ); ?></p>
-			</div>
+            </div>
 			<?php
 			update_option( sanitize_key( $this->plugin_name ), [] );
 		endforeach;
 	}
+
 
 	/**
 	 * Determines if the woocommerce installed.
@@ -245,8 +248,27 @@ final class WC_MINMAX {
 	public function is_wc_installed() {
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
+
 		return is_plugin_active( 'woocommerce/woocommerce.php' ) == true;
 	}
+
+	/**
+	 * Adds notices if the wocoomerce is not activated
+	 *
+	 * @internal
+	 *
+	 * @since 1.0.6
+	 */
+	public function woocommerce_admin_notices() {
+		if ( false === is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php _e( 'Woocommerce is not installed or inactive. Please install and active woocommerce plugin.', 'wc-minmax-quantities' ); ?></p>
+            </div>
+			<?php
+		}
+	}
+
 
 	/**
 	 * Determines if the pro version installed.
