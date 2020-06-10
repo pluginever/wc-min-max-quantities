@@ -92,15 +92,6 @@ This section deals with global rules that apply to every single product of your 
 
 If you want to exclude a product or set custom rule for it then you have to do it from the product data tabs in the edit product section. Under the inventory tab, you will find the min/max options. To exclude a product from the global rule, you just have to leave the fields empty. Likewise, you can set custom min/max rules by inserting custom values. Important to note here that, you must enable the ***Ignore Global Min/Max Rules*** to flawlessly enjoy this feature.
 
-### 📢 CONTRIBUTE
-
-This may have bugs and/or a lack of features. If you want to contribute to this project, you are more than welcome. Please open an issue [**here**](https://github.com/pluginever/wc-min-max-quantities/issues).
- 
-== Installation ==
- 
-1. Upload `wc-minmax-quantities` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
- 
 ### 📢 Frequently Asked Questions
 
 **Which min/max rule takes priority over the other?**
@@ -113,6 +104,16 @@ There are multiple levels of min/max rules that you can assign to your products.
 
 **How can I suggest a new feature?**
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wc-minmax-quantities/issues) as the feature request.
+
+### 📢 CONTRIBUTE
+
+This may have bugs and/or a lack of features. If you want to contribute to this project, you are more than welcome. Please open an issue [**here**](https://github.com/pluginever/wc-min-max-quantities/issues).
+ 
+== Installation ==
+ 
+1. Upload `wc-minmax-quantities` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+
 == Screenshots ==
 1. Limitation for product
 2. General settings
