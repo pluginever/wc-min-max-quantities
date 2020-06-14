@@ -37,6 +37,11 @@ class WC_MINMAX_Settings {
 			array(
 				'id'    => 'wc_minmax_quantity_advanced_settings',
 				'title' => __( 'Advanced Settings', 'wc-minmax-quantities' )
+			),
+
+			array(
+				'id'    => 'wc_minmax_quantity_translate_settings',
+				'title' => __( 'Translate Settings', 'wc-minmax-quantities' )
 			)
 
 		);
@@ -107,7 +112,60 @@ class WC_MINMAX_Settings {
 					'type'  => 'number',
 					'min'   => 0,
 				),
-			)
+			),
+			'wc_minmax_quantity_translate_settings' => array(
+				
+				array(
+					'label' => __( 'Minimum Order Quantity Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s twice to display minimum order quantity and product name', 'wc-minmax-quantities' ),
+					'name'  => 'min_order_quantity_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'You have to buy at least %s quantities of %s'
+				),
+
+				array(
+					'label' => __( 'Maximum Order Quantity Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s twice to display maximum order quantity and product name', 'wc-minmax-quantities' ),
+					'name'  => 'max_order_quantity_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'You can\'t buy more than %s quantities of %s'
+				),
+
+				array(
+					'label' => __( 'Minimum Order Price Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s twice to display minimum order price and product name', 'wc-minmax-quantities' ),
+					'name'  => 'min_order_price_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'Minimum total price should be %s or more for %s'
+				),
+
+				array(
+					'label' => __( 'Maximum Order Price Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s twice to display maximum order price and product name.', 'wc-minmax-quantities' ),
+					'name'  => 'max_order_price_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'Maximum total price can not be more than %s for %s'
+				),
+				
+				array(
+					'label' => __( 'Minimum Cart Total Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s to display minimum cart total price', 'wc-minmax-quantities' ),
+					'name'  => 'min_cart_total_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'Minimum cart total price should be %s or more'
+				),
+
+				array(
+					'label' => __( 'Maximum Cart Total Error Message', 'wc-minmax-quantities' ),
+					'desc'  => __( 'Must use %s to display maximum cart total price', 'wc-minmax-quantities' ),
+					'name'  => 'max_cart_total_error_message',
+					'type'  => 'text',
+					'placeholder' 	=> 'Maximum cart total price can not be more than %s'
+				),
+			),
+
+			
+			
 		);
 
 		return apply_filters( 'wc_minmax_quantity_settings_fields', $settings_fields );

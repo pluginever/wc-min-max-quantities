@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function wc_minmax_quantities_get_settings( $key, $default = false, $section = 'wc_minmax_quantity_general_settings' ) {
 	$settings = get_option( $section, [] );
 
-	return isset( $settings[ $key ] ) ? $settings[ $key ] : $default;
+	return isset( $settings[ $key ] ) && !empty($settings[ $key ]) ? $settings[ $key ] : $default;
 }
 
 /**
@@ -43,15 +43,25 @@ function wc_minmax_quantities_get_notice_message( $args ) {
 		'name'      => '',
 	) ) );
 
+	$min_order_quantity_error_message = wc_minmax_quantities_get_settings( 'min_order_quantity_error_message', "You have to buy at least %s quantities of %s", 'wc_minmax_quantity_translate_settings' );
+
+	$max_order_quantity_error_message = wc_minmax_quantities_get_settings( 'max_order_quantity_error_message', "You can't buy more than %s quantities of %s", 'wc_minmax_quantity_translate_settings' );
+
+	$min_order_price_error_message = wc_minmax_quantities_get_settings( 'min_order_price_error_message', "Minimum total price should be %s or more for %s", 'wc_minmax_quantity_translate_settings' );
+
+	$max_order_price_error_message = wc_minmax_quantities_get_settings( 'max_order_price_error_message', "Maximum total price can not be more than %s for %s", 'wc_minmax_quantity_translate_settings' );
+
+
+
 	switch ( $type ) {
 		case 'min_qty':
-			return sprintf( __( "You have to buy at least %s quantities of %s", 'wc-minmax-quantities' ), $min_qty, $name );
+			return sprintf( __( $min_order_quantity_error_message, 'wc-minmax-quantities' ), $min_qty, $name );
 		case 'max_qty':
-			return sprintf( __( "You can't buy more than %s quantities of %s", 'wc-minmax-quantities' ), $max_qty, $name );
+			return sprintf( __( $max_order_quantity_error_message, 'wc-minmax-quantities' ), $max_qty, $name );
 		case 'min_price':
-			return sprintf( __( "Minimum total price should be %s or more for %s", 'wc-minmax-quantities' ), wc_price( $min_price ), $name );
+			return sprintf( __( $min_order_price_error_message, 'wc-minmax-quantities' ), wc_price( $min_price ), $name );
 		case 'max_price':
-			return sprintf( __( "Maximum total price can not be more than %s for %s", 'wc-minmax-quantities' ), wc_price( $max_price ), $name );
+			return sprintf( __( $max_order_price_error_message, 'wc-minmax-quantities' ), wc_price( $max_price ), $name );
 		default:
 			return false;
 	}
@@ -148,13 +158,16 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 	$total_amount         = floatval( WC()->cart->cart_contents_total );
 	$min_cart_total_price = wc_minmax_quantities_get_settings( 'min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	$max_cart_total_price = wc_minmax_quantities_get_settings( 'max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
+	$min_cart_total_error_message = wc_minmax_quantities_get_settings( 'min_cart_total_error_message', "Minimum cart total price should be %s or more", 'wc_minmax_quantity_translate_settings' );
+	$max_cart_total_error_message = wc_minmax_quantities_get_settings( 'max_cart_total_error_message', "Maximum cart total price can not be more than %s", 'wc_minmax_quantity_translate_settings' );
+
 	if ( ! empty( $min_cart_total_price ) && $total_amount < $min_cart_total_price ) {
-		wc_add_notice( sprintf( __( "Minimum cart total price should be %s or more", 'wc-minmax-quantities' ), wc_price( $min_cart_total_price ) ), 'error' );
+		wc_add_notice( sprintf( __( $min_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $min_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
 
 	if ( ! empty( $max_cart_total_price ) && $total_amount > $max_cart_total_price ) {
-		wc_add_notice( sprintf( __( "Maximum cart total price can not be more than %s", 'wc-minmax-quantities' ), wc_price( $max_cart_total_price ) ), 'error' );
+		wc_add_notice( sprintf( __( $max_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $max_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
 }
