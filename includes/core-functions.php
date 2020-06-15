@@ -84,12 +84,10 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 		$total_amount         = floatval( WC()->cart->cart_contents_total );
 		$min_cart_total_price = wc_minmax_quantities_get_settings( 'min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 		$max_cart_total_price = wc_minmax_quantities_get_settings( 'max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
-
-
 	}
 //	error_log($total_quantity);
 	$items = WC()->cart->get_cart();
-
+	$ignor_cart_total = false;
 	foreach ( $items as $item ) {
 
 		$product_id    = $item['product_id'];
@@ -108,7 +106,9 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 			$max_quantity = (int) get_post_meta( $product_id, '_minmax_product_max_quantity', true );
 			$min_price    = (int) get_post_meta( $product_id, '_minmax_product_min_price', true );
 			$max_price    = (int) get_post_meta( $product_id, '_minmax_product_max_price', true );
-
+			$ignor_cart_total = true;
+		}else{
+			$ignor_cart_total = false;
 		}
 
 		//=== Check minimum quantity ===
@@ -161,12 +161,13 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 	$min_cart_total_error_message = wc_minmax_quantities_get_settings( 'min_cart_total_error_message', "Minimum cart total price should be %s or more", 'wc_minmax_quantity_translate_settings' );
 	$max_cart_total_error_message = wc_minmax_quantities_get_settings( 'max_cart_total_error_message', "Maximum cart total price can not be more than %s", 'wc_minmax_quantity_translate_settings' );
 
-	if ( ! empty( $min_cart_total_price ) && $total_amount < $min_cart_total_price ) {
+
+	if ( ! empty( $min_cart_total_price ) && $total_amount < $min_cart_total_price && !$ignor_cart_total) {
 		wc_add_notice( sprintf( __( $min_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $min_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
 
-	if ( ! empty( $max_cart_total_price ) && $total_amount > $max_cart_total_price ) {
+	if ( ! empty( $max_cart_total_price ) && $total_amount > $max_cart_total_price && !$ignor_cart_total) {
 		wc_add_notice( sprintf( __( $max_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $max_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
