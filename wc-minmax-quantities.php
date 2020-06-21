@@ -69,7 +69,7 @@ final class WC_MINMAX {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.6';
+	public $version = '1.0.8';
 
 	/**
 	 * admin notices
@@ -145,8 +145,9 @@ final class WC_MINMAX {
 
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
-			require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
+			//require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/class-wc_minmax_quantites_admin_settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
 
