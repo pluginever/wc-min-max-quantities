@@ -21,7 +21,7 @@ class WC_Minmax_Quantites_Admin_Settings extends WC_Admin_Settings {
 			$settings[] = include( 'settings/wc-minmax-quantities-settings-translate.php' );
 			$settings[] = include( 'settings/wc-minmax-quantities-settings-help.php' );
 
-			self::$settings = apply_filters( 'wc_serial_numbers_get_settings_pages', $settings );
+			self::$settings = apply_filters( 'wc_minmax_quantities_get_settings_pages', $settings );
 		}
 
 		return self::$settings;
