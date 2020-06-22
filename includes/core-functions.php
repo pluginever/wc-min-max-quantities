@@ -189,5 +189,42 @@ function wc_min_max_quantities_hide_checkout_btn() {
 	remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 }
 
+/**
+ * List icon depending on pro plugin
+ * @param string pro or free
+ * 
+ * @return null
+ */
+function ever_wc_minmax_feature_icon($type){
+
+	if($type=='pro'){
+		if(class_exists('WC_MINMAX_PRO')){
+			$image = '/images/ever-tick.svg';
+		}else{
+			$image = '/images/ever-cross.svg';
+		}
+	}
+	if($type=='free'){
+
+		$image = '/images/ever-tick.svg';
+
+	}
+	echo "<img width='12' src='".WC_MINMAX_ASSETS_URL . $image."' alt='' />";
+}
 
 
+add_filter( 'wc_minmax_quantities_features_pro', 'ever_wc_minmax_upgrade_to_pro' );
+/**
+ * Callback for wc_minmax_quantities_features_pro filter
+ * @param string feature text
+ * 
+ * @return string $text
+ */
+function ever_wc_minmax_upgrade_to_pro($text){
+
+	if(!class_exists('WC_MINMAX_PRO')){
+		$text .= '&nbsp <a target="_blank" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
+	}
+
+	return $text;
+}
