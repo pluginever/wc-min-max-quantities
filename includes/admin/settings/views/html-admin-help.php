@@ -1,7 +1,7 @@
 <?php defined( 'ABSPATH' ) || exit(); ?>
 <div class="wrap about-wrap">
 	<h1><?php _e( 'Welcome', 'wc-minmax-quantities' ); ?></h1>
-	<p class="about-text"><?php _e( 'Thank you for installing from WooCommerce Min Max Quantities! The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.', 'wc-minmax-quantities' ); ?></p>
+	<p class="about-text"><?php _e( 'Thank you for installing WooCommerce Min Max Quantities! The plugin allows you to set minimum and maximum allowable product quantities and price per product and order.', 'wc-minmax-quantities' ); ?></p>
 </div>
 <div class="wrap" style="margin: 25px 40px 0 20px;">
 
