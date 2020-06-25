@@ -98,7 +98,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'                => 'wc_minmax_quantities_hide_checkout',
 					'desc'              => __( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
 					'type'              => 'checkbox',
-					'default' 			=> 'on',
+					'default' 			=> 'yes',
 				],
 				[
 					'type' => 'sectionend',
