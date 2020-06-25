@@ -148,7 +148,7 @@ final class WC_MINMAX {
 		if ( $this->is_request( 'admin' ) ) {
 			//require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
-			require_once WC_MINMAX_INCLUDES . '/admin/class-wc_minmax_quantites_admin_settings.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/class-wc-minmax-quantites-admin-settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
 
