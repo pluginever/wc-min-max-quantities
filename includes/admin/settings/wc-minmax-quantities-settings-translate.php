@@ -36,28 +36,28 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'      => 'wc_minmax_quantities_min_product_quantity_error_message',
 					'desc'    => __( 'Must use %s twice to display minimum order quantity and product name', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'You have to buy at least %s quantities of %s'
+					'placeholder' 	=> __('You have to buy at least %s quantities of %s','wc-minmax-quantities')
                 ],
                 [
 					'title'   => __( 'Maximum Product Quantity Error Message', 'wc-minmax-quantities' ),
 					'id'      => 'wc_minmax_quantities_max_order_quantity_error_message',
 					'desc'    => __( 'Must use %s twice to display maximum order quantity and product name', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'You can\'t buy more than %s quantities of %s'
+					'placeholder' 	=> __('You can\'t buy more than %s quantities of %s','wc-minmax-quantities'),
                 ],
                 [
 					'title'   => __( 'Minimum Product Price Error Message', 'wc-minmax-quantities' ),
 					'id'      => 'wc_minmax_quantities_min_order_price_error_message',
 					'desc'    => __( 'Must use %s twice to display minimum order price and product name', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'Minimum total price should be %s or more for %s'
+					'placeholder' 	=> __('Minimum total price should be %s or more for %s','wc-minmax-quantities'),
                 ],
                 [
 					'title'   => __( 'Maximum Product Price Error Message', 'wc-minmax-quantities' ),
 					'id'      => 'wc_minmax_quantities_max_order_price_error_message',
 					'desc'    => __( 'Must use %s twice to display maximum order price and product name.', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'Maximum total price can not be more than %s for %s'
+					'placeholder' 	=> __('Maximum total price can not be more than %s for %s','wc-minmax-quantities'),
                 ],
                 
                 [
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'      => 'wc_minmax_quantities_min_cart_total_error_message',
 					'desc'    => __( 'Must use %s to display minimum cart total price', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'Minimum cart total price should be %s or more'
+					'placeholder' 	=> __('Minimum cart total price should be %s or more','wc-minmax-quantities'),
                 ],
                 
                 [
@@ -73,7 +73,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'      => 'wc_minmax_quantities_max_cart_total_error_message',
 					'desc'    => __( 'Must use %s to display maximum cart total price', 'wc-minmax-quantities' ),
 					'type'    => 'text',
-					'placeholder' 	=> 'Maximum cart total price can not be more than %s'
+					'placeholder' 	=> __('Maximum cart total price can not be more than %s','wc-minmax-quantities'),
 				],
 
 				[

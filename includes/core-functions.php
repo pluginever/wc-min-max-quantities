@@ -20,7 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function wc_minmax_quantities_get_settings( $key, $default = false, $section = 'wc_minmax_quantity_general_settings' ) {
 	$settings = get_option( $key );
-	return !empty($settings) ? $settings : $default;
+
+	return ! empty( $settings ) ? $settings : $default;
 }
 
 /**
@@ -42,14 +43,13 @@ function wc_minmax_quantities_get_notice_message( $args ) {
 		'name'      => '',
 	) ) );
 
-	$wc_minmax_quantities_min_product_quantity_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_product_quantity_error_message', "You have to buy at least %s quantities of %s", 'wc_minmax_quantity_translate_settings' );
+	$wc_minmax_quantities_min_product_quantity_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_product_quantity_error_message', __( "You have to buy at least %s quantities of %s", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
-	$wc_minmax_quantities_max_order_quantity_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_order_quantity_error_message', "You can't buy more than %s quantities of %s", 'wc_minmax_quantity_translate_settings' );
+	$wc_minmax_quantities_max_order_quantity_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_order_quantity_error_message', __( "You can't buy more than %s quantities of %s", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
-	$wc_minmax_quantities_min_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_order_price_error_message', "Minimum total price should be %s or more for %s", 'wc_minmax_quantity_translate_settings' );
+	$wc_minmax_quantities_min_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_order_price_error_message', __( "Minimum total price should be %s or more for %s", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
-	$wc_minmax_quantities_max_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_order_price_error_message', "Maximum total price can not be more than %s for %s", 'wc_minmax_quantity_translate_settings' );
-
+	$wc_minmax_quantities_max_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_order_price_error_message', __( "Maximum total price can not be more than %s for %s", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
 
 	switch ( $type ) {
@@ -79,13 +79,13 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 	global $woocommerce;
 
 	if ( apply_filters( 'wc_min_max_quantities_allow_global_rule', true ) ) {
-		$total_quantity       = $woocommerce->cart->cart_contents_count;
-		$total_amount         = floatval( WC()->cart->cart_contents_total );
+		$total_quantity                            = $woocommerce->cart->cart_contents_count;
+		$total_amount                              = floatval( WC()->cart->cart_contents_total );
 		$wc_minmax_quantities_min_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 		$wc_minmax_quantities_max_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	}
 //	error_log($total_quantity);
-	$items = WC()->cart->get_cart();
+	$items            = WC()->cart->get_cart();
 	$ignor_cart_total = false;
 	foreach ( $items as $item ) {
 
@@ -101,12 +101,12 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 		$max_price     = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_product_price', 0 );
 
 		if ( $ignore_global == 'yes' ) {
-			$min_quantity = (int) get_post_meta( $product_id, '_minmax_product_min_quantity', true );
-			$max_quantity = (int) get_post_meta( $product_id, '_minmax_product_max_quantity', true );
-			$min_price    = (int) get_post_meta( $product_id, '_minmax_product_min_price', true );
-			$max_price    = (int) get_post_meta( $product_id, '_minmax_product_max_price', true );
+			$min_quantity     = (int) get_post_meta( $product_id, '_minmax_product_min_quantity', true );
+			$max_quantity     = (int) get_post_meta( $product_id, '_minmax_product_max_quantity', true );
+			$min_price        = (int) get_post_meta( $product_id, '_minmax_product_min_price', true );
+			$max_price        = (int) get_post_meta( $product_id, '_minmax_product_max_price', true );
 			$ignor_cart_total = true;
-		}else{
+		} else {
 			$ignor_cart_total = false;
 		}
 
@@ -154,19 +154,19 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 
 	//for cart total
 
-	$total_amount         = floatval( WC()->cart->cart_contents_total );
+	$total_amount                              = floatval( WC()->cart->cart_contents_total );
 	$wc_minmax_quantities_min_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	$wc_minmax_quantities_max_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
-	$min_cart_total_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_error_message', "Minimum cart total price should be %s or more", 'wc_minmax_quantity_translate_settings' );
-	$max_cart_total_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_cart_total_error_message', "Maximum cart total price can not be more than %s", 'wc_minmax_quantity_translate_settings' );
+	$min_cart_total_error_message              = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_error_message', __( "Minimum cart total price should be %s or more", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
+	$max_cart_total_error_message              = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_cart_total_error_message', __( "Maximum cart total price can not be more than %s", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
 
-	if ( ! empty( $wc_minmax_quantities_min_cart_total_price ) && $total_amount < $wc_minmax_quantities_min_cart_total_price && !$ignor_cart_total) {
+	if ( ! empty( $wc_minmax_quantities_min_cart_total_price ) && $total_amount < $wc_minmax_quantities_min_cart_total_price && ! $ignor_cart_total ) {
 		wc_add_notice( sprintf( __( $min_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $wc_minmax_quantities_min_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
 
-	if ( ! empty( $wc_minmax_quantities_max_cart_total_price ) && $total_amount > $wc_minmax_quantities_max_cart_total_price && !$ignor_cart_total) {
+	if ( ! empty( $wc_minmax_quantities_max_cart_total_price ) && $total_amount > $wc_minmax_quantities_max_cart_total_price && ! $ignor_cart_total ) {
 		wc_add_notice( sprintf( __( $max_cart_total_error_message, 'wc-minmax-quantities' ), wc_price( $wc_minmax_quantities_max_cart_total_price ) ), 'error' );
 		wc_min_max_quantities_hide_checkout_btn();
 	}
@@ -191,38 +191,40 @@ function wc_min_max_quantities_hide_checkout_btn() {
 
 /**
  * List icon depending on pro plugin
+ *
  * @param string pro or free
- * 
+ *
  * @return null
  */
-function ever_wc_minmax_feature_icon($type){
+function ever_wc_minmax_feature_icon( $type ) {
 
-	if($type=='pro'){
-		if(class_exists('WC_MINMAX_PRO')){
+	if ( $type == 'pro' ) {
+		if ( class_exists( 'WC_MINMAX_PRO' ) ) {
 			$image = '/images/ever-tick.svg';
-		}else{
+		} else {
 			$image = '/images/ever-cross.svg';
 		}
 	}
-	if($type=='free'){
+	if ( $type == 'free' ) {
 
 		$image = '/images/ever-tick.svg';
 
 	}
-	echo "<img width='12' src='".WC_MINMAX_ASSETS_URL . $image."' alt='' />";
+	echo "<img width='12' src='" . WC_MINMAX_ASSETS_URL . $image . "' alt='' />";
 }
 
 
 add_filter( 'wc_minmax_quantities_features_pro', 'ever_wc_minmax_upgrade_to_pro' );
 /**
  * Callback for wc_minmax_quantities_features_pro filter
+ *
  * @param string feature text
- * 
+ *
  * @return string $text
  */
-function ever_wc_minmax_upgrade_to_pro($text){
+function ever_wc_minmax_upgrade_to_pro( $text ) {
 
-	if(!class_exists('WC_MINMAX_PRO')){
+	if ( ! class_exists( 'WC_MINMAX_PRO' ) ) {
 		$text .= '&nbsp <a target="_blank" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
 	}
 
