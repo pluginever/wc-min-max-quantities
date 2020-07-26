@@ -11,7 +11,7 @@ class Install {
 	}
 
 	public static function install() {
-		if ( get_option( 'wc_minmax_quantities_install_date' ) ) {
+		if ( get_option( 'wc_minmax_quantitiess_install_date' ) ) {
 			return;
 		}
 

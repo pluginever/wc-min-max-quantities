@@ -1,18 +1,6 @@
 <?php
 
-function wcsn_update_1_0_8() {
-
-	wp_clear_scheduled_hook( 'wcsn_per_minute_event' );
-	wp_clear_scheduled_hook( 'wcsn_daily_event' );
-	wp_clear_scheduled_hook( 'wcsn_hourly_event' );
-
-	if ( ! wp_next_scheduled( 'wc_minmax_quantities_hourly_event' ) ) {
-		wp_schedule_event( time(), 'hourly', 'wc_minmax_quantities_hourly_event' );
-	}
-
-	if ( ! wp_next_scheduled( 'wc_minmax_quantities_daily_event' ) ) {
-		wp_schedule_event( time(), 'daily', 'wc_minmax_quantities_daily_event' );
-	}
+function wcmm_update_1_0_9() {
 
     $general_settings = get_option('wc_minmax_quantity_general_settings');
     $advnace_settings = get_option('wc_minmax_quantity_advanced_settings');
@@ -42,5 +30,4 @@ function wcsn_update_1_0_8() {
     update_option('wc_minmax_quantities_max_cart_total_price', $max_cart_total_price);
 
 }
-
-wcsn_update_1_0_8();
+wcmm_update_1_0_9();

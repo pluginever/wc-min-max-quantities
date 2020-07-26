@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Min Max Quantities
  * Plugin URI:  https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  * Description: The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version:     1.0.8
+ * Version:     1.0.9
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -69,7 +69,7 @@ final class WC_MINMAX {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.8';
+	public $version = '1.0.9';
 
 	/**
 	 * admin notices
@@ -96,17 +96,14 @@ final class WC_MINMAX {
 			self::$instance = new self();
 			self::$instance->setup();
 		}
-
 		return self::$instance;
 	}
-
 
 	/**
 	 * EverProjects Constructor.
 	 */
 	public function setup() {
 		$this->define_constants();
-
 		add_action( 'woocommerce_loaded', array( $this, 'init_plugin' ) );
 		add_action( 'admin_notices', array( $this, 'woocommerce_admin_notices' ) );
 		add_action( 'init', array( $this, 'localization_setup' ) );
@@ -134,6 +131,10 @@ final class WC_MINMAX {
 
 	/**
 	 * Include required core files used in admin and on the frontend.
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * @return void
 	 */
 	public function includes() {
 		if ( ! $this->is_wc_installed() ) {
@@ -143,6 +144,7 @@ final class WC_MINMAX {
 		//core includes
 		include_once WC_MINMAX_INCLUDES . '/core-functions.php';
 		include_once WC_MINMAX_INCLUDES . '/class-install.php';
+		include_once WC_MINMAX_INCLUDES . '/class-upgrades.php';
 
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
@@ -167,7 +169,6 @@ final class WC_MINMAX {
 	 *
 	 * @return string
 	 */
-
 	private function is_request( $type ) {
 		switch ( $type ) {
 			case 'admin':
@@ -180,7 +181,6 @@ final class WC_MINMAX {
 				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) && ! defined( 'REST_REQUEST' );
 		}
 	}
-
 
 	/**
 	 * Initialize plugin for localization
@@ -239,7 +239,6 @@ final class WC_MINMAX {
 		endforeach;
 	}
 
-
 	/**
 	 * Determines if the woocommerce installed.
 	 *
@@ -249,8 +248,6 @@ final class WC_MINMAX {
 	 */
 	public function is_wc_installed() {
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-
 		return is_plugin_active( 'woocommerce/woocommerce.php' ) == true;
 	}
 
@@ -270,7 +267,6 @@ final class WC_MINMAX {
 			<?php
 		}
 	}
-
 
 	/**
 	 * Determines if the pro version installed.
@@ -299,7 +295,6 @@ final class WC_MINMAX {
 		if ( ! self::is_pro_installed() ) {
 			$links['Upgrade'] = '<a target="_blank" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" title="' . esc_attr( __( 'Upgrade To Pro', 'wc-minmax-quantities' ) ) . '" style="color:red;font-weight:bold;">' . __( 'Upgrade To Pro', 'wc-minmax-quantities' ) . '</a>';
 		}
-
 		return $links;
 	}
 
