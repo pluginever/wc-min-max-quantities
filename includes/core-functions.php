@@ -155,6 +155,13 @@ function wc_min_max_quantities_proceed_to_checkout_conditions() {
 	//for cart total
 
 	$total_amount                              = floatval( WC()->cart->cart_contents_total );
+
+	$wc_minmax_quantities_bypass_discount_code = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_bypass_discount_code', 'no', 'wc_minmax_quantity_advanced_settings' );
+
+	if( $wc_minmax_quantities_bypass_discount_code == 'yes' ) {
+		$total_amount = $total_amount +  WC()->cart->get_discount_total();
+	}
+
 	$wc_minmax_quantities_min_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	$wc_minmax_quantities_max_cart_total_price = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_cart_total_price', 0, 'wc_minmax_quantity_advanced_settings' );
 	$min_cart_total_error_message              = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_cart_total_error_message', __( "Minimum cart total price should be %s or more", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );

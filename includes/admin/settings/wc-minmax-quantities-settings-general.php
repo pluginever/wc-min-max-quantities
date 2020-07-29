@@ -94,6 +94,12 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'    => 'other_settings'
 				],
 				[
+					'title' => __( 'Bypass Discont Code', 'wc-minmax-quantities-pro' ),
+					'id'    => 'wc_minmax_quantities_bypass_discount_code',
+					'desc'  => __( 'Bypass discount code from minimum cart total price rule', 'wc-minmax-quantities-pro' ),
+					'type'  => 'checkbox',
+				],
+				[
 					'title'             => __( 'Hide Checkout Button', 'wc-minmax-quantities' ),
 					'id'                => 'wc_minmax_quantities_hide_checkout',
 					'desc'              => __( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
