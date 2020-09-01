@@ -182,7 +182,6 @@ final class WC_MINMAX {
 				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) && ! defined( 'REST_REQUEST' );
 		}
 	}
-
 	/**
 	 * Initialize plugin for localization
 	 *
@@ -309,7 +308,7 @@ final class WC_MINMAX {
 	 *
 	 */
 	public function plugin_url() {
-		return untrailingslashit( plugins_url( '/', WC_MINMAX_FILE ) );
+		return untrailingslashit( plugins_url( '/', __FILE__ ) );
 	}
 
 	/**
@@ -320,7 +319,17 @@ final class WC_MINMAX {
 	 *
 	 */
 	public function plugin_path() {
-		return untrailingslashit( plugin_dir_path( WC_MINMAX_FILE ) );
+		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+	}
+
+	/**
+	 * Plugin base path name getter.
+	 *
+	 * @return string
+	 * @since 1.1.0
+	 */
+	public function plugin_basename() {
+		return plugin_basename( __FILE__ );
 	}
 
 	/**
