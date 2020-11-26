@@ -11,11 +11,11 @@ function wcmm_update_1_0_9() {
 	$max_product_quantity = isset( $general_settings['max_product_quantity'] ) ? $general_settings['max_product_quantity'] : false;
 	update_option( 'wc_minmax_quantities_max_product_quantity', $max_product_quantity );
 
-	$min_cart_price = isset( $general_settings['min_cart_price'] ) ? $general_settings['min_cart_price'] : false;
-	update_option( 'wc_minmax_quantities_min_product_price', $min_cart_price );
+	$min_product_price = isset( $general_settings['min_cart_price'] ) ? $general_settings['min_cart_price'] : false;
+	update_option( 'wc_minmax_quantities_min_product_price', $min_product_price );
 
-	$max_cart_price = isset( $general_settings['max_cart_price'] ) ? $general_settings['max_cart_price'] : false;
-	update_option( 'wc_minmax_quantities_max_product_price', $max_cart_price );
+	$max_product_price = isset( $general_settings['max_cart_price'] ) ? $general_settings['max_cart_price'] : false;
+	update_option( 'wc_minmax_quantities_max_product_price', $max_product_price );
 
 	$hide_checkout = isset( $general_settings['hide_checkout'] ) ? $general_settings['hide_checkout'] : false;
 	if ( $hide_checkout == 'on' ) {
@@ -23,11 +23,12 @@ function wcmm_update_1_0_9() {
 	}
 	update_option( 'wc_minmax_quantities_hide_checkout', $hide_checkout );
 
-	$min_cart_total_quantity = isset( $advance_settings['min_cart_total_quantity'] ) ? $advance_settings['min_cart_total_quantity'] : false;
-	update_option( 'wc_minmax_quantities_min_cart_total_quantity', $min_cart_total_quantity );
+	$min_cart_total_price = isset( $advance_settings['min_cart_total_price'] ) ? $advance_settings['min_cart_total_price'] : false;
+	update_option( 'wc_minmax_quantities_min_cart_total_price', $min_cart_total_price );
 
-	$max_cart_total_quantity = isset( $advance_settings['max_cart_total_quantity'] ) ? $advance_settings['max_cart_total_quantity'] : false;
-	update_option( 'wc_minmax_quantities_max_cart_total_quantity', $max_cart_total_quantity );
+	$max_cart_total_price = isset( $advance_settings['max_cart_total_price'] ) ? $advance_settings['max_cart_total_price'] : false;
+	update_option( 'wc_minmax_quantities_max_cart_total_price', $max_cart_total_price );
+
 
 	$force_add_minimum_quantity = isset( $advance_settings['force_add_minimum_quantity'] ) ? $advance_settings['force_add_minimum_quantity'] : false;
 	if ( $force_add_minimum_quantity == 'on' ) {
