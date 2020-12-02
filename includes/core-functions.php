@@ -1,11 +1,6 @@
 <?php
 
-//function prefix wc_min_max_quantities
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
-
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Get WC MIN MAX Quantities settings
@@ -16,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return bool|string|array
  */
-
-
 function wc_minmax_quantities_get_settings( $key, $default = false, $section = 'wc_minmax_quantity_general_settings' ) {
 	$settings = get_option( $key );
 
@@ -31,7 +24,6 @@ function wc_minmax_quantities_get_settings( $key, $default = false, $section = '
  *
  * @return bool|string
  */
-
 function wc_minmax_quantities_get_notice_message( $args ) {
 
 	extract( wp_parse_args( $args, array(
@@ -50,7 +42,6 @@ function wc_minmax_quantities_get_notice_message( $args ) {
 	$wc_minmax_quantities_min_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_min_order_price_error_message', __( "Minimum total price should be {min_price} or more for {product_name}.", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
 
 	$wc_minmax_quantities_max_order_price_error_message = wc_minmax_quantities_get_settings( 'wc_minmax_quantities_max_order_price_error_message', __( "Maximum total price can not be more than {max_price} for {product_name}.", 'wc-minmax-quantities' ), 'wc_minmax_quantity_translate_settings' );
-
 
 	switch ( $type ) {
 		case 'min_qty':
@@ -88,7 +79,7 @@ function wc_minmax_quantities_get_notice_message( $args ) {
 /**
  * Check min max rules to proceed checkout
  *
- * @since 3.1.3
+ * @since 1.0.0
  */
 
 function wc_min_max_quantities_proceed_to_checkout_conditions() {

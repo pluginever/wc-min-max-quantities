@@ -27,7 +27,6 @@ class WC_Minmax_Quantites_Admin_Settings extends WC_Admin_Settings {
 		return self::$settings;
 	}
 
-
 	/**
 	 * Save the settings
 	 */
@@ -131,6 +130,5 @@ class WC_Minmax_Quantites_Admin_Settings extends WC_Admin_Settings {
 
 		include WC_MINMAX_INCLUDES . '/admin/settings/views/html-admin-settings.php';
 	}
-
 
 }

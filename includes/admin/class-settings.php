@@ -1,20 +1,15 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 class WC_MINMAX_Settings {
-
 	private $settings_api;
 
 	function __construct() {
-
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 99 );
-
 	}
 
-	function admin_menu() {
+	public function admin_menu() {
 		add_submenu_page(
 			'woocommerce',
 			__( 'WooCommerce Min Max Quantities', 'wc-minmax-quantities' ),
@@ -22,10 +17,9 @@ class WC_MINMAX_Settings {
 			'manage_options',
 			'wc-minmax-quantities',
 			//array( $this, 'settings_page' )
-			array('WC_Minmax_Quantites_Admin_Settings', 'output')
+			array( 'WC_Minmax_Quantites_Admin_Settings', 'output' )
 		);
 	}
-
 
 }
 

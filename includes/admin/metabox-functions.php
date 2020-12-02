@@ -1,10 +1,12 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;// Exit if accessed directly
 
-
+/**
+ * Add product min max meta settings
+ *
+ * @since 1.0.0
+ */
 function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_text_input(
 		array(
@@ -55,12 +57,9 @@ add_action( 'woocommerce_product_options_inventory_product_data', 'wc_min_max_qu
 
 /**
  * Save product min max meta settings
+ * @since 1.0.0
  *
- * @since 3.1.3
- *
- * @return bool|null
  */
-
 function wc_min_max_quantities_save_product_data_tab( $post_id ) {
 	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 		return false;

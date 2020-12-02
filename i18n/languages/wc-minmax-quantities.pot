@@ -18,111 +18,107 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: includes/admin/class-settings.php:20
+#: includes/admin/class-settings.php:15
 msgid "WooCommerce Min Max Quantities"
 msgstr ""
 
-#: includes/admin/class-settings.php:21
+#: includes/admin/class-settings.php:16
 msgid "Min Max Quantities"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:12
+#: includes/admin/metabox-functions.php:14
 msgid "Product Min Quantity"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:21
+#: includes/admin/metabox-functions.php:23
 msgid "Product Max Quantity"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:30
+#: includes/admin/metabox-functions.php:32
 msgid "Product Min Price"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:39
+#: includes/admin/metabox-functions.php:41
 msgid "Product Max Price"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:48
+#: includes/admin/metabox-functions.php:50
 msgid "Ignore Global Min-Max Rules"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:30
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:31
 msgid "Product Restrictions"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:32
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:33
 msgid "The following options are for adding minimum maximum rules for products globally"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:36
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:37
 msgid "Minimum Product Quantity"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:38
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:39
 msgid "Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:43
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:44
 msgid "Maximum Product Quantity"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:45
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:46
 msgid "Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:50
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:51
 msgid "Minimum Product Price"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:52
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:53
 msgid "Enter an amount of price to prevent  users from buying, if they have lower than the allowed product price in their cart."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:57
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:58
 msgid "Maximum Product Price"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:59
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:60
 msgid "Enter an amount of price to prevent  users from buying, if they have more than the allowed product price in their cart."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:59
-msgid "Enter an amount of price to prevent  users from buying, if they have more than the allowed product price in their cart."
-msgstr ""
-
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:68
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:69
 msgid "Cart Restriction"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:70
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:71
 msgid "The following options are for cart restrictions"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:74
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:75
 msgid "Minimum Cart Total Price"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:76
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:77
 msgid "Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart total."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:81
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:82
 msgid "Maximum Cart Total Price"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:76
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:84
 msgid "Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart total."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:92
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:93
 msgid "Other Settings"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:97
-msgid "Bypass Discont Code"
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:98
+msgid "Bypass Discount Code"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-general.php:99
+#: includes/admin/settings/wc-minmax-quantities-settings-general.php:100
 msgid "Bypass discount code from minimum cart total price rule"
 msgstr ""
 
@@ -134,49 +130,61 @@ msgstr ""
 msgid "Hide checkout button if Min/Max condition not passed."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-help.php:22
+#: includes/admin/settings/wc-minmax-quantities-settings-help.php:11
 msgid "Help"
 msgstr ""
 
 #: includes/admin/settings/wc-minmax-quantities-settings-translate.php:14
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:30
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:31
 msgid "Translate Settings"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:35
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:36
 msgid "Minimum Product Quantity Error Message"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:37
-msgid "Must use %s twice to display minimum order quantity and product name"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:38
+msgid "Must use {min_qty} and {product_name} to display minimum order quantity and product name respectively."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:37
-msgid "You have to buy at least %s quantities of %s"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:40
+msgid "You have to buy at least {min_qty} quantities of {product_name}."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:42
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:43
 msgid "Maximum Product Quantity Error Message"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:44
-msgid "Must use %s twice to display maximum order quantity and product name"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:45
+msgid "Must use {max_qty} and {product_name} to display maximum order quantity and product name respectively."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:46
-msgid "You can't buy more than %s quantities of %s"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:47
+msgid "You can't buy more than {max_qty} quantities of {product_name}."
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:49
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:50
 msgid "Minimum Product Price Error Message"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:51
-msgid "Must use %s twice to display maximum order price and product name"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:52
+msgid "Must use {min_price} and {product_name} to display minimum order price and product name respectively."
 msgstr ""
 
 #: includes/admin/settings/wc-minmax-quantities-settings-translate.php:53
-msgid "Minimum total price should be %s or more for %s"
+msgid "Minimum total price should be {min_price} or more for {product_name}."
+msgstr ""
+
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:57
+msgid "Maximum Product Price Error Message"
+msgstr ""
+
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:59
+msgid "Must use {max_price} and {product_name} to display maximum order price and product name respectively."
+msgstr ""
+
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:61
+msgid "Maximum total price can not be more than {max_price} for {product_name}."
 msgstr ""
 
 #: includes/admin/settings/wc-minmax-quantities-settings-translate.php:64
@@ -184,23 +192,23 @@ msgid "Minimum Cart Total Error Message"
 msgstr ""
 
 #: includes/admin/settings/wc-minmax-quantities-settings-translate.php:66
-msgid "Must use %s to display minimum cart total price"
+msgid "Must use {min_cart_total_price} to display minimum cart total price"
 msgstr ""
 
 #: includes/admin/settings/wc-minmax-quantities-settings-translate.php:68
-msgid "Minimum cart total price should be %s or more"
+msgid "Minimum cart total price should be {min_cart_total_price} or more"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:72
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:71
 msgid "Maximum Cart Total Error Message"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:74
-msgid "Must use %s to display maximum cart total price"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:73
+msgid "Must use {max_cart_total_price} to display maximum cart total price"
 msgstr ""
 
-#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:76
-msgid "Maximum cart total price can not be more than %s"
+#: includes/admin/settings/wc-minmax-quantities-settings-translate.php:75
+msgid "Maximum cart total price can not be more than {max_cart_total_price}"
 msgstr ""
 
 #: includes/admin/settings/views/html-admin-help.php:3
@@ -211,93 +219,90 @@ msgstr ""
 msgid "Thank you for installing WooCommerce Min Max Quantities! The plugin allows you to set minimum and maximum allowable product quantities and price per product and order."
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:4
-msgid "Thank you for installing WooCommerce Min Max Quantities! The plugin allows you to set minimum and maximum allowable product quantities and price per product and order."
-msgstr ""
-
 #: includes/admin/settings/views/html-admin-help.php:8
 msgid "Features"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:13
+#: includes/admin/settings/views/html-admin-help.php:16
 msgid "Min Max Quantity for Product Globally"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:17
+#: includes/admin/settings/views/html-admin-help.php:20
 msgid "Min Max Price for Product Globally"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:21
+#: includes/admin/settings/views/html-admin-help.php:24
 msgid "Minimum Cart Total Price"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:25
+#: includes/admin/settings/views/html-admin-help.php:28
 msgid "Maximum Cart Total Price"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:78
+#: includes/admin/settings/views/html-admin-help.php:77
+msgid "Support"
+msgstr ""
+
 #: includes/admin/settings/views/html-admin-help.php:80
+#: includes/admin/settings/views/html-admin-help.php:82
 msgid "Submit A Ticket"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:79
+#: includes/admin/settings/views/html-admin-help.php:81
 msgid "We offer our support through our advanced ticket system. Use our contact form to filter through your query so your ticket can be allocated to the right department."
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:83
 #: includes/admin/settings/views/html-admin-help.php:85
+#: includes/admin/settings/views/html-admin-help.php:87
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/settings/views/html-admin-help.php:79
+#: includes/admin/settings/views/html-admin-help.php:86
 msgid "This is the place to go to reference different aspects of the plugin. Our online documentation is a useful resource for learning the ins and outs of using our plugins."
 msgstr ""
 
-#: includes/core-functions.php:46
-msgid "You have to buy at least %s quantities of %s"
+#: includes/core-functions.php:38
+msgid "You have to buy at least {min_qty} quantities of {product_name}."
 msgstr ""
 
-#: includes/core-functions.php:48
-msgid "You can't buy more than %s quantities of %s"
+#: includes/core-functions.php:40
+msgid "You can't buy more than {max_qty} quantities of {product_name}."
 msgstr ""
 
-#: includes/core-functions.php:50
-msgid "Minimum total price should be %s or more for %s"
+#: includes/core-functions.php:42
+msgid "Minimum total price should be {min_price} or more for {product_name}."
 msgstr ""
 
-#: includes/core-functions.php:52
-msgid "Maximum total price can not be more than %s for %s"
+#: includes/core-functions.php:44
+msgid "Maximum total price can not be more than {max_price} for {product_name}."
 msgstr ""
 
-#: includes/core-functions.php:168
-msgid "Minimum cart total price should be %s or more"
+#: includes/core-functions.php:176
+msgid "Minimum cart total price should be {min_cart_total_price} or more"
 msgstr ""
 
-#: includes/core-functions.php:169
-msgid "Maximum cart total price can not be more than %s"
+#: includes/core-functions.php:177
+msgid "Maximum cart total price can not be more than {max_cart_total_price}"
 msgstr ""
 
-#: includes/core-functions.php:236
-#: wc-minmax-quantities.php:298
+#: includes/core-functions.php:246
+#: wc-minmax-quantities.php:296
 msgid "Upgrade To Pro"
 msgstr ""
 
-#: wc-minmax-quantities.php:265
+#: wc-minmax-quantities.php:264
 
 msgid ""
-"Woocommerce is not installed or inactive. Please install and active "
-"woocommerce plugin."
+"WooCommerce Min Max Quantities</strong> requires <strong>WooCommerce</strong> installed and activated. "
+"Please Install %s WooCommerce. %s"
 msgstr ""
 
-#: wc-minmax-quantities.php:296
+#: wc-minmax-quantities.php:294
 msgid "Settings"
 msgstr ""
 
-#: wc-minmax-quantities.php:347
-msgid "Cheatin&#8217; huh?"
-msgstr ""
-
 #: wc-minmax-quantities.php:358
+#: wc-minmax-quantities.php:369
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 

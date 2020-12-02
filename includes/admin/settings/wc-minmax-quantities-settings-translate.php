@@ -22,6 +22,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 		 * Get settings array
 		 *
 		 * @return array
+		 * @since 1.0.9
 		 */
 		public function get_settings() {
 			global $woocommerce, $wp_roles;
@@ -59,7 +60,6 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'type'        => 'text',
 					'placeholder' => __( 'Maximum total price can not be more than {max_price} for {product_name}.', 'wc-minmax-quantities' ),
 				],
-
 				[
 					'title'       => __( 'Minimum Cart Total Error Message', 'wc-minmax-quantities' ),
 					'id'          => 'wc_minmax_quantities_min_cart_total_error_message',
@@ -67,7 +67,6 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'type'        => 'text',
 					'placeholder' => __( 'Minimum cart total price should be {min_cart_total_price} or more', 'wc-minmax-quantities' ),
 				],
-
 				[
 					'title'       => __( 'Maximum Cart Total Error Message', 'wc-minmax-quantities' ),
 					'id'          => 'wc_minmax_quantities_max_cart_total_error_message',

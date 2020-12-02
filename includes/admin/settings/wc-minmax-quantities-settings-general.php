@@ -22,6 +22,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 		 * Get settings array
 		 *
 		 * @return array
+		 * @since 1.0.9
 		 */
 		public function get_settings() {
 			global $woocommerce, $wp_roles;
@@ -94,7 +95,7 @@ if ( ! class_exists( 'WC_Serial_Numbers_Settings_General' ) ) :
 					'id'    => 'other_settings'
 				],
 				[
-					'title' => __( 'Bypass Discont Code', 'wc-minmax-quantities-pro' ),
+					'title' => __( 'Bypass Discount Code', 'wc-minmax-quantities' ),
 					'id'    => 'wc_minmax_quantities_bypass_discount_code',
 					'desc'  => __( 'Bypass discount code from minimum cart total price rule', 'wc-minmax-quantities-pro' ),
 					'type'  => 'checkbox',

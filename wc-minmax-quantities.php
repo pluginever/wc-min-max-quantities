@@ -261,11 +261,10 @@ final class WC_MINMAX {
 	 */
 	public function woocommerce_admin_notices() {
 		if ( false === is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php _e( 'Woocommerce is not installed or inactive. Please install and active woocommerce plugin.', 'wc-minmax-quantities' ); ?></p>
-			</div>
-			<?php
+			$message = sprintf( __( '<strong>WooCommerce Min Max Quantities</strong> requires <strong>WooCommerce</strong> installed and activated. Please Install %s WooCommerce. %s', 'wc-serial-numbers' ),
+			'<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">', '</a>' );
+			echo sprintf( '<div class="notice notice-error"><p>%s</p></div>', $message );
+
 		}
 	}
 
