@@ -111,6 +111,7 @@ final class WC_MINMAX {
 		add_action( 'admin_notices', array( $this, 'woocommerce_admin_notices' ) );
 		add_action( 'plugins_loaded', array( $this, 'includes' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 	}
 
 	/**
@@ -334,6 +335,28 @@ final class WC_MINMAX {
 
 	public function init_plugin() {
 
+	}
+
+	/**
+	 * Add plugin docs links in plugin row links
+	 *
+	 * @param mixed $links Links
+	 * @param mixed $file File
+	 *
+	 * @return array
+	 * @since 1.0.10
+	 */
+	public function plugin_row_meta( $links, $file ) {
+		if ( plugin_basename( __FILE__ ) === $file ) {
+
+			$row_meta = array(
+				'docs' => '<a href="' . esc_url( apply_filters( 'wc_min_max_quantities_docs_url', 'https://pluginever.com/docs/min-max-quantities-for-woocommerce/' ) ) . '" aria-label="' . esc_attr__( 'View documentation', 'wc-minmax-quantities' ) . '">' . esc_html__( 'Docs', 'wc-minmax-quantities' ) . '</a>',
+			);
+
+			return array_merge( $links, $row_meta );
+		}
+
+		return $links;
 	}
 
 }
