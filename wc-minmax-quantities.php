@@ -69,7 +69,7 @@ final class WC_MINMAX {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.6';
+	public $version = '1.0.8';
 
 	/**
 	 * admin notices
@@ -106,10 +106,11 @@ final class WC_MINMAX {
 	 */
 	public function setup() {
 		$this->define_constants();
+
+		add_action( 'woocommerce_loaded', array( $this, 'init_plugin' ) );
+		add_action( 'admin_notices', array( $this, 'woocommerce_admin_notices' ) );
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
-		add_action( 'admin_notices', array( $this, 'woocommerce_admin_notices' ) );
-		add_action( 'plugins_loaded', array( $this, 'includes' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 	}
 
@@ -145,8 +146,9 @@ final class WC_MINMAX {
 
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
-			require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
+			//require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/class-wc-minmax-quantites-admin-settings.php';
 			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
 
@@ -333,7 +335,32 @@ final class WC_MINMAX {
 	}
 
 	public function init_plugin() {
+		$this->includes();
+	}
 
+	/**
+	 * Throw error on object clone
+	 *
+	 * The whole idea of the singleton design pattern is that there is a single
+	 * object therefore, we don't want the object to be cloned.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wc-minmax-quantities' ), '1.0.0' );
+	}
+
+	/**
+	 * Disable unserializing of the class
+	 *
+	 * @access protected
+	 * @return void
+	 */
+
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wc-minmax-quantities' ), '1.0.0' );
 	}
 
 }

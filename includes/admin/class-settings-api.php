@@ -19,6 +19,7 @@ if ( ! class_exists( 'Ever_Settings_API' ) ):
 
         public function __construct() {
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+            add_action('admin_print_styles', array( $this, 'admin_enqueue_style' ));
         }
 
         /**
@@ -29,6 +30,11 @@ if ( ! class_exists( 'Ever_Settings_API' ) ):
             wp_enqueue_media();
             wp_enqueue_script( 'wp-color-picker' );
             wp_enqueue_script( 'jquery' );
+            wp_enqueue_script( 'jquery-ui-datepicker' );
+        }
+
+        function admin_enqueue_style(){
+            wp_enqueue_style( 'jquery-ui-datepicker-style' , WC_MINMAX_ASSETS_URL. '/css/jquery-ui.css');
         }
 
         /**
@@ -206,6 +212,20 @@ if ( ! class_exists( 'Ever_Settings_API' ) ):
         function callback_url( $args ) {
             $this->callback_text( $args );
         }
+
+        /**
+         * Displays a Datepicker field for a settings field
+         *
+         * @param array $args settings field args
+         */
+        function callback_datepicker( $args ) {
+            $value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+            $size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+            $html  = sprintf( '<input type="text" class="%1$s-text ever-datepicker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $size, $args['section'], $args['id'], $value, $args['std'] );
+            $html  .= $this->get_field_description( $args );
+            echo $html;
+        }
+
 
         /**
          * Displays a number field for a settings field
@@ -613,6 +633,9 @@ if ( ! class_exists( 'Ever_Settings_API' ) ):
                         // Finally, open the modal
                         file_frame.open();
                     });
+
+                    $('.ever-datepicker-field').datepicker();
+                    
                 });
             </script>
             <?php
