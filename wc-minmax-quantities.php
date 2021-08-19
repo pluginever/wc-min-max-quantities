@@ -147,15 +147,15 @@ final class WC_MINMAX {
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
 			//require_once WC_MINMAX_INCLUDES . '/admin/class-settings-api.php';
-			require_once WC_MINMAX_INCLUDES . '/admin/class-settings.php';
-			require_once WC_MINMAX_INCLUDES . '/admin/class-wc-minmax-quantites-admin-settings.php';
-			require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
+			require_once WC_MINMAX_INCLUDES . '/admin/class-admin.php';
+			// require_once WC_MINMAX_INCLUDES . '/admin/class-wc-minmax-quantites-admin-settings.php';
+			//require_once WC_MINMAX_INCLUDES . '/admin/metabox-functions.php';
 		}
 
 		//admin
-		if ( ! $this->is_pro_installed() ) {
-			require_once( WC_MINMAX_INCLUDES . '/admin/class-promotion.php' );
-		}
+//		if ( ! $this->is_pro_installed() ) {
+//			require_once( WC_MINMAX_INCLUDES . '/admin/class-promotion.php' );
+//		}
 
 		do_action( 'wc_minmax_quantities_loaded' );
 	}
