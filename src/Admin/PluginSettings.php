@@ -25,7 +25,7 @@ class PluginSettings extends SettingsPage {
 	 * @since 1.0.0
 	 */
 	protected function get_page_title() {
-		// TODO: Implement get_page_title() method.
+		return esc_html__('WC Min Max Settings', 'wc-minmax-quantities');
 	}
 
 	/**
@@ -65,7 +65,7 @@ class PluginSettings extends SettingsPage {
 	 */
 	protected function get_settings() {
 		$settings = array(
-			'general'  => array(
+			'general' => array(
 				'title'    => __( 'General', 'wc-minmax-quantities' ),
 				'sections' => array(
 					'main' => array(
@@ -173,72 +173,6 @@ class PluginSettings extends SettingsPage {
 								'desc'    => esc_html__( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed product price in their cart.', 'wc-minmax-quantities' ),
 								'type'    => 'number',
 								'default' => '0',
-							),
-						),
-					),
-				),
-			),
-			'template' => array(
-				'title'    => esc_html__( 'Template', 'wc-minmax-quantities' ),
-				'sections' => array(
-					'main' => array(
-						'title'  => esc_html__( 'Template', 'wc-minmax-quantities' ),
-						'fields' => array(
-							array(
-								'title' => esc_html__( 'Translate Settings', 'wc-minmax-quantities' ),
-								'type'  => 'section',
-								'id'    => 'section_translate_settings',
-							),
-							array(
-								'title'       => esc_html__( 'Minimum Product Quantity Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'min_product_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {min_qty} and {product_name} to display minimum order quantity and product name respectively.', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'You have to buy at least {min_qty} quantities of {product_name}.', 'wc-minmax-quantities' ),
-							),
-							array(
-								'title'       => esc_html__( 'Minimum Product Price Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'min_order_price_error_message',
-								'desc'        => esc_html__( 'Must use {min_price} and {product_name} to display minimum order price and product name respectively.', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum total price should be {min_price} or more for {product_name}.', 'wc-minmax-quantities' ),
-							),
-							array(
-								'title'       => esc_html__( 'Maximum Product Price Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'max_order_price_error_message',
-								'desc'        => esc_html__( 'Must use {max_price} and {product_name} to display maximum order price and product name respectively.', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum total price can not be more than {max_price} for {product_name}.', 'wc-minmax-quantities' ),
-							),
-							array(
-								'title'       => esc_html__( 'Minimum Cart Total Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'min_cart_total_error_message',
-								'desc'        => esc_html__( 'Must use {min_cart_total_price} to display minimum cart total price', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum cart total price should be {min_cart_total_price} or more', 'wc-minmax-quantities' ),
-							),
-							array(
-								'title'       => esc_html__( 'Maximum Cart Total Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'max_cart_total_error_message',
-								'desc'        => esc_html__( 'Must use {max_cart_total_price} to display maximum cart total price', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum cart total price can not be more than {max_cart_total_price}', 'wc-minmax-quantities' ),
-							),
-							array(
-								'title'       => esc_html__( 'Minimum Cart Quantity Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'min_cart_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {min_cart_qty} to display minimum cart quantity', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum cart quantity should be {min_cart_qty} or more', 'wc-minmax-quantities' ),
-								'disabled'    => true,
-							),
-							array(
-								'title'       => esc_html__( 'Maximum Cart Quantity Error Message', 'wc-minmax-quantities' ),
-								'id'          => 'max_cart_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {max_cart_qty} to display maximum cart quantity', 'wc-minmax-quantities' ),
-								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum cart total item can not be more than {max_cart_qty}', 'wc-minmax-quantities' ),
-								'disabled'    => true,
 							),
 						),
 					),

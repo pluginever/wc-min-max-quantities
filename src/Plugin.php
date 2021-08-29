@@ -55,9 +55,8 @@ final class Plugin extends App {
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {
-			self::$instance            = new self();
-			self::$instance->container = new Container();
-			self::$instance->init_services();
+			self::$instance = new self();
+			self::$instance->register();
 		}
 
 		return self::$instance;
@@ -104,46 +103,12 @@ final class Plugin extends App {
 	}
 
 	/**
-	 * Init DI Container, set all services as globals
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function init_services() {
-		$container = &$this->container;
-		if ( ! Utils::is_plugin_active( 'woocommerce' ) ) {
-			add_action( 'admin_notices', [ $this, 'wc_missing_notice' ] );
-			deactivate_plugins( $this->get_plugin_file(), true );
-			return;
-		}
-
-		$this->options = new Options( 'wc_minmax_settings' );
-		if ( is_admin() ) {
-			$container->addProvider( AdminManager::class );
-		}
-
-		// Register hooks.
-		$this->register();
-	}
-
-	/**
-	 * Register hooks.
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function register() {
-		// Localize our plugin
-		add_action( 'init', [ $this, 'localization_setup' ] );
-	}
-
-	/**
 	 * Show error message if WooCommerce is disabled
 	 *
 	 * @return  void
 	 * @since   1.1.0
 	 */
-	public function wc_missing_notice() {
+	public static function wc_missing_notice() {
 		?>
 		<div class="error">
 			<p>
@@ -157,6 +122,24 @@ final class Plugin extends App {
 	}
 
 	/**
+	 * Registers the plugin with WordPress.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function register() {
+		if ( ! Utils::is_plugin_active( 'woocommerce' ) ) {
+			add_action( 'admin_notices', [ __CLASS__, 'wc_missing_notice' ] );
+			deactivate_plugins( $this->get_plugin_file(), true );
+
+			return;
+		}
+
+		add_action( 'init', [ $this, 'localization_setup' ] );
+		add_action( 'plugins_loaded', [ $this, 'init_services' ] );
+	}
+
+	/**
 	 * Initialize plugin for localization
 	 *
 	 * @return void
@@ -164,5 +147,22 @@ final class Plugin extends App {
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wc-minmax-quantities', false, plugin_basename( dirname( WC_MINMAX_FILE ) ) . '/languages' );
+	}
+
+	/**
+	 * Init DI Container, set all services as globals
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function init_services() {
+		$this->container = new Container();
+		$container       = &$this->container;
+		$this->options   = new Options( 'wc_minmax_settings' );
+		if ( is_admin() ) {
+			$container->addProvider( AdminManager::class );
+		}
+
+		do_action( 'wc_minmax_quantities_loaded' );
 	}
 }

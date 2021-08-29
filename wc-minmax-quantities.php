@@ -33,6 +33,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use PluginEver\MinMaxQuantities\Plugin;
 
 // don't call the file directly
 defined( 'ABSPATH' ) || exit();
@@ -53,11 +54,12 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 
 /**
  * Returns the main instance of the plugin.
- * @return \PluginEver\MinMaxQuantities\Plugin
+ *
+ * @return Plugin
  * @since 1.0.0
  */
 function wc_minmax_quantities() {
-	return \PluginEver\MinMaxQuantities\Plugin::get_instance();
+	return Plugin::get_instance();
 }
 
 // Kit start.
