@@ -1,22 +1,71 @@
 {
     "name": "pluginever/wc-minmax-quantities",
-    "description": "The Best WordPress Plugin ever made!",
+    "description": "Min Max Quantities for WooCommerce",
     "keywords": ["wordpress", "plugin"],
     "homepage": "https://www.pluginever.com",
     "type": "wordpress-plugin",
     "license": "GPL-3.0",
-    "authors": [
-        {
-            "name": "pluginever",
-            "email": "support@pluginever.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.6.0"
-    },
-    "autoload" : {
-        "psr-4" : {
-            "Pluginever\\WCMinMaxQuantities\\": "includes/"
-        }
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "sultan",
+      "email": "sultan@pluginever.com"
     }
+  ],
+  "repositories": [
+    {
+      "url": "https://github.com/byteever/phpcs-composer.git",
+      "type": "git"
+    },
+    {
+      "url": "https://github.com/byteever/container.git",
+      "type": "git"
+    },
+    {
+      "url": "https://github.com/byteever/settings.git",
+      "type": "git"
+    },
+    {
+      "url": "https://github.com/byteever/plugin.git",
+      "type": "git"
+    }
+  ],
+  "require": {
+    "php": ">=5.6",
+    "byteever/plugin": "dev-master",
+    "byteever/container": "dev-master",
+    "byteever/settings": "dev-master",
+    "composer/installers": "~1.7"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "byteever/phpcs-composer": "dev-master",
+    "phpunit/phpunit": "^6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "PluginEver\\MinMaxQuantities\\": "src"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "7.0"
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "pre-commit": [
+      "@phpcs"
+    ],
+    "phpcs": "phpcs -s -p .",
+    "phpcbf": "phpcbf -p ."
+  },
+  "extra": {
+    "scripts-description": {
+      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+    }
+  }
 }
