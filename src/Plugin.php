@@ -263,9 +263,11 @@ final class Plugin extends Plugin_Loader {
 	 * @return array
 	 */
 	public function set_quantity_args( $data, $product ) {
-		if ( $product->is_type( 'variation' ) ) {
+		$is_excluded = 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true );
+		if ( $is_excluded || $product->is_type( 'variation' ) ) {
 			return $data;
 		}
+
 		if ( 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_override', true ) ) {
 			$minimum_quantity = absint( get_post_meta( $product->get_id(), '_minmax_quantities_min_qty', true ) );
 			$maximum_quantity = absint( get_post_meta( $product->get_id(), '_minmax_quantities_max_qty', true ) );
@@ -273,7 +275,7 @@ final class Plugin extends Plugin_Loader {
 		} else {
 			$minimum_quantity = wc_minmax_quantities()->options->get( 'min_product_quantity', 0 );
 			$maximum_quantity = wc_minmax_quantities()->options->get( 'max_product_quantity', 0 );
-			$quantity_step    = wc_minmax_quantities()->options->get( 'quantities_step', 0 );
+			$quantity_step    = wc_minmax_quantities()->options->get( 'product_quantity_step', 0 );
 		}
 
 		if ( $minimum_quantity > 0 ) {
@@ -402,7 +404,7 @@ final class Plugin extends Plugin_Loader {
 			} else {
 				$minimum_quantity = wc_minmax_quantities()->options->get( 'min_product_quantity', 0 );
 				$maximum_quantity = wc_minmax_quantities()->options->get( 'max_product_quantity', 0 );
-				$quantity_step    = wc_minmax_quantities()->options->get( 'quantities_step', 0 );
+				$quantity_step    = wc_minmax_quantities()->options->get( 'product_quantity_step', 0 );
 			}
 
 			if ( $maximum_quantity > 0 && ( $quantity > $maximum_quantity ) ) {
