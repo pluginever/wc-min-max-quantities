@@ -1,10 +1,13 @@
 {
-    "name": "pluginever/wc-minmax-quantities",
-    "description": "Min Max Quantities for WooCommerce",
-    "keywords": ["wordpress", "plugin"],
-    "homepage": "https://www.pluginever.com",
-    "type": "wordpress-plugin",
-    "license": "GPL-3.0",
+  "name": "pluginever/wc-minmax-quantities",
+  "description": "Min Max Quantities for WooCommerce",
+  "keywords": [
+    "wordpress",
+    "plugin"
+  ],
+  "homepage": "https://www.pluginever.com",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0",
   "prefer-stable": true,
   "minimum-stability": "dev",
   "authors": [
@@ -19,10 +22,6 @@
       "type": "git"
     },
     {
-      "url": "https://github.com/byteever/container.git",
-      "type": "git"
-    },
-    {
       "url": "https://github.com/byteever/settings.git",
       "type": "git"
     },
@@ -34,7 +33,6 @@
   "require": {
     "php": ">=5.6",
     "byteever/plugin": "dev-master",
-    "byteever/container": "dev-master",
     "byteever/settings": "dev-master",
     "composer/installers": "~1.7"
   },
@@ -45,7 +43,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PluginEver\\MinMaxQuantities\\": "src"
+      "PluginEver\\WC_MinMax_Quantities\\": "src"
     }
   },
   "config": {
