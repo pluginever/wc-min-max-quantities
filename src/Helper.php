@@ -3,10 +3,10 @@
  * Helper function.
  *
  * @since 1.1.0
- * @package PluginEver\WC_MinMax_Quantities
+ * @package PluginEver\WooCommerce\WCMinMaxQuantities
  */
 
-namespace PluginEver\WC_MinMax_Quantities;
+namespace PluginEver\WooCommerce\WCMinMaxQuantities;
 
 // don't call the file directly
 defined( 'ABSPATH' ) || exit();
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit();
  * Class Helper
  *
  * @since 1.1.0
- * @package PluginEver\WC_MinMax_Quantities
+ * @package PluginEver\WooCommerce\WCMinMaxQuantities
  */
 class Helper {
 	/**

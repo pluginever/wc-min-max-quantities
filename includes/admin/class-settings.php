@@ -36,111 +36,111 @@ class WC_MINMAX_Settings {
 	public function init_settings() {
 		$settings = array(
 			'general'  => array(
-				'title'    => __( 'General', 'wc-minmax-quantities' ),
+				'title'    => __( 'General', 'wc-min-max-qunatities' ),
 				'sections' => array(
 					'main' => array(
-						'title'  => __( 'General', 'wc-minmax-quantities' ),
+						'title'  => __( 'General', 'wc-min-max-qunatities' ),
 						'fields' => array(
 							array(
-								'title' => esc_html__( 'Cart Restriction', 'wc-minmax-quantities' ),
+								'title' => esc_html__( 'Cart Restriction', 'wc-min-max-qunatities' ),
 								'type'  => 'section',
-								'desc'  => esc_html__( 'The following options are for cart restrictions', 'wc-minmax-quantities' ),
+								'desc'  => esc_html__( 'The following options are for cart restrictions', 'wc-min-max-qunatities' ),
 								'id'    => 'cart_restrictions',
 							),
 							array(
-								'title'   => esc_html__( 'Minimum Cart Total Price', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Minimum Cart Total Price', 'wc-min-max-qunatities' ),
 								'id'      => 'min_cart_total_price',
-								'desc'    => esc_html__( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart total.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter an amount of Price to prevent  users from buying, if they have lower than the allowed price in their cart total.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
 							array(
-								'title'   => esc_html__( 'Maximum Cart Total Price', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Maximum Cart Total Price', 'wc-min-max-qunatities' ),
 								'id'      => 'max_cart_total_price',
-								'desc'    => esc_html__( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart total.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed price in their cart total.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
 							array(
-								'title'    => esc_html__( 'Minimum Cart Quantity', 'wc-minmax-quantities' ),
+								'title'    => esc_html__( 'Minimum Cart Quantity', 'wc-min-max-qunatities' ),
 								'id'       => 'min_cart_total_quantity',
-								'desc'     => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed total quantity in their cart.', 'wc-minmax-quantities' ),
+								'desc'     => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed total quantity in their cart.', 'wc-min-max-qunatities' ),
 								'type'     => 'number',
 								'min'      => 0,
 								'disabled' => true,
 							),
 							array(
-								'title'    => esc_html__( 'Maximum Cart Quantity', 'wc-minmax-quantities' ),
+								'title'    => esc_html__( 'Maximum Cart Quantity', 'wc-min-max-qunatities' ),
 								'id'       => 'max_cart_total_quantity',
-								'desc'     => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed total quantity in their cart.', 'wc-minmax-quantities' ),
+								'desc'     => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed total quantity in their cart.', 'wc-min-max-qunatities' ),
 								'type'     => 'number',
 								'min'      => 0,
 								'disabled' => true,
 							),
 							array(
-								'title' => esc_html__( 'Other Settings', 'wc-minmax-quantities' ),
+								'title' => esc_html__( 'Other Settings', 'wc-min-max-qunatities' ),
 								'type'  => 'section',
 								'id'    => 'other_settings',
 							),
 							array(
-								'title'   => esc_html__( 'Hide Checkout Button', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Hide Checkout Button', 'wc-min-max-qunatities' ),
 								'id'      => 'hide_checkout',
-								'desc'    => esc_html__( 'Hide checkout button if Min/Max condition not passed.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Hide checkout button if Min/Max condition not passed.', 'wc-min-max-qunatities' ),
 								'type'    => 'checkbox',
 								'default' => 'yes',
 							),
 							array(
-								'title'    => esc_html__( 'Force Minimum Quantity', 'wc-minmax-quantities' ),
+								'title'    => esc_html__( 'Force Minimum Quantity', 'wc-min-max-qunatities' ),
 								'id'       => 'force_add_minimum_quantity',
-								'desc'     => esc_html__( 'Force to add minimum quantity in product cart', 'wc-minmax-quantities' ),
+								'desc'     => esc_html__( 'Force to add minimum quantity in product cart', 'wc-min-max-qunatities' ),
 								'type'     => 'checkbox',
 								'disabled' => true,
 							),
 							array(
-								'title'    => esc_html__( 'Prevent Add to Cart', 'wc-minmax-quantities' ),
+								'title'    => esc_html__( 'Prevent Add to Cart', 'wc-min-max-qunatities' ),
 								'id'       => 'prevent_add_to_cart',
-								'desc'     => esc_html__( 'Prevent add product in cart when reach the product quantity/price maximum limit', 'wc-minmax-quantities' ),
+								'desc'     => esc_html__( 'Prevent add product in cart when reach the product quantity/price maximum limit', 'wc-min-max-qunatities' ),
 								'type'     => 'checkbox',
 								'disabled' => true,
 							),
 							array(
-								'title'    => esc_html__( 'Remove Item from Checkout', 'wc-minmax-quantities' ),
+								'title'    => esc_html__( 'Remove Item from Checkout', 'wc-min-max-qunatities' ),
 								'id'       => 'remove_item_checkout',
-								'desc'     => esc_html__( 'Enable option for remove item from checkout page', 'wc-minmax-quantities' ),
+								'desc'     => esc_html__( 'Enable option for remove item from checkout page', 'wc-min-max-qunatities' ),
 								'type'     => 'checkbox',
 								'disabled' => true,
 							),
 							array(
-								'title' => esc_html__( 'Product Restrictions', 'wc-minmax-quantities' ),
+								'title' => esc_html__( 'Product Restrictions', 'wc-min-max-qunatities' ),
 								'type'  => 'section',
-								'desc'  => esc_html__( 'The following options are for adding minimum maximum rules for products globally', 'wc-minmax-quantities' ),
+								'desc'  => esc_html__( 'The following options are for adding minimum maximum rules for products globally', 'wc-min-max-qunatities' ),
 								'id'    => 'section_product_restrictions',
 							),
 							array(
-								'title'   => esc_html__( 'Minimum Product Quantity', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Minimum Product Quantity', 'wc-min-max-qunatities' ),
 								'id'      => 'min_product_quantity',
-								'desc'    => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have fewer than the allowed quantity in their cart.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
 							array(
-								'title'   => esc_html__( 'Maximum Product Quantity', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Maximum Product Quantity', 'wc-min-max-qunatities' ),
 								'id'      => 'max_product_quantity',
-								'desc'    => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter a quantity to prevent  user from buying this product if they have more than the allowed quantity in their cart.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
 							array(
-								'title'   => esc_html__( 'Minimum Product Price', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Minimum Product Price', 'wc-min-max-qunatities' ),
 								'id'      => 'min_product_price',
-								'desc'    => esc_html__( 'Enter an amount of price to prevent  users from buying, if they have lower than the allowed product price in their cart.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter an amount of price to prevent  users from buying, if they have lower than the allowed product price in their cart.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
 							array(
-								'title'   => esc_html__( 'Maximum Product Price', 'wc-minmax-quantities' ),
+								'title'   => esc_html__( 'Maximum Product Price', 'wc-min-max-qunatities' ),
 								'id'      => 'max_product_price',
-								'desc'    => esc_html__( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed product price in their cart.', 'wc-minmax-quantities' ),
+								'desc'    => esc_html__( 'Enter an amount of Price to prevent users from buying, if they have more than the allowed product price in their cart.', 'wc-min-max-qunatities' ),
 								'type'    => 'number',
 								'default' => '0',
 							),
@@ -149,65 +149,65 @@ class WC_MINMAX_Settings {
 				),
 			),
 			'template' => array(
-				'title'    => esc_html__( 'Template', 'wc-minmax-quantities' ),
+				'title'    => esc_html__( 'Template', 'wc-min-max-qunatities' ),
 				'sections' => array(
 					'main' => array(
-						'title'  => esc_html__( 'Template', 'wc-minmax-quantities' ),
+						'title'  => esc_html__( 'Template', 'wc-min-max-qunatities' ),
 						'fields' => array(
 							array(
-								'title' => esc_html__( 'Translate Settings', 'wc-minmax-quantities' ),
+								'title' => esc_html__( 'Translate Settings', 'wc-min-max-qunatities' ),
 								'type'  => 'section',
 								'id'    => 'section_translate_settings',
 							),
 							array(
-								'title'       => esc_html__( 'Minimum Product Quantity Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Minimum Product Quantity Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'min_product_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {min_qty} and {product_name} to display minimum order quantity and product name respectively.', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {min_qty} and {product_name} to display minimum order quantity and product name respectively.', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'You have to buy at least {min_qty} quantities of {product_name}.', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'You have to buy at least {min_qty} quantities of {product_name}.', 'wc-min-max-qunatities' ),
 							),
 							array(
-								'title'       => esc_html__( 'Minimum Product Price Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Minimum Product Price Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'min_order_price_error_message',
-								'desc'        => esc_html__( 'Must use {min_price} and {product_name} to display minimum order price and product name respectively.', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {min_price} and {product_name} to display minimum order price and product name respectively.', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum total price should be {min_price} or more for {product_name}.', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Minimum total price should be {min_price} or more for {product_name}.', 'wc-min-max-qunatities' ),
 							),
 							array(
-								'title'       => esc_html__( 'Maximum Product Price Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Maximum Product Price Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'max_order_price_error_message',
-								'desc'        => esc_html__( 'Must use {max_price} and {product_name} to display maximum order price and product name respectively.', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {max_price} and {product_name} to display maximum order price and product name respectively.', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum total price can not be more than {max_price} for {product_name}.', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Maximum total price can not be more than {max_price} for {product_name}.', 'wc-min-max-qunatities' ),
 							),
 							array(
-								'title'       => esc_html__( 'Minimum Cart Total Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Minimum Cart Total Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'min_cart_total_error_message',
-								'desc'        => esc_html__( 'Must use {min_cart_total_price} to display minimum cart total price', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {min_cart_total_price} to display minimum cart total price', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum cart total price should be {min_cart_total_price} or more', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Minimum cart total price should be {min_cart_total_price} or more', 'wc-min-max-qunatities' ),
 							),
 							array(
-								'title'       => esc_html__( 'Maximum Cart Total Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Maximum Cart Total Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'max_cart_total_error_message',
-								'desc'        => esc_html__( 'Must use {max_cart_total_price} to display maximum cart total price', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {max_cart_total_price} to display maximum cart total price', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum cart total price can not be more than {max_cart_total_price}', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Maximum cart total price can not be more than {max_cart_total_price}', 'wc-min-max-qunatities' ),
 							),
 							array(
-								'title'       => esc_html__( 'Minimum Cart Quantity Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Minimum Cart Quantity Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'min_cart_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {min_cart_qty} to display minimum cart quantity', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {min_cart_qty} to display minimum cart quantity', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Minimum cart quantity should be {min_cart_qty} or more', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Minimum cart quantity should be {min_cart_qty} or more', 'wc-min-max-qunatities' ),
 								'disabled'    => true,
 							),
 							array(
-								'title'       => esc_html__( 'Maximum Cart Quantity Error Message', 'wc-minmax-quantities' ),
+								'title'       => esc_html__( 'Maximum Cart Quantity Error Message', 'wc-min-max-qunatities' ),
 								'id'          => 'max_cart_quantity_error_message',
-								'desc'        => esc_html__( 'Must use {max_cart_qty} to display maximum cart quantity', 'wc-minmax-quantities' ),
+								'desc'        => esc_html__( 'Must use {max_cart_qty} to display maximum cart quantity', 'wc-min-max-qunatities' ),
 								'type'        => 'text',
-								'placeholder' => esc_html__( 'Maximum cart total item can not be more than {max_cart_qty}', 'wc-minmax-quantities' ),
+								'placeholder' => esc_html__( 'Maximum cart total item can not be more than {max_cart_qty}', 'wc-min-max-qunatities' ),
 								'disabled'    => true,
 							),
 						),
@@ -215,10 +215,10 @@ class WC_MINMAX_Settings {
 				),
 			),
 			'help'     => array(
-				'title'    => esc_html__( 'Help', 'wc-minmax-quantities' ),
+				'title'    => esc_html__( 'Help', 'wc-min-max-qunatities' ),
 				'sections' => array(
 					'main' => array(
-						'title'  => esc_html__( 'Help', 'wc-minmax-quantities' ),
+						'title'  => esc_html__( 'Help', 'wc-min-max-qunatities' ),
 						'fields' => apply_filters( 'wc_minmax_quantities_help_settings_fields', array() ),
 					),
 				),
@@ -227,30 +227,30 @@ class WC_MINMAX_Settings {
 
 		if ( wc_minmax_quantities()::is_pro_installed() ) {
 			$settings['template']['sections']['purchase_rule_settings'] = array(
-				'title'  => esc_html__( 'Purchase Rules', 'wc-minmax-quantities' ),
+				'title'  => esc_html__( 'Purchase Rules', 'wc-min-max-qunatities' ),
 				'fields' => array(
 					array(
-						'title' => esc_html__( 'Purchase Rules', 'wc-minmax-quantities-pro' ),
+						'title' => esc_html__( 'Purchase Rules', 'wc-min-max-qunatities' ),
 						'type'  => 'section',
-						'desc'  => esc_html__( 'The following options are for show purchase rules in product details page', 'wc-minmax-quantities-pro' ),
+						'desc'  => esc_html__( 'The following options are for show purchase rules in product details page', 'wc-min-max-qunatities' ),
 						'id'    => 'purchase_rules_show',
 					),
 					array(
-						'title' => esc_html__( 'Show Purchase rules in Product page', 'wc-minmax-quantities-pro' ),
+						'title' => esc_html__( 'Show Purchase rules in Product page', 'wc-min-max-qunatities' ),
 						'id'    => 'wc_minmax_quantities_show_purchase_rules',
-						'desc'  => esc_html__( 'Enable option to show purchase rules in product page', 'wc-minmax-quantities-pro' ),
+						'desc'  => esc_html__( 'Enable option to show purchase rules in product page', 'wc-min-max-qunatities' ),
 						'type'  => 'checkbox',
 					),
 					array(
-						'title'   => esc_html__( 'Position in Product page', 'wc-minmax-quantities-pro' ),
+						'title'   => esc_html__( 'Position in Product page', 'wc-min-max-qunatities' ),
 						'id'      => 'wc_minmax_quantities_purchase_rule_position',
-						'desc'    => esc_html__( 'Set the position in product details page where showing rules', 'wc-minmax-quantities-pro' ),
+						'desc'    => esc_html__( 'Set the position in product details page where showing rules', 'wc-min-max-qunatities' ),
 						'type'    => 'select',
 						'options' => array(
-							'before_title'       => esc_html__( 'Before Title', 'wc-minmax-quantities-pro' ),
-							'after_price'        => esc_html__( 'After Price', 'wc-minmax-quantities-pro' ),
-							'before_add_to_cart' => esc_html__( 'Before Add to Cart', 'wc-minmax-quantities-pro' ),
-							'before_tabs'        => esc_html__( 'Before Tabs', 'wc-minmax-quantities-pro' ),
+							'before_title'       => esc_html__( 'Before Title', 'wc-min-max-qunatities' ),
+							'after_price'        => esc_html__( 'After Price', 'wc-min-max-qunatities' ),
+							'before_add_to_cart' => esc_html__( 'Before Add to Cart', 'wc-min-max-qunatities' ),
+							'before_tabs'        => esc_html__( 'Before Tabs', 'wc-min-max-qunatities' ),
 						),
 					),
 				),
@@ -551,7 +551,7 @@ class WC_MINMAX_Settings {
 					   class="<?php echo esc_attr( sprintf( '%s-text %s', $field['size'], $field['input_class'] ) ); ?>"
 					<?php echo implode( ' ', $attributes ); ?>/>
 				<span>&nbsp;
-					<button type="button" class="wc_minmax_settings_upload_button button-secondary"><?php esc_html_e( 'Upload File', 'wc-minmax-quantities' ); ?></button></span>
+					<button type="button" class="wc_minmax_settings_upload_button button-secondary"><?php esc_html_e( 'Upload File', 'wc-min-max-qunatities' ); ?></button></span>
 				<?php
 				break;
 			case 'html':
@@ -658,8 +658,8 @@ class WC_MINMAX_Settings {
 	public function register_settings_page() {
 		add_submenu_page(
 			'options-general.php',
-			__( 'WC Min Max Settings', 'wc-minmax-quantities' ),
-			__( 'WC Min Max Settings', 'wc-minmax-quantities' ),
+			__( 'WC Min Max Settings', 'wc-min-max-qunatities' ),
+			__( 'WC Min Max Settings', 'wc-min-max-qunatities' ),
 			'manage_options',
 			'wc-minmax-settings',
 			array( $this, 'render_settings_page' )
@@ -711,7 +711,7 @@ class WC_MINMAX_Settings {
 		ob_start();
 		?>
 		<div class="wrap wc_minmax-settings">
-			<h2><?php esc_html_e( 'WooCommerce Min Max Quantities - Settings', 'wc-minmax-quantities' ); ?></h2>
+			<h2><?php esc_html_e( 'WooCommerce Min Max Quantities - Settings', 'wc-min-max-qunatities' ); ?></h2>
 			<?php if ( count( $menu_tabs ) > 1 ) : ?>
 				<h2 class="nav-tab-wrapper wcminmax-tab-wrapper">
 					<?php foreach ( $tabs as $tab_slug => $tab_title ) : ?>

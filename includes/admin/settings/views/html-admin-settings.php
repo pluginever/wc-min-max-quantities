@@ -25,7 +25,7 @@
 
 		<?php if ( ! isset( $GLOBALS['hide_save_button'] ) ) : ?>
 		<p class="submit">
-			<input name="save" class="button-primary" type="submit" value="<?php _e( 'Save changes', 'woocommerce' ); ?>"/>
+			<input name="save" class="button-primary" type="submit" value="<?php _e( 'Save changes', 'wc-min-max-qunatities' ); ?>"/>
 			<input type="hidden" name="subtab" id="last_tab"/>
 			<?php wp_nonce_field( 'wc-minmax-quantities-settings' ); ?>
 		</p>

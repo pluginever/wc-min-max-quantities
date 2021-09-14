@@ -19,7 +19,7 @@ class WC_Minmax_Quantities_Settings_Help extends WC_Settings_Page {
 	 */
 	public function __construct() {
 		$this->id    = 'help';
-		$this->label = __( 'Help', 'wc-minmax-quantities' );
+		$this->label = __( 'Help', 'wc-min-max-qunatities' );
 		add_filter('wc_minmax_quantities_settings_tabs_array', array($this, 'add_settings_page'), 99);
 		add_action('wc_minmax_quantities_settings_' . $this->id, array($this, 'output'));
 		add_action('wc_minmax_quantities_settings_save_' . $this->id, array($this, 'save'));

@@ -22,18 +22,13 @@
       "type": "git"
     },
     {
-      "url": "https://github.com/byteever/settings.git",
-      "type": "git"
-    },
-    {
-      "url": "https://github.com/byteever/plugin.git",
+      "url": "https://github.com/byteever/plugin-framework",
       "type": "git"
     }
   ],
   "require": {
-    "php": ">=5.6",
-    "byteever/plugin": "dev-master",
-    "byteever/settings": "dev-master",
+    "php": ">=7.0",
+    "byteever/plugin-framework": "dev-master",
     "composer/installers": "~1.7"
   },
   "require-dev": {
@@ -43,7 +38,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PluginEver\\WC_MinMax_Quantities\\": "src"
+      "PluginEver\\WooCommerce\\WCMinMaxQuantities\\": "src"
     }
   },
   "config": {

@@ -4,7 +4,7 @@
  *
  * Uninstalling WCMinMaxQuantities deletes user roles, pages, tables, and options.
  *
- * @package WCMinMaxQuantities\Uninstaller
+ * @package PluginEver\WooCommerce\WCMinMaxQuantities
  * @version 1.0.0
  */
 

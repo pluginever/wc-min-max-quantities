@@ -3,154 +3,124 @@
  * WooCommerce MinMax Quantities: Plugin main class.
  */
 
-namespace PluginEver\WC_MinMax_Quantities;
+namespace PluginEver\WooCommerce\WCMinMaxQuantities;
 
-use ByteEver\Container\Container;
-use ByteEver\Plugin\Plugin_Loader;
-use ByteEver\Settings\Options;
-use PluginEver\WC_MinMax_Quantities\Admin\Plugin_Settings;
+use \ByteEver\PluginFramework\v1_0_0 as Framework;
+use PluginEver\WooCommerce\WCMinMaxQuantities\Admin\Plugin_Settings;
 
-// don't call the file directly
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Plugin
- *
- * @package PluginEver\WC_MinMax_Quantities
+ * @package PluginEver\WooCommerce\WCMinMaxQuantities
  */
-final class Plugin extends Plugin_Loader {
+class Plugin extends Framework\Plugin{
 	/**
-	 * The single instance of the class.
+	 * Single instance of plugin.
 	 *
 	 * @since 1.0.0
-	 * @var Plugin
+	 * @var object
 	 */
-	protected static $instance = null;
+	protected static $instance;
 
 	/**
-	 * Service container.
 	 *
 	 * @since 1.0.0
-	 * @var Container
+	 * @var Framework\Options
 	 */
-	public $container;
+	protected $options;
 
 	/**
-	 * Options container.
+	 * Returns the main Plugin instance.
 	 *
-	 * @since 1.0.0
-	 * @var Options
-	 */
-	public $options;
-
-	/**
-	 * Create plugin instance if not exist.
-	 *
-	 * @param string $file Plugin file.
+	 * Ensures only one instance is loaded at one time.
 	 *
 	 * @return Plugin
 	 * @since 1.0.0
 	 */
-	public static function create( $file ) {
-		if ( null === static::$instance ) {
-			static::$instance = new static( $file );
+	public static function instance(){
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
 		}
 
-		return static::$instance;
+		return self::$instance;
 	}
 
 	/**
-	 * Get an array of dependency error messages.
+	 * Checks the environment on loading WordPress.
 	 *
-	 * @return array
+	 * Check the required environment, dependencies
+	 * if not met then add admin error and return false.
+	 *
+	 * @return bool
+	 * @since 1.0.0
 	 */
-	protected function get_dependency_errors() {
-		$errors = array();
-		if ( ! self::is_plugin_active( 'woocommerce' ) ) {
-			$errors[] = sprintf(
-			/* translators: 1: URL of WordPress.org, 2: The minimum WordPress version number */
-				__( 'The WooCommerce MinMax Quantities plugin is disabled. In order to work, it requires <a href="%1$s">WooCommerce</a> installed and active.', 'wc-minmax-quantities' ),
-				'https://wordpress.org/plugin/woocommerce'
-			);
+	public function is_environment_compatible() {
+		$ret = parent::is_environment_compatible();
+
+		if( $ret && !$this->is_plugin_active('woocommerce')){
+			$this->add_admin_notice( 'install_woocommerce', 'error', sprintf(
+				'%s requires WooCommerce to function. Please %sinstall WooCommerce &raquo;%s',
+				'<strong>' . $this->get_plugin_name() . '</strong>',
+				'<a href="' . esc_url( admin_url( 'plugin-install.php' ) ) . '">', '</a>'
+			) );
+			$this->deactivate_plugin();
+
+			return false;
 		}
 
-		return $errors;
+		return $ret;
 	}
 
 	/**
-	 * Init the plugin.
+	 * Gets the main plugin file.
+	 *
+	 * return __FILE__;
+	 *
+	 * @return string the full path and filename of the plugin file
+	 * @since 1.0.0
 	 */
-	public function register() {
-		add_action( 'init', [ $this, 'localization_setup' ] );
-		add_action( 'plugins_loaded', [ $this, 'init_services' ] );
-		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
+	protected function get_plugin_file() {
+		return PLUGIN_FILE;
+	}
+
+	/**
+	 * Initialize the plugin.
+	 *
+	 * The method is automatically called as soon
+	 * the class instance is created.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function init() {
+		$options = new Framework\Options('wc_min_max_settings');
+		$this->container['options'] = $options;
+		if( is_admin() ){
+			$settings = new Plugin_Settings($options);
+			$settings->register_hooks();
+		}
+	}
+
+	/**
+	 * Hook into actions and filters.
+	 *
+	 * The method is automatically called when WordPress
+	 * triggers `plugins_loaded` hook.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function plugins_loaded() {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 		add_action( 'woocommerce_process_product_meta', [ __CLASS__, 'save_product_meta' ] );
-		// Quantity
-		add_filter( 'woocommerce_quantity_input_args', array( $this, 'set_quantity_args' ), 10, 2 );
-		// Prevent add to cart.
+		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
+		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
 		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart' ), 10, 4 );
-		// Check items.
-		add_action( 'woocommerce_check_cart_items', array( $this, 'check_cart_items' ) );
+		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_scripts') );
 	}
-
-	/**
-	 * Initialize plugin for localization
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function localization_setup() {
-		load_plugin_textdomain( 'wc-minmax-quantities', false, plugin_basename( dirname( $this->plugin_file ) ) . '/languages' );
-	}
-
-	/**
-	 * Init DI Container, set all services as globals
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function init_services() {
-		$this->options = new Options( 'wc_minmax_settings' );
-		if ( self::is_admin() ) {
-			$settings = new Plugin_Settings( $this->options );
-			$settings->register();
-		}
-	}
-
-	/**
-	 * Output any plugin specific error messages
-	 *
-	 * We use this instead of wc_print_notices so we
-	 * can remove any error notices that aren't from us.
-	 */
-	public function output_errors() {
-		$notices  = wc_get_notices( 'error' );
-		$messages = array();
-
-		foreach ( $notices as $i => $notice ) {
-			if ( isset( $notice['notice'] ) && isset( $notice['data']['source'] ) && 'wc-minmax-quantities' === $notice['data']['source'] ) {
-				$messages[] = $notice['notice'];
-			} else {
-				unset( $notice[ $i ] );
-			}
-		}
-
-		if ( ! empty( $messages ) ) {
-			ob_start();
-
-			wc_get_template(
-				'notices/error.php',
-				array(
-					'messages' => array_filter( $messages ), // @deprecated 3.9.0
-					'notices'  => array_filter( $notices ),
-				)
-			);
-
-			echo wc_kses_notice( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-	}
-
 
 	/**
 	 * Add tab content in product edit page
@@ -168,24 +138,24 @@ final class Plugin extends Plugin_Loader {
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => '_minmax_quantities_exclude',
-					'label'       => __( 'Ignore min/max rules', 'wc-minmax-quantities' ),
-					'description' => __( 'Do not apply any of the min max restrictions to this product.', 'wc-minmax-quantities' ),
+					'label'       => __( 'Ignore min/max rules', 'wc-min-max-qunatities' ),
+					'description' => __( 'Do not apply any of the min max restrictions to this product.', 'wc-min-max-qunatities' ),
 				)
 			);
 
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => '_minmax_quantities_override',
-					'label'       => esc_html__( 'Override global', 'wc-min-max-quantities' ),
-					'description' => esc_html__( 'Global settings will be overridden by these ones. Set zero for no restrictions.', 'wc-min-max-quantities' ),
+					'label'       => esc_html__( 'Override global', 'wc-min-max-qunatities' ),
+					'description' => esc_html__( 'Global settings will be overridden by these ones. Set zero for no restrictions.', 'wc-min-max-qunatities' ),
 				)
 			);
 
 			woocommerce_wp_text_input(
 				array(
 					'id'                => '_minmax_quantities_min_qty',
-					'label'             => __( 'Minimum quantity', 'wc-minmax-quantities' ),
-					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have fewer than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+					'label'             => __( 'Minimum quantity', 'wc-min-max-qunatities' ),
+					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have fewer than the allowed quantity in their cart.', 'wc-min-max-qunatities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -197,8 +167,8 @@ final class Plugin extends Plugin_Loader {
 			woocommerce_wp_text_input(
 				array(
 					'id'                => '_minmax_quantities_max_qty',
-					'label'             => __( 'Maximum quantity', 'wc-minmax-quantities' ),
-					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have more than the allowed quantity in their cart.', 'wc-minmax-quantities' ),
+					'label'             => __( 'Maximum quantity', 'wc-min-max-qunatities' ),
+					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have more than the allowed quantity in their cart.', 'wc-min-max-qunatities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -211,8 +181,8 @@ final class Plugin extends Plugin_Loader {
 			woocommerce_wp_text_input(
 				array(
 					'id'          => '_minmax_quantities_step',
-					'label'       => __( 'Quantity groups of', 'wc-minmax-quantities' ),
-					'description' => __( 'Enter a quantity to only allow this product to be purchased in groups of X.', 'wc-minmax-quantities' ),
+					'label'       => __( 'Quantity groups of', 'wc-min-max-qunatities' ),
+					'description' => __( 'Enter a quantity to only allow this product to be purchased in groups of X.', 'wc-min-max-qunatities' ),
 					'desc_tip'    => true,
 					'type'        => 'number',
 					'min'         => '0',
@@ -256,13 +226,47 @@ final class Plugin extends Plugin_Loader {
 	}
 
 	/**
+	 * Output any plugin specific error messages
+	 *
+	 * We use this instead of wc_print_notices so we
+	 * can remove any error notices that aren't from us.
+	 */
+	public function output_errors() {
+		$notices  = wc_get_notices( 'error' );
+		$messages = array();
+
+		foreach ( $notices as $i => $notice ) {
+			if ( isset( $notice['notice'] ) && isset( $notice['data']['source'] ) && 'wc-minmax-quantities' === $notice['data']['source'] ) {
+				$messages[] = $notice['notice'];
+			} else {
+				unset( $notice[ $i ] );
+			}
+		}
+
+		if ( ! empty( $messages ) ) {
+			ob_start();
+
+			wc_get_template(
+				'notices/error.php',
+				array(
+					'messages' => array_filter( $messages ), // @deprecated 3.9.0
+					'notices'  => array_filter( $notices ),
+				)
+			);
+
+			echo wc_kses_notice( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+	}
+
+	/**
 	 * Updates the quantity arguments.
 	 *
 	 * @param array       $data    List of data to update.
 	 * @param \WC_Product $product Product object.
 	 * @return array
 	 */
-	public function set_quantity_args( $data, $product ) {
+	public static function set_quantity_args( $data, $product ) {
+		// wp_die(1);
 		$is_excluded = 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true );
 		if ( $is_excluded || $product->is_type( 'variation' ) ) {
 			return $data;
@@ -273,9 +277,9 @@ final class Plugin extends Plugin_Loader {
 			$maximum_quantity = absint( get_post_meta( $product->get_id(), '_minmax_quantities_max_qty', true ) );
 			$quantity_step    = absint( get_post_meta( $product->get_id(), '_minmax_quantities_step', true ) );
 		} else {
-			$minimum_quantity = wc_minmax_quantities()->options->get( 'min_product_quantity', 0 );
-			$maximum_quantity = wc_minmax_quantities()->options->get( 'max_product_quantity', 0 );
-			$quantity_step    = wc_minmax_quantities()->options->get( 'product_quantity_step', 0 );
+			$minimum_quantity = static::$instance->get( 'min_product_quantity', 0 );
+			$maximum_quantity = static::$instance->get( 'max_product_quantity', 0 );
+			$quantity_step    = static::$instance->get( 'product_quantity_step', 0 );
 		}
 
 		if ( $minimum_quantity > 0 ) {
@@ -338,8 +342,8 @@ final class Plugin extends Plugin_Loader {
 			$minimum_quantity = absint( get_post_meta( $product_id, '_minmax_quantities_min_qty', true ) );
 			$maximum_quantity = absint( get_post_meta( $product_id, '_minmax_quantities_max_qty', true ) );
 		} else {
-			$minimum_quantity = wc_minmax_quantities()->options->get( 'min_product_quantity', 0 );
-			$maximum_quantity = wc_minmax_quantities()->options->get( 'max_product_quantity', 0 );
+			$minimum_quantity = static::$instance->get( 'min_product_quantity', 0 );
+			$maximum_quantity = static::$instance->get( 'max_product_quantity', 0 );
 		}
 
 		$total_quantity  = $quantity;
@@ -349,7 +353,7 @@ final class Plugin extends Plugin_Loader {
 			$_product = wc_get_product( $product_id );
 
 			/* translators: %1$s: Product name, %2$d: Maximum quantity */
-			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'woocommerce-min-max-quantities' ), $_product->get_title(), $maximum_quantity );
+			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-qunatities' ), $_product->get_title(), $maximum_quantity );
 
 			Helper::add_error( $message );
 
@@ -360,7 +364,7 @@ final class Plugin extends Plugin_Loader {
 			$_product = wc_get_product( $product_id );
 
 			/* translators: %1$s: Product name, %2$d: Minimum quantity */
-			Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-minmax-quantities' ), $_product->get_title(), $minimum_quantity ) );
+			Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-qunatities' ), $_product->get_title(), $minimum_quantity ) );
 
 			$pass = false;
 		}
@@ -374,7 +378,7 @@ final class Plugin extends Plugin_Loader {
 	 * @return void
 	 * @since 1.1.0
 	 */
-	public function check_cart_items() {
+	public static function check_cart_items() {
 		$quantities  = [];
 		$line_amount = [];
 		foreach ( WC()->cart->get_cart() as $item ) {
@@ -402,15 +406,15 @@ final class Plugin extends Plugin_Loader {
 				$maximum_quantity = absint( get_post_meta( $product_id, '_minmax_quantities_max_qty', true ) );
 				$quantity_step    = absint( get_post_meta( $product_id, '_minmax_quantities_step', true ) );
 			} else {
-				$minimum_quantity = wc_minmax_quantities()->options->get( 'min_product_quantity', 0 );
-				$maximum_quantity = wc_minmax_quantities()->options->get( 'max_product_quantity', 0 );
-				$quantity_step    = wc_minmax_quantities()->options->get( 'product_quantity_step', 0 );
+				$minimum_quantity = static::$instance->get( 'min_product_quantity', 0 );
+				$maximum_quantity = static::$instance->get( 'max_product_quantity', 0 );
+				$quantity_step    = static::$instance->get( 'product_quantity_step', 0 );
 			}
 
 			if ( $maximum_quantity > 0 && ( $quantity > $maximum_quantity ) ) {
 
 				/* translators: %1$s: Product name, %2$d: Maximum quantity */
-				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-minmax-quantities' ), $product->get_title(), $maximum_quantity );
+				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-qunatities' ), $product->get_title(), $maximum_quantity );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 				Helper::add_error( $message );
 				break;
@@ -418,7 +422,7 @@ final class Plugin extends Plugin_Loader {
 
 			if ( $minimum_quantity > 0 && $quantity < $minimum_quantity ) {
 				/* translators: %1$s: Product name, %2$d: Minimum quantity */
-				Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-minmax-quantities' ), $product->get_title(), $minimum_quantity ) );
+				Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-qunatities' ), $product->get_title(), $minimum_quantity ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				break;
@@ -426,7 +430,7 @@ final class Plugin extends Plugin_Loader {
 
 			if ( $quantity_step > 0 && ( intval( $quantity ) % intval( $quantity_step ) > 0 ) ) {
 				/* translators: %1$s: Product name, %2$d: Group amount */
-				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-minmax-quantities' ), $product->get_title(), $quantity_step, $quantity_step - ( $quantity % $quantity_step ) ) );
+				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-qunatities' ), $product->get_title(), $quantity_step, $quantity_step - ( $quantity % $quantity_step ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				break;
@@ -436,38 +440,49 @@ final class Plugin extends Plugin_Loader {
 		$total_quantity = array_sum( array_values( $quantities ) );
 		$total_amount   = array_sum( array_values( $quantities ) );
 
-		if ( (int) $this->options->get( 'min_order_quantity' ) > 0 && $total_quantity < (int) $this->options->get( 'min_order_quantity' ) ) {
+		if ( (int) static::$instance->options->get( 'min_order_quantity' ) > 0 && $total_quantity < (int) static::$instance->options->get( 'min_order_quantity' ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-minmax-quantities' ), (int) $this->options->get( 'min_order_quantity' ) ) );
+			Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-qunatities' ), (int) static::$instance->options->get( 'min_order_quantity' ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 
 		}
 
-		if ( (int) $this->options->get( 'max_order_quantity' ) > 0 && $total_quantity > (int) $this->options->get( 'max_order_quantity' ) ) {
+		if ( (int) static::$instance->options->get( 'max_order_quantity' ) > 0 && $total_quantity > (int) static::$instance->options->get( 'max_order_quantity' ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-minmax-quantities' ), (int) $this->options->get( 'max_order_quantity' ) ) );
+			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-qunatities' ), (int) static::$instance->options->get( 'max_order_quantity' ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 		}
 
-		if ( (int) $this->options->get( 'min_order_amount' ) > 0 && $total_amount < (int) $this->options->get( 'min_order_amount' ) ) {
+		if ( (int) static::$instance->options->get( 'min_order_amount' ) > 0 && $total_amount < (int) static::$instance->options->get( 'min_order_amount' ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum required items in cart is %s. Please increase the quantity in your cart.', 'wc-minmax-quantities' ), wc_price( $this->options->get( 'min_order_amount' ) ) ) );
+			Helper::add_error( sprintf( __( 'The minimum required items in cart is %s. Please increase the quantity in your cart.', 'wc-min-max-qunatities' ), wc_price( static::$instance->options->get( 'min_order_amount' ) ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 
 		}
 
-		if ( (int) $this->options->get( 'max_order_amount' ) > 0 && $total_amount > (int) $this->options->get( 'max_order_amount' ) ) {
+		if ( (int) static::$instance->options->get( 'max_order_amount' ) > 0 && $total_amount > (int) static::$instance->options->get( 'max_order_amount' ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s. Please decrease the quantity in your cart.', 'wc-minmax-quantities' ), wc_price( $this->options->get( 'max_order_amount' ) ) ) );
+			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s. Please decrease the quantity in your cart.', 'wc-min-max-qunatities' ), wc_price( static::$instance->options->get( 'max_order_amount' ) ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 		}
 	}
+
+	/**
+	 * Enqueue public scripts
+	 */
+	public function enqueue_public_scripts(){
+		$this->register_script('wc-min-max-quantities-script', 'js/frontend.js', ['jquery']);
+		wp_enqueue_script('wc-min-max-quantities-script');
+		$this->register_style('wc-min-max-quantities-style', 'css/frontend-style.css');
+		wp_enqueue_style('wc-min-max-quantities-style');
+	}
+
 }

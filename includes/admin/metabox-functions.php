@@ -9,7 +9,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_text_input(
 		array(
 			'id'    => '_minmax_product_min_quantity',
-			'label' => __( 'Product Min Quantity', 'wc-minmax-quantities' ),
+			'label' => __( 'Product Min Quantity', 'wc-min-max-qunatities' ),
 			'type'  => 'number',
 			'min'   => '0',
 		)
@@ -18,7 +18,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_text_input(
 		array(
 			'id'    => '_minmax_product_max_quantity',
-			'label' => __( 'Product Max Quantity', 'wc-minmax-quantities' ),
+			'label' => __( 'Product Max Quantity', 'wc-min-max-qunatities' ),
 			'type'  => 'number',
 			'min'   => '0',
 		)
@@ -27,7 +27,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_text_input(
 		array(
 			'id'    => '_minmax_product_min_price',
-			'label' => __( 'Product Min Price', 'wc-minmax-quantities' ),
+			'label' => __( 'Product Min Price', 'wc-min-max-qunatities' ),
 			'type'  => 'number',
 			'min'   => '0',
 		)
@@ -36,7 +36,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_text_input(
 		array(
 			'id'    => '_minmax_product_max_price',
-			'label' => __( 'Product Max Price', 'wc-minmax-quantities' ),
+			'label' => __( 'Product Max Price', 'wc-min-max-qunatities' ),
 			'type'  => 'number',
 			'min'   => '0',
 		)
@@ -45,7 +45,7 @@ function wc_min_max_quantities_add_product_data_tab() {
 	woocommerce_wp_checkbox(
 		array(
 			'id'      => '_minmax_ignore_global',
-			'label'   => __( 'Ignore Global Min-Max Rules', 'wc-minmax-quantities' ),
+			'label'   => __( 'Ignore Global Min-Max Rules', 'wc-min-max-qunatities' ),
 			'default' => '0',
 		)
 	);
