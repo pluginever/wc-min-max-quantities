@@ -97,20 +97,6 @@ class Plugin_Settings extends Framework\Admin\Settings_Page {
 								'default' => '0',
 							),
 							array(
-								'title'   => esc_html__( 'Minimum product total', 'wc-min-max-qunatities' ),
-								'id'      => 'min_product_total',
-								'desc'    => esc_html__( 'Minimum price total of items required for each product. Set zero for no restrictions.', 'wc-min-max-qunatities' ),
-								'type'    => 'number',
-								'default' => '0',
-							),
-							array(
-								'title'   => esc_html__( 'Maximum product total', 'wc-min-max-qunatities' ),
-								'id'      => 'max_product_total',
-								'desc'    => esc_html__( 'Maximum allowed price total of items for each product. Set zero for no restrictions.', 'wc-min-max-qunatities' ),
-								'type'    => 'number',
-								'default' => '0',
-							),
-							array(
 								'title'   => esc_html__( 'Quantity groups of', 'wc-min-max-qunatities' ),
 								'id'      => 'product_quantity_step',
 								'desc'    => esc_html__( 'Enter a quantity to only allow product to be purchased in groups of X. Set zero for no restrictions.', 'wc-min-max-qunatities' ),
