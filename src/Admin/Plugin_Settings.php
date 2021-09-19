@@ -157,6 +157,6 @@ class Plugin_Settings extends Framework\Admin\Settings_Page {
 			),
 		);
 
-		return apply_filters( 'wc_min_max_settings', $settings );
+		return apply_filters( 'wc_min_max_quantities_settings', $settings );
 	}
 }

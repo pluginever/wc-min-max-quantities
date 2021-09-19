@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e63abc450908f0372bcfd1be71067e5",
+    "content-hash": "127f22fca22f151806f0046239061aef",
     "packages": [
         {
             "name": "byteever/plugin-framework",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/byteever/plugin-framework",
-                "reference": "d07f9c9b6e595a112be24d3ae041ea953d128eb6"
+                "reference": "d3c391ce580eee44faaa9848b7fe37eb92970a2d"
             },
             "require": {
                 "php": ">=7.0"
@@ -38,7 +38,7 @@
                 "Plugin",
                 "wordpress"
             ],
-            "time": "2021-09-13T19:22:49+00:00"
+            "time": "2021-09-13T20:47:49+00:00"
         },
         {
             "name": "composer/installers",
@@ -2681,7 +2681,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6"
+        "php": ">=7.0"
     },
     "platform-dev": [],
     "platform-overrides": {
