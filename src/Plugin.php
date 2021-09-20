@@ -509,7 +509,7 @@ class Plugin extends Framework\Plugin {
 			return false;
 		}
 
-		if ( $maximum_order_total > 1 && WC()->cart->get_cart_total() > $maximum_order_total ) {
+		if ( $maximum_order_total > 1 && WC()->cart->get_cart_total() > wc_price( $maximum_order_total ) ) {
 			Helper::add_error( sprintf( __( 'The maximum allowed order total is %s.', 'wc-minmax-quantities' ), wc_price( $maximum_order_total ) ) );
 
 			return false;
