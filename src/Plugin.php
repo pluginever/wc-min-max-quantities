@@ -402,7 +402,7 @@ class Plugin extends Framework\Plugin {
 
 
 		$order_quantity = array_sum( array_values( $quantities ) );
-		$order_total    = array_sum( array_values( $quantities ) );
+		$order_total    = array_sum( array_values( $line_amount ) );
 
 		if ( (int) self::instance()->options->get( 'min_order_quantity' ) > 0 && $order_quantity < (int) self::instance()->options->get( 'min_order_quantity' ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
