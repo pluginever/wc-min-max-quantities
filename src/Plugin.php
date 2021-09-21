@@ -355,9 +355,6 @@ class Plugin extends Framework\Plugin {
 		$line_amount = [];
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
-			if ( 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true ) ) {
-				continue;
-			}
 			if ( ! isset( $quantities[ $product_id ] ) ) {
 				$quantities[ $product_id ] = $item['quantity'];
 			} else {
@@ -367,6 +364,10 @@ class Plugin extends Framework\Plugin {
 				$line_amount[ $product_id ] = $item['data']->get_price() * $item['quantity'];
 			} else {
 				$line_amount[ $product_id ] += $item['data']->get_price() * $item['quantity'];
+			}
+
+			if ( 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true ) ) {
+				continue;
 			}
 
 			$product_ids[] = $product_id;
