@@ -109,6 +109,8 @@ class Plugin extends Framework\Plugin {
 		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ) );
 		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'modify_add_to_cart_quantity' ) );
 		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
+		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
 
 		if ( is_admin() ) {
 			$settings = new Plugin_Settings( $options );
@@ -623,5 +625,88 @@ class Plugin extends Framework\Plugin {
 		}
 
 		return $args;
+	}
+
+	/**
+	 * Adds variation min max settings to be used by JS.
+	 *
+	 * @param array $data Available variation data.
+	 * @param \WC_Product $product Product object.
+	 * @param \WC_Product_Variable $variation Variation object.
+	 *
+	 * @return array $data
+	 */
+	public static function available_variation( $data, $product, $variation ) {
+		if ( 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true ) ) {
+			return $data;
+		}
+		$limits = Helper::get_product_limits( $product->get_id(), 0 );
+
+		if ( ! empty( $limits['min_qty'] ) ) {
+			if ( $product->managing_stock() && $product->backorders_allowed() && absint( $limits['min_qty'] ) > $product->get_stock_quantity() ) {
+				$data['min_qty'] = $product->get_stock_quantity();
+
+			} else {
+				$data['min_qty'] = $limits['min_qty'];
+			}
+		}
+
+		if ( ! empty( $limits['max_qty'] ) ) {
+
+			if ( $product->managing_stock() && $product->backorders_allowed() ) {
+				$data['max_qty'] = $limits['max_qty'];
+
+			} elseif ( $product->managing_stock() && absint( $limits['max_qty'] ) > $product->get_stock_quantity() ) {
+				$data['max_qty'] = $product->get_stock_quantity();
+
+			} else {
+				$data['max_qty'] = $limits['max_qty'];
+			}
+		}
+
+		if ( ! empty( $limits['step'] ) ) {
+			$data['step'] = 1;
+			// If both minimum and maximum quantity are set, make sure both are equally divisible by quantity step of quantity.
+			if ( $limits['max_qty'] && $limits['min_qty'] ) {
+				if ( absint( $limits['max_qty'] ) % absint( $limits['min_qty'] ) === 0 && absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) {
+					$data['step'] = $limits['step'];
+				}
+			} elseif ( ! $limits['max_qty'] || absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) {
+
+				$data['step'] = $limits['step'];
+			}
+
+			// Set the minimum only when minimum is not set.
+			if ( ! $limits['min_qty'] ) {
+				$data['min_qty'] = $limits['step'];
+			}
+		}
+
+		if ( ! is_cart() ) {
+			if ( ! $limits['min_qty'] && $limits['step'] ) {
+				$data['input_value'] = $limits['step'];
+			} else {
+				$data['input_value'] = ! empty( $limits['min_qty'] ) ? $limits['min_qty'] : 1;
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Load scripts.
+	 */
+	public static function load_scripts() {
+		// Only load on single product page and cart page.
+		if ( is_product() || is_cart() ) {
+			wc_enqueue_js(
+					"
+					jQuery( 'body' ).on( 'show_variation', function( event, variation ) {
+						const step = 'undefined' !== typeof variation.step ? variation.step : 1;
+						jQuery( 'form.variations_form' ).find( 'input[name=quantity]' ).prop( 'step', step ).val( variation.input_value );
+					});
+					"
+			);
+		}
 	}
 }
