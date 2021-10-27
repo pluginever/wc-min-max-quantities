@@ -1,6 +1,6 @@
 <?php
 
-namespace Pluginever\WCMinMaxQuantities;
+namespace Pluginever\WC_Min_Max_Quantities;
 
 class Install {
 	/**

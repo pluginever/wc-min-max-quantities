@@ -3,16 +3,16 @@
  * WooCommerce MinMax Quantities: Plugin main class.
  */
 
-namespace PluginEver\WooCommerce\WCMinMaxQuantities;
+namespace PluginEver\WC_Min_Max_Quantities;
 
 use \ByteEver\PluginFramework\v1_0_0 as Framework;
-use PluginEver\WooCommerce\WCMinMaxQuantities\Admin\Plugin_Settings;
+use PluginEver\WC_Min_Max_Quantities\Admin\Settings;
 
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Plugin
- * @package PluginEver\WooCommerce\WCMinMaxQuantities
+ * @package PluginEver\WC_Min_Max_Quantities
  */
 class Plugin extends Framework\Plugin {
 	/**
@@ -27,7 +27,7 @@ class Plugin extends Framework\Plugin {
 	 * Settings options.
 	 *
 	 * @since 1.0.0
-	 * @var Framework\Options
+	 * @var Options
 	 */
 	public $options;
 
@@ -82,8 +82,20 @@ class Plugin extends Framework\Plugin {
 	 * @return string the full path and filename of the plugin file
 	 * @since 1.0.0
 	 */
-	protected function get_plugin_file() {
-		return PLUGIN_FILE;
+	public function get_plugin_file() {
+		return WC_MIN_MAX_PLUGIN_FILE;
+	}
+
+	/**
+	 * Get plugin key prefix.
+	 *
+	 * Is will be saved as prefix of options.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function get_id_key() {
+		return 'wc_min_max_quantities';
 	}
 
 	/**
@@ -96,12 +108,22 @@ class Plugin extends Framework\Plugin {
 	 * @since 1.0.0
 	 */
 	public function init() {
-		$options       = new Framework\Options( 'wc_min_max_quantities_settings' );
-		$this->options = $options;
+		$this->options = $this->register( Options::class );
+		$this->register( Lifecycle::class, $this );
+		$this->register( Settings::class, $this->options );
+		$this->register_hooks();
 
+		do_action('wc_min_max_quantities_loaded');
+	}
+
+	/**
+	 * Adds the action & filter hooks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_hooks() {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 		add_action( 'woocommerce_process_product_meta', [ __CLASS__, 'save_product_meta' ] );
-
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
@@ -111,11 +133,6 @@ class Plugin extends Framework\Plugin {
 		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
-
-		if ( is_admin() ) {
-			$settings = new Plugin_Settings( $options );
-			$settings->register_hooks();
-		}
 	}
 
 
@@ -386,6 +403,7 @@ class Plugin extends Framework\Plugin {
 				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_title(), $limits['max_qty'] );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 				Helper::add_error( $message );
+
 				return;
 			}
 
@@ -393,12 +411,14 @@ class Plugin extends Framework\Plugin {
 				/* translators: %1$s: Product name, %2$d: Minimum quantity */
 				Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['min_qty'] ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
 				return;
 			}
 			if ( $limits['step'] > 0 && ( (float) $quantity % (float) $limits['step'] > 0 ) ) {
 				/* translators: %1$s: Product name, %2$d: quantity amount */
 				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
 				return;
 			}
 		}

@@ -17,7 +17,7 @@
  * WC requires at least: 3.0.0
  * WC tested up to: 4.0.1
  *
- * @package PluginEver\WooCommerce\WCMinMaxQuantities;
+ * @package PluginEver\WC_Min_Max_Quantities;
  */
 
 /**
@@ -38,14 +38,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace PluginEver\WooCommerce\WCMinMaxQuantities;
+if ( ! defined( 'WC_MIN_MAX_PLUGIN_FILE' ) ) {
+	define( 'WC_MIN_MAX_PLUGIN_FILE', __FILE__ );
+}
 
-// don't call the file directly
-defined( 'ABSPATH' ) || exit();
+if ( ! defined( 'WC_MIN_MAX_PLUGIN_DIR' ) ) {
+	define( 'WC_MIN_MAX_PLUGIN_DIR', __DIR__ );
+}
 
-const PLUGIN_FILE = __FILE__;
-
-// Include autoloader.
+// Autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
 
-Plugin::instance();
+\PluginEver\WC_Min_Max_Quantities\Plugin::instance();

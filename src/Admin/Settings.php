@@ -1,5 +1,5 @@
 <?php
-namespace PluginEver\WooCommerce\WCMinMaxQuantities\Admin;
+namespace PluginEver\WC_Min_Max_Quantities\Admin;
 
 
 
@@ -10,7 +10,7 @@ use ByteEver\PluginFramework\v1_0_0 as Framework;
  *
  * @package PluginEver\WC_MinMax_Quantities\Admin
  */
-class Plugin_Settings extends Framework\Admin\Settings_Page {
+class Settings extends Framework\Admin\Settings {
 
 	/**
 	 * Hook into actions and filters.

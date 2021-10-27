@@ -1,10 +1,10 @@
 <?php
 /**
- * WCMinMaxQuantities Uninstall
+ * WC_Min_Max_Quantities Uninstall
  *
- * Uninstalling WCMinMaxQuantities deletes user roles, pages, tables, and options.
+ * Uninstalling WC_Min_Max_Quantities deletes user roles, pages, tables, and options.
  *
- * @package PluginEver\WooCommerce\WCMinMaxQuantities
+ * @package PluginEver\WC_Min_Max_Quantities
  * @version 1.0.0
  */
 

@@ -28,8 +28,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "byteever/plugin-framework": "dev-master",
-    "composer/installers": "~1.7"
+    "byteever/plugin-framework": "dev-master"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -38,7 +37,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PluginEver\\WooCommerce\\WCMinMaxQuantities\\": "src"
+      "PluginEver\\WC_Min_Max_Quantities\\": "src"
     }
   },
   "config": {

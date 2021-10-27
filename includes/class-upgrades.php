@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-class WCMinMaxQuantities_Upgrades {
+class WC_Min_Max_Quantities_Upgrades {
 
     /**
      * The upgrades
