@@ -40,6 +40,7 @@
     "grunt-wp-i18n": "^1.0.3",
     "grunt-wp-readme-to-markdown": "^2.0.1",
     "husky": "4.3.0",
+    "lint-staged": "^12.1.2",
     "matchdep": "^2.0.0"
   },
   "@byteever/scripts": {

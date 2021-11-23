@@ -49,4 +49,13 @@ if ( ! defined( 'WC_MIN_MAX_PLUGIN_DIR' ) ) {
 // Autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
 
-\PluginEver\WC_Min_Max_Quantities\Plugin::instance();
+/**
+ * Main Plugin Instance.
+ *
+ * @return \PluginEver\WC_Min_Max_Quantities\Plugin
+ */
+function wc_min_max_quantities(){
+	return \PluginEver\WC_Min_Max_Quantities\Plugin::instance();
+}
+
+$GLOBALS['wc_min_max_quantities'] = wc_min_max_quantities();

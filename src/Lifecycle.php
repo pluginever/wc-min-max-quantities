@@ -22,8 +22,8 @@ class Lifecycle extends Framework\Lifecycle {
 	 * @since 1.0.0
 	 */
 	public function install() {
-		$this->set_installed_version( $this->get_plugin()->get_version() );
-		update_option( $this->get_plugin()->get_option_key( 'install_date' ), current_time( 'mysql' ) );
+		$this->get_plugin()->update_db_version();
+		update_option( $this->get_plugin()->get_option_name( 'install_date' ), current_time( 'mysql' ) );
 	}
 
 	/**

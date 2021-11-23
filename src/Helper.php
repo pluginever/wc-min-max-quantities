@@ -55,9 +55,9 @@ class Helper {
 				$limits['min_qty'] = (int)$product->get_meta( '_minmax_quantities_min_qty' );
 				$limits['max_qty'] = (int)$product->get_meta( '_minmax_quantities_max_qty' );
 			} else {
-				$limits['step']    = (int)Plugin::instance()->options->get( 'product_quantity_step', 0 );
-				$limits['min_qty'] = (int)Plugin::instance()->options->get( 'min_product_quantity', 0 );
-				$limits['max_qty'] = (int)Plugin::instance()->options->get( 'max_product_quantity', 0 );
+				$limits['step']    = (int)Plugin::instance()::get_option( 'wc_min_max_quantities_settings[product_quantity_step]', 0 );
+				$limits['min_qty'] = (int)Plugin::instance()::get_option( 'wc_min_max_quantities_settings[min_product_quantity]', 0 );
+				$limits['max_qty'] = (int)Plugin::instance()::get_option( 'wc_min_max_quantities_settings[max_product_quantity]', 0 );
 			}
 
 			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );

@@ -18,7 +18,7 @@ class Settings extends Framework\Admin\Settings {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function register_hooks() {
+	public function init_hooks() {
 		add_action( 'admin_menu', [ $this, 'register_admin_menu' ], 99 );
 	}
 
@@ -57,7 +57,7 @@ class Settings extends Framework\Admin\Settings {
 			__( 'Min Max Quantities', 'wc-min-max-quantities' ),
 			'manage_options',
 			$this->get_page_slug(),
-			array( $this, 'display_settings_page' )
+			array( $this, 'output_settings' )
 		);
 	}
 
@@ -68,7 +68,7 @@ class Settings extends Framework\Admin\Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function get_settings() {
+	public function get_settings() {
 		$settings = array(
 			'general' => array(
 				'title'    => __( 'General', 'wc-min-max-quantities' ),
