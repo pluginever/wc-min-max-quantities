@@ -2,15 +2,15 @@
 Contributors: manikmist09, pluginever
 Tags: WooCommerce, Products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, wc, wc min and max quantity for woocommerce,pluginever
 Requires at least: 3.0.1
-Tested up to: 5.4
+Tested up to: 5.8.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
- 
+
 Min Max Quantities for WooCommerce is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
 
- 
+
 # Description
 
 **[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the simplest WooCommerce extension to create special deals with product quantity and price. With the help of this plugin, you will be able to set a minimum and maximum permitted product quantity and/or price that a customer can purchase.
@@ -99,7 +99,7 @@ There are multiple levels of min/max rules that you can assign to your products.
 
 ⏫ Product variation. [Premium]
 ⏫ Product.
-⏫ Category. [Premium] 
+⏫ Category. [Premium]
 ⏫ General/Global [*Use the option Ignore Global Min/Max Rules, to stay on the safe side.*]
 
 **How can I suggest a new feature?**
@@ -108,16 +108,16 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 ### 📢 CONTRIBUTE
 
 This may have bugs and/or a lack of features. If you want to contribute to this project, you are more than welcome. Please open an issue [**here**](https://github.com/pluginever/wc-min-max-quantities/issues).
- 
+
 == Installation ==
- 
+
 1. Upload `wc-minmax-quantities` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
 1. Limitation for product
 2. General settings
- 
+
 == Changelog ==
 = 1.0.8 (7th April, 2020) =
 * Fix - Compatibility with WP v5.4
@@ -158,9 +158,9 @@ This may have bugs and/or a lack of features. If you want to contribute to this 
 * Enhance New dedicated settings page
 * Compatibility with WC
 * Compatibility with WP
- 
+
 = 1.0.0 (7th October, 2018) =
 * Initial Release
 
 
- 
+

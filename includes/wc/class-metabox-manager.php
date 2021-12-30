@@ -1,9 +1,23 @@
 <?php
+/**
+ * Handles WooCommerce meta box related functionalities.
+ *
+ * @since    1.1.0
+ * @package  WC_Min_Max_Quantities\WC
+ */
 
-namespace PluginEver\WC_Min_Max_Quantities\Admin;
+namespace WC_Min_Max_Quantities\WC;
 
-class Metaboxes {
+defined( 'ABSPATH' ) || exit();
 
+/**
+ * Class Metabox_Manager.
+ */
+class Metabox_Manager {
+
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( __CLASS__, 'add_meta_box' ) );
 		add_action( 'save_post', array( __CLASS__, 'save_meta_box' ) );
@@ -12,8 +26,8 @@ class Metaboxes {
 	/**
 	 * Add tab content in product edit page
 	 *
-	 * @since  1.0.0
 	 * @return void
+	 * @since  1.0.0
 	 */
 	public static function write_tab_options() {
 		global $post;
@@ -87,8 +101,8 @@ class Metaboxes {
 	 *
 	 * @param int $post_id product ID.
 	 *
-	 * @since 1.1.0
 	 * @return void
+	 * @since 1.1.0
 	 */
 	public static function save_product_meta( $post_id ) {
 		$product        = wc_get_product( $post_id );
@@ -111,5 +125,4 @@ class Metaboxes {
 		}
 		$product->save();
 	}
-
 }
