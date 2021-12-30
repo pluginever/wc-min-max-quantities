@@ -1,12 +1,11 @@
 {
-  "name": "wc-minmax-quantities",
-  "title": "WC Min Max Quantities",
-  "description": "The Best WordPress Plugin ever made!",
-  "version": "1.0.7",
-  "homepage": "https://www.pluginever.com",
+  "name": "wc-min-max-quantities",
+  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "version": "1.1.0",
+  "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
   "author": {
     "name": "pluginever",
-    "email": "support@pluginever.com",
+    "email": "support@byteever.com",
     "url": "https://www.pluginever.com"
   },
   "engines": {
@@ -14,37 +13,27 @@
     "npm": ">=5.5.1"
   },
   "scripts": {
-    "start": "composer install --ignore-platform-reqs && npm install && npm run lint && npm run watch",
-    "watch": "byteever-scripts start",
-    "build": "byteever-scripts build",
-    "postbuild": "npm run i18n",
-    "i18n": "grunt i18n",
-    "format": "byteever-scripts format-js",
-    "lint": "npm run lint:js && npm run lint:css && npm run && npm run lint:php && npm run lint:pkg-json && npm run lint:md",
-    "lint:js": "byteever-scripts lint-js  --fix",
-    "lint:css": "byteever-scripts lint-style --fix",
-    "lint:php": "./vendor/bin/phpcs --standard=phpcs.xml $(git ls-files | grep .php$)",
-    "lint:php-fix": "./vendor/bin/phpcbf --standard=phpcs.xml $(git ls-files | grep .php$)",
-    "lint:pkg-json": "byteever-scripts lint-pkg-json",
-    "lint:md": "byteever-scripts lint-md-docs",
-    "analyze-bundles": "byteever-scripts build --webpack-bundle-analyzer",
-    "check-engines": "byteever-scripts check-engines",
-    "check-licenses": "byteever-scripts check-licenses",
-    "packages-update": "byteever-scripts packages-update",
-    "test:e2e": "byteever-scripts test-e2e",
-    "test:unit": "byteever-scripts test-unit-js"
+    "prebuild": "npm install",
+    "build": "grunt build",
+    "watch": "grunt watch",
+    "build:test": "grunt shell"
   },
   "devDependencies": {
-    "@byteever/scripts": "git+ssh://git@github.com:byteever/scripts.git",
+    "@wordpress/eslint-plugin": "^9.3.0",
+    "autoprefixer": "^9.8.8",
+    "grunt": "^1.4.1",
     "grunt-checktextdomain": "^1.0.1",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-uglify": "^5.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-eslint": "^24.0.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^3.1.0",
+    "grunt-shell": "^3.0.1",
     "grunt-wp-i18n": "^1.0.3",
-    "grunt-wp-readme-to-markdown": "^2.0.1",
-    "husky": "4.3.0",
-    "lint-staged": "^12.1.2",
-    "matchdep": "^2.0.0"
-  },
-  "@byteever/scripts": {
-    "devURL": "https://buildwc.test"
+    "husky": "^7.0.4",
+    "matchdep": "^2.0.0",
+    "node-sass": "^7.0.1"
   },
   "husky": {
     "hooks": {
@@ -59,9 +48,16 @@
     "*.scss": [
       "stylelint --syntax=scss --fix"
     ],
-    "*.{js,jsx}": [
-      "wp-scripts format-js",
-      "wp-scripts lint-js"
+    "*.{js}": [
+      "grunt jshint"
     ]
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "IE 10"
+  ],
+  "dependencies": {
+    "a11y-dialog": "^7.3.0"
   }
 }

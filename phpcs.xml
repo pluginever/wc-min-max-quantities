@@ -2,6 +2,5 @@
 <ruleset name="byteever Coding Standards">
 	<description>byteever PHPCS extended.</description>
 	<rule ref="byteever-Default" />
-	<rule ref="PSR2"/>
 	<exclude-pattern>*/bin/*</exclude-pattern>
 </ruleset>

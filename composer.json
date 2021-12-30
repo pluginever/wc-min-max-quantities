@@ -1,63 +1,70 @@
 {
-  "name": "pluginever/wc-minmax-quantities",
-  "description": "Min Max Quantities for WooCommerce",
-  "keywords": [
-    "wordpress",
-    "plugin"
-  ],
-  "homepage": "https://www.pluginever.com",
+  "name": "pluginever/wc-min-max-quantities",
+  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0",
+  "license": "GPL-2.0-or-later",
   "prefer-stable": true,
-  "minimum-stability": "dev",
   "authors": [
     {
-      "name": "sultan",
-      "email": "sultan@pluginever.com"
+      "name": "pluginever",
+      "email": "support@pluginever.com",
+      "homepage": "https://pluginever.com",
+      "role": "developer"
     }
   ],
   "repositories": [
     {
-      "url": "https://github.com/byteever/phpcs-composer.git",
-      "type": "git"
-    },
-    {
-      "url": "https://github.com/byteever/plugin-framework",
+      "url": "https://github.com/byteever/php-coding-standards.git",
       "type": "git"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
-    "php": ">=7.0",
-    "byteever/plugin-framework": "dev-master"
+    "php": ">=7.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "byteever/phpcs-composer": "dev-master",
-    "phpunit/phpunit": "^6.5"
+    "phpunit/phpunit": "~7.5",
+    "byteever/php-coding-standards": "dev-master"
   },
   "autoload": {
-    "psr-4": {
-      "PluginEver\\WC_Min_Max_Quantities\\": "src"
-    }
+    "classmap": [
+      "includes/"
+    ],
+    "files": [
+      "includes/functions.php"
+    ]
   },
   "config": {
     "optimize-autoloader": true,
-    "platform": {
-      "php": "7.0"
-    },
-    "sort-packages": true
+    "sort-packages": true,
+    "classmap-authoritative": true,
+    "preferred-install": "dist",
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "scripts": {
-    "pre-commit": [
-      "@phpcs"
+    "install-scripts": [
+      "composer dump-autoload -o"
     ],
+    "post-install-cmd": [
+      "@install-scripts"
+    ],
+    "post-update-cmd": [
+      "@install-scripts"
+    ],
+    "pre-commit": "@phpcs",
     "phpcs": "phpcs -s -p .",
     "phpcbf": "phpcbf -p ."
   },
   "extra": {
+    "installer-disable": true,
     "scripts-description": {
+      "test": "Run unit tests",
       "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
-      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
+      "makepot-audit": "Generate i18n/languages/wc_min_max_quantities.pot file and run audit",
+      "makepot": "Generate i18n/languages/wc_min_max_quantities.pot file"
     }
   }
 }

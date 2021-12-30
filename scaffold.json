@@ -1,0 +1,16 @@
+{
+  "id": "wc_min_max_quantities",
+  "slug": "wc-min-max-quantities",
+  "name": "WC Min Max Quantities",
+  "package": "WC_Min_Max_Quantities",
+  "constant": "WC_MIN_MAX_QUANTITIES",
+  "textdomain": "wc-min-max-quantities",
+  "cssprefix": "wcmmq",
+  "main": "wc-min-max-quantities.php",
+  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
+  "version": "1.1.0",
+  "author": "pluginever",
+  "author_email": "support@pluginever",
+  "author_url": "https://pluginever.com"
+}
