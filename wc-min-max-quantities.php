@@ -57,15 +57,13 @@ function wc_min_max_quantities_missing_wc_notice() {
  * @return Plugin
  */
 function wc_min_max_quantities() {
-	if ( ! \WC_Min_Max_Quantities\Helper::is_plugin_active( 'woocommerce' ) ) {
+	if ( ! class_exists( '\WooCommerce' ) ) {
 		add_action( 'admin_notices', 'wc_min_max_quantities_missing_wc_notice' );
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		unset( $_GET['activate'] ); // phpcs:ignore CSRF ok.
 	}
 
 	return Plugin::instance();
 }
 
 // Kick off the plugin.
-wc_min_max_quantities();
+add_action( 'plugins_loaded', 'wc_min_max_quantities', -1 );
 

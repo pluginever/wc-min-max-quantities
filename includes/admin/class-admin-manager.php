@@ -8,6 +8,8 @@
 
 namespace WC_Min_Max_Quantities\Admin;
 
+use WC_Min_Max_Quantities\Plugin;
+
 defined( 'ABSPATH' ) || exit();
 
 /**
@@ -16,10 +18,13 @@ defined( 'ABSPATH' ) || exit();
 class Admin_Manager {
 
 	/**
-	 * class construct
+	 * Admin_Manager construct.
+	 *
+	 * @since 1.1.0
+	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'init' ) );
+		$this->init_classes();
 	}
 
 	/**
@@ -27,7 +32,7 @@ class Admin_Manager {
 	 *
 	 * @since 1.1.0
 	 */
-	public function init() {
-		new Admin_Settings();
+	public function init_classes() {
+		Plugin::instance()->admin_settings = new Admin_Settings();
 	}
 }

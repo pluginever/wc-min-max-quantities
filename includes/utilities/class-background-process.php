@@ -2,6 +2,7 @@
 /**
  * WC_Min_Max_Quantities Background Process Handlers.
  *
+ * @version  1.1.0
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities\Utilities
  * @class    Background_Process

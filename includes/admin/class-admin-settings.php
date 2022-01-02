@@ -23,7 +23,10 @@ class Admin_Settings {
 	protected $option_key = 'wc_min_max_quantities_settings';
 
 	/**
-	 * Constructor.
+	 * Admin_Settings Constructor.
+	 *
+	 * @since 1.1.0
+	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
@@ -62,7 +65,7 @@ class Admin_Settings {
 		static $settings_fields = null;
 		if ( is_null( $settings_fields ) ) {
 			$settings_fields = array(
-				'general'  => array(
+				'general' => array(
 					array(
 						'id'    => 'section_product_restrictions',
 						'title' => esc_html__( 'Product Restrictions', 'wc-min-max-quantities' ),
@@ -161,7 +164,7 @@ class Admin_Settings {
 	 *
 	 * @since 1.1.0
 	 */
-	function admin_enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 //		wp_enqueue_style( 'wp-color-picker' );
 //		wp_enqueue_script( 'wp-color-picker' );
 //		wp_enqueue_script( 'jquery' );
@@ -184,8 +187,8 @@ class Admin_Settings {
 			} else {
 				$callback = null;
 			}
-			$title = count( $this->get_tabs() ) > 1 ? $tab['title'] : '';
-			add_settings_section( $tab['id'], $title, $callback, 'wc_min_max_quantities_' . $tab['id'] );
+
+			add_settings_section( $tab['id'], $tab['title'], $callback, 'wc_min_max_quantities_' . $tab['id'] );
 		}
 
 		foreach ( $this->get_settings() as $section_id => $fields ) {
@@ -244,9 +247,9 @@ class Admin_Settings {
 	public function output() {
 		$tabs = $this->get_tabs();
 		ob_start();
-		$this->output_style();
+		self::output_style();
 		?>
-		<div id="wc-min-max-quantities-settings-wrap" class="wrap settings-wrap wcmmq-settings">
+		<div id="wc-min-max-quantities-settings-wrap" class="wrap settings-wrap wc-min-max-quantities-settings">
 
 			<h1><?php echo get_admin_page_title() ?></h1>
 
@@ -284,7 +287,7 @@ class Admin_Settings {
 
 		</div>
 		<?php
-		$this->output_script();
+		self::output_script();
 		echo ob_get_clean();
 	}
 
@@ -293,7 +296,7 @@ class Admin_Settings {
 	 *
 	 * @since 1.1.0
 	 */
-	public function output_script() {
+	public static function output_script() {
 		?>
 		<script>
 			jQuery(document).ready(function ($) {
@@ -357,7 +360,7 @@ class Admin_Settings {
 	 *
 	 * @since 1.1.0
 	 */
-	public function output_style() {
+	public static function output_style() {
 		?>
 		<style type="text/css">
 			.settings-wrap .nav-tab-wrapper {
@@ -398,7 +401,7 @@ class Admin_Settings {
 	 * @since 1.1.0
 	 * @return array
 	 */
-	function sanitize_settings( $input = array() ) {
+	public function sanitize_settings( $input = array() ) {
 		$tab      = filter_input( INPUT_POST, 'tab', FILTER_SANITIZE_STRING );
 		$settings = $this->get_settings();
 		if ( ! isset( $settings[ $tab ] ) || empty( $settings[ $tab ] ) ) {
@@ -432,7 +435,7 @@ class Admin_Settings {
 					break;
 				case 'select':
 				default:
-					$value = $this->clean( $raw_value );
+					$value = self::clean( $raw_value );
 					break;
 			}
 
@@ -815,9 +818,9 @@ class Admin_Settings {
 	 * @since 1.1.0
 	 * @return string|array
 	 */
-	public function clean( $var ) {
+	protected static function clean( $var ) {
 		if ( is_array( $var ) ) {
-			return array_map( array( $this, 'clean' ), $var );
+			return array_map( array( __CLASS__, 'clean' ), $var );
 		}
 
 		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;

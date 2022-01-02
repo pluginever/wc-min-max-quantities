@@ -2,9 +2,9 @@
 /**
  * WC_Min_Max_Quantities Background Updater Handler
  *
- * @since 1.1.0
- * @package WC_Min_Max_Quantities\Utilities
- * @class    Background_Updater
+ * @version  1.1.0
+ * @since    1.1.0
+ * @package  WC_Min_Max_Quantities\Utilities
  */
 
 namespace WC_Min_Max_Quantities\Utilities;
@@ -16,9 +16,6 @@ defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Background_Updater.
- *
- * @since 1.1.0
- * @package WC_Min_Max_Quantities\Utilities
  */
 class Background_Updater extends Background_Process {
 
@@ -93,18 +90,17 @@ class Background_Updater extends Background_Process {
 	 */
 	protected function task( $callback ) {
 		$result = false;
-
 		if ( is_callable( $callback ) ) {
-			Helper::log( sprintf( 'Running updater %s callback ', $callback ) );
+			Helper::log( sprintf( 'Running updater %s callback ', var_export( $callback, true ) ) );
 			$result = (bool) call_user_func( $callback );
 
 			if ( $result ) {
-				Helper::log( sprintf( '%s callback needs to run again', $callback ) );
+				Helper::log( sprintf( '%s callback needs to run again', var_export( $callback, true ) ) );
 			} else {
-				Helper::log( sprintf( 'Finished running %s callback', $callback ) );
+				Helper::log( sprintf( 'Finished running %s callback', var_export( $callback, true ) ) );
 			}
 		} else {
-			Helper::log( sprintf( 'Could not find %s callback', $callback ) );
+			Helper::log( sprintf( 'Could not find %s callback', var_export( $callback, true ) ) );
 		}
 
 		return $result ? $callback : false;

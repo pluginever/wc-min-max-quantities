@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-	bootstrap="tests/bootstrap.php"
+	bootstrap="tests/php/bootstrap.php"
 	backupGlobals="false"
 	colors="true"
 	convertErrorsToExceptions="true"
@@ -11,7 +11,7 @@
 
 	<testsuites>
 		<testsuite name="WC Min Max Quantities">
-			<directory prefix="tests-" suffix=".php">./tests</directory>
+			<directory prefix="tests-" suffix=".php">./tests/php</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

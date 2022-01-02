@@ -2,7 +2,8 @@
 /**
  * Handle admin notice related functionalities.
  *
- * @since 1.1.0
+ * @version	1.1.0
+ * @since	1.1.0
  * @package WC_Min_Max_Quantities\Admin
  */
 
@@ -20,13 +21,16 @@ class Admin_Notices {
 	/**
 	 * Stores notices.
 	 *
-	 * @var array
 	 * @since 1.1.0
+	 * @var array
 	 */
 	private static $notices = array();
 
 	/**
-	 * Constructor.
+	 * Admin_Notices construct.
+	 *
+	 * @since 1.1.0
+	 * @return void
 	 */
 	public function __construct() {
 		self::$notices = get_option( 'wc_min_max_quantities_admin_notices', array() );
@@ -49,9 +53,12 @@ class Admin_Notices {
 			'type'        => 'notice-success', // | 'notice-warning' | 'notice-success' | 'notice-error' | 'notice-info',
 			'message'     => '',
 			'dismissible' => false,
+			'dismissed'   => false,
 			'class'       => '',
 			'capability'  => 'manage_options',
 			'display_on'  => array(),
+			'start_time'  => null,
+			'end_time'    => null,
 		);
 
 		if ( is_string( $notice ) ) {
@@ -59,7 +66,7 @@ class Admin_Notices {
 		}
 
 		$notice      = (array) wp_parse_args( $notice, $defaults );
-		$dismissible = Helper::string_to_bool( $notice['dismissible'] );
+		$dismissible = filter_var( $notice['dismissible'], FILTER_VALIDATE_BOOLEAN );
 		$notice_id   = trim( $notice['id'] );
 		if ( empty( $notice_id ) ) {
 			$notice_id    = substr( md5( $notice['message'] ), 0, 33 );
@@ -216,7 +223,21 @@ class Admin_Notices {
 		global $pagenow;
 		if ( ! empty( self::$notices ) ) {
 			foreach ( self::$notices as $notice ) {
+
 				if ( empty( $notice['message'] ) || empty( $notice['type'] ) ) {
+					continue;
+				}
+
+				if ( $notice['dismissible'] && self::is_notice_dismissed( $notice['id'] ) ) {
+					continue;
+				}
+
+				if ( ! empty( $notice['start_time'] ) && current_time( 'timestamp' ) < absint( $notice['start_time'] ) ) {
+					continue;
+				}
+
+				if ( ! empty( $notice['end_time'] ) && current_time( 'timestamp' ) > absint( $notice['end_time'] ) ) {
+					self::dismiss_notice( $notice['id'] );
 					continue;
 				}
 
@@ -226,10 +247,6 @@ class Admin_Notices {
 				}
 
 				if ( ! empty( $params['display_on'] ) && ! in_array( $pagenow, wp_parse_list( $params['display_on'] ), true ) ) {
-					continue;
-				}
-
-				if ( $notice['dismissible'] && self::is_notice_dismissed( $notice['id'] ) ) {
 					continue;
 				}
 
@@ -333,5 +350,51 @@ class Admin_Notices {
 		self::dismiss_notice( $notice_id );
 		wp_send_json_success( 'Notice dismissed' );
 		exit();
+	}
+
+
+	public static function add_welcome_notice() {
+		if ( ! Plugin::instance()->has( 'docs_url' ) ) {
+			return;
+		}
+
+		$message = sprintf(
+		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
+			__( 'Thanks for installing %1$s! To get started, take a minute to %2$sread the documentation%3$s :)', 'wc-min-max-quantities' ),
+			'<strong>' . esc_html( Plugin::instance()->name ) . '</strong>',
+			'<a href="' . esc_url( Plugin::instance()->docs_url ) . '" target="_blank">', '</a>'
+		);
+
+		self::add_notice( array(
+			'id'          => 'welcome_notice',
+			'type'        => 'notice-success',
+			'message'     => $message,
+			'dismissible' => true,
+			'capability'  => 'manage_options',
+			'display_on'  => array(),
+		) );
+	}
+
+
+	public static function add_review_notice() {
+		if ( ! Plugin::instance()->has( 'reviews_url' ) ) {
+			return;
+		}
+
+		$message = sprintf(
+		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
+			__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating to help us spread the word and boost our motivation? %2$s Sure! You deserve it! %3$s', 'wc-min-max-quantities' ),
+			'<strong>' . esc_html( Plugin::instance()->name ) . '</strong>',
+			'<a href="' . esc_url( Plugin::instance()->reviews_url ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>', '</a>'
+		);
+
+		self::add_notice( array(
+			'id'          => 'reviews_url',
+			'type'        => 'notice-success',
+			'message'     => $message,
+			'dismissible' => true,
+			'capability'  => 'manage_options',
+			'display_on'  => array(),
+		) );
 	}
 }

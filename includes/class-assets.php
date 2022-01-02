@@ -2,6 +2,7 @@
 /**
  * Plugin Assets handlers.
  *
+ * @version  1.1.0
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities
  */
@@ -16,14 +17,14 @@ defined( 'ABSPATH' ) || exit();
 class Assets {
 
 	/**
-	 * Register action & filter hooks.
+	 * Assets constructor.
 	 *
 	 * @since 1.1.0
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_scripts' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_public_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
 	}
 
 	/**
@@ -31,7 +32,8 @@ class Assets {
 	 *
 	 * @version 1.1.0
 	 */
-	public function enqueue_admin_scripts() {
+	public static function enqueue_admin_scripts() {
+
 	}
 
 	/**
@@ -39,7 +41,7 @@ class Assets {
 	 *
 	 * @version 1.1.0
 	 */
-	public function enqueue_public_scripts() {
+	public static function enqueue_public_scripts() {
 	}
 
 	/**
@@ -52,11 +54,11 @@ class Assets {
 	 *
 	 * @since 1.1.0
 	 */
-	public function register_script( $handle, $relative_url = null, $deps = array(), $has_i18n = false ) {
+	public static function register_script( $handle, $relative_url = null, $deps = array(), $has_i18n = false ) {
 		$file      = basename( $relative_url );
 		$filename  = pathinfo( $file, PATHINFO_FILENAME );
 		$version   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : Plugin::instance()->version;
-		$file_path = $this->get_asset_path( str_replace( $file, "$filename.asset.php", $relative_url ) );
+		$file_path = self::get_asset_path( str_replace( $file, "$filename.asset.php", $relative_url ) );
 
 		if ( file_exists( $file_path ) ) {
 			$asset   = require $file_path;
@@ -64,7 +66,7 @@ class Assets {
 			$version = ! empty( $asset['version'] ) ? $asset['version'] : $version;
 		}
 
-		wp_register_script( $handle, $this->get_asset_url( $relative_url ), $deps, $version, true );
+		wp_register_script( $handle, self::get_asset_url( $relative_url ), $deps, $version, true );
 
 		if ( $has_i18n && function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations( $handle, 'wc-min-max-quantities', dirname( Plugin::instance()->basename ) . '/i18n/languages/' );
@@ -81,11 +83,11 @@ class Assets {
 	 *
 	 * @since 1.1.0
 	 */
-	public function register_style( $handle, $relative_url, $deps = array(), $has_rtl = true ) {
+	public static function register_style( $handle, $relative_url, $deps = array(), $has_rtl = true ) {
 		$file      = basename( $relative_url );
 		$filename  = pathinfo( $file, PATHINFO_FILENAME );
 		$version   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : Plugin::instance()->version;
-		$file_path = $this->get_asset_path( str_replace( $file, "$filename.asset.php", $relative_url ) );
+		$file_path = self::get_asset_path( str_replace( $file, "$filename.asset.php", $relative_url ) );
 
 
 		if ( file_exists( $file_path ) ) {
@@ -93,7 +95,7 @@ class Assets {
 			$version = ! empty( $asset['version'] ) ? $asset['version'] : $version;
 		}
 
-		wp_register_style( $handle, $this->get_asset_url( $relative_url ), $deps, $version );
+		wp_register_style( $handle, self::get_asset_url( $relative_url ), $deps, $version );
 
 		if ( $has_rtl && function_exists( 'wp_style_add_data' ) ) {
 			wp_style_add_data( $handle, 'rtl', 'replace' );
@@ -109,7 +111,7 @@ class Assets {
 	 * @since 1.1.0
 	 * @return string (URL)
 	 */
-	public function get_asset_path( $path = '', $relative = '/dist/' ) {
+	public static function get_asset_path( $path = '', $relative = '/dist/' ) {
 		return Plugin::instance()->get_path( $relative . $path );
 	}
 
@@ -122,7 +124,7 @@ class Assets {
 	 * @since 1.1.0
 	 * @return string (URL)
 	 */
-	public function get_asset_url( $path = '', $relative = '/dist/' ) {
+	public static function get_asset_url( $path = '', $relative = '/dist/' ) {
 		return Plugin::instance()->get_url( $relative . $path );
 	}
 }

@@ -2,6 +2,7 @@
 /**
  * Main plugin file.
  *
+ * @version  1.1.0
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities
  */
@@ -127,6 +128,34 @@ final class Plugin {
 	}
 
 	/**
+	 * This method will be called when somebody will try to invoke a method in object
+	 * context, which does not exist, like:
+	 *
+	 * $plugin->method($arg, $arg1);
+	 *
+	 * @param string $method Method name.
+	 * @param array $arguments Array of arguments passed to the method.
+	 */
+	public function __call( $method, $arguments ) {
+		$sub_method = substr( $method, 0, 3 );
+		// Drop method name.
+		$property_name = substr( $method, 4 );
+		switch ( $sub_method ) {
+			case "get":
+				return $this->get( $property_name );
+			case "set":
+				$this->set( $property_name, $arguments[0] );
+				break;
+			case "has":
+				return $this->has( $property_name );
+			default:
+				throw new \BadMethodCallException( "Undefined method $method" );
+		}
+
+		return null;
+	}
+
+	/**
 	 * Call method or properties on demand.
 	 *
 	 * @param string $key Key to return the value for.
@@ -230,7 +259,7 @@ final class Plugin {
 	 */
 	protected function setup_plugin() {
 		// Plugin data.
-		$this->version  = '1.1.0';
+		$this->version  = '1.0.9';
 		$this->slug     = 'wc-min-max-quantities';
 		$this->id       = 'wc_min_max_quantities';
 		$this->name     = 'WC Min Max Quantities';
@@ -244,7 +273,7 @@ final class Plugin {
 		$this->support_url = 'http://pluginever.com/support';
 		$this->reviews_url = 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post';
 		$this->upgrade_url = 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/';
-		$this->addons_url  = '';
+		$this->settings_url = admin_url( 'admin.php?page=wc-min-max-quantities-settings' );
 	}
 
 	/**
@@ -254,14 +283,13 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function register_hooks() {
-		register_activation_hook( $this->file, array( Lifecycle::class, 'install' ) );
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), - 1 );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 
 		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
 		add_action( 'init', [ $this, 'i18n' ] );
-		add_action( 'init', array( $this, 'init' ), 0 );
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
 	}
 
 	/**
@@ -333,7 +361,7 @@ final class Plugin {
 			$custom_links['reviews'] = sprintf( '<a href="%s">%s</a>', $this->get( 'reviews_url' ), esc_html_x( 'Reviews', 'verb', 'wc-min-max-quantities' ) );
 		}
 
-		if ( !$this->is_pro_exists() && $this->has( 'upgrade_url' ) ) {
+		if ( ! $this->is_pro_exists() && $this->has( 'upgrade_url' ) ) {
 			$links['upgrade_url'] = '<a href="' . esc_url( $this->get( 'upgrade_url' ) ) . '" title="' . esc_attr( __( 'Upgrade to Pro', 'wc-min-max-quantities' ) ) . '" style="color:red;">' . esc_html__( 'Upgrade to Pro', 'wc-min-max-quantities' ) . '</a>';
 		}
 
@@ -347,13 +375,14 @@ final class Plugin {
 	 * @return void
 	 */
 	public function init() {
-		$this->lifecycle       = new Lifecycle();
-		$this->notices         = new Admin\Admin_Notices();
+		$this->lifecycle     = new Lifecycle();
+		$this->admin_notices = new Admin\Admin_Notices();
+		// WooCommerce
 		$this->wc_cart_manager = new WC\Cart_Manager();
 
 		if ( is_admin() ) {
-			$this->admin_settings      = new Admin\Admin_Settings();
-			$this->wc_metabox_mananger = new WC\Metabox_Manager();
+			$this->admin_manager    = new Admin\Admin_Manager();
+			$this->wc_admin_manager = new WC\Admin_Manager();
 		}
 	}
 }

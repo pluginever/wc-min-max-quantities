@@ -2,6 +2,7 @@
 /**
  * Handles WooCommerce cart related functionalities.
  *
+ * @version  1.1.0
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities\WC
  */
@@ -18,45 +19,20 @@ defined( 'ABSPATH' ) || exit();
 class Cart_Manager {
 
 	/**
-	 * Constructor
+	 * Cart_Manager constructor.
+	 *
+	 * @since 1.1.0
+	 * @return void
 	 */
 	public function __construct() {
-		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
+		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
-		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart' ), 10, 4 );
-		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ) );
-		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'modify_add_to_cart_quantity' ) );
+		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart_validation' ), 20, 4 );
+		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ), 20 );
+		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'set_cart_quantity' ) );
 		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
-	}
-
-	/**
-	 * Add quantity property to add to cart button on shop loop for simple products.
-	 *
-	 * @param string $html Add to cart link.
-	 * @param \WC_Product $product Product object.
-	 *
-	 * @return string
-	 */
-	public static function add_to_cart_link( $html, $product ) {
-
-		if ( 'variable' !== $product->get_type() && 'yes' !== get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true ) ) {
-			$limits = Helper::get_product_limits( $product->get_id() );
-
-			if ( $limits['min_qty'] || $limits['step'] ) {
-
-				$quantity_attribute = $limits['min_qty'];
-
-				if ( $limits['step'] > 0 && $limits['min_qty'] < $limits['step'] ) {
-					$quantity_attribute = $limits['step'];
-				}
-
-				$html = str_replace( '<a ', '<a data-quantity="' . $quantity_attribute . '" ', $html );
-			}
-		}
-
-		return $html;
 	}
 
 	/**
@@ -70,7 +46,7 @@ class Cart_Manager {
 		$messages = array();
 
 		foreach ( $notices as $i => $notice ) {
-			if ( isset( $notice['notice'] ) && isset( $notice['data']['source'] ) && 'wc-minmax-quantities' === $notice['data']['source'] ) {
+			if ( isset( $notice['notice'] ) && isset( $notice['data']['source'] ) && 'wc-min-max-quantities' === $notice['data']['source'] ) {
 				$messages[] = $notice['notice'];
 			} else {
 				unset( $notice[ $i ] );
@@ -92,6 +68,32 @@ class Cart_Manager {
 		}
 	}
 
+	/**
+	 * Add quantity property to add to cart button on shop loop for simple products.
+	 *
+	 * @param string $html Add to cart link.
+	 * @param \WC_Product $product Product object.
+	 *
+	 * @return string
+	 */
+	public static function add_to_cart_link( $html, $product ) {
+
+		if ( 'variable' !== $product->get_type() && ! WC_Helper::is_product_excluded( $product->get_id() ) ) {
+			$limits = WC_Helper::get_product_limits( $product->get_id() );
+			if ( $limits['min_qty'] || $limits['step'] ) {
+
+				$quantity_attribute = $limits['min_qty'];
+
+				if ( $limits['step'] > 0 && $limits['min_qty'] < $limits['step'] ) {
+					$quantity_attribute = $limits['step'];
+				}
+
+				$html = str_replace( '<a ', '<a data-quantity="' . $quantity_attribute . '" ', $html );
+			}
+		}
+
+		return $html;
+	}
 
 	/**
 	 * Updates the quantity arguments.
@@ -104,18 +106,17 @@ class Cart_Manager {
 	public static function set_quantity_args( $data, $product ) {
 		$product_id   = $product->get_id();
 		$variation_id = 0;
+
 		if ( $product->is_type( 'variation' ) ) {
 			$product_id   = $product->get_parent_id();
 			$variation_id = $product->get_id();
 		}
 
-		if ( 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true )
-		     || ( $variation_id && 'yes' === get_post_meta( $variation_id, '_minmax_quantities_exclude', true ) )
-		     || 'yes' === get_post_meta( $product_id, '_minmax_quantities_allow_combination', true ) ) {
+		if ( WC_Helper::is_product_excluded( $product_id, $variation_id ) || WC_Helper::is_allow_combination( $product_id ) ) {
 			return $data;
 		}
 
-		$limits = Helper::get_product_limits( $product_id, $variation_id );
+		$limits = WC_Helper::get_product_limits( $product_id, $variation_id );
 		if ( $limits['min_qty'] > 0 ) {
 
 			if ( $product->managing_stock() && ! $product->backorders_allowed() && absint( $limits['min_qty'] ) > $product->get_stock_quantity() ) {
@@ -156,6 +157,83 @@ class Cart_Manager {
 	}
 
 	/**
+	 * Add to cart validation
+	 *
+	 * @param mixed $pass Filter value.
+	 * @param mixed $product_id Product ID.
+	 * @param mixed $quantity Quantity.
+	 * @param int $variation_id Variation ID (default none).
+	 *
+	 * @return mixed
+	 */
+	public static function add_to_cart_validation( $pass, $product_id, $quantity, $variation_id = 0 ) {
+
+		if ( WC_Helper::is_allow_combination( $product_id ) || WC_Helper::is_product_excluded( $product_id, $variation_id ) ) {
+			return $pass;
+		}
+
+		$limits = WC_Helper::get_product_limits( $product_id, $variation_id );
+
+		// If it's a variation and overridden from variation level we will use conditions
+		// from variation otherwise will check parent if that is not overridden fall back to global.
+		$minmax_product_id = $product_id;
+		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_wc_min_max_quantities_override', true ) ) {
+			$minmax_product_id = $variation_id;
+		}
+
+		$product = wc_get_product( $minmax_product_id );
+
+		// Count items.
+		$total_quantity = $quantity;
+		foreach ( WC()->cart->get_cart() as $item ) {
+			if ( $item['product_id'] === $product_id ) {
+				$total_quantity += $item['quantity'];
+			}
+		}
+
+		if ( $limits['max_qty'] > 0 && ( $total_quantity > $limits['max_qty'] ) ) {
+			/* translators: %1$s: Product name, %2$d: Maximum quantity */
+			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $limits['max_qty'] ) );
+			WC_Helper::add_error( $message );
+
+			return false;
+		}
+
+		if ( ! WC_Helper::is_allow_combination( $product_id ) && $limits['min_qty'] > 0 && $total_quantity < $limits['min_qty'] ) {
+			/* translators: %1$s: Product name, %2$d: Minimum quantity */
+			WC_Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $limits['min_qty'] ) ) );
+
+			return false;
+		}
+
+		if ( ! WC_Helper::is_allow_combination( $product_id ) && $limits['step'] > 0 && ( (int) $quantity % (int) $limits['step'] > 0 ) ) {
+			/* translators: %1$s: Product name, %2$d: Group amount */
+			WC_Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
+
+			return false;
+		}
+
+		//For cart level check for maximum only.
+		$maximum_order_quantity = Helper::get_option( 'max_order_quantity', 0 );
+		$maximum_order_total    = Helper::get_option( 'max_order_amount', 0 );
+
+		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
+			WC_Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
+
+			return false;
+		}
+
+		if ( $maximum_order_total > 1 && (int) WC()->cart->get_cart_total() > (int) wc_price( $maximum_order_total ) ) {
+			WC_Helper::add_error( sprintf( __( 'The maximum allowed order total is %s.', 'wc-min-max-quantities' ), wc_price( $maximum_order_total ) ) );
+
+			return false;
+		}
+
+
+		return apply_filters( 'wc_min_max_quantities_add_to_cart_validation', $pass, $product_id, $quantity, $variation_id );
+	}
+
+	/**
 	 * Check cart items.
 	 *
 	 * @since 1.1.0
@@ -172,13 +250,14 @@ class Cart_Manager {
 			} else {
 				$quantities[ $product_id ] += $item['quantity'];
 			}
+
 			if ( ! isset( $line_amount[ $product_id ] ) ) {
 				$line_amount[ $product_id ] = $item['data']->get_price() * $item['quantity'];
 			} else {
 				$line_amount[ $product_id ] += $item['data']->get_price() * $item['quantity'];
 			}
 
-			if ( 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true ) ) {
+			if ( WC_Helper::is_product_excluded( $product_id ) ) {
 				continue;
 			}
 
@@ -187,7 +266,7 @@ class Cart_Manager {
 
 		foreach ( $product_ids as $product_id ) {
 			$product = wc_get_product( $product_id );
-			$limits  = Helper::get_product_limits( $product_id );
+			$limits  = WC_Helper::get_product_limits( $product_id );
 
 			$quantity = ! empty( $quantities[ $product_id ] ) ? $quantities[ $product_id ] : 0;
 
@@ -195,21 +274,21 @@ class Cart_Manager {
 				/* translators: %1$s: Product name, %2$d: Maximum quantity */
 				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_title(), $limits['max_qty'] );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-				Helper::add_error( $message );
+				WC_Helper::add_error( $message );
 
 				return;
 			}
 
 			if ( $limits['min_qty'] > 0 && $quantity < $limits['min_qty'] ) {
 				/* translators: %1$s: Product name, %2$d: Minimum quantity */
-				Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['min_qty'] ) );
+				WC_Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['min_qty'] ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				return;
 			}
 			if ( $limits['step'] > 0 && ( (float) $quantity % (float) $limits['step'] > 0 ) ) {
 				/* translators: %1$s: Product name, %2$d: quantity amount */
-				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
+				WC_Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				return;
@@ -222,7 +301,7 @@ class Cart_Manager {
 
 		if ( (int) Helper::get_option( 'min_order_quantity' ) > 0 && $order_quantity < (int) Helper::get_option( 'min_order_quantity' ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), (int) Helper::get_option( 'min_order_quantity' ) ) );
+			WC_Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), (int) Helper::get_option( 'min_order_quantity' ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -231,7 +310,7 @@ class Cart_Manager {
 
 		if ( (int) Helper::get_option( 'max_order_quantity' ) > 0 && $order_quantity > (int) Helper::get_option( 'max_order_quantity' ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), (int) Helper::get_option( 'max_order_quantity' ) ) );
+			WC_Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), (int) Helper::get_option( 'max_order_quantity' ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -239,7 +318,7 @@ class Cart_Manager {
 
 		if ( (int) Helper::get_option( 'min_order_amount' ) > 0 && $order_total < (int) Helper::get_option( 'min_order_amount' ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum allowed order value %s. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Helper::get_option( 'min_order_amount' ) ) ) );
+			WC_Helper::add_error( sprintf( __( 'The minimum allowed order value %s. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Helper::get_option( 'min_order_amount' ) ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -248,91 +327,11 @@ class Cart_Manager {
 
 		if ( (int) Helper::get_option( 'max_order_amount' ) > 0 && $order_total > (int) Helper::get_option( 'max_order_amount' ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order value is %s. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Helper::get_option( 'max_order_amount' ) ) ) );
+			WC_Helper::add_error( sprintf( __( 'The maximum allowed order value is %s. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Helper::get_option( 'max_order_amount' ) ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 		}
-	}
-
-	/**
-	 * Add to cart validation
-	 *
-	 * @param mixed $pass Filter value.
-	 * @param mixed $product_id Product ID.
-	 * @param mixed $quantity Quantity.
-	 * @param int $variation_id Variation ID (default none).
-	 *
-	 * @return mixed
-	 */
-	public static function add_to_cart( $pass, $product_id, $quantity, $variation_id = 0 ) {
-		if ( 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true )
-		     || ( $variation_id && 'yes' === get_post_meta( $variation_id, '_minmax_quantities_exclude', true ) )
-		     || 'yes' === get_post_meta( $product_id, '_minmax_quantities_allow_combination', true ) ) {
-			return $pass;
-		}
-
-		$limits = Helper::get_product_limits( $product_id, $variation_id );
-
-		// If its a variation and overridden from variation level we will use conditions
-		// from variation otherwise will check parent if that is not not overridden fall back to global.
-		$minmax_product_id = $product_id;
-		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_minmax_quantities_override', true ) ) {
-			$minmax_product_id = $variation_id;
-		}
-
-		$product           = wc_get_product( $minmax_product_id );
-		$allow_combination = 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_allow_combination', true );
-
-
-		// Count items.
-		$total_quantity = $quantity;
-		foreach ( WC()->cart->get_cart() as $item ) {
-			if ( $item['product_id'] === $product_id ) {
-				$total_quantity += $item['quantity'];
-			}
-		}
-
-		if ( $limits['max_qty'] > 0 && ( $total_quantity > $limits['max_qty'] ) ) {
-			/* translators: %1$s: Product name, %2$d: Maximum quantity */
-			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $limits['max_qty'] ) );
-			Helper::add_error( $message );
-
-			return false;
-		}
-
-		if ( ! $allow_combination && $limits['min_qty'] > 0 && $total_quantity < $limits['min_qty'] ) {
-			/* translators: %1$s: Product name, %2$d: Minimum quantity */
-			Helper::add_error( sprintf( __( 'The minimum required quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $limits['min_qty'] ) ) );
-
-			return false;
-		}
-
-		if ( ! $allow_combination && $limits['step'] > 0 && ( (int) $quantity % (int) $limits['step'] > 0 ) ) {
-			/* translators: %1$s: Product name, %2$d: Group amount */
-			Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
-
-			return false;
-		}
-
-		//For cart level check for maximum only.
-		$maximum_order_quantity = Helper::get_option( 'max_order_quantity', 0 );
-		$maximum_order_total    = Helper::get_option( 'max_order_amount', 0 );
-
-		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
-			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
-
-			return false;
-		}
-
-		if ( $maximum_order_total > 1 && (int) WC()->cart->get_cart_total() > (int) wc_price( $maximum_order_total ) ) {
-			Helper::add_error( sprintf( __( 'The maximum allowed order total is %s.', 'wc-min-max-quantities' ), wc_price( $maximum_order_total ) ) );
-
-			return false;
-		}
-
-
-		return $pass;
 	}
 
 	/**
@@ -342,7 +341,7 @@ class Cart_Manager {
 	 *
 	 * @return int
 	 */
-	public static function modify_add_to_cart_quantity( $product_id ) {
+	public static function set_cart_quantity( $product_id ) {
 		$add_to_cart = filter_input( INPUT_GET, 'wc-ajax', FILTER_SANITIZE_NUMBER_FLOAT );
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
@@ -357,12 +356,11 @@ class Cart_Manager {
 			return $product_id;
 		}
 
-		$is_excluded = 'yes' === get_post_meta( $product_id, '_minmax_quantities_exclude', true );
-		if ( $is_excluded ) {
+		if ( WC_Helper::is_product_excluded( $product_id ) ) {
 			return $product_id;
 		}
 
-		$limits   = Helper::get_product_limits( $product_id );
+		$limits   = WC_Helper::get_product_limits( $product_id );
 		$quantity = 0;
 
 		foreach ( WC()->cart->get_cart() as $cart_item ) {
@@ -407,21 +405,21 @@ class Cart_Manager {
 	 * @param \WC_Product $product Product object.
 	 */
 	public function maybe_show_backorder_message( $args, $product ) {
-		if ( ! $product->managing_stock() || 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true )
-		     || ( $product->is_type( 'variation' ) && 'yes' === get_post_meta( $product->get_parent_id(), '_minmax_quantities_exclude', true ) ) ) {
-			return $args;
-		}
-
-		// Figure out what our minimum_quantity is.
 		$product_id   = $product->get_id();
-		$variation_id = 0;
+		$variation_id = null;
+
 		if ( $product->is_type( 'variation' ) ) {
 			$product_id   = $product->get_parent_id();
 			$variation_id = $product->get_id();
 		}
-		$limits = Helper::get_product_limits( $product_id, $variation_id );
 
-		// If the minimum quantity allowed for purchase is smaller then the amount in stock, we need
+		if ( ! $product->managing_stock() || WC_Helper::is_product_excluded( $product_id, $variation_id ) ) {
+			return $args;
+		}
+
+		$limits = WC_Helper::get_product_limits( $product_id, $variation_id );
+
+		// If the minimum quantity allowed for purchase is smaller than the amount in stock, we need
 		// clearer messaging.
 		if ( $limits['min_qty'] > 0 && $product->get_stock_quantity() < $limits['min_qty'] ) {
 			if ( $product->backorders_allowed() ) {
@@ -450,10 +448,11 @@ class Cart_Manager {
 	 * @return array $data
 	 */
 	public static function available_variation( $data, $product, $variation ) {
-		if ( 'yes' === get_post_meta( $product->get_id(), '_minmax_quantities_exclude', true ) ) {
+		if ( WC_Helper::is_product_excluded( $product->get_id(), $variation->get_id() ) || WC_Helper::is_allow_combination( $product->get_id() ) ) {
 			return $data;
 		}
-		$limits = Helper::get_product_limits( $product->get_id(), 0 );
+
+		$limits = WC_Helper::get_product_limits( $product->get_id(), $variation->get_id() );
 
 		if ( ! empty( $limits['min_qty'] ) ) {
 			if ( $product->managing_stock() && $product->backorders_allowed() && absint( $limits['min_qty'] ) > $product->get_stock_quantity() ) {
