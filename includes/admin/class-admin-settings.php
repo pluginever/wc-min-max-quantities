@@ -309,7 +309,6 @@ class Admin_Settings {
 				if (typeof (localStorage) != 'undefined') {
 					activetab = localStorage.getItem("activetab");
 				}
-				console.log(activetab)
 				//if url has section id as hash then set it as active or override the current local storage value
 				if (window.location.hash) {
 					activetab = window.location.hash;
