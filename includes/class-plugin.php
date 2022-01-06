@@ -259,7 +259,7 @@ final class Plugin {
 	 */
 	protected function setup_plugin() {
 		// Plugin data.
-		$this->version  = '1.0.9';
+		$this->version  = '1.1.0';
 		$this->slug     = 'wc-min-max-quantities';
 		$this->id       = 'wc_min_max_quantities';
 		$this->name     = 'WC Min Max Quantities';

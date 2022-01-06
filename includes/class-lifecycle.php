@@ -304,13 +304,13 @@ class Lifecycle {
 
 		foreach ( $products as $product_id ) {
 			$product = wc_get_product( $product_id );
-			if( 'variation' === $product->get_type() ) {
+			if ( 'variation' === $product->get_type() ) {
 				$post_metas = array(
+					'manage_minmax_quantities'       => '_wc_min_max_quantities_override',
 					'vr_minmax_product_min_quantity' => '_wc_min_max_quantities_min_qty',
 					'vr_minmax_product_max_quantity' => '_wc_min_max_quantities_max_qty',
 					'vr_minmax_product_min_price'    => '_wc_min_max_quantities_min_total',
 					'vr_minmax_product_max_price'    => '_wc_min_max_quantities_max_total',
-					'vr_minmax_ignore_global'        => '_wc_min_max_quantities_override',
 				);
 			} else {
 				$post_metas = array(
