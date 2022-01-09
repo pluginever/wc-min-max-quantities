@@ -268,6 +268,8 @@ class Lifecycle {
 		$term_metas = array(
 			'cat_min_quantity' => '_wc_min_max_quantities_min_qty',
 			'cat_max_quantity' => '_wc_min_max_quantities_max_qty',
+			'cat_min_price'    => '_wc_min_max_quantities_min_total',
+			'cat_max_price'    => '_wc_min_max_quantities_max_total',
 		);
 
 		foreach ( $categories as $term_id ) {
