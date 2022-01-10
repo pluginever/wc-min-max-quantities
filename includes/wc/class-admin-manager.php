@@ -67,7 +67,7 @@ class Admin_Manager {
 				array(
 					'id'                => '_wc_min_max_quantities_min_qty',
 					'label'             => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-					'description'       => __( 'Set a minimum quantity customers are required to purchase for this product.', 'wc-min-max-quantities' ),
+					'description'       => __( 'Set an allowed minimum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -81,7 +81,7 @@ class Admin_Manager {
 				array(
 					'id'                => '_wc_min_max_quantities_max_qty',
 					'label'             => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-					'description'       => __( 'Set a maximum quantity customers are allowed to purchase for this product.', 'wc-min-max-quantities' ),
+					'description'       => __( 'Set an allowed maximum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -95,7 +95,7 @@ class Admin_Manager {
 				array(
 					'id'          => '_wc_min_max_quantities_step',
 					'label'       => __( 'Quantity groups of', 'wc-min-max-quantities' ),
-					'description' => __( 'Enter a number that will be counted every time a quantity is increased for this product.', 'wc-min-max-quantities' ),
+					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
 					'desc_tip'    => true,
 					'type'        => 'number',
 					'min'         => '0',
