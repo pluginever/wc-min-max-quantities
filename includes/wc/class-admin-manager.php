@@ -43,7 +43,7 @@ class Admin_Manager {
 				array(
 					'id'          => '_wc_min_max_quantities_excluded',
 					'label'       => __( 'Exclude Min/Max Rule', 'wc-min-max-quantities' ),
-					'description' => __( 'The product will be excluded from Min/Max rules if checked.', 'wc-min-max-quantities' ),
+					'description' => __( 'By enabling, this product will be excluded from all min-max rules', 'wc-min-max-quantities' ),
 				)
 			);
 
@@ -67,7 +67,7 @@ class Admin_Manager {
 				array(
 					'id'                => '_wc_min_max_quantities_min_qty',
 					'label'             => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have fewer than the allowed quantity in their cart.', 'wc-min-max-quantities' ),
+					'description'       => __( 'Set an allowed minimum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -81,7 +81,7 @@ class Admin_Manager {
 				array(
 					'id'                => '_wc_min_max_quantities_max_qty',
 					'label'             => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-					'description'       => __( 'Enter a quantity to prevent the user buying this product if they have more than the allowed quantity in their cart.', 'wc-min-max-quantities' ),
+					'description'       => __( 'Set an allowed maximum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
@@ -95,7 +95,7 @@ class Admin_Manager {
 				array(
 					'id'          => '_wc_min_max_quantities_step',
 					'label'       => __( 'Quantity groups of', 'wc-min-max-quantities' ),
-					'description' => __( 'Enter a quantity to only allow this product to be purchased in groups of X.', 'wc-min-max-quantities' ),
+					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
 					'desc_tip'    => true,
 					'type'        => 'number',
 					'min'         => '0',
