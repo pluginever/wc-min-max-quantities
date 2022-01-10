@@ -23,7 +23,7 @@ The global rules are applicable storewide. By default, they include all products
 
 > [Get The PRO Version]([https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/))  |  [Support]([https://www.pluginever.com/support/](https://www.pluginever.com/support/))  |  [Documentation ]([https://pluginever.com/docs/min-max-quantities-for-woocommerce/](https://pluginever.com/docs/min-max-quantities-for-woocommerce/))
 
-## 🚀 THE BENEFITS OF MIN MAX QUANTITIES FOR WOOCOMMERCE:
+## 🚀 THE BENEFITS OF WC MIN MAX QUANTITIES:
 
 🛍 Create custom deals targetting various occasions.
 🛍 Set a special deal for your desired product/s.
@@ -31,7 +31,7 @@ The global rules are applicable storewide. By default, they include all products
 🛍 It will help increase your total sales volume.
 🛍 Finally, enjoy the enhanced store revenue :).
 
-## 🆓 MIN MAX QUANTITIES FOR WOOCOMMERCE FEATURES:
+## 🆓 WC MIN MAX QUANTITIES FEATURES:
 
 ⚖️ Set a global min/max rule for every single product.
 ⚖️ Exclude product/s from the global min/max rule.
@@ -47,10 +47,11 @@ The global rules are applicable storewide. By default, they include all products
 
 **📍NOTE:** **You have to *Override Global* to make the individual product level rules effective.**
 
-## 🔥 [MIN MAX QUANTITIES FOR WOOCOMMERCE PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
+## 🔥 [WC MIN MAX QUANTITIES PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
 
 🎯 Set a minimum purchasable product price.
 🎯 Set a maximum purchasable product price.
+🎯 Customized notice message settings.
 
 🎯 Add min/max price rules for products.
 🎯 Add min/max price rules for variation products.
@@ -58,7 +59,7 @@ The global rules are applicable storewide. By default, they include all products
 🎯 Set a minimum total product quantity for specific category
 🎯 Set a maximum total product quantity for specific category
 🎯 Control min/max rules for product/s belonging to multiple categories.
-🎯 Option to ignore category rules product-wise
+🎯 Option to ignore category rules product-wise.
 
 ### FUNCTIONALITY EXPLAINED:
 
@@ -115,7 +116,7 @@ This may have bugs and/or a lack of features. If you want to contribute to this 
 
 == Installation ==
 
-1. Upload `wc-minmax-quantities` to the `/wp-content/plugins/` directory
+1. Upload `wc-min-max-quantities` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
