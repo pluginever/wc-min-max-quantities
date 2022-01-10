@@ -37,24 +37,28 @@ The global rules are applicable storewide. By default, they include all products
 ⚖️ Exclude product/s from the global min/max rule.
 ⚖️ Set a minimum purchasable product quantity.
 ⚖️ Set a maximum purchasable product quantity.
-⚖️ Set a minimum purchasable product price.
-⚖️ Set a maximum purchasable product price.
+⚖️ Set step count to sell products in the group
 
-⚖️ Set a minimum cart total (price) that customers must purchase.
-⚖️ Set a maximum cart total (price) that customers are allowed to purchase.
-⚖️ Hide the checkout button if min/max conditions are not satisfied.
+⚖️ Set a minimum cart total quantity that customers must purchase.
+⚖️ Set a maximum cart total quantity that customers must purchase.
+⚖️ Set a minimum cart total price that customers must purchase.
+⚖️ Set a maximum cart total price that customers are allowed to purchase.
+⚖️ Exclude min/max rules for products
 
-**📍NOTE:** **You have to *Ignore Global Min/Max Rules* to make the individual product level rules effective.**
+**📍NOTE:** **You have to *Override Global* to make the individual product level rules effective.**
 
 ## 🔥 [MIN MAX QUANTITIES FOR WOOCOMMERCE PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
 
-🎯 Add min/max rules for variable products.
+🎯 Set a minimum purchasable product price.
+🎯 Set a maximum purchasable product price.
+
+🎯 Add min/max price rules for products.
+🎯 Add min/max price rules for variation products.
 🎯 Add min/max rules for product categories.
-🎯 Add min/max rules for the cart quantity (number of products).
-🎯 Option to directly add the minimum product quantity to cart.
-🎯 Prevent add to cart when max limit for quantity/price is reached.
-🎯 Enable option to remove item/s from the checkout page.
+🎯 Set a minimum total product quantity for specific category
+🎯 Set a maximum total product quantity for specific category
 🎯 Control min/max rules for product/s belonging to multiple categories.
+🎯 Option to ignore category rules product-wise
 
 ### FUNCTIONALITY EXPLAINED:
 
