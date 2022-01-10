@@ -225,10 +225,8 @@ class Lifecycle {
 		$general_keys = array(
 			'min_product_quantity' => 'min_product_quantity',
 			'max_product_quantity' => 'max_product_quantity',
-			'min_cart_price'       => 'min_order_quantity',
-			'max_cart_price'       => 'max_order_quantity',
-			'min_cart_total_price' => 'min_order_amount',
-			'max_cart_total_price' => 'max_order_amount',
+			'min_cart_price'       => 'min_product_total',
+			'max_cart_price'       => 'max_product_total',
 		);
 		foreach ( $general_keys as $old_key => $new_key ) {
 			if ( ! empty( $general_settings[ $old_key ] ) ) {
@@ -239,8 +237,8 @@ class Lifecycle {
 		$advanced_keys = array(
 			'min_cart_total_price'    => 'min_order_amount',
 			'max_cart_total_price'    => 'max_order_amount',
-			'min_cart_total_quantity' => 'max_order_amount',
-			'max_cart_total_quantity' => 'max_order_amount',
+			'min_cart_total_quantity' => 'min_order_quantity',
+			'max_cart_total_quantity' => 'max_order_quantity',
 		);
 
 		foreach ( $advanced_keys as $old_key => $new_key ) {
@@ -307,13 +305,24 @@ class Lifecycle {
 		}
 
 		foreach ( $products as $product_id ) {
-			$post_metas = array(
-				'_minmax_product_min_quantity' => '_wc_min_max_quantities_min_qty',
-				'_minmax_product_max_quantity' => '_wc_min_max_quantities_max_qty',
-				'_minmax_product_min_price'    => '_wc_min_max_quantities_min_total',
-				'_minmax_product_max_price'    => '_wc_min_max_quantities_max_total',
-				'_minmax_ignore_global'        => '_wc_min_max_quantities_override',
-			);
+			$product = wc_get_product( $product_id );
+			if ( 'variation' === $product->get_type() ) {
+				$post_metas = array(
+					'manage_minmax_quantities'       => '_wc_min_max_quantities_override',
+					'vr_minmax_product_min_quantity' => '_wc_min_max_quantities_min_qty',
+					'vr_minmax_product_max_quantity' => '_wc_min_max_quantities_max_qty',
+					'vr_minmax_product_min_price'    => '_wc_min_max_quantities_min_total',
+					'vr_minmax_product_max_price'    => '_wc_min_max_quantities_max_total',
+				);
+			} else {
+				$post_metas = array(
+					'_minmax_product_min_quantity' => '_wc_min_max_quantities_min_qty',
+					'_minmax_product_max_quantity' => '_wc_min_max_quantities_max_qty',
+					'_minmax_product_min_price'    => '_wc_min_max_quantities_min_total',
+					'_minmax_product_max_price'    => '_wc_min_max_quantities_max_total',
+					'_minmax_ignore_global'        => '_wc_min_max_quantities_override',
+				);
+			}
 
 			foreach ( $post_metas as $old_key => $new_key ) {
 				$value = get_post_meta( $product_id, $old_key, true );
@@ -323,6 +332,8 @@ class Lifecycle {
 
 				delete_post_meta( $product_id, $old_key );
 			}
+
+
 		}
 		$migrated = array_merge( $migrated, $products );
 
