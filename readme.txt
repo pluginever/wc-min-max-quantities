@@ -8,16 +8,16 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Min Max Quantities for WooCommerce is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
+WC Min Max Quantities is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
 
 
 # Description
 
-**[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the simplest WooCommerce extension to create special deals with product quantity and price. With the help of this plugin, you will be able to set a minimum and maximum permitted product quantity and/or price that a customer can purchase.
+**[WC Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the simplest WooCommerce extension to create special deals with product quantity and price. With the help of this plugin, you will be able to set a minimum and maximum permitted product quantity and/or price that a customer can purchase.
 
-**Min Max Quantities for WooCommerce** stands out with it's easy to follow features. It will allow you to set a global rule that applies to every single product of your store. Besides, you can also set special rules for an individual product. Moreover, set a minimum and maximum range on the cart total (price) with just a few clicks.
+**WC Min Max Quantities** stands out with it's easy to follow features. It will allow you to set a global rule that applies to every single product of your store. Besides, you can also set special rules for an individual product. Moreover, set a minimum and maximum range on the cart total (price) with just a few clicks.
 
-The brilliant features will empower you to restrict your customers from purchasing an item if the product quantity and price conditions are not met. For instance, if you set a minimum and maximum product quantity for a product, customers will not be able to check out if they attempt to purchase a quantity that is lower than the minimum or higher then the maximum you have set. Likewise, you can also set a minimum and maximum range for the product price. Finally, customers must pass those conditions for successful checkout.
+The brilliant features will empower you to restrict your customers from purchasing an item if the product quantity and price conditions are not met. For instance, if you set a minimum and maximum product quantity for a product, customers will not be able to check out if they attempt to purchase a quantity that is lower than the minimum or higher then the maximum you have set. Likewise, you can also set a minimum and maximum range for the product price. Therefore, customers must pass those conditions for successful checkout.
 
 The global rules are applicable storewide. By default, they include all products of your store. You can exclude an individual product from the global rule or set a custom rule by using the option named ***Ignore Global Min/Max Rules***. Apart from that, you can also target the ***cart*** and set conditions targetting it. This will force your customers to purchase the total number that you prefer.
 
@@ -25,41 +25,46 @@ The global rules are applicable storewide. By default, they include all products
 
 ## 🚀 THE BENEFITS OF WC MIN MAX QUANTITIES:
 
-🛍 Create custom deals targetting various occasions.
-🛍 Set a special deal for your desired product/s.
-🛍 Easily force customers to purchase more products.
-🛍 It will help increase your total sales volume.
-🛍 Finally, enjoy the enhanced store revenue :).
+🛍 Force your customers must purchase in the required quantity
+🛍 Encourage customers to buy more by changing the initial value in the quantity field for each product
+🛍 Ensure your order quantities match your warehousing and delivery systems
+🛍 Set a special deal for your desired product/s
+🛍 Create custom deals targeting various occasions
+🛍 Guide your customers to add the correct quantity of products
+🛍 Add interval-based quantities to encourage your customers to buy more
+🛍 Protect your profit margins
 
 ## 🆓 WC MIN MAX QUANTITIES FEATURES:
 
-⚖️ Set a global min/max rule for every single product.
-⚖️ Exclude product/s from the global min/max rule.
-⚖️ Set a minimum purchasable product quantity.
-⚖️ Set a maximum purchasable product quantity.
+⚖️ Set a global minimum number of items required for each and every product
+⚖️ Set a global maximum number of items required for each and every product
 ⚖️ Set step count to sell products in the group
-
-⚖️ Set a minimum cart total quantity that customers must purchase.
-⚖️ Set a maximum cart total quantity that customers must purchase.
-⚖️ Set a minimum cart total price that customers must purchase.
-⚖️ Set a maximum cart total price that customers are allowed to purchase.
-⚖️ Exclude min/max rules for products
+⚖️ Change the WooCommerce default quantity
+⚖️ Set a minimum number of products customers can add to cart 
+⚖️ Set  a maximum number of products customers can add to cart
+⚖️ Set a minimum cart total (price) that customers must purchase
+⚖️ Set a maximum cart total (price) that customers are allowed to purchase
+⚖️ Set minimum-maximum quantity rule product-wise
+⚖️ Override global minimum-maximum rule from the product level
+⚖️ Ignore global min-max rule product-wise 
+⚖️ Set step count product-wise to sell product in the group 
 
 **📍NOTE:** **You have to *Override Global* to make the individual product level rules effective.**
 
 ## 🔥 [WC MIN MAX QUANTITIES PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
 
-🎯 Set a minimum purchasable product price.
-🎯 Set a maximum purchasable product price.
-🎯 Customized notice message settings.
-
-🎯 Add min/max price rules for products.
-🎯 Add min/max price rules for variation products.
-🎯 Add min/max rules for product categories.
-🎯 Set a minimum total product quantity for specific category
-🎯 Set a maximum total product quantity for specific category
-🎯 Control min/max rules for product/s belonging to multiple categories.
-🎯 Option to ignore category rules product-wise.
+🎯 Set a global minimum purchasable product price
+🎯 Set a global maximum purchasable product price
+🎯 Set minimum-maximum price rule product-wise
+🎯 Add minimum-maximum rules for variable products
+🎯 Allow combinational min/max conditions for variable products
+🎯 Add minimum-maximum rules product-wise for categories
+🎯 Set step count to sell products in group category-wise
+🎯 Option to set min/max rules for the total number of products from a certain category
+🎯 Control minimum-maximum rules for product/s belonging to multiple categories
+🎯 Disable category-based rules from the global settings
+🎯 Option to ignore category rules product-wise
+🎯 Option to set custom notification messages
 
 ### FUNCTIONALITY EXPLAINED:
 
@@ -71,31 +76,25 @@ This section deals with global rules that apply to every single product of your 
 
 **Maximum Order Quantity:** Control the maximum number of a product that a customer can purchase with this option. Customers will not be able to check out if they attempt to purchase a higher quantity.
 
-**Minimum Order Price:** Set the minimum amount/price that your customers must purchase. Otherwise, they will not be able to checkout.
+***[🎉 Premium]* Minimum Order Price:** Set the minimum amount/price that your customers must purchase. Otherwise, they will not be able to checkout.
 
-**Maximum Order Price:** Finally, set the maximum amount/price that your customers are allowed to purchase. Otherwise, they will not be able to checkout.
+***[🎉 Premium]* Maximum Order Price:** Finally, set the maximum amount/price that your customers are allowed to purchase. Otherwise, they will not be able to checkout.
 
-**Hide Checkout Button:** Enable this option to hide the checkout button if the min/max conditions are not met.
 
-### ADVANCED SETTINGS:
+### ORDER SETTINGS:
 
-**Minimum Cart Total:** Set a minimum cart amount/price. Customers will not be able to check out if their cart total is lower than this minimum.
+**Minimum Order Quantity:** Set a minimum cart quantity that customers must purchase for successful checkout.
 
-**Maximum Cart Total:** Set a maximum cart amount/price. Customers will not be able to check out if their cart total is higher than this maximum.
+**Maximum Order Quantity:** Set a maximum cart quantity that customers are allowed to purchase from your store.
 
-***[🎉 Premium]* Minimum Cart Quantity:** Set a minimum cart quantity that customers must purchase for successful checkout.
+**Minimum Order Amount:** Set a minimum cart amount/price. Customers will not be able to check out if their cart total is lower than this minimum.
 
-***[🎉 Premium]* Maximum Cart Quantity:** Set a maximum cart quantity that customers are allowed to purchase from your store.
+**Maximum Order Amount:** Set a maximum cart amount/price. Customers will not be able to check out if their cart total is higher than this maximum.
 
-***[🎉 Premium]* Force minimum Quantity:** Enabling this options will add the minimum number of products when customers click the add to cart button.
-
-***[🎉 Premium]* Prevent add to cart:** Restrict customers from adding more products to their cart when max is reached for price/quantity.
-
-***[🎉 Premium]* Remove Item from Checkout:** Allow your customers to remove items directly from the checkout page.
 
 ### EXCLUDE OR ADD CUSTOM MIN/MAX RULES FOR A PRODUCT:
 
-If you want to exclude a product or set custom rule for it then you have to do it from the product data tabs in the edit product section. Under the inventory tab, you will find the min/max options. To exclude a product from the global rule, you just have to leave the fields empty. Likewise, you can set custom min/max rules by inserting custom values. Important to note here that, you must enable the ***Ignore Global Min/Max Rules*** to flawlessly enjoy this feature.
+If you want to exclude a product or set custom rule for it then you have to do it from the product data tabs in the edit product section. Under the inventory tab, you will find the min/max options. To exclude a product from the global rule, you just have to leave the fields empty. Likewise, you can set custom min/max rules by inserting custom values. 
 
 ### 📢 Frequently Asked Questions
 
@@ -105,10 +104,31 @@ There are multiple levels of min/max rules that you can assign to your products.
 ⏫ Product variation. [Premium]
 ⏫ Product.
 ⏫ Category. [Premium]
-⏫ General/Global [*Use the option Ignore Global Min/Max Rules, to stay on the safe side.*]
+⏫ General/Global
 
 **How can I suggest a new feature?**
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wc-minmax-quantities/issues) as the feature request.
+
+**What if I set the min-max product quantity or price value to zero?**
+Setting Min-Max product quantity or price to zero will not function as rules. 
+
+**What is quantity step or step count?**
+If your customers want to purchase a product, the minimum quantity of the product will be shown on the single product page and the cart page by default. If the customer intends to increase the product quantity from the product page or in the cart, it will increase collectively.
+
+**How can I override global settings with a single product min-max condition?**
+From the product page, go to general settings and select override global settings, and put values where necessary. 
+
+**How to ignore global Min-Max rules?**
+From the product page, go to general settings and select ignore min/max rules, and doing so, it will abrogate all min/max rules for the product.
+
+**Can I set the min-max rule for the variable products?**
+Yes, for the parent product, you can set the min/max quantity rule. You can choose any number of variations within the given condition in the parent product. 
+
+**Does the cart have a separate min/max rule?**
+Yes, you need to set a separate cart rule from the settings and it will act globally. Whatever min/max rule you are setting either global or productwise, eventually, the cart rule will be dominant.
+
+**What if I do not set the cart rule?**
+If the global rule or the product rules are set the cart will maintain the global or product rules if the cart rule is not set.
 
 ### 📢 CONTRIBUTE
 
