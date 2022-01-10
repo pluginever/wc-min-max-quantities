@@ -91,6 +91,8 @@ This section deals with global rules that apply to every single product of your 
 
 **Maximum Order Amount:** Set a maximum cart amount/price. Customers will not be able to check out if their cart total is higher than this maximum.
 
+###*[🎉 Premium]* TRANSLATION SETTINGS:
+Messages can be set and will be shown if product quantity and price for orders do not converge with the predetermined rules.
 
 ### EXCLUDE OR ADD CUSTOM MIN/MAX RULES FOR A PRODUCT:
 
