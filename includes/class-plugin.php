@@ -9,8 +9,6 @@
 
 namespace WC_Min_Max_Quantities;
 
-use WC_Min_Max_Quantities\Admin\Admin_Manager;
-
 defined( 'ABSPATH' ) || exit();
 
 /**
@@ -226,7 +224,7 @@ final class Plugin {
 	protected function includes() {
 		// Register autoloader.
 		spl_autoload_register( array( $this, 'autoload' ), true );
-		$this->set( 'background_updater', new Utilities\Background_Updater( $this->get( 'id' ) ) );
+		$this->set( 'background_updater', new Utilities\Background_Updater() );
 		$this->set( 'lifecycle', new Lifecycle() );
 	}
 
@@ -238,35 +236,22 @@ final class Plugin {
 	 * @since 1.1.0
 	 */
 	public function autoload( $class ) {
-		$class = ltrim( $class, '\\' );
-
-		if ( ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
+		$class     = ltrim( $class, '\\' );
+		$namespace = 'WC_Min_Max_Quantities\\';
+		$len       = strlen( $namespace );
+		if ( strncmp( $namespace, $class, $len ) !== 0 || ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
 			return;
 		}
 
-		if ( 0 !== stripos( $class, __NAMESPACE__ ) ) {
-			return;
-		}
+		$include_path  = untrailingslashit( __DIR__ );
+		$class_name    = strtolower( $matches['class_name'] );
+		$file_name     = 'class-' . str_replace( '_', '-', $class_name ) . '.php';
+		$relative_path = str_replace( array( $namespace, '\\', $matches['class_name'] ), array( '', DIRECTORY_SEPARATOR, $file_name ), $class );
+		$file          = trailingslashit( $include_path ) . strtolower( $relative_path );
 
-		$include_path = untrailingslashit( __DIR__ );
-		$class_name   = strtolower( $matches['class_name'] );
-		$file_name    = 'class-' . str_replace( '_', '-', $class_name ) . '.php';
-
-		// And an array of possible locations in order of importance.
-		$locations = array(
-			"$include_path",
-			"$include_path/admin",
-			"$include_path/cli",
-			"$include_path/libraries",
-			"$include_path/rest",
-			"$include_path/utilities",
-			"$include_path/wc",
-		);
-
-		foreach ( $locations as $location ) {
-			if ( file_exists( trailingslashit( $location ) . $file_name ) ) {
-				require_once trailingslashit( $location ) . $file_name;
-			}
+		// if the file exists, require it.
+		if ( file_exists( $file ) ) {
+			require $file;
 		}
 	}
 
@@ -277,13 +262,13 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function register_hooks() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 9 );
-		add_action( 'plugins_loaded', array( $this, 'i18n' ) );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 5 );
+		add_action( 'init', array( $this, 'i18n' ) );
 		add_filter( 'plugin_action_links_' . $this->get( 'basename' ), array( $this, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
 		// Init the plugin after WordPress inits.
-		add_action( 'init', array( $this, 'init' ), 9 );
+		add_action( 'init', array( $this, 'init' ), 5 );
 	}
 
 	/**
@@ -373,7 +358,7 @@ final class Plugin {
 		$this->set( 'cart_manager', new Cart_Manager() );
 
 		if ( is_admin() ) {
-			$this->set( Admin_Manager::class, new Admin\Admin_Manager() );
+			$this->set( 'admin_manager', new Admin\Admin_Manager() );
 		}
 	}
 }

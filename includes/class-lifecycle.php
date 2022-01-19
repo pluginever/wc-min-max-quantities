@@ -35,14 +35,6 @@ class Lifecycle {
 	);
 
 	/**
-	 * Plugin background updater.
-	 *
-	 * @since 1.1.0
-	 * @var Background_Updater
-	 */
-	protected static $background_updater;
-
-	/**
 	 * Lifecycle constructor.
 	 *
 	 * @since 1.1.0

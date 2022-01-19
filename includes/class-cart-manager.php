@@ -78,7 +78,7 @@ class Cart_Manager {
 
 		if ( 'variable' !== $product->get_type() && ! Helper::is_product_excluded( $product->get_id() ) ) {
 			$limits = Helper::get_product_limits( $product->get_id() );
-			if ( !empty( $limits['min_qty'] ) || !empty( $limits['step'] ) ) {
+			if ( ! empty( $limits['min_qty'] ) || ! empty( $limits['step'] ) ) {
 
 				$quantity_attribute = $limits['min_qty'];
 
@@ -212,8 +212,8 @@ class Cart_Manager {
 		}
 
 		//For cart level check for maximum only.
-		$maximum_order_quantity = Plugin::get('settings')->get_option( 'general_max_order_quantity');
-		$maximum_order_total    = Plugin::get('settings')->get_option( 'general_max_order_amount');
+		$maximum_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
+		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
 			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
@@ -238,9 +238,13 @@ class Cart_Manager {
 	 * @return void
 	 */
 	public static function check_cart_items() {
-		$product_ids = [];
-		$quantities  = [];
-		$line_amount = [];
+		$product_ids        = [];
+		$quantities         = [];
+		$line_amount        = [];
+		$max_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
+		$min_order_quantity = Plugin::get( 'settings' )->get_option( 'general_min_order_quantity' );
+		$max_order_amount   = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
+		$min_order_amount   = Plugin::get( 'settings' )->get_option( 'general_min_order_amount' );
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {
@@ -297,35 +301,35 @@ class Cart_Manager {
 		$order_quantity = array_sum( array_values( $quantities ) );
 		$order_total    = array_sum( array_values( $line_amount ) );
 
-		if ( (int) Plugin::get('settings')->get_option( 'general_min_order_quantity' ) > 0 && $order_quantity < (int) Plugin::get('settings')->get_option( 'general_min_order_quantity' ) ) {
+		if ( (int) $min_order_quantity > 0 && $order_quantity < (int) $min_order_quantity ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), (int) Plugin::get('settings')->get_option( 'general_min_order_quantity' ) ) );
+			Helper::add_error( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), (int) $min_order_quantity ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 
 		}
 
-		if ( (int) Plugin::get('settings')->get_option( 'general_max_order_quantity' ) > 0 && $order_quantity > (int) Plugin::get('settings')->get_option( 'general_max_order_quantity' ) ) {
+		if ( (int) $max_order_quantity > 0 && $order_quantity > (int) $max_order_quantity ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), (int) Plugin::get('settings')->get_option( 'general_max_order_quantity' ) ) );
+			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), (int) $max_order_quantity ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 		}
 
-		if ( (int) Plugin::get('settings')->get_option( 'general_min_order_amount' ) > 0 && $order_total < (int) Plugin::get('settings')->get_option( 'general_min_order_amount' ) ) {
+		if ( (int) $min_order_amount > 0 && $order_total < (int) $min_order_amount ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The minimum allowed order value %s. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Plugin::get('settings')->get_option( 'general_min_order_amount' ) ) ) );
+			Helper::add_error( sprintf( __( 'The minimum allowed order value %s. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $min_order_amount ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 
 		}
 
-		if ( (int) Plugin::get('settings')->get_option( 'general_max_order_amount' ) > 0 && $order_total > (int) Plugin::get('settings')->get_option( 'general_max_order_amount' ) ) {
+		if ( (int) $max_order_amount > 0 && $order_total > (int) $max_order_amount ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			Helper::add_error( sprintf( __( 'The maximum allowed order value is %s. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( Plugin::get('settings')->get_option( 'general_max_order_amount' ) ) ) );
+			Helper::add_error( sprintf( __( 'The maximum allowed order value is %s. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $max_order_amount ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;

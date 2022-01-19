@@ -35,7 +35,7 @@ class Admin_Notices {
 		self::$notices = get_option( 'wc_min_max_quantities_admin_notices', array() );
 		add_filter( 'wp_redirect', array( __CLASS__, 'redirect' ), 1 );
 		add_action( 'admin_notices', array( __CLASS__, 'render_notices' ), 15 );
-		add_action( 'wp_ajax_dismiss_admin_notice_' . Plugin::instance()->get('basename'), array( __CLASS__, 'handle_dismiss_notice' ) );
+		add_action( 'wp_ajax_dismiss_admin_notice_' . Plugin::get('basename'), array( __CLASS__, 'handle_dismiss_notice' ) );
 	}
 
 	/**
@@ -268,9 +268,9 @@ class Admin_Notices {
 	 */
 	public static function render_notice( $notice ) {
 		$output            = '';
-		$plugin_class      = Plugin::instance()->get('slug');
+		$plugin_class      = Plugin::get('slug');
 		$dismissible_class = $notice['dismissible'] ? 'is-dismissible' : '';
-		$nonce             = $notice['dismissible'] ? wp_create_nonce( Plugin::instance()->get('id') . '_dismiss_notice' ) : '';
+		$nonce             = $notice['dismissible'] ? wp_create_nonce( Plugin::get('id') . '_dismiss_notice' ) : '';
 
 		$output .= sprintf( '<div class="notice %2$s %3$s %4$s %5$s %7$s-admin-notice" data-notice-id="%5$s" data-plugin-id="%6$s" data-nonce="%8$s">%1$s</div>',
 			wpautop( $notice['message'] ),
@@ -278,7 +278,7 @@ class Admin_Notices {
 			esc_attr( $dismissible_class ),
 			esc_attr( $notice['class'] ),
 			esc_attr( $notice['id'] ),
-			esc_attr( Plugin::instance()->get('basename') ),
+			esc_attr( Plugin::get('basename') ),
 			esc_attr( $plugin_class ),
 			esc_attr( $nonce )
 		);
@@ -296,7 +296,7 @@ class Admin_Notices {
 	 * @since 1.1.0
 	 */
 	public static function render_admin_notice_js() {
-		$plugin_class = Plugin::instance()->get('slug');
+		$plugin_class = Plugin::get('slug');
 		// if there were no notices, or we've already rendered the js, there's nothing to do
 		ob_start();
 		?>
@@ -340,9 +340,9 @@ class Admin_Notices {
 		$notice_id    = filter_input( INPUT_GET, 'notice_id', FILTER_SANITIZE_STRING );
 		$plugin_id    = filter_input( INPUT_GET, 'plugin_id', FILTER_SANITIZE_STRING );
 		$nonce        = filter_input( INPUT_GET, 'nonce', FILTER_SANITIZE_STRING );
-		$nonce_action = Plugin::instance()->get('id') . '_dismiss_notice';
+		$nonce_action = Plugin::get('id') . '_dismiss_notice';
 
-		if ( empty( $notice_id ) || $plugin_id !== esc_attr( Plugin::instance()->get('basename') ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
+		if ( empty( $notice_id ) || $plugin_id !== esc_attr( Plugin::get('basename') ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
 			wp_send_json_error( esc_html__( 'Something does not look appropriate.', 'wc-min-max-quantities' ) );
 		}
 
@@ -353,15 +353,15 @@ class Admin_Notices {
 
 
 	public static function add_welcome_notice() {
-		if ( ! Plugin::instance()->has( 'docs_url' ) ) {
+		if ( ! Plugin::has( 'docs_url' ) ) {
 			return;
 		}
 
 		$message = sprintf(
 		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'Thanks for installing %1$s! To get started, take a minute to %2$sread the documentation%3$s :)', 'wc-min-max-quantities' ),
-			'<strong>' . esc_html( Plugin::instance()->get('name') ) . '</strong>',
-			'<a href="' . esc_url( Plugin::instance()->get('docs_url') ) . '" target="_blank">', '</a>'
+			'<strong>' . esc_html( Plugin::get('name') ) . '</strong>',
+			'<a href="' . esc_url( Plugin::get('docs_url') ) . '" target="_blank">', '</a>'
 		);
 
 		self::add_notice( array(
@@ -376,15 +376,15 @@ class Admin_Notices {
 
 
 	public static function add_review_notice() {
-		if ( ! Plugin::instance()->has( 'reviews_url' ) ) {
+		if ( ! Plugin::has( 'reviews_url' ) ) {
 			return;
 		}
 
 		$message = sprintf(
 		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating to help us spread the word and boost our motivation? %2$s Sure! You deserve it! %3$s', 'wc-min-max-quantities' ),
-			'<strong>' . esc_html( Plugin::instance()->get('name') ) . '</strong>',
-			'<a href="' . esc_url( Plugin::instance()->get('reviews_url') ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>', '</a>'
+			'<strong>' . esc_html( Plugin::get('name') ) . '</strong>',
+			'<a href="' . esc_url( Plugin::get('reviews_url') ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>', '</a>'
 		);
 
 		self::add_notice( array(

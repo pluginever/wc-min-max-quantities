@@ -17,16 +17,26 @@ class Settings {
 	/**
 	 * Settings key/identifier
 	 *
+	 * @since 1.1.0
 	 * @var string
 	 */
 	protected $option_key;
 
 	/**
-	 * Settings page fields.
+	 * Settings tabs.
 	 *
+	 * @since 1.1.0
 	 * @var array
 	 */
-	protected $settings;
+	protected $tabs;
+
+	/**
+	 * Settings page fields.
+	 *
+	 * @since 1.1.0
+	 * @var array
+	 */
+	protected $fields;
 
 	/**
 	 * Class constructor.
@@ -34,10 +44,30 @@ class Settings {
 	 */
 	public function __construct() {
 		$this->option_key = 'wc_min_max_quantities_settings';
-		$this->settings   = $this->get_settings();
+		$this->tabs       = $this->get_tabs();
+		$this->fields     = $this->get_fields();
 
 		add_action( 'wc_min_max_quantities_output_settings', array( $this, 'output_settings' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+	}
+
+	/**
+	 * Get settings tabs.
+	 *
+	 * @since 1.1.0
+	 * @return array
+	 */
+	protected function get_tabs() {
+		$tabs = array(
+			'general'      => array(
+				'title' => esc_html__( 'General', 'wc-min-max-quantities' ),
+			),
+			'translations' => array(
+				'title' => esc_html__( 'Translations', 'wc-min-max-quantities' ),
+			)
+		);
+
+		return apply_filters( 'wc_min_max_quantities_settings_tabs', $tabs );
 	}
 
 	/**
@@ -45,11 +75,10 @@ class Settings {
 	 *
 	 * @return array
 	 */
-	protected function get_settings() {
+	protected function get_fields() {
 		$fields = array(
-			'general'  => array(
-				'title'  => esc_html__( 'General', 'wc-min-max-quantities' ),
-				'fields' => array(
+			'general'      => apply_filters( 'wc_min_max_quantities_general_settings_fields',
+				array(
 					array(
 						'id'    => 'section_product_restrictions',
 						'title' => esc_html__( 'Product Restrictions', 'wc-min-max-quantities' ),
@@ -127,10 +156,7 @@ class Settings {
 					),
 				)
 			),
-			'advanced' => array(
-				'title'  => esc_html__( 'Advanced', 'wc-min-max-quantities' ),
-				'fields' => array()
-			)
+			'translations' => apply_filters( 'wc_min_max_quantities_translations_settings_fields', array() ),
 		);
 
 		/**
@@ -138,7 +164,7 @@ class Settings {
 		 *
 		 * @return array  Array of option fields
 		 */
-		return apply_filters( 'wc_min_max_quantities_settings', $fields );
+		return apply_filters( 'wc_min_max_quantities_settings_fields', $fields );
 	}
 
 	/**
@@ -157,15 +183,19 @@ class Settings {
 		ob_start();
 		wp_enqueue_script( 'jquery' );
 		self::output_style();
+		$tabs = array_filter( $this->tabs, function ( $tab, $tab_id ) {
+			return ! empty( $this->fields[ $tab_id ] ) || ( ! empty( $tab['callback'] ) && is_callable( $tab['callback'] ) );
+		}, ARRAY_FILTER_USE_BOTH );
+
 		?>
 		<div id="wc-min-max-quantities-settings-wrap" class="wrap settings-wrap wcmmq-settings">
 			<h1><?php echo get_admin_page_title() ?></h1>
 
-			<?php if ( ! empty( $this->settings ) && count( $this->settings ) > 1 ) : ?>
+			<?php if ( ! empty( $tabs ) && count( $tabs ) > 1 ) : ?>
 
 				<nav class="nav-tab-wrapper">
-					<?php foreach ( $this->settings as $section_id => $section ) : ?>
-						<a href="#<?php echo esc_attr( $section_id ) ?>" class="nav-tab" id="<?php echo esc_attr( $section_id ) ?>-tab"><?php echo esc_html( $section['title'] ) ?></a>
+					<?php foreach ( $tabs as $tab_id => $tab ) : ?>
+						<a href="#<?php echo esc_attr( $tab_id ) ?>" class="nav-tab" id="<?php echo esc_attr( $tab_id ) ?>-tab"><?php echo esc_html( $tab['title'] ) ?></a>
 					<?php endforeach; ?>
 				</nav>
 
@@ -175,19 +205,19 @@ class Settings {
 			<?php settings_errors(); ?>
 
 			<div class="settings-tabs">
-				<?php foreach ( $this->settings as $section_id => $section ) : ?>
-					<div id="<?php echo esc_attr( $section_id ); ?>" class="settings-tab" style="display: none;">
-						<?php if ( ! empty( $section['callback'] ) && is_callable( $section['callback'] ) ) : ?>
-							<?php call_user_func( $section['callback'] ); ?>
+				<?php foreach ( $this->tabs as $tab_id => $tab ) : ?>
+					<div id="<?php echo esc_attr( $tab_id ); ?>" class="settings-tab" style="display: none;">
+						<?php if ( ! empty( $tab['callback'] ) && is_callable( $tab['callback'] ) ) : ?>
+							<?php call_user_func( $tab['callback'] ); ?>
 						<?php else : ?>
 							<form method="post" action="options.php" enctype="multipart/form-data">
 								<?php settings_fields( 'wc_min_max_quantities_settings' ); ?>
-								<input type="hidden" name="tab" value="<?php echo esc_attr( $section_id ); ?>">
+								<input type="hidden" name="tab" value="<?php echo esc_attr( $tab_id ); ?>">
 								<table class="form-table" role="presentation">
-									<?php $this->do_settings_fields( $this->option_key, $section_id ); ?>
+									<?php $this->do_settings_fields( $this->option_key, $tab_id ); ?>
 								</table>
-								<?php if ( ! isset( $section['hide_save_button'] ) || ! $section['hide_save_button'] ) : ?>
-									<?php submit_button( '', 'primary large', $section_id . '-submit' ); ?>
+								<?php if ( ! isset( $tab['hide_save_button'] ) || ! $tab['hide_save_button'] ) : ?>
+									<?php submit_button( '', 'primary large', $tab_id . '-submit' ); ?>
 								<?php endif; ?>
 							</form>
 						<?php endif; ?>
@@ -310,8 +340,6 @@ class Settings {
 	 * @return void
 	 */
 	public function register_settings() {
-		$sections = $this->settings;
-
 		register_setting(
 			$this->option_key,
 			$this->option_key,
@@ -321,19 +349,19 @@ class Settings {
 			)
 		);
 
-		foreach ( $sections as $section_id => $section ) {
-			if ( empty( $section['fields'] ) || ! is_array( $section['fields'] ) ) {
+		foreach ( $this->fields as $tab_id => $tab ) {
+			if ( empty( $tab ) || ! is_array( $tab ) ) {
 				continue;
 			}
 
 			add_settings_section(
-				$section_id,
+				$tab_id,
 				null,
 				'__return_false',
 				$this->option_key
 			);
 
-			foreach ( $section['fields'] as $field ) {
+			foreach ( $tab as $field ) {
 				// No field id associated, skip.
 				if ( ! isset( $field['id'] ) ) {
 					continue;
@@ -359,7 +387,7 @@ class Settings {
 						'callback'    => '',
 						'css'         => '',
 						'attrs'       => array(),
-						'section'     => $section_id,
+						'tab_id'      => $tab_id,
 					) );
 
 				add_settings_field(
@@ -367,7 +395,7 @@ class Settings {
 					$field['title'],
 					is_callable( $field['callback'] ) ? $field['callback'] : array( $this, 'render_field' ),
 					$this->option_key,
-					$section_id,
+					$tab_id,
 					$field
 				);
 			}
@@ -389,7 +417,7 @@ class Settings {
 		if ( ! empty( $field['value'] ) && is_callable( $field['value'] ) ) {
 			$field['value'] = call_user_func( $field['value'] );
 		} else {
-			$field['value'] = $this->get_option( implode( '_', [ $field['section'], $field['id'] ] ), $field['default'] );
+			$field['value'] = $this->get_option( implode( '_', [ $field['tab_id'], $field['id'] ] ), $field['default'] );
 		}
 
 		// Custom attribute handling.
@@ -442,7 +470,7 @@ class Settings {
 					'<input type="%1$s" name="%2$s[%3$s_%4$s]" id="%2$s_%3$s_%4$s" class="field-type-%1$s %5$s-text %6$s" style="%7$s" placeholder="%8$s" value="%9$s" %10$s/> %11$s %12$s',
 					esc_attr( $field['type'] ),
 					esc_attr( $this->option_key ),
-					esc_attr( $field['section'] ),
+					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
 					esc_attr( $field['size'] ),
 					esc_attr( $field['class'] ),
@@ -459,7 +487,7 @@ class Settings {
 			case 'textarea':
 				$output = sprintf( '<textarea name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-textarea %4$s-text %5$s" style="%6$s" placeholder="%7$s"  %8$s>%9$s</textarea>%10$s %11$s',
 					esc_attr( $this->option_key ),
-					esc_attr( $field['section'] ),
+					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
 					esc_attr( $field['size'] ),
 					esc_attr( $field['class'] ),
@@ -492,7 +520,7 @@ class Settings {
 				$output = sprintf(
 					'<select name="%1$s[%2$s_%3$s]%4$s" id="%1$s_%2$s_%3$s" class="field-type-select %5$s-text %6$s" style="%7$s"  %8$s/> %9$s %10$s</select> %11$s',
 					esc_attr( $this->option_key ),
-					esc_attr( $field['section'] ),
+					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
 					( 'multiselect' === $field['type'] ) ? '[]' : '',
 					esc_attr( $field['size'] ),
@@ -512,7 +540,7 @@ class Settings {
 					$checked = isset( $value[ $key ] ) ? $value[ $key ] : 'no';
 					$options .= sprintf( '<li><label><input type="checkbox" name="%1$s[%2$s_%3$s][%4$s]" id="%1$s_%2$s_%3$s_%4$s" class="field-type-checkbox %5$s" style="%6$s" value="yes" %7$s %8$s/>%9$s</label></li>',
 						esc_attr( $this->option_key ),
-						esc_attr( $field['section'] ),
+						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] ),
 						esc_attr( $key ),
 						esc_attr( $field['class'] ),
@@ -535,7 +563,7 @@ class Settings {
 				foreach ( $field['options'] as $key => $title ) {
 					$options .= sprintf( '<li><label><input type="radio" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s_%6$s" class="field-type-radio %4$s" style="%5$s" value="%6$s" %7$s  %8$s/>%9$s</label></li>',
 						esc_attr( $this->option_key ),
-						esc_attr( $field['section'] ),
+						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] ),
 						esc_attr( $field['class'] ),
 						esc_attr( $field['css'] ),
@@ -555,7 +583,7 @@ class Settings {
 			case 'checkbox':
 				$output = sprintf( '<label><input type="checkbox" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-checkbox %4$s" style="%5$s" value="yes" %6$s %7$s/>%8$s</label> %9$s',
 					esc_attr( $this->option_key ),
-					esc_attr( $field['section'] ),
+					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
 					esc_attr( $field['class'] ),
 					esc_attr( $field['css'] ),
@@ -577,7 +605,7 @@ class Settings {
 					stripslashes( $field['value'] ),
 					sprintf( '%1$s_%2$s_%3$s',
 						esc_attr( $this->option_key ),
-						esc_attr( $field['section'] ),
+						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] )
 					),
 					array_merge(
@@ -585,7 +613,7 @@ class Settings {
 						array(
 							'textarea_name' => sprintf( '%1$s[%2$s_%3$s]',
 								esc_attr( $this->option_key ),
-								esc_attr( $field['section'] ),
+								esc_attr( $field['tab_id'] ),
 								esc_attr( $field['id'] )
 							)
 						)
@@ -618,13 +646,13 @@ class Settings {
 
 		$input = $input ? $input : array();
 
-		foreach ( $settings['fields'] as $field ) {
+		foreach ( $settings as $field ) {
 			if ( ! isset( $field['id'], $field['type'] ) ) {
 				continue;
 			}
 
-			$raw_value = isset( $input[ $field['id'] ] ) ? wp_unslash( $input[ $field['id'] ] ) : null;
 			$name      = sprintf( '%s_%s', $tab, $field['id'] );
+			$raw_value = isset( $input[ $name ] ) ? wp_unslash( $input[ $name ] ) : null;
 
 			// Format the value based on option type.
 			switch ( $field['type'] ) {
@@ -676,15 +704,15 @@ class Settings {
 	public function get_defaults() {
 		$defaults = array();
 
-		foreach ( $this->settings as $section_id => $section ) {
-			if ( empty( $section['fields'] ) || ! is_array( $section['fields'] ) ) {
+		foreach ( $this->fields as $tab_id => $tab ) {
+			if ( empty( $tab ) || ! is_array( $tab ) ) {
 				continue;
 			}
-			foreach ( $section['fields'] as $field ) {
+			foreach ( $tab as $field ) {
 				if ( empty( $field['id'] ) || ! isset( $field['default'] ) ) {
 					continue;
 				}
-				$id    = implode( '_', [ $section_id, $field['id'] ] );
+				$id    = implode( '_', [ $tab_id, $field['id'] ] );
 				$value = isset( $field['default'] ) ? $field['default'] : null;
 				if ( ! empty( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 					$value = call_user_func( $field['sanitize_callback'], $value );
