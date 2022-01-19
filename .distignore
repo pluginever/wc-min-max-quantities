@@ -41,6 +41,8 @@ tests
 *.tar.gz
 *.zip
 *.sh
+.phpstorm.meta.php
+.husky
 
 #OS
 .DS_Store
@@ -54,3 +56,4 @@ Thumbs.db
 
 #Plugin Specific
 scaffold.json
+assets

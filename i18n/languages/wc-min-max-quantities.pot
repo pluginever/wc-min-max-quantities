@@ -1,15 +1,15 @@
-# Copyright (C) 2021 pluginever
+# Copyright (C) 2022 pluginever
 # This file is distributed under the same license as the WC Min Max Quantities package.
 msgid ""
 msgstr ""
 "Project-Id-Version: WC Min Max Quantities 1.1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/wc-min-max-quantities\n"
-"POT-Creation-Date: 2021-12-30 20:12:29+00:00\n"
+"POT-Creation-Date: 2022-01-19 09:31:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -25,261 +25,253 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/admin/class-admin-notices.php:330
-msgid "Something does not look appropriate."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:46
-msgid "General Settings"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:68
-#: includes/admin/class-admin-settings.php:73 src/Admin/Settings.php:80
-msgid "Product Restrictions"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:70
-#: includes/admin/class-admin-settings.php:75 src/Admin/Settings.php:82
-msgid ""
-"The following options are for adding minimum maximum rules for products "
-"globally."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:79 src/Admin/Settings.php:86
-msgid "Minimum product quantity"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:81 src/Admin/Settings.php:88
-msgid ""
-"Minimum number of items required for each product. Set zero for no "
-"restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:86 src/Admin/Settings.php:93
-msgid "Maximum product quantity"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:88 src/Admin/Settings.php:95
-msgid ""
-"Maximum quantity allowed for each single product. Set zero for no "
-"restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:93
-#: includes/wc/class-metabox-manager.php:85 src/Admin/Metaboxes.php:71
-#: src/Admin/Settings.php:100
-msgid "Quantity groups of"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:95 src/Admin/Settings.php:102
-msgid ""
-"Enter a quantity to only allow product to be purchased in groups of X. Set "
-"zero for no restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:100 src/Admin/Settings.php:107
-msgid "Order Restriction"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:102 src/Admin/Settings.php:109
-msgid "The following options are for cart restrictions"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:106 src/Admin/Settings.php:113
-msgid "Minimum order quantity"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:108 src/Admin/Settings.php:115
-msgid "Minimum number of items in cart. Set zero for no restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:114 src/Admin/Settings.php:120
-msgid "Maximum order quantity"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:116 src/Admin/Settings.php:122
-msgid "Maximum number of items in cart. Set zero for no restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:122 src/Admin/Settings.php:127
-msgid "Minimum order amount"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:124 src/Admin/Settings.php:129
-msgid "Minimum order total. Set zero for no restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:129 src/Admin/Settings.php:134
-msgid "Maximum order amount"
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:131 src/Admin/Settings.php:136
-msgid "Maximum order total.Set zero for no restrictions."
-msgstr ""
-
-#: includes/admin/class-admin-settings.php:151
+#: includes/admin/class-admin-manager.php:51
 msgid "Min Max Quantities Settings"
 msgstr ""
 
-#: includes/admin/class-admin-settings.php:152 src/Admin/Settings.php:56
-#: src/Admin/Settings.php:57
+#: includes/admin/class-admin-manager.php:52
 msgid "Min Max Quantities"
 msgstr ""
 
-#: includes/class-ajax.php:47
-msgid "Error: You are not allowed to do this."
+#: includes/admin/class-admin-manager.php:74
+msgid "Exclude Min/Max Rule"
 msgstr ""
 
-#: includes/class-ajax.php:68
-msgid "Error: Cheatin&#8217; huh?."
+#: includes/admin/class-admin-manager.php:75
+msgid "The product will be excluded from Min/Max rules if checked."
 msgstr ""
 
-#: includes/class-plugin.php:65
-msgid "Cloning is forbidden."
+#: includes/admin/class-admin-manager.php:82
+msgid "Override Global"
 msgstr ""
 
-#: includes/class-plugin.php:75
-msgid "Unserializing instances of this class is forbidden."
+#: includes/admin/class-admin-manager.php:83
+msgid "Global Min/Max rules will be overridden by local settings if checked."
 msgstr ""
 
-#: includes/class-plugin.php:298
-msgid "Settings"
+#: includes/admin/class-admin-manager.php:98
+msgid "Minimum quantity"
 msgstr ""
 
-#: includes/class-plugin.php:323
-#. translators: Docs as in Documentation
-msgid "Docs"
+#: includes/admin/class-admin-manager.php:99
+msgid ""
+"Enter a quantity to prevent the user buying this product if they have fewer "
+"than the allowed quantity in their cart."
 msgstr ""
 
-#: includes/class-plugin.php:337
-msgid "Upgrade to Pro"
+#: includes/admin/class-admin-manager.php:112
+msgid "Maximum quantity"
 msgstr ""
 
-#: includes/libraries/wp-background-process.php:447
-#: includes/utilities/class-background-process.php:175
-#. translators: %d: interval
-msgid "Every %d minutes"
+#: includes/admin/class-admin-manager.php:113
+msgid ""
+"Enter a quantity to prevent the user buying this product if they have more "
+"than the allowed quantity in their cart."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:196
-#: includes/wc/class-cart-manager.php:298 src/Plugin.php:268 src/Plugin.php:370
+#: includes/admin/class-admin-manager.php:126 includes/class-settings.php:82
+msgid "Quantity groups of"
+msgstr ""
+
+#: includes/admin/class-admin-manager.php:127
+msgid "Enter a quantity to only allow this product to be purchased in groups of X."
+msgstr ""
+
+#: includes/admin/class-admin-notices.php:346
+msgid "Something does not look appropriate."
+msgstr ""
+
+#: includes/admin/class-admin-notices.php:362
+msgid ""
+"Thanks for installing %1$s! To get started, take a minute to %2$sread the "
+"documentation%3$s :)"
+msgstr ""
+
+#: includes/admin/class-admin-notices.php:385
+msgid ""
+"We hope you're enjoying %1$s! Could you please do us a BIG favor and give "
+"it a 5-star rating to help us spread the word and boost our motivation? "
+"%2$s Sure! You deserve it! %3$s"
+msgstr ""
+
+#: includes/class-cart-manager.php:194 includes/class-cart-manager.php:273
 #. translators: %1$s: Product name, %2$d: Maximum quantity
 msgid "The maximum allowed quantity for %1$s is %2$d."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:205
-#: includes/wc/class-cart-manager.php:306 src/Plugin.php:277 src/Plugin.php:378
+#: includes/class-cart-manager.php:202 includes/class-cart-manager.php:282
 #. translators: %1$s: Product name, %2$d: Minimum quantity
 msgid "The minimum required quantity for %1$s is %2$d."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:212 src/Plugin.php:284
+#: includes/class-cart-manager.php:209
+#. translators: %1$s: Product name, %2$d: Group amount
+msgid "%1$s must be bought in groups of %2$d."
+msgstr ""
+
+#: includes/class-cart-manager.php:219
+msgid "The maximum allowed order quantity is %s."
+msgstr ""
+
+#: includes/class-cart-manager.php:225
+msgid "The maximum allowed order total is %s."
+msgstr ""
+
+#: includes/class-cart-manager.php:289
 #. translators: %1$s: Product name, %2$d: quantity amount
 msgid ""
 "%1$s must be bought in groups of %2$d. Please increase or decrease the "
 "quantity to continue."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:225 src/Plugin.php:297
+#: includes/class-cart-manager.php:302
 #. translators: %d: Minimum amount of items in the cart
 msgid ""
 "The minimum required items in cart is %d. Please increase the quantity in "
 "your cart."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:234 src/Plugin.php:306
+#: includes/class-cart-manager.php:311
 #. translators: %d: Maximum amount of items in the cart
 msgid ""
 "The maximum allowed order quantity is %d. Please decrease the quantity in "
 "your cart."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:242 src/Plugin.php:314
+#: includes/class-cart-manager.php:319
 #. translators: %d: Minimum amount of items in the cart
 msgid ""
 "The minimum allowed order value %s. Please increase the quantity in your "
 "cart."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:251 src/Plugin.php:323
+#: includes/class-cart-manager.php:328
 #. translators: %d: Maximum amount of items in the cart
 msgid ""
 "The maximum allowed order value is %s. Please decrease the quantity in your "
 "cart."
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:313 src/Plugin.php:385
-#. translators: %1$s: Product name, %2$d: Group amount
-msgid "%1$s must be bought in groups of %2$d."
-msgstr ""
-
-#: includes/wc/class-cart-manager.php:323 src/Plugin.php:395
-msgid "The maximum allowed order quantity is %s."
-msgstr ""
-
-#: includes/wc/class-cart-manager.php:329 src/Plugin.php:401
-msgid "The maximum allowed order total is %s."
-msgstr ""
-
-#: includes/wc/class-cart-manager.php:429 src/Plugin.php:501
+#: includes/class-cart-manager.php:425
 msgid "Available on backorder"
 msgstr ""
 
-#: includes/wc/class-cart-manager.php:435 src/Plugin.php:507
+#: includes/class-cart-manager.php:431
 msgid "Out of stock"
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:42 src/Admin/Metaboxes.php:28
-msgid "Ignore min/max rules"
+#: includes/class-plugin.php:67
+msgid "Cloning is forbidden."
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:43 src/Admin/Metaboxes.php:29
-msgid "Do not apply any of the min max restrictions to this product."
+#: includes/class-plugin.php:77
+msgid "Unserializing instances of this class is forbidden."
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:50 src/Admin/Metaboxes.php:36
-msgid "Override global"
+#: includes/class-plugin.php:320
+msgid "Settings"
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:51 src/Admin/Metaboxes.php:37
-msgid ""
-"Global settings will be overridden by per product settings. Set zero for no "
-"restrictions."
+#: includes/class-plugin.php:324
+msgid "Upgrade"
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:58 src/Admin/Metaboxes.php:44
-msgid "Minimum quantity"
+#: includes/class-plugin.php:349
+#. translators: Docs as in Documentation
+msgid "Docs"
 msgstr ""
 
-#: includes/wc/class-metabox-manager.php:59 src/Admin/Metaboxes.php:45
-msgid ""
-"Enter a quantity to prevent the user buying this product if they have fewer "
-"than the allowed quantity in their cart."
-msgstr ""
-
-#: includes/wc/class-metabox-manager.php:71 src/Admin/Metaboxes.php:57
-msgid "Maximum quantity"
-msgstr ""
-
-#: includes/wc/class-metabox-manager.php:72 src/Admin/Metaboxes.php:58
-msgid ""
-"Enter a quantity to prevent the user buying this product if they have more "
-"than the allowed quantity in their cart."
-msgstr ""
-
-#: includes/wc/class-metabox-manager.php:86 src/Admin/Metaboxes.php:72
-msgid "Enter a quantity to only allow this product to be purchased in groups of X."
-msgstr ""
-
-#: src/Admin/Settings.php:33
-msgid "WC Min Max Settings"
-msgstr ""
-
-#: src/Admin/Settings.php:74 src/Admin/Settings.php:77
+#: includes/class-settings.php:51
 msgid "General"
 msgstr ""
 
-#: wc-min-max-quantities.php:44
+#: includes/class-settings.php:55 includes/class-settings.php:60
+msgid "Product Restrictions"
+msgstr ""
+
+#: includes/class-settings.php:57 includes/class-settings.php:62
+msgid ""
+"The following options are for adding minimum maximum rules for products "
+"globally."
+msgstr ""
+
+#: includes/class-settings.php:66
+msgid "Minimum product quantity"
+msgstr ""
+
+#: includes/class-settings.php:68
+msgid ""
+"Minimum number of items required for each product. Set zero for no "
+"restrictions."
+msgstr ""
+
+#: includes/class-settings.php:74
+msgid "Maximum product quantity"
+msgstr ""
+
+#: includes/class-settings.php:76
+msgid ""
+"Maximum quantity allowed for each single product. Set zero for no "
+"restrictions."
+msgstr ""
+
+#: includes/class-settings.php:84
+msgid ""
+"Enter a quantity to only allow product to be purchased in groups of X. Set "
+"zero for no restrictions."
+msgstr ""
+
+#: includes/class-settings.php:90
+msgid "Order Restriction"
+msgstr ""
+
+#: includes/class-settings.php:92
+msgid "The following options are for cart restrictions"
+msgstr ""
+
+#: includes/class-settings.php:96
+msgid "Minimum order quantity"
+msgstr ""
+
+#: includes/class-settings.php:98
+msgid "Minimum number of items in cart. Set zero for no restrictions."
+msgstr ""
+
+#: includes/class-settings.php:104
+msgid "Maximum order quantity"
+msgstr ""
+
+#: includes/class-settings.php:106
+msgid "Maximum number of items in cart. Set zero for no restrictions."
+msgstr ""
+
+#: includes/class-settings.php:113
+msgid "Minimum order amount"
+msgstr ""
+
+#: includes/class-settings.php:115
+msgid "Minimum order total. Set zero for no restrictions."
+msgstr ""
+
+#: includes/class-settings.php:121
+msgid "Maximum order amount"
+msgstr ""
+
+#: includes/class-settings.php:123
+msgid "Maximum order total.Set zero for no restrictions."
+msgstr ""
+
+#: includes/class-settings.php:131
+msgid "Advanced"
+msgstr ""
+
+#: includes/libraries/wp-background-process.php:448
+#: includes/utilities/class-background-process.php:176
+#. translators: %d: interval
+msgid "Every %d minutes"
+msgstr ""
+
+#: wc-min-max-quantities.php:47
 #. translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link.
 msgid "%1$s requires %2$s to be installed and active. You can download %3$s here."
 msgstr ""
@@ -306,12 +298,12 @@ msgstr ""
 msgid "https://pluginever.com/"
 msgstr ""
 
-#: includes/class-plugin.php:328
+#: includes/class-plugin.php:354
 msgctxt "noun"
 msgid "Support"
 msgstr ""
 
-#: includes/class-plugin.php:333
+#: includes/class-plugin.php:359
 msgctxt "verb"
 msgid "Reviews"
 msgstr ""

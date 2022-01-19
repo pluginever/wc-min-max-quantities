@@ -22,10 +22,10 @@ class Background_Updater extends Background_Process {
 	/**
 	 * Background_Updater Constructor.
 	 */
-	public function __construct() {
+	public function __construct( $id = '' ) {
 		// Uses unique prefix per blog so each blog has separate queue.
 		$this->prefix = 'wp_' . get_current_blog_id();
-		$this->action = Plugin::instance()->id . '_background_updater';
+		$this->action = $id . '_background_updater';
 
 		parent::__construct();
 	}

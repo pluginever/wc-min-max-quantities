@@ -2,38 +2,32 @@
   "name": "wc-min-max-quantities",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "version": "1.1.0",
-  "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
   "author": {
     "name": "pluginever",
     "email": "support@byteever.com",
     "url": "https://www.pluginever.com"
   },
+  "license": "GPL-2.0-or-later",
+  "keywords": [],
+  "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
+  "repository": "",
+  "bugs": {},
   "engines": {
     "node": ">=8.9.3",
     "npm": ">=5.5.1"
   },
-  "scripts": {
-    "prebuild": "npm install",
-    "build": "grunt build",
-    "watch": "grunt watch",
-    "build:test": "grunt shell"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@wordpress/eslint-plugin": "^9.3.0",
-    "autoprefixer": "^9.8.8",
     "grunt": "^1.4.1",
     "grunt-checktextdomain": "^1.0.1",
-    "grunt-contrib-cssmin": "^4.0.0",
-    "grunt-contrib-uglify": "^5.0.1",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-eslint": "^24.0.0",
-    "grunt-postcss": "^0.9.0",
-    "grunt-sass": "^3.1.0",
     "grunt-shell": "^3.0.1",
     "grunt-wp-i18n": "^1.0.3",
     "husky": "^7.0.4",
-    "matchdep": "^2.0.0",
-    "node-sass": "^7.0.1"
+    "matchdep": "^2.0.0"
+  },
+  "scripts": {
+    "postinstall": "husky install",
+    "build": "grunt build"
   },
   "husky": {
     "hooks": {
@@ -56,8 +50,5 @@
     "last 2 version",
     "> 1%",
     "IE 10"
-  ],
-  "dependencies": {
-    "a11y-dialog": "^7.3.0"
-  }
+  ]
 }

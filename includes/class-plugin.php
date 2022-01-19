@@ -9,21 +9,30 @@
 
 namespace WC_Min_Max_Quantities;
 
+use WC_Min_Max_Quantities\Admin\Admin_Manager;
+
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Final Plugin class.
- *
- * @property string $version Plugin version.
- * @property string $slug Plugin slug.
- * @property string $id Plugin unique id.
- * @property string $name Plugin name.
- * @property string $file Plugin file.
- * @property string $basename Plugin basename.
- * @property string $dir Plugin directory path.
- * @property string $url Plugin directory url.
  */
 final class Plugin {
+	/**
+	 * Plugin version number.
+	 *
+	 * @since 1.1.0
+	 * @const string
+	 */
+	protected $version = '1.1.0';
+
+	/**
+	 * Plugin data container.
+	 *
+	 * @since 1.1.0
+	 * @var array|bool[]|int[]|string[]|object[]
+	 */
+	protected $container = [];
+
 	/**
 	 * The single instance of the class.
 	 *
@@ -31,14 +40,6 @@ final class Plugin {
 	 * @var Plugin
 	 */
 	protected static $instance;
-
-	/**
-	 * Plugin data container.
-	 *
-	 * @since 1.1.0
-	 * @var array
-	 */
-	protected $container = [];
 
 	/**
 	 * Main Plugin Instance.
@@ -77,57 +78,6 @@ final class Plugin {
 	}
 
 	/**
-	 * Magic method for checking the existence of a certain container.
-	 *
-	 * @param string $key Key to check the set status for.
-	 *
-	 * @since 1.1.0
-	 * @return bool
-	 */
-	public function __isset( $key ) {
-		return isset( $this->container[ $key ] );
-	}
-
-	/**
-	 * Call method or properties on demand.
-	 *
-	 * @param string $key Key to return the value for.
-	 *
-	 * @since 1.1.0
-	 * @return mixed
-	 */
-	public function __get( $key ) {
-		return isset( $this->container[ $key ] ) ? $this->container[ $key ] : null;
-	}
-
-	/**
-	 * Call method or properties on demand.
-	 *
-	 * @param string $key Key to set a value for.
-	 * @param mixed $value Value to set.
-	 *
-	 * @since 1.1.0
-	 * @return void
-	 */
-	public function __set( $key, $value ) {
-		$this->container[ $key ] = $value;
-	}
-
-	/**
-	 * Magic method for unsetting variables.
-	 *
-	 * @param string $key Key to unset a value for.
-	 *
-	 * @since 1.1.0
-	 * @return void
-	 */
-	public function __unset( $key ) {
-		if ( isset( $this->container[ $key ] ) ) {
-			unset( $this->container[ $key ] );
-		}
-	}
-
-	/**
 	 * This method will be called when somebody will try to invoke a method in object
 	 * context, which does not exist, like:
 	 *
@@ -137,47 +87,72 @@ final class Plugin {
 	 * @param array $arguments Array of arguments passed to the method.
 	 */
 	public function __call( $method, $arguments ) {
-		$sub_method = substr( $method, 0, 3 );
-		// Drop method name.
-		$property_name = substr( $method, 4 );
-		switch ( $sub_method ) {
+		switch ( $method ) {
 			case "get":
-				return $this->get( $property_name );
+				return $this->get( $arguments[0] );
 			case "set":
-				$this->set( $property_name, $arguments[0] );
-				break;
+				return $this->set( $arguments[0], $arguments[1] );
 			case "has":
-				return $this->has( $property_name );
+				return $this->has( $arguments[0] );
 			default:
 				throw new \BadMethodCallException( "Undefined method $method" );
 		}
+	}
 
-		return null;
+	/**
+	 * Magic method for calling methods on the container.
+	 *
+	 * @param string $method Method name.
+	 * @param mixed $args Method arguments.
+	 *
+	 * @mathod static get_version
+	 *
+	 * @return bool|mixed|null
+	 */
+	public static function __callStatic( $method, $args ) {
+		return self::$instance->__call( $method, $args );
 	}
 
 	/**
 	 * Call method or properties on demand.
 	 *
-	 * @param string $key Key to return the value for.
+	 * @param string $prop Property to return the value for.
+	 * @param mixed $default The value that should be returned if the variable key is not a registered one.
 	 *
 	 * @since 1.1.0
-	 * @return mixed
+	 * @return mixed Either the registered value or the default value if the variable is not registered.
 	 */
-	public function get( $key ) {
-		return $this->__get( $key );
+	protected function get( $prop, $default = null ) {
+		if ( isset( $this->container[ $prop ] ) ) {
+			return $this->container[ $prop ];
+		}
+
+		return $default;
 	}
 
 	/**
 	 * Call method or properties on demand.
 	 *
-	 * @param string $key Key to set a value for.
+	 * @param string $prop Property to set a value for.
 	 * @param mixed $value Value to set.
 	 *
 	 * @since 1.1.0
 	 * @return Plugin
 	 */
-	public function set( $key, $value ) {
-		$this->__set( $key, $value );
+	protected function set( $prop, $value = null ) {
+		if ( empty( $prop ) ) {
+			return $this;
+		}
+
+		if ( $this->has( $prop ) ) {
+			return $this;
+		}
+
+		if ( is_null( $value ) ) {
+			$value = $prop;
+		}
+
+		$this->container[ $prop ] = $value;
 
 		return $this;
 	}
@@ -190,44 +165,8 @@ final class Plugin {
 	 * @since 1.1.0
 	 * @return bool
 	 */
-	public function has( $key ) {
-		return $this->__isset( $key );
-	}
-
-	/**
-	 * Get the full path to the plugin folder, with trailing slash (e.g. /wp-content/plugins/my-plugin/).
-	 *
-	 * @param string $path Relative path.
-	 *
-	 * @since 1.1.0
-	 * @return string The plugin directory path.
-	 */
-	public function get_path( $path = '' ) {
-		$plugin_path = plugin_dir_path( $this->file );
-		if ( ! empty( $plugin_path ) && ! empty( $path ) && is_string( $path ) ) {
-			$plugin_path = trailingslashit( $plugin_path );
-			$plugin_path .= ltrim( $path, '/' );
-		}
-
-		return $plugin_path;
-	}
-
-	/**
-	 * Get the URL to the plugin folder, with trailing slash.
-	 *
-	 * @param string $path Relative path.
-	 *
-	 * @since 1.1.0
-	 * @return string (URL)
-	 */
-	public function get_url( $path = '' ) {
-		$url = plugin_dir_url( $this->file );
-		if ( ! empty( $url ) && ! empty( $path ) && is_string( $path ) ) {
-			$url = trailingslashit( $url );
-			$url .= ltrim( $path, '/' );
-		}
-
-		return $url;
+	protected function has( $key ) {
+		return ! empty( $this->container[ $key ] );
 	}
 
 	/**
@@ -248,6 +187,7 @@ final class Plugin {
 	 */
 	protected function __construct() {
 		$this->setup_plugin();
+		$this->includes();
 		$this->register_hooks();
 	}
 
@@ -259,21 +199,75 @@ final class Plugin {
 	 */
 	protected function setup_plugin() {
 		// Plugin data.
-		$this->version  = '1.1.0';
-		$this->slug     = 'wc-min-max-quantities';
-		$this->id       = 'wc_min_max_quantities';
-		$this->name     = 'WC Min Max Quantities';
-		$this->file     = WC_MIN_MAX_QUANTITIES_FILE;
-		$this->basename = plugin_basename( $this->file );
-		$this->dir      = plugin_dir_path( $this->file );
-		$this->url      = plugin_dir_url( $this->file );
+		$this->set( 'version', $this->version );
+		$this->set( 'file', WC_MIN_MAX_QUANTITIES_PLUGIN_FILE );
+		$this->set( 'name', 'WC Min Max Quantities' );
+		$this->set( 'slug', basename( dirname( $this->get( 'file' ) ) ) );
+		$this->set( 'basename', plugin_basename( $this->get( 'file' ) ) );
+		$this->set( 'plugin_id', str_replace( '-', '_', $this->get( 'slug' ) ) );
+		$this->set( 'plugin_path', untrailingslashit( plugin_dir_path( $this->get( 'file' ) ) ) );
+		$this->set( 'plugin_url', untrailingslashit( plugin_dir_url( $this->get( 'file' ) ) ) );
+		$this->set( 'pro_exist', $this->is_pro_exists() );
 
 		// Meta URLs.
-		$this->docs_url    = 'http://pluginever.com/docs';
-		$this->support_url = 'http://pluginever.com/support';
-		$this->reviews_url = 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post';
-		$this->upgrade_url = 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/';
-		$this->settings_url = admin_url( 'admin.php?page=wc-min-max-quantities-settings' );
+		$this->set( 'docs_url', 'http://pluginever.com/docs' );
+		$this->set( 'support_url', 'http://pluginever.com/support' );
+		$this->set( 'reviews_url', 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5' );
+		$this->set( 'pro_url', 'https://pluginever.com/plugins/wc-min-max-quantities-pro/' );
+		$this->set( 'settings_url', admin_url( 'admin.php?page=wc-min-max-quantities-settings' ) );
+	}
+
+	/**
+	 * Include required core files used in admin and on the frontend.
+	 *
+	 * @since 1.1.0
+	 * @return void
+	 */
+	protected function includes() {
+		// Register autoloader.
+		spl_autoload_register( array( $this, 'autoload' ), true );
+		$this->set( 'background_updater', new Utilities\Background_Updater( $this->get( 'id' ) ) );
+		$this->set( 'lifecycle', new Lifecycle() );
+	}
+
+	/**
+	 * Autoloader for classes
+	 *
+	 * @param string $class Fully qualified classname to be loaded.
+	 *
+	 * @since 1.1.0
+	 */
+	public function autoload( $class ) {
+		$class = ltrim( $class, '\\' );
+
+		if ( ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
+			return;
+		}
+
+		if ( 0 !== stripos( $class, __NAMESPACE__ ) ) {
+			return;
+		}
+
+		$include_path = untrailingslashit( __DIR__ );
+		$class_name   = strtolower( $matches['class_name'] );
+		$file_name    = 'class-' . str_replace( '_', '-', $class_name ) . '.php';
+
+		// And an array of possible locations in order of importance.
+		$locations = array(
+			"$include_path",
+			"$include_path/admin",
+			"$include_path/cli",
+			"$include_path/libraries",
+			"$include_path/rest",
+			"$include_path/utilities",
+			"$include_path/wc",
+		);
+
+		foreach ( $locations as $location ) {
+			if ( file_exists( trailingslashit( $location ) . $file_name ) ) {
+				require_once trailingslashit( $location ) . $file_name;
+			}
+		}
 	}
 
 	/**
@@ -283,13 +277,13 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function register_hooks() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-
-		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'plugin_action_links' ) );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 9 );
+		add_action( 'plugins_loaded', array( $this, 'i18n' ) );
+		add_filter( 'plugin_action_links_' . $this->get( 'basename' ), array( $this, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
-		add_action( 'init', [ $this, 'i18n' ] );
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
+		// Init the plugin after WordPress inits.
+		add_action( 'init', array( $this, 'init' ), 9 );
 	}
 
 	/**
@@ -309,7 +303,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'wc-min-max-quantities', false, dirname( $this->basename ) . '/i18n/languages' );
+		load_plugin_textdomain( 'wc-min-max-quantities', false, plugin_basename( $this->get( 'plugin_path' ) ) . '/i18n/languages/' );
 	}
 
 	/**
@@ -321,9 +315,13 @@ final class Plugin {
 	 * @since 1.1.0
 	 * @return array associative array of plugin action links.
 	 */
-	public function plugin_action_links( $links ) {
+	public function action_links( $links ) {
 		if ( $this->has( 'settings_url' ) ) {
 			array_unshift( $links, sprintf( '<a href="%1$s">%2$s</a>', esc_url( $this->get( 'settings_url' ) ), __( 'Settings', 'wc-min-max-quantities' ) ) );
+		}
+
+		if ( ! $this->is_pro_exists() && $this->has( 'pro_url' ) ) {
+			array_unshift( $links, sprintf( '<a href="%1$s" style="color:red;" target="_blank">%2$s</a>', esc_url( Plugin::instance()->get( 'pro_url' ) ), __( 'Upgrade', 'wc-min-max-quantities' ) ) );
 		}
 
 		return $links;
@@ -339,7 +337,7 @@ final class Plugin {
 	 * @return string[] An array of the plugin's metadata.
 	 */
 	public function plugin_row_meta( $links, $file ) {
-		if ( $file !== $this->basename ) {
+		if ( $file !== $this->get( 'basename' ) ) {
 			return $links;
 		}
 
@@ -361,10 +359,6 @@ final class Plugin {
 			$custom_links['reviews'] = sprintf( '<a href="%s">%s</a>', $this->get( 'reviews_url' ), esc_html_x( 'Reviews', 'verb', 'wc-min-max-quantities' ) );
 		}
 
-		if ( ! $this->is_pro_exists() && $this->has( 'upgrade_url' ) ) {
-			$links['upgrade_url'] = '<a href="' . esc_url( $this->get( 'upgrade_url' ) ) . '" title="' . esc_attr( __( 'Upgrade to Pro', 'wc-min-max-quantities' ) ) . '" style="color:red;">' . esc_html__( 'Upgrade to Pro', 'wc-min-max-quantities' ) . '</a>';
-		}
-
 		return array_merge( $links, $custom_links );
 	}
 
@@ -375,14 +369,11 @@ final class Plugin {
 	 * @return void
 	 */
 	public function init() {
-		$this->lifecycle     = new Lifecycle();
-		$this->admin_notices = new Admin\Admin_Notices();
-		// WooCommerce
-		$this->wc_cart_manager = new WC\Cart_Manager();
+		$this->set( 'settings', new Settings() );
+		$this->set( 'cart_manager', new Cart_Manager() );
 
 		if ( is_admin() ) {
-			$this->admin_manager    = new Admin\Admin_Manager();
-			$this->wc_admin_manager = new WC\Admin_Manager();
+			$this->set( Admin_Manager::class, new Admin\Admin_Manager() );
 		}
 	}
 }

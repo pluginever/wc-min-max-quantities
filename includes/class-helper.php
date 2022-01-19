@@ -35,79 +35,130 @@ class Helper {
 	}
 
 	/**
-	 * Format a case to lower case with specified dashes
+	 * Add an error.
 	 *
-	 * @param string|array $string String to format.
-	 * @param string $separator Separator.
+	 * @param string $error Error text.
 	 *
-	 * @since 1.1.0
-	 * @return string Formatted String.
+	 * @since 1.0.0
 	 */
-	public static function dasherize( $string, $separator = '-' ) {
-		if ( is_array( $string ) ) {
-			$string = implode( $string, $separator );
+	public static function add_error( $error = '' ) {
+		if ( $error && ! wc_has_notice( $error, 'error' ) ) {
+			wc_add_notice( $error, 'error', array( 'source' => 'wc-min-max-quantities' ) );
 		}
-		if ( preg_match( '#\w+[_-]\w+#', $string ) ) {
-			$string = preg_replace( '#[_-]#', ' ', $string );
-		}
-		$string = preg_split( '#\s+#', trim( $string ) );
-
-		return strtolower( implode( $separator, $string ) );
 	}
 
 	/**
-	 * Get a setting from the settings API.
+	 * Get product limits.
 	 *
-	 * @param string $key Option name.
-	 * @param mixed $default Default value.
+	 * @param int $product_id Product ID.
+	 * @param int $variation_id Variation ID.
 	 *
-	 * @since 1.1.0
-	 * @return mixed
+	 * @return array
 	 */
-	public static function get_option( $key, $default = '' ) {
-		if ( empty( $key ) ) {
-			return $default;
+	public static function get_product_limits( $product_id, $variation_id = 0 ) {
+		$key = "wc-min-max-{$product_id}-{$variation_id}";
+		if ( self::is_product_excluded( $product_id, $variation_id ) ) {
+			return array(
+				'step'      => 0,
+				'min_qty'   => 0,
+				'max_qty'   => 0,
+				'min_total' => 0,
+			);
 		}
 
-		// Get value.
-		$option_values = get_option( 'wc_min_max_quantities_settings', array() );
-		if ( isset( $option_values[ $key ] ) ) {
-			$option_value = $option_values[ $key ];
-		} else {
-			$option_value = null;
+		$limits = wp_cache_get( $key );
+		if ( false === $limits ) {
+			$product  = wc_get_product( $product_id );
+			$override = 'yes' === get_post_meta( $product->get_id(), '_wc_min_max_quantities_override', true );
+			if ( $override ) {
+				$limits['step']    = (int) $product->get_meta( '_wc_min_max_quantities_step' );
+				$limits['min_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_min_qty' );
+				$limits['max_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_max_qty' );
+			} else {
+				$limits['step']    = (int) Plugin::get( 'settings' )->get_option( 'general_product_quantity_step' );
+				$limits['min_qty'] = (int) Plugin::get( 'settings' )->get_option( 'min_product_quantity' );
+				$limits['max_qty'] = (int) Plugin::get( 'settings' )->get_option( 'max_product_quantity' );
+			}
+
+			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );
+			wp_cache_add( $key, $limits, 'wc-min-max-quantities' );
 		}
 
-		if ( is_array( $option_value ) ) {
-			$option_value = wp_unslash( $option_value );
-		} elseif ( ! is_null( $option_value ) ) {
-			$option_value = stripslashes( $option_value );
-		}
-
-		return ( null === $key ) ? $default : $option_value;
+		return $limits;
 	}
 
 	/**
-	 * Update option.
+	 * Get product categories.
 	 *
-	 * @param string $key Option name.
-	 * @param mixed $option_value Option value.
+	 * @param int $product_id Product id.
 	 *
-	 * @since 1.1.0
+	 * @return int[]
+	 */
+	public static function get_product_categories( $product_id ) {
+		$terms      = wp_list_pluck( get_the_terms( $product_id, 'product_cat' ), 'term_id' );
+		$categories = [];
+		foreach ( $terms as $term_id ) {
+			$categories[] = $term_id;
+			$parents      = get_ancestors( $term_id, 'product_cat' );
+			foreach ( $parents as $parent ) {
+				$categories[] = $parent;
+			}
+		}
+
+		return array_unique( array_filter( $categories ) );
+	}
+
+	/**
+	 * Return cart quantity for specified product.
+	 *
+	 * @param integer $product_id The product ID.
+	 * @param boolean $is_variation Check if is a variation.
+	 *
+	 * @since  1.0.0
+	 * @return int
+	 */
+	public static function get_cart_item_qty( $product_id, $is_variation = false ) {
+		$items = WC()->cart->get_cart();
+		$qty   = 0;
+
+		foreach ( $items as $item_id => $item ) {
+
+			if ( $is_variation && (int) $item['variation_id'] === (int) $product_id ) {
+				return $item['quantity'];
+			}
+
+			if ( (int) $item['product_id'] === (int) $product_id ) {
+				$qty += $item['quantity'];
+			}
+		}
+
+		return $qty;
+	}
+
+	/**
+	 * Check if the product is excluded from min/max quantity.
+	 *
+	 * @param int $product_id Product ID.
+	 * @param int $variation_id Variation ID.
+	 *
 	 * @return bool
 	 */
-	public static function update_option( $key, $option_value ) {
-		if ( empty( $key ) ) {
-			return false;
-		}
-		if ( is_array( $option_value ) ) {
-			$option_value = wp_slash( $option_value );
-		} elseif ( ! is_null( $option_value ) ) {
-			$option_value = addslashes( $option_value );
+	public static function is_product_excluded( $product_id, $variation_id = null ) {
+		if ( $variation_id !== null && 'yes' === get_post_meta( $variation_id, '_wc_min_max_quantities_excluded', true ) ) {
+			return true;
 		}
 
-		$option_values         = get_option( 'wc_min_max_quantities_settings', array() );
-		$option_values[ $key ] = $option_value;
+		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_excluded', true );
+	}
 
-		return update_option( 'wc_min_max_quantities_settings', $option_values );
+	/**
+	 * Check if the product supports min/max allow combination.
+	 *
+	 * @param int $product_id Product ID.
+	 *
+	 * @return bool
+	 */
+	public static function is_allow_combination( $product_id ) {
+		return apply_filters( 'wc_min_max_quantities_allow_combination', false, $product_id );
 	}
 }

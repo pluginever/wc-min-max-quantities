@@ -62,7 +62,6 @@ class Lifecycle {
 	 * @return void
 	 */
 	public static function init_classes() {
-		self::$background_updater = new Background_Updater();
 	}
 
 	/**
@@ -71,7 +70,7 @@ class Lifecycle {
 	 * @since  1.1.0
 	 */
 	public static function maybe_install() {
-		if ( ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && ! defined( 'IFRAME_REQUEST' ) && Plugin::instance()->version != self::get_db_version() ) {
+		if ( ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && ! defined( 'IFRAME_REQUEST' ) && Plugin::instance()->get( 'version' ) !== self::get_db_version() ) {
 			self::install();
 		}
 	}
@@ -83,7 +82,7 @@ class Lifecycle {
 	 * @return void
 	 */
 	public static function maybe_update() {
-		if ( self::needs_db_update() ) {
+		if ( self::needs_db_update() && Plugin::has( 'background_updater' ) ) {
 			$installed_version = self::get_db_version();
 			foreach ( self::$updates as $version => $update_callbacks ) {
 				if ( version_compare( $installed_version, $version, '<' ) ) {
@@ -93,11 +92,11 @@ class Lifecycle {
 					}
 
 					foreach ( $update_callbacks as $update_callback ) {
-						self::$background_updater->push_to_queue( $update_callback );
+						Plugin::get( 'background_updater' )->push_to_queue( $update_callback );
 					}
 				}
 			}
-			self::$background_updater->save()->dispatch();
+			Plugin::get( 'background_updater' )->save()->dispatch();
 			self::update_db_version();
 		}
 	}
@@ -111,7 +110,7 @@ class Lifecycle {
 	protected static function needs_db_update() {
 		$current_db_version = self::get_db_version();
 
-		return ! empty( $current_db_version ) && version_compare( $current_db_version, Plugin::instance()->version, '<' );
+		return ! empty( $current_db_version ) && version_compare( $current_db_version, Plugin::instance()->get( 'version' ), '<' );
 	}
 
 	/**
@@ -132,7 +131,7 @@ class Lifecycle {
 	 * @since 1.1.0
 	 */
 	protected static function update_db_version( $version = null ) {
-		update_option( 'wc_min_max_quantities_version', is_null( $version ) ? Plugin::instance()->version : $version );
+		update_option( 'wc_min_max_quantities_version', is_null( $version ) ? Plugin::instance()->get( 'version' ) : $version );
 	}
 
 	/**
@@ -148,6 +147,8 @@ class Lifecycle {
 		if ( ! get_option( 'wc_min_max_quantities_install_date' ) ) {
 			update_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
 		}
+
+		Plugin::get( 'settings' )->save_settings();
 	}
 
 	/**
@@ -158,9 +159,8 @@ class Lifecycle {
 	 */
 	public static function maybe_add_notices() {
 		Admin_Notices::add_welcome_notice();
-
 		// Review notice after 1 day of installation.
-		$date = get_option( 'wc_min_max_quantities_install_date' );
+		$date = (int) get_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
 		if ( $date + ( DAY_IN_SECONDS * 1 ) < current_time( 'timestamp' ) ) {
 			Admin_Notices::add_review_notice();
 		}
@@ -223,10 +223,12 @@ class Lifecycle {
 		$advanced_settings = get_option( 'wc_minmax_quantity_advanced_settings', array() );
 
 		$general_keys = array(
-			'min_product_quantity' => 'min_product_quantity',
-			'max_product_quantity' => 'max_product_quantity',
-			'min_cart_price'       => 'min_product_total',
-			'max_cart_price'       => 'max_product_total',
+			'min_product_quantity' => 'general_min_product_quantity',
+			'max_product_quantity' => 'general_max_product_quantity',
+			'min_cart_price'       => 'general_min_order_quantity',
+			'max_cart_price'       => 'general_max_order_quantity',
+			'min_cart_total_price' => 'general_min_order_amount',
+			'max_cart_total_price' => 'general_max_order_amount',
 		);
 		foreach ( $general_keys as $old_key => $new_key ) {
 			if ( ! empty( $general_settings[ $old_key ] ) ) {
@@ -235,10 +237,10 @@ class Lifecycle {
 		}
 
 		$advanced_keys = array(
-			'min_cart_total_price'    => 'min_order_amount',
-			'max_cart_total_price'    => 'max_order_amount',
-			'min_cart_total_quantity' => 'min_order_quantity',
-			'max_cart_total_quantity' => 'max_order_quantity',
+			'min_cart_total_price'    => 'general_min_order_amount',
+			'max_cart_total_price'    => 'general_max_order_amount',
+			'min_cart_total_quantity' => 'general_max_order_amount',
+			'max_cart_total_quantity' => 'general_max_order_amount',
 		);
 
 		foreach ( $advanced_keys as $old_key => $new_key ) {
@@ -248,7 +250,7 @@ class Lifecycle {
 		}
 
 		foreach ( $updated_settings as $key => $value ) {
-			Helper::update_option( $key, $value );
+			Plugin::get( 'settings' )->update_option( $key, $value );
 		}
 
 	}

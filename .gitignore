@@ -15,6 +15,7 @@ tmtags
 *.un~
 Session.vim
 *.swp
+.husky
 
 # Mac OSX
 .DS_Store

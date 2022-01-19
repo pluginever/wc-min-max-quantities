@@ -10,7 +10,7 @@
  * Domain Path: /i18n/languages/
  * Requires PHP: 5.6
  * WC requires at least: 3.0.0
- * WC tested up to: 6.0.0
+ * WC tested up to: 6.1.0
  *
  * @package     WC_Min_Max_Quantities
  * @author      pluginever
@@ -27,15 +27,18 @@
  * GNU General Public License for more details.
  */
 
-use WC_Min_Max_Quantities\Plugin;
-
 defined( 'ABSPATH' ) || exit;
 
-const WC_MIN_MAX_QUANTITIES_FILE = __FILE__;
+if ( ! defined( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE' ) ) {
+	define( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE', __FILE__ );
+}
 
-// Autoloader.
-require_once __DIR__ . '/vendor/autoload.php';
-
+/**
+ * Missing WooCommerce notice.
+ *
+ * @since 1.1.0
+ * @return void
+ */
 function wc_min_max_quantities_missing_wc_notice() {
 	/* translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link. */
 	$notice = '<div class="notice notice-error">';
@@ -54,16 +57,30 @@ function wc_min_max_quantities_missing_wc_notice() {
 /**
  * Returns the main instance of plugin.
  *
- * @return Plugin
+ * @since  1.1.0
+ * @return WC_Min_Max_Quantities\Plugin
  */
 function wc_min_max_quantities() {
+	require_once __DIR__ . '/includes/class-plugin.php';
+	return WC_Min_Max_Quantities\Plugin::instance();
+}
+
+/**
+ * Initialize the plugin.
+ *
+ * @since 1.1.0
+ * @return void
+ */
+function wc_min_max_quantities_init() {
 	if ( ! class_exists( '\WooCommerce' ) ) {
 		add_action( 'admin_notices', 'wc_min_max_quantities_missing_wc_notice' );
+
+		return;
 	}
 
-	return Plugin::instance();
+	// Kick off the plugin.
+	$GLOBALS['wc_min_max_quantities'] = wc_min_max_quantities();
 }
 
 // Kick off the plugin.
-add_action( 'plugins_loaded', 'wc_min_max_quantities', -1 );
-
+add_action( 'plugins_loaded', 'wc_min_max_quantities_init', -1 );
