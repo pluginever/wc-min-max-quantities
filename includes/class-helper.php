@@ -76,8 +76,8 @@ class Helper {
 				$limits['max_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_max_qty' );
 			} else {
 				$limits['step']    = (int) Plugin::get( 'settings' )->get_option( 'general_product_quantity_step' );
-				$limits['min_qty'] = (int) Plugin::get( 'settings' )->get_option( 'min_product_quantity' );
-				$limits['max_qty'] = (int) Plugin::get( 'settings' )->get_option( 'max_product_quantity' );
+				$limits['min_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_min_product_quantity' );
+				$limits['max_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_max_product_quantity' );
 			}
 
 			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );
