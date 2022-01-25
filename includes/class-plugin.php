@@ -222,37 +222,7 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function includes() {
-		// Register autoloader.
-		spl_autoload_register( array( $this, 'autoload' ), true );
-		$this->set( 'background_updater', new Utilities\Background_Updater() );
-		$this->set( 'lifecycle', new Lifecycle() );
-	}
-
-	/**
-	 * Autoloader for classes
-	 *
-	 * @param string $class Fully qualified classname to be loaded.
-	 *
-	 * @since 1.1.0
-	 */
-	public function autoload( $class ) {
-		$class     = ltrim( $class, '\\' );
-		$namespace = 'WC_Min_Max_Quantities\\';
-		$len       = strlen( $namespace );
-		if ( strncmp( $namespace, $class, $len ) !== 0 || ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
-			return;
-		}
-
-		$include_path  = untrailingslashit( __DIR__ );
-		$class_name    = strtolower( $matches['class_name'] );
-		$file_name     = 'class-' . str_replace( '_', '-', $class_name ) . '.php';
-		$relative_path = str_replace( array( $namespace, '\\', $matches['class_name'] ), array( '', DIRECTORY_SEPARATOR, $file_name ), $class );
-		$file          = trailingslashit( $include_path ) . strtolower( $relative_path );
-
-		// if the file exists, require it.
-		if ( file_exists( $file ) ) {
-			require $file;
-		}
+		include_once __DIR__ . '/class-autoloader.php';
 	}
 
 	/**
@@ -262,13 +232,12 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function register_hooks() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 5 );
-		add_action( 'init', array( $this, 'i18n' ) );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
 		add_filter( 'plugin_action_links_' . $this->get( 'basename' ), array( $this, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
 		// Init the plugin after WordPress inits.
-		add_action( 'init', array( $this, 'init' ), 5 );
+		add_action( 'init', array( $this, 'init' ), 0);
 	}
 
 	/**
@@ -354,11 +323,18 @@ final class Plugin {
 	 * @return void
 	 */
 	public function init() {
+		// Set up localisation.
+		$this->i18n();
+
+		$this->set( 'background_updater', new Utilities\Background_Updater() );
+		$this->set( 'lifecycle', new Lifecycle() );
 		$this->set( 'settings', new Settings() );
 		$this->set( 'cart_manager', new Cart_Manager() );
 
 		if ( is_admin() ) {
 			$this->set( 'admin_manager', new Admin\Admin_Manager() );
 		}
+
+		do_action( 'wc_min_max_quantities_init' );
 	}
 }

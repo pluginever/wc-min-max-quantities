@@ -25,7 +25,7 @@ class Admin_Manager {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'admin_init', array( $this, 'init' ), 9 );
+		add_action( 'admin_init', array( $this, 'init' ), 0);
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 		add_action( 'woocommerce_process_product_meta', [ __CLASS__, 'save_product_meta' ] );

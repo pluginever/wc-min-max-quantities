@@ -23,30 +23,11 @@ class Settings {
 	protected $option_key;
 
 	/**
-	 * Settings tabs.
-	 *
-	 * @since 1.1.0
-	 * @var array
-	 */
-	protected $tabs;
-
-	/**
-	 * Settings page fields.
-	 *
-	 * @since 1.1.0
-	 * @var array
-	 */
-	protected $fields;
-
-	/**
 	 * Class constructor.
 	 *
 	 */
 	public function __construct() {
 		$this->option_key = 'wc_min_max_quantities_settings';
-		$this->tabs       = $this->get_tabs();
-		$this->fields     = $this->get_fields();
-
 		add_action( 'wc_min_max_quantities_output_settings', array( $this, 'output_settings' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
@@ -180,13 +161,16 @@ class Settings {
 	 * @since 1.1.0
 	 */
 	public function output_settings() {
+		$tabs   = $this->get_tabs();
+		$fields = $this->get_fields();
 		ob_start();
 		wp_enqueue_script( 'jquery' );
 		self::output_style();
-		$tabs = array_filter( $this->tabs, function ( $tab, $tab_id ) {
-			return ! empty( $this->fields[ $tab_id ] ) || ( ! empty( $tab['callback'] ) && is_callable( $tab['callback'] ) );
-		}, ARRAY_FILTER_USE_BOTH );
-
+		foreach ( $tabs as $tab_id => $tab ) {
+			if ( empty( $fields[ $tab_id ] ) || ( ! empty( $tab['callback'] ) && ! is_callable( $tab['callback'] ) ) ) {
+				unset( $tabs[ $tab_id ] );
+			}
+		}
 		?>
 		<div id="wc-min-max-quantities-settings-wrap" class="wrap settings-wrap wcmmq-settings">
 			<h1><?php echo get_admin_page_title() ?></h1>
@@ -205,7 +189,7 @@ class Settings {
 			<?php settings_errors(); ?>
 
 			<div class="settings-tabs">
-				<?php foreach ( $this->tabs as $tab_id => $tab ) : ?>
+				<?php foreach ( $tabs as $tab_id => $tab ) : ?>
 					<div id="<?php echo esc_attr( $tab_id ); ?>" class="settings-tab" style="display: none;">
 						<?php if ( ! empty( $tab['callback'] ) && is_callable( $tab['callback'] ) ) : ?>
 							<?php call_user_func( $tab['callback'] ); ?>
@@ -349,7 +333,7 @@ class Settings {
 			)
 		);
 
-		foreach ( $this->fields as $tab_id => $tab ) {
+		foreach ( $this->get_fields() as $tab_id => $tab ) {
 			if ( empty( $tab ) || ! is_array( $tab ) ) {
 				continue;
 			}
@@ -638,11 +622,12 @@ class Settings {
 	 * @return array
 	 */
 	public function sanitize_settings( $input = array() ) {
-		$tab = filter_input( INPUT_POST, 'tab', FILTER_SANITIZE_STRING );
-		if ( ! isset( $this->fields[ $tab ] ) || empty( $this->fields[ $tab ] ) ) {
+		$tab    = filter_input( INPUT_POST, 'tab', FILTER_SANITIZE_STRING );
+		$fields = $this->get_fields();
+		if ( ! isset( $fields[ $tab ] ) || empty( $fields[ $tab ] ) ) {
 			return $input;
 		}
-		$settings = $this->fields[ $tab ];
+		$settings = $fields[ $tab ];
 
 		$input = $input ? $input : array();
 
@@ -704,7 +689,7 @@ class Settings {
 	public function get_defaults() {
 		$defaults = array();
 
-		foreach ( $this->fields as $tab_id => $tab ) {
+		foreach ( $this->get_fields() as $tab_id => $tab ) {
 			if ( empty( $tab ) || ! is_array( $tab ) ) {
 				continue;
 			}
