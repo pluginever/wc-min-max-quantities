@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WC Min Max Quantities is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
+Min Max Quantities for WooCommerce is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
 
 
 # Description
@@ -27,28 +27,28 @@ The basic rules are applicable storewide. By default, they include all products 
 
 🛍 A minimum product quantity and price restriction force your customers to purchase minimum number of products
 🛍 A maximum product quantity helps you to manage capacity and keep your orders manageable
-🛍 Increase order value by seting a default quantity which appears on the quantity field for each product
+🛍 Increase order value by setting a default quantity which appears on the quantity field for each product
 🛍 Make your customers purchase products in increments by setting quantity step value
 🛍 Allow customers to buy variable products in combinations within the given quantity and price range
 🛍 Target different groups of customers by setting quantity and price restrictions category-wise
 
 ## 🆓 WC MIN MAX QUANTITIES FEATURES:
 
-⚖️ Set a  minimum number of products required storewide
-⚖️ Set a maximum number of products required storewide
+⚖️ Set a minimum number of products customers can purchase storewide
+⚖️ Set a maximum number of products customers can purchase storewide
 ⚖️ Set step count to sell products in group
-⚖️ Set the WooCommerce default quantity for the products
+⚖️ Set the WooCommerce default quantity default quantity which appears on the quantity field for each product
 ⚖️ Set a minimum number of products customers can add to cart 
-⚖️ Set  a maximum number of products customers can add to cart
+⚖️ Set a maximum number of products customers can add to cart
 ⚖️ Set a minimum cart total (price) that customers must purchase
 ⚖️ Set a maximum cart total (price) that customers are allowed to purchase
 ⚖️ Set minimum-maximum quantity rule product-wise
-⚖️ Override global minimum-maximum rule from the product level
-⚖️ Ignore global min-max rule product-wise 
+⚖️ Exclude storewide minimum-maximum rule from the product level
+⚖️ Override global min-max rule product-wise 
 
 **📍NOTE:** **You have to *Override Global* to make the individual product level rules effective.**
 
-## 🔥 [WC MIN MAX QUANTITIES PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
+## 🔥 [MIN MAX QUANTITIES FOR WOOCOMMERCE PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES:
 
 🎯 Set a minimum purchasable product price storewide
 🎯 Set a maximum purchasable product price storewide
@@ -62,6 +62,7 @@ The basic rules are applicable storewide. By default, they include all products 
 🎯 Disable category-based rules from the global settings
 🎯 Option to ignore category rules product-wise
 🎯 Option to set custom notification messages
+🎯 Frontend product edit options for multivendor plugins (Dokan and WCFM)
 
 ### FUNCTIONALITY EXPLAINED:
 
