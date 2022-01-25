@@ -25,8 +25,8 @@ The basic rules are applicable storewide. By default, they include all products 
 
 ## 🚀 THE BENEFITS OF MIN MAX QUANTITIES FOR WOOCOMMERCE:
 
-🛍 A minimum product quantity and price restriction force your customers to purchase minimum number of products
-🛍 A maximum product quantity helps you to manage capacity and keep your orders manageable
+🛍 Set minimum product quantity and price restriction to push your customers to purchase a minimum number of products
+🛍 Set maximum product quantity and price restrictions to manage capacity and to keep your orders manageable
 🛍 Increase order value by setting a default quantity which appears on the quantity field for each product
 🛍 Make your customers purchase products in increments by setting quantity step value
 🛍 Allow customers to buy variable products in combinations within the given quantity and price range
