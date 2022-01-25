@@ -32,7 +32,7 @@ The basic rules are applicable storewide. By default, they include all products 
 🛍 Allow customers to buy variable products in combinations within the given quantity and price range
 🛍 Target different groups of customers by setting quantity and price restrictions category-wise
 
-## 🆓 WC MIN MAX QUANTITIES FEATURES:
+## 🆓 MIN MAX QUANTITIES FOR WOOCOMMERCE FEATURES:
 
 ⚖️ Set a minimum number of products customers can purchase storewide
 ⚖️ Set a maximum number of products customers can purchase storewide
