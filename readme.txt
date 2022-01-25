@@ -97,8 +97,8 @@ This may have bugs and/or a lack of features. If you want to contribute to this 
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
-1. Limitation for product
-2. General settings
+1. Per product settings
+2. Global settings
 
 == Changelog ==
 = 1.1.0 (25th January 2022) =
@@ -107,6 +107,10 @@ This may have bugs and/or a lack of features. If you want to contribute to this 
 * Enhance - Step count for increasing and decreasing product quantity
 * Enhance - Product exclusion from min/max rules
 * Enhance - Set min/max quantity for variable products
+
+= 1.0.9 (27th May 2022) =
+* Fix - Compatibility with WP v5.7.2
+* Fix - Compatibility with WC v5.3.0
 
 = 1.0.8 (7th April 2020) =
 * Fix - Compatibility with WP v5.4
