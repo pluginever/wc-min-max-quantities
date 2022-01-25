@@ -232,22 +232,11 @@ final class Plugin {
 	 * @return void
 	 */
 	protected function register_hooks() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
 		add_filter( 'plugin_action_links_' . $this->get( 'basename' ), array( $this, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
 		// Init the plugin after WordPress inits.
 		add_action( 'init', array( $this, 'init' ), 0);
-	}
-
-	/**
-	 * Trigger plugin loaded hook.
-	 *
-	 * @since 1.1.0
-	 * @return void
-	 */
-	public function plugins_loaded() {
-		do_action( 'wc_min_max_quantities_loaded' );
 	}
 
 	/**
