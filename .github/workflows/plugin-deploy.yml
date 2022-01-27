@@ -15,7 +15,7 @@ jobs:
         uses: sultann/action-wp-build-deploy@master
         with:
           generate_zip: true
-          wp_deploy: false
+          wp_deploy: true
           composer_build: false
           wp_username: ${{ secrets.WP_USERNAME }}
           wp_password: ${{ secrets.WP_PASSWORD }}
