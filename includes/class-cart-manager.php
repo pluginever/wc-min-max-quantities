@@ -119,7 +119,7 @@ class Cart_Manager {
 
 		}
 
-		if ( Helper::is_product_excluded( $product_id, $variation_id ) || Helper::is_allow_combination( $product_id ) ) {
+		if ( Helper::is_product_excluded( $product_id, $variation_id ) || Helper::is_allow_combination( $product_id ) || Helper::is_group_product_excluded( $product_id ) ) {
 			return $data;
 		}
 

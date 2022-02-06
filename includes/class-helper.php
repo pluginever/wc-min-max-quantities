@@ -193,6 +193,17 @@ class Helper {
 	 * @return bool
 	*/
 	public static function is_allow_grouping( $product_id ) {
-		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_allow_grouping', true );
+		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_group_allow_grouping', true );
+	}
+
+	/**
+	 * Check if the group product excluded or not
+	 *
+	 * @param int $product_id Product ID
+	 *
+	 * @return bool
+	*/
+	public static function is_group_product_excluded( $product_id ) {
+		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_group_ignore_category_rules', true );
 	}
 }
