@@ -201,6 +201,7 @@ class Admin_Manager {
 					'id'          => '_wc_min_max_quantities_group_excluded',
 					'label'       => __( 'Exclude Min/Max Rule', 'wc-min-max-quantities' ),
 					'description' => __( 'By enabling, this product will be excluded from all min-max rules.', 'wc-min-max-quantities' ),
+					'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_excluded', true ),
 				)
 			);
 
@@ -209,6 +210,7 @@ class Admin_Manager {
 					'id'          => '_wc_min_max_quantities_group_allow_grouping',
 					'label'       => __( 'Allow Grouping', 'wc-min-max-quantities' ),
 					'description' => __( 'By allowing this, the rules will be applied to the linked products altogether.', 'wc-min-max-quantities' ),
+					'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_allow_grouping', true ),
 				)
 			);
 
@@ -217,6 +219,7 @@ class Admin_Manager {
 					'id'          => '_wc_min_max_quantities_group_override',
 					'label'       => __( 'Override Global', 'wc-min-max-quantities' ),
 					'description' => __( 'Global Min/Max rules will be overridden by local settings if checked.', 'wc-min-max-quantities' ),
+					'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_override', true ),
 				)
 			);
 
@@ -328,9 +331,6 @@ class Admin_Manager {
 			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );
 		}
 
-		$group_override_excluded = filter_input( INPUT_POST, '_wc_min_max_quantities_group_excluded',FILTER_SANITIZE_STRING );
-		$product->update_meta_data( '_wc_min_max_quantities_excluded', empty( $group_override_excluded ) ? 'no' : 'yes' );
-
 		$group_fields = [
 			'_wc_min_max_quantities_group_excluded',
 			'_wc_min_max_quantities_group_override',
@@ -338,7 +338,10 @@ class Admin_Manager {
 		];
 
 		foreach( $group_fields as $check_field ) {
-			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );
+			if( $product->is_type('grouped') ){
+				$value = filter_input( INPUT_POST, $check_field, FILTER_SANITIZE_STRING );
+				$product->update_meta_data( str_replace( '_group_','_', $check_field ), empty( $value ) ? 'no' : 'yes' );
+			}
 		}
 
 		$product->save();
