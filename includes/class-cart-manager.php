@@ -105,12 +105,17 @@ class Cart_Manager {
 		$product_id   = $product->get_id();
 		$variation_id = 0;
 
+
 		if ( $product->is_type( 'variation' ) ) {
 			$product_id   = $product->get_parent_id();
 			$variation_id = $product->get_id();
 		}
 
-		if ( Helper::is_product_excluded( $product_id, $variation_id ) || Helper::is_allow_combination( $product_id ) ) {
+		if ( Helper::get_group_parent_product_id( $product_id ) ) {
+			$product_id = Helper::get_group_parent_product_id( $product_id );
+		}
+
+		if ( Helper::is_product_excluded( $product_id, $variation_id ) || Helper::is_allow_combination( $product_id ) || Helper::is_allow_grouping( $product_id ) ) {
 			return $data;
 		}
 
@@ -149,6 +154,11 @@ class Cart_Manager {
 		if ( empty( $limits['min_qty'] ) && ! $product->is_type( 'group' ) && $limits['step'] > 0 ) {
 			$data['min_value'] = $limits['step'];
 		}
+
+		if( Helper::is_allow_grouping( $product_id ) ) {
+			$data['input_value'] = $data['min_qty'];
+		}
+
 
 
 		return $data;

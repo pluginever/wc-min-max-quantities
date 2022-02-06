@@ -161,4 +161,38 @@ class Helper {
 	public static function is_allow_combination( $product_id ) {
 		return apply_filters( 'wc_min_max_quantities_allow_combination', false, $product_id );
 	}
+
+	/**
+	 * Check is the product a part of group product
+	 *
+	 * @param int $product_id Product ID
+	 *
+	 * @return string|false
+	*/
+	public static function get_group_parent_product_id( $product_id ) {
+		global $wpdb;
+		if ( empty( $product_id ) ) {
+			return false;
+		}
+		$product = wc_get_product( $product_id );
+		if ( ! $product ) {
+			return false;
+		}
+
+		$parent_product = $wpdb->get_col( "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key='_children' AND meta_value LIKE '%$product_id%'" );
+
+		return 1 == sizeof( $parent_product ) ?  reset( $parent_product ) : false;
+
+	}
+
+	/**
+	 * Check if the product allows min/max allow grouping rules
+	 *
+	 * @param int $product_id Product ID
+	 *
+	 * @return bool
+	*/
+	public static function is_allow_grouping( $product_id ) {
+		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_allow_grouping', true );
+	}
 }
