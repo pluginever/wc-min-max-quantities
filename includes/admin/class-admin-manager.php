@@ -198,36 +198,38 @@ class Admin_Manager {
 
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => '_wc_min_max_quantities_excluded',
+					'id'          => '_wc_min_max_quantities_group_excluded',
 					'label'       => __( 'Exclude Min/Max Rule', 'wc-min-max-quantities' ),
 					'description' => __( 'By enabling, this product will be excluded from all min-max rules.', 'wc-min-max-quantities' ),
-					'value' => get_post_meta( $post->ID, '_wc_min_max_quantities_excluded', true ) ? 'yes' : 'no'
+					'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_excluded', true )
 				)
 			);
 
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => '_wc_min_max_quantities_override',
+					'id'          => '_wc_min_max_quantities_group_override',
 					'label'       => __( 'Override Global', 'wc-min-max-quantities' ),
 					'description' => __( 'Global Min/Max rules will be overridden by local settings if checked.', 'wc-min-max-quantities' ),
+					'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_override', true )
 				)
 			);
 
 		woocommerce_wp_checkbox(
 			array(
-				'id'          => '_wc_min_max_quantities_allow_grouping',
+				'id'          => '_wc_min_max_quantities_group_allow_grouping',
 				'label'       => __( 'Allow Grouping', 'wc-min-max-quantities' ),
 				'description' => __( 'By allowing this, the rules will be applied to the linked products altogether.', 'wc-min-max-quantities' ),
+				'value'       => get_post_meta( $post->ID, '_wc_min_max_quantities_allow_grouping', true )
 			)
 		);
 
-			do_action( 'wc_min_max_quantities_before_override_settings' );
+			do_action( 'wc_min_max_quantities_before_override_group_settings' );
 
 			$settings = get_post_meta( $post->ID, '_wc_min_max_quantities_override', true );
 			$css      = 'yes' === $settings ? '' : 'display:none;';
 			echo '<div class="wc-min-max-override-settings" style="' . esc_attr( $css ) . '">';
 
-			do_action( 'wc_min_max_quantities_override_settings_top' );
+			do_action( 'wc_min_max_quantities_override_group_settings_top' );
 
 			woocommerce_wp_text_input(
 				array(
@@ -268,32 +270,32 @@ class Admin_Manager {
 				)
 			);
 
-			do_action( 'wc_min_max_quantities_override_settings_bottom' );
+			do_action( 'wc_min_max_quantities_override_group_settings_bottom' );
 
 			echo '</div>';
 
-			do_action( 'wc_min_max_quantities_after_override_settings' );
+			do_action( 'wc_min_max_quantities_after_override_group_settings' );
 
-//			$js = "
-//			jQuery( function( $ ) {
-//				$( '._wc_min_max_quantities_override_field' ).on( 'change', '#_wc_min_max_quantities_override', function() {
-//					var wrapper  = $( this ).closest( 'div' ).find( '.wc-min-max-override-settings' );
-//					if( $( this ).is(':checked') ){
-//						wrapper.show();
-//					}else{
-//						wrapper.hide();
-//					}
-//				});
-//
-//				$( '._wc_min_max_quantities_override_field #_wc_min_max_quantities_override' ).trigger( 'change' );
-//			});
-//		";
-//
-//			if ( function_exists( 'wc_enqueue_js' ) ) {
-//				wc_enqueue_js( $js );
-//			} else {
-//				WC()->add_inline_js( $js );
-//			}
+			$js = "
+			jQuery( function( $ ) {
+				$( '._wc_min_max_quantities_group_override_field' ).on( 'change', '#_wc_min_max_quantities_group_override', function() {
+					var wrapper  = $( this ).closest( 'div' ).find( '.wc-min-max-override-settings' );
+					if( $( this ).is(':checked') ){
+						wrapper.show();
+					}else{
+						wrapper.hide();
+					}
+				});
+
+				$( '._wc_min_max_quantities_group_override_field #_wc_min_max_quantities_group_override' ).trigger( 'change' );
+			});
+		";
+
+			if ( function_exists( 'wc_enqueue_js' ) ) {
+				wc_enqueue_js( $js );
+			} else {
+				WC()->add_inline_js( $js );
+			}
 
 
 		echo '</div>';
@@ -321,12 +323,25 @@ class Admin_Manager {
 
 		$check_fields = [
 			'_wc_min_max_quantities_excluded',
-			'_wc_min_max_quantities_override',
-			'_wc_min_max_quantities_allow_grouping'
+			'_wc_min_max_quantities_override'
 		];
 		foreach ( $check_fields as $check_field ) {
 			$value = filter_input( INPUT_POST, $check_field, FILTER_SANITIZE_STRING );
 			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );
+		}
+
+		$group_override_excluded = filter_input( INPUT_POST, '_wc_min_max_quantities_group_excluded',FILTER_SANITIZE_STRING );
+		$product->update_meta_data( '_wc_min_max_quantities_excluded', empty( $group_override_excluded ) ? 'no' : 'yes' );
+
+		$group_fields = [
+			'_wc_min_max_quantities_group_excluded',
+			'_wc_min_max_quantities_group_override',
+			'_wc_min_max_quantities_group_allow_grouping'
+		];
+
+		foreach( $group_fields as $check_field ) {
+			$value = filter_input( INPUT_POST, $check_field, FILTER_SANITIZE_STRING );
+			$product->update_meta_data( str_replace('group_','', $check_field ), empty( $value ) ? 'no' : 'yes' );
 		}
 
 		$product->save();
