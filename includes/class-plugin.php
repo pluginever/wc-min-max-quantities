@@ -2,7 +2,7 @@
 /**
  * Main plugin file.
  *
- * @version  1.1.0
+ * @version  1.1.1
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities
  */
@@ -21,7 +21,7 @@ final class Plugin {
 	 * @since 1.1.0
 	 * @const string
 	 */
-	protected $version = '1.1.0';
+	protected $version = '1.1.1';
 
 	/**
 	 * Plugin data container.

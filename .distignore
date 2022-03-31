@@ -1,13 +1,9 @@
 /.wordpress-org
 /.git
 /.github
-<<<<<<< HEAD
-/node_modules
-=======
 .gitattributes
 .gitkeep
 .gitmodules
->>>>>>> develop
 
 .distignore
 .gitignore
@@ -16,10 +12,9 @@
 .eslintignore
 .eslintrc.json
 .npmrc
-<<<<<<< HEAD
 yarn.lock
 
-=======
+
 .svnignore
 .travis.yml
 .jshintrc
@@ -33,10 +28,10 @@ Gruntfile.js
 composer.json
 composer.lock
 /node_modules
+/vendor
 /bin
 gulpfile.js
 gruntfile.js
->>>>>>> develop
 
 #COMMON
 CONTRIBUTING.md
@@ -45,35 +40,28 @@ phpunit.xml.dist
 phpunit.xml
 phpcs.xml
 phpcs.xml.dist
-<<<<<<< HEAD
 package.json
 package-lock.json
 gruntfile.js
 composer.json
 composer.lock
-=======
->>>>>>> develop
 tests
 *.sql
 *.tar.gz
 *.zip
-<<<<<<< HEAD
 
 =======
 *.sh
 .phpstorm.meta.php
 .husky
->>>>>>> develop
 
 #OS
 .DS_Store
 Thumbs.db
 
-<<<<<<< HEAD
 #build files
 .build
 src
-=======
 #WP
 .wordpress-org
 
@@ -83,4 +71,3 @@ src
 #Plugin Specific
 scaffold.json
 assets
->>>>>>> develop

@@ -101,6 +101,10 @@ This may have bugs and/or a lack of features. If you want to contribute to this 
 2. Global settings
 
 == Changelog ==
+= 1.1.1 (11th April 2022) =
+* Fix - Compatibility with WP v5.9.2
+* Fix - Compatibility with WC v6.3.1
+
 = 1.1.0 (25th January 2022) =
 * Enhance - Full rewritten plugin
 * Enhance - Product min/max restrictions on the product page
