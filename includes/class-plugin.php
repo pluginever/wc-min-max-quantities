@@ -62,7 +62,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wc-min-max-quantities' ), '1.1.1' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-min-max-quantities' ), '1.1.1' );
 	}
 
 	/**

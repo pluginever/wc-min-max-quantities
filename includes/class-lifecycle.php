@@ -2,7 +2,7 @@
 /**
  * Class Lifecycle
  *
- * @version  1.1.0
+ * @version  1.1.1
  * @since    1.1.0
  * @package  WC_Min_Max_Quantities
  */

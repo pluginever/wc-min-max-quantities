@@ -5,7 +5,7 @@
  * Uninstalling WC Min Max Quantities deletes user roles, pages, tables, and options.
  *
  * @package     WC_Min_Max_Quantities
- * @version     1.1.0
+ * @version     1.1.1
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
