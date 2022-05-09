@@ -9,9 +9,9 @@
  * Text Domain:  wc-min-max-quantities
  * Domain Path: /i18n/languages/
  * Requires PHP: 5.6
- * Tested up to: 5.9.2
+ * Tested up to: 5.9.3
  * WC requires at least: 3.0.0
- * WC tested up to: 6.3.1
+ * WC tested up to: 6.4.1
  *
  * @package     WC_Min_Max_Quantities
  * @author      pluginever
