@@ -62,15 +62,9 @@ class Settings {
 				array(
 					array(
 						'id'    => 'section_product_restrictions',
-						'title' => esc_html__( 'Product Restrictions', 'wc-min-max-quantities' ),
+						'title' => esc_html__( 'Product restrictions', 'wc-min-max-quantities' ),
 						'type'  => 'section',
 						'desc'  => esc_html__( 'The following options are for adding minimum maximum rules for products globally.', 'wc-min-max-quantities' ),
-					),
-					array(
-						'title' => esc_html__( 'Product Restrictions', 'wc-min-max-quantities' ),
-						'type'  => 'section',
-						'desc'  => esc_html__( 'The following options are for adding minimum maximum rules for products globally.', 'wc-min-max-quantities' ),
-						'id'    => 'section_product_restrictions',
 					),
 					array(
 						'title'             => esc_html__( 'Minimum product quantity', 'wc-min-max-quantities' ),
@@ -89,7 +83,7 @@ class Settings {
 						'sanitize_callback' => 'floatval',
 					),
 					array(
-						'title'             => esc_html__( 'Quantity groups of', 'wc-min-max-quantities' ),
+						'title'             => esc_html__( 'Quantity group of', 'wc-min-max-quantities' ),
 						'id'                => 'product_quantity_step',
 						'desc'              => esc_html__( 'Enter a number that will increment or decrement every time a quantity is changed.', 'wc-min-max-quantities' ),
 						'type'              => 'number',
@@ -97,7 +91,7 @@ class Settings {
 						'sanitize_callback' => 'floatval',
 					),
 					array(
-						'title' => esc_html__( 'Order Restriction', 'wc-min-max-quantities' ),
+						'title' => esc_html__( 'Order restrictions', 'wc-min-max-quantities' ),
 						'type'  => 'section',
 						'desc'  => esc_html__( 'The following options can be applied to the cart only.', 'wc-min-max-quantities' ),
 						'id'    => 'cart_restrictions',
