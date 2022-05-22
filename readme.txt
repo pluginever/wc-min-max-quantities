@@ -53,6 +53,7 @@ The basic rules are applicable storewide. By default, they include all products 
 * Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category ( Set rules by product categories )
 * Customize Error Notices
 
+
 === 💢 Supercharge Your WooCommerce Store With Our Other Plugins: ===
 
 * **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
