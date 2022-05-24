@@ -53,7 +53,8 @@ The basic rules are applicable storewide. By default, they include all products 
 * Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category ( Set rules by product categories )
 * Customize Error Notices
 
-=== 💢 Supercharge Your WooCommerce Store With Our Other Plugins: === 
+
+=== 💢 Supercharge Your WooCommerce Store With Our Other Plugins: ===
 
 * **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
 * **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
@@ -124,6 +125,12 @@ If the global rule or the product rules are set the cart will maintain the globa
 2. Global settings
 
 == Changelog ==
+= 1.1.1 (24th May 2022) =
+- Fix - Fix typo
+- Fix - Rearrange action links
+- Fix - Compatability with WP v6.0.0
+- Fix - Compatability with WC v6.5.1
+
 = 1.1.0 (25th January 2022) =
 * Enhance - Full rewritten plugin
 * Enhance - Product min/max restrictions on the product page
