@@ -21,7 +21,7 @@ final class Plugin {
 	 * @since 1.1.0
 	 * @const string
 	 */
-	protected $version = '1.1.0';
+	protected $version = '1.1.1';
 
 	/**
 	 * Plugin data container.
@@ -259,12 +259,21 @@ final class Plugin {
 	 * @return array associative array of plugin action links.
 	 */
 	public function action_links( $links ) {
+
 		if ( $this->has( 'settings_url' ) ) {
-			array_unshift( $links, sprintf( '<a href="%1$s">%2$s</a>', esc_url( $this->get( 'settings_url' ) ), __( 'Settings', 'wc-min-max-quantities' ) ) );
+			$settings_links = array(
+				'settings' => sprintf( '<a href="%1$s">%2$s</a>', esc_url( $this->get( 'settings_url' ) ), __( 'Settings', 'wc-min-max-quantities' ) ),
+			);
+
+			$links = array_merge( $settings_links, $links );
 		}
 
 		if ( ! $this->is_pro_exists() && $this->has( 'pro_url' ) ) {
-			array_unshift( $links, sprintf( '<a href="%1$s" style="color:red;" target="_blank">%2$s</a>', esc_url( Plugin::instance()->get( 'pro_url' ) ), __( 'Upgrade', 'wc-min-max-quantities' ) ) );
+			$upgrade_links = array(
+				'upgrade' => sprintf( '<a href="%1$s" style="color:red; font-weight: bold;" target="_blank">%2$s</a>', esc_url( Plugin::instance()->get( 'pro_url' ) ), __( 'Go Pro', 'wc-min-max-quantities' ) ),
+			);
+
+			$links = array_merge( $links, $upgrade_links );
 		}
 
 		return $links;
