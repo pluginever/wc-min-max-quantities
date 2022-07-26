@@ -1,11 +1,11 @@
 <?php
 /**
- * WC Min Max Quantities Uninstall
+ * WCMinMaxQuantities Uninstall
  *
- * Uninstalling WC Min Max Quantities deletes user roles, pages, tables, and options.
+ * Uninstalling WCMinMaxQuantities deletes user roles, pages, tables, and options.
  *
- * @package     WC_Min_Max_Quantities
- * @version     1.1.0
+ * @package WCMinMaxQuantities\Uninstaller
+ * @version 1.0.0
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;

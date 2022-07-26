@@ -2,25 +2,28 @@
 /**
  * Handles WooCommerce cart related functionalities.
  *
- * @version  1.1.0
  * @since    1.1.0
+ * @version  1.1.0
  * @package  WC_Min_Max_Quantities\WC
  */
 
-namespace WC_Min_Max_Quantities;
+namespace PluginEver\WC_Min_Max_Quantities;
 
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Cart_Manager.
+ *
+ * @since 1.1.0
+ * @package PluginEver\WC_Min_Max_Quantities
  */
 class Cart_Manager {
 
 	/**
 	 * Cart_Manager constructor.
 	 *
-	 * @since 1.1.0
 	 * @return void
+	 * @since 1.1.0
 	 */
 	public function __construct() {
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
@@ -212,8 +215,8 @@ class Cart_Manager {
 		}
 
 		//For cart level check for maximum only.
-		$maximum_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
+		$maximum_order_quantity = get_option( 'wc_min_max_quantities_max_order_quantity' );
+		$maximum_order_total    = get_option( 'wc_min_max_quantities_max_order_amount' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
 			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
@@ -234,17 +237,17 @@ class Cart_Manager {
 	/**
 	 * Check cart items.
 	 *
-	 * @since 1.1.0
 	 * @return void
+	 * @since 1.1.0
 	 */
 	public static function check_cart_items() {
 		$product_ids        = [];
 		$quantities         = [];
 		$line_amount        = [];
-		$max_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$min_order_quantity = Plugin::get( 'settings' )->get_option( 'general_min_order_quantity' );
-		$max_order_amount   = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
-		$min_order_amount   = Plugin::get( 'settings' )->get_option( 'general_min_order_amount' );
+		$max_order_quantity = get_option( 'wc_min_max_quantities_max_order_quantity' );
+		$min_order_quantity = get_option( 'wc_min_max_quantities_min_order_quantity' );
+		$max_order_amount   = get_option( 'wc_min_max_quantities_max_order_amount' );
+		$min_order_amount   = get_option( 'wc_min_max_quantities_min_order_amount' );
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {
@@ -507,3 +510,5 @@ class Cart_Manager {
 		return $data;
 	}
 }
+
+return new Cart_Manager();

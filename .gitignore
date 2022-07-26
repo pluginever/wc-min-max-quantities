@@ -1,37 +1,36 @@
-node_modules
-bower_components
-release
-vendor
-.idea
-*.log
+# IDEs
+/.settings
+/.project
+/.idea
 
+# NPM packages used by Grunt.js
+/node_modules
 
-# Editors
-*.esproj
-*.tmproj
-*.tmproject
-tmtags
-.*.sw[a-z]
-*.un~
-Session.vim
-*.swp
+# NPM debug log
+npm-debug.log
+
+# Composer
+/vendor
+
+# PHPUnit
+/tmp
+
+# Misc
+*.zip
+.cache
+.sass-cache*
 .husky
 
-# Mac OSX
-.DS_Store
-._*
-.Spotlight-V100
-.Trashes
+# Tests
+codeception.yml
+.env
+/tests/_data/dump.sql
+.env.testing
 
-# Windows
-Thumbs.db
-Desktop.ini
-
-# Asset Files
-assets/**/*.map
-assets/**/*.css
-assets/**/*.min.js
+# Framework
+lib
+!lib/bootstrap.php
 
 
-# Plugin Specific
-@next
+# Build
+assets/dist

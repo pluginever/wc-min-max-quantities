@@ -1,36 +1,41 @@
 {
   "name": "wc-min-max-quantities",
-  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "title": "WC Min Max Quantities",
   "version": "1.1.1",
-  "author": {
-    "name": "pluginever",
-    "email": "support@byteever.com",
-    "url": "https://www.pluginever.com"
-  },
-  "license": "GPL-2.0-or-later",
-  "keywords": [],
+  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
-  "repository": "",
-  "bugs": {},
-  "engines": {
-    "node": ">=8.9.3",
-    "npm": ">=5.5.1"
-  },
-  "dependencies": {
-    "-": "^0.0.1",
-    "grunt-cli": "^1.4.3"
+  "license": "GPL-3.0+",
+  "scripts": {
+    "build": "wp-scripts build && grunt build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "grunt": "^1.4.1",
+    "@lodder/time-grunt": "^4.0.0",
+    "@wordpress/prettier-config": "^1.4.0",
+    "@wordpress/scripts": "^23.3.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "grunt": "^1.5.3",
     "grunt-checktextdomain": "^1.0.1",
-    "grunt-shell": "^3.0.1",
+    "grunt-text-replace": "^0.4.0",
     "grunt-wp-i18n": "^1.0.3",
-    "husky": "^7.0.4",
-    "matchdep": "^2.0.0"
-  },
-  "scripts": {
-    "postinstall": "husky install",
-    "build": "grunt build"
+    "grunt-wp-readme-to-markdown": "^2.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "load-grunt-tasks": "^5.1.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "webpack-remove-empty-scripts": "^0.8.1"
   },
   "husky": {
     "hooks": {
@@ -40,18 +45,19 @@
   "lint-staged": {
     "*.php": [
       "php -d display_errors=1 -l",
-      "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s"
+      "composer run-script pre-commit"
     ],
-    "*.scss": [
-      "stylelint --syntax=scss --fix"
-    ],
-    "*.{js}": [
-      "grunt jshint"
+    "!(*min).js": [
+      "eslint --fix"
     ]
   },
+  "engines": {
+    "node": "^16.13.1",
+    "pnpm": "^6.24.2"
+  },
   "browserslist": [
-    "last 2 version",
-    "> 1%",
-    "IE 10"
+    "> 0.1%",
+    "ie 8",
+    "ie 9"
   ]
 }

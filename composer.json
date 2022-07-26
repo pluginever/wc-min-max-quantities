@@ -2,69 +2,89 @@
   "name": "pluginever/wc-min-max-quantities",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-3.0-or-later",
   "prefer-stable": true,
-  "authors": [
-    {
-      "name": "pluginever",
-      "email": "support@pluginever.com",
-      "homepage": "https://pluginever.com",
-      "role": "developer"
-    }
-  ],
+  "minimum-stability": "dev",
   "repositories": [
     {
-      "url": "https://github.com/byteever/php-coding-standards.git",
-      "type": "git"
+      "url": "git@github.com:byteever/byteever-sniffs.git",
+      "type": "github"
+    },
+    {
+      "url": "git@github.com:pluginever/framework-plugin.git",
+      "type": "github"
+    },
+    {
+      "url": "git@github.com:pluginever/framework-settings.git",
+      "type": "github"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": ">=7.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5",
-    "byteever/php-coding-standards": "dev-master"
-  },
-  "autoload": {
-    "classmap": [
-      "includes/"
-    ],
-    "files": [
-      "includes/functions.php"
-    ]
+    "byteever/byteever-sniffs": "dev-master",
+    "codeception/lib-innerbrowser": "^1.0",
+    "codeception/module-asserts": "^1.1",
+    "codeception/module-cli": "^1.0",
+    "codeception/module-db": "^1.0",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-rest": "^1.2",
+    "codeception/module-webdriver": "^1.0",
+    "codeception/util-universalframework": "^1.0",
+    "coenjacobs/mozart": "^0.7.1",
+    "lucatume/wp-browser": "^3.1",
+    "phpcompatibility/php-compatibility": "9.3.5",
+    "pluginever/framework-plugin": "dev-master",
+    "pluginever/framework-settings": "dev-master"
   },
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true,
-    "classmap-authoritative": true,
-    "preferred-install": "dist",
     "allow-plugins": {
+      "composer/*": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
+  "autoload": {},
+  "autoload-dev": {
+    "psr-4": {
+      "WooCommerceSerialNumbers\\Tests\\WPUnit\\": "tests/wpunit",
+      "WooCommerceSerialNumbers\\Tests\\Unit\\": "tests/unit"
+    },
+    "classmap": []
+  },
   "scripts": {
-    "install-scripts": [
-      "composer dump-autoload -o"
-    ],
     "post-install-cmd": [
-      "@install-scripts"
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
     ],
     "post-update-cmd": [
-      "@install-scripts"
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
     ],
-    "pre-commit": "@phpcs",
-    "phpcs": "phpcs -s -p .",
-    "phpcbf": "phpcbf -p ."
+    "phpcbf": "./vendor/bin/phpcbf -p .",
+    "phpcs": "./vendor/bin/phpcs --standard=ByteEver-Default --extensions=php -s -p .",
+    "selenium:start": "selenium-server -port 4444",
+    "test:acceptance": "@php ./vendor/bin/codecept run acceptance",
+    "test:clean": "@php ./vendor/bin/codecept clean",
+    "test:coverage": "@php ./vendor/bin/codecept run wpunit --coverage --coverage-xml --coverage-html",
+    "test:functional": "@php ./vendor/bin/codecept run functional",
+    "test:generate-scenarios": "@php vendor/bin/codecept generate:scenarios",
+    "test:integration": "@php ./vendor/bin/codecept run wpunit"
   },
   "extra": {
-    "installer-disable": true,
-    "scripts-description": {
-      "test": "Run unit tests",
-      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
-      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
-      "makepot-audit": "Generate i18n/languages/wc_min_max_quantities.pot file and run audit",
-      "makepot": "Generate i18n/languages/wc_min_max_quantities.pot file"
+    "mozart": {
+      "dep_namespace": "PluginEver\\WC_Min_Max_Quantities\\",
+      "dep_directory": "/lib/",
+      "classmap_directory": "/lib/classes/",
+      "classmap_prefix": "WC_Min_Max_Quantities_",
+      "delete_vendor_directories": true,
+      "packages": [
+        "pluginever/framework-plugin",
+        "pluginever/framework-settings"
+      ]
     }
   }
 }
