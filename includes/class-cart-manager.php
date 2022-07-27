@@ -215,8 +215,8 @@ class Cart_Manager {
 		}
 
 		//For cart level check for maximum only.
-		$maximum_order_quantity = get_option( 'wc_min_max_quantities_max_order_quantity' );
-		$maximum_order_total    = get_option( 'wc_min_max_quantities_max_order_amount' );
+		$maximum_order_quantity = get_option( 'minmax_quantities_max_order_quantity' );
+		$maximum_order_total    = get_option( 'minmax_quantities_max_order_amount' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
 			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
@@ -244,10 +244,10 @@ class Cart_Manager {
 		$product_ids        = [];
 		$quantities         = [];
 		$line_amount        = [];
-		$max_order_quantity = get_option( 'wc_min_max_quantities_max_order_quantity' );
-		$min_order_quantity = get_option( 'wc_min_max_quantities_min_order_quantity' );
-		$max_order_amount   = get_option( 'wc_min_max_quantities_max_order_amount' );
-		$min_order_amount   = get_option( 'wc_min_max_quantities_min_order_amount' );
+		$max_order_quantity = get_option( 'minmax_quantities_max_order_quantity' );
+		$min_order_quantity = get_option( 'minmax_quantities_min_order_quantity' );
+		$max_order_amount   = get_option( 'minmax_quantities_max_order_amount' );
+		$min_order_amount   = get_option( 'minmax_quantities_min_order_amount' );
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {

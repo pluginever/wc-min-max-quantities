@@ -42,7 +42,7 @@ class Admin_Settings extends Framework\AdminSettings {
 
 			array(
 				'title'             => esc_html__( 'Minimum product quantity', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_min_product_quantity',
+				'id'                => 'minmax_quantities_min_product_quantity',
 				'desc'              => esc_html__( 'Set an allowed minimum number of items for each product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',
@@ -51,7 +51,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Maximum product quantity', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_max_product_quantity',
+				'id'                => 'minmax_quantities_max_product_quantity',
 				'desc'              => esc_html__( 'Set an allowed maximum number of items for each product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',
@@ -60,7 +60,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Quantity group of', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_product_quantity_step',
+				'id'                => 'minmax_quantities_product_quantity_step',
 				'desc'              => esc_html__( 'Enter a number that will increment or decrement every time a quantity is changed.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',
@@ -79,7 +79,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Minimum order quantity', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_min_order_quantity',
+				'id'                => 'minmax_quantities_min_order_quantity',
 				'desc'              => esc_html__( 'Set an allowed minimum number of products customers can add to the cart. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',
@@ -88,7 +88,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Maximum order quantity', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_max_order_quantity',
+				'id'                => 'minmax_quantities_max_order_quantity',
 				'desc'              => esc_html__( 'Set an allowed maximum number of products customers can add to the cart. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'min'               => 0,
@@ -98,7 +98,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Minimum order amount', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_min_order_amount',
+				'id'                => 'minmax_quantities_min_order_amount',
 				'desc'              => esc_html__( 'Set an allowed minimum total order amount customers can add to the cart. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',
@@ -107,7 +107,7 @@ class Admin_Settings extends Framework\AdminSettings {
 			),
 			array(
 				'title'             => esc_html__( 'Maximum order amount', 'wc-min-max-quantities' ),
-				'id'                => 'wc_min_max_quantities_max_order_amount',
+				'id'                => 'minmax_quantities_max_order_amount',
 				'desc'              => esc_html__( 'Set an allowed maximum total order amount customers can add to the cart. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 				'type'              => 'number',
 				'default'           => '0',

@@ -73,9 +73,9 @@ class Helper {
 				$limits['min_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_min_qty' );
 				$limits['max_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_max_qty' );
 			} else {
-				$limits['step']    = (int) get_option( 'wc_min_max_quantities_product_quantity_step' );
-				$limits['min_qty'] = (int) get_option( 'wc_min_max_quantities_min_product_quantity' );
-				$limits['max_qty'] = (int) get_option( 'wc_min_max_quantities_max_product_quantity' );
+				$limits['step']    = (int) get_option( 'minmax_quantities_product_quantity_step' );
+				$limits['min_qty'] = (int) get_option( 'minmax_quantities_min_product_quantity' );
+				$limits['max_qty'] = (int) get_option( 'minmax_quantities_max_product_quantity' );
 			}
 
 			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );
