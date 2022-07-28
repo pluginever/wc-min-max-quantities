@@ -15,7 +15,7 @@
  * WC requires at least: 3.0.0
  * WC tested up to: 6.5.1
  *
- * @package     PluginEver\WC_Min_Max_Quantities
+ * @package     PluginEver\WooCommerceMinMaxQuantities
  * @author      pluginever
  * @link        https://pluginever.com/plugins/wc-min-max-quantities/
  * Settings Path: admin.php?page=wc-min-max-quantities-settings
@@ -33,7 +33,7 @@
  * GNU General Public License for more details.
  */
 
-use PluginEver\WC_Min_Max_Quantities\Plugin;
+use PluginEver\WooCommerceMinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 

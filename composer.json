@@ -76,10 +76,10 @@
   },
   "extra": {
     "mozart": {
-      "dep_namespace": "PluginEver\\WC_Min_Max_Quantities\\",
+      "dep_namespace": "PluginEver\\WooCommerceMinMaxQuantities\\",
       "dep_directory": "/lib/",
       "classmap_directory": "/lib/classes/",
-      "classmap_prefix": "WC_Min_Max_Quantities_",
+      "classmap_prefix": "WooCommerceMinMaxQuantities_",
       "delete_vendor_directories": true,
       "packages": [
         "pluginever/framework-plugin",

@@ -1,8 +1,8 @@
 <?php
 
-namespace PluginEver\WC_Min_Max_Quantities\Admin;
+namespace PluginEver\WooCommerceMinMaxQuantities;
 
-use PluginEver\WC_Min_Max_Quantities\Framework;
+use PluginEver\WooCommerceMinMaxQuantities\Framework;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit();
  * Class Settings Page.
  *
  * @since   1.0.0
- * @package PluginEver\WC_Min_Max_Quantities
+ * @package PluginEver\WooCommerceMinMaxQuantities
  */
 class Admin_Settings extends Framework\AdminSettings {
 	/**

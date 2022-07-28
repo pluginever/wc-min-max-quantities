@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginEver\WC_Min_Max_Quantities;
+namespace PluginEver\WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit();
  *
  * @since    1.1.0
  * @version  1.1.0
- * @package  WC_Min_Max_Quantities
+ * @package  PluginEver\WooCommerceMinMaxQuantities
  */
 final class Plugin extends Framework\AbstractPlugin {
 

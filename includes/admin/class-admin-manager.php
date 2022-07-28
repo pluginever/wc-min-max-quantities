@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginEver\WC_Min_Max_Quantities\Admin;
+namespace PluginEver\WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit();
  * Class Admin_Manager.
  *
  * @since 1.1.0
- * @package PluginEver\WC_Min_Max_Quantities
+ * @package PluginEver\WooCommerceMinMaxQuantities
  */
 class Admin_Manager {
 

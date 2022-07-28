@@ -1,21 +1,15 @@
 <?php
-/**
- * Handles WooCommerce cart related functionalities.
- *
- * @since    1.1.0
- * @version  1.1.0
- * @package  WC_Min_Max_Quantities\WC
- */
 
-namespace PluginEver\WC_Min_Max_Quantities;
+namespace PluginEver\WooCommerceMinMaxQuantities;
 
+// don't call the file directly.
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Cart_Manager.
  *
  * @since 1.1.0
- * @package PluginEver\WC_Min_Max_Quantities
+ * @package PluginEver\WooCommerceMinMaxQuantities
  */
 class Cart_Manager {
 
@@ -32,7 +26,7 @@ class Cart_Manager {
 		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart_validation' ), 20, 4 );
 		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ), 20 );
 		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'set_cart_quantity' ) );
-		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
+		add_filter( 'woocommerce_get_availability', array( __CLASS__, 'maybe_show_backorder_message' ), 10, 2 );
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
 	}
 
@@ -409,7 +403,7 @@ class Cart_Manager {
 	 * @param array $args List of arguments.
 	 * @param \WC_Product $product Product object.
 	 */
-	public function maybe_show_backorder_message( $args, $product ) {
+	public static function maybe_show_backorder_message( $args, $product ) {
 		$product_id   = $product->get_id();
 		$variation_id = null;
 
