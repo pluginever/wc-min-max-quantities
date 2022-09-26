@@ -1,33 +1,33 @@
 ===Min Max Quantities for WooCommerce===
 Contributors: manikmist09, pluginever, b-07
-Tags: WooCommerce, Products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, wc, wc min and max quantity for woocommerce,pluginever
+Tags: products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
 Requires at least: 3.0.1
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Min Max Quantities for WooCommerce is an extension that enhances control over your sell. It enables you to set a special rule over the cart total and also the number of products. You can also set special rule for individual products too.
+Set required minimum and maximum order quanlities or amounts for products individually, category-wise or globally with step control. 
 
 
 == Description ==
 
-**[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the simplest WooCommerce extension to create special deals with product quantity and price. With the help of this plugin, customers are only allowed to purchase a prededined minimum and maximum product quantity and/or amount.
+**[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** lets set required minimum and maximum order quanlities or amounts in WooCommerce. You can set quantity and price thresholds for simple products as well as variable products. You can also set conditions targetting the cart.
 
-**Min Max Quantities for WooCommerce** stands out with its easy to follow features. It will allow you to set a rule that applies to every single product of your store. Besides, you can set quantity and price threshold for single products as well as variable products. Moreover, the plugin also allows you to restrict the product quantity and price on the cart page.
-
-These brilliant features will empower you to restrict your customers from purchasing an item if the product quantity and price conditions are not met. For instance, if you set a minimum and maximum product quantity for a product, customers will not be able to check out if they attempt to purchase a quantity that is lower than the minimum or higher then the maximum you have set. Likewise, you can also set a minimum and maximum range for the product price. Provided that, customers must pass those conditions for successful checkout.
-
-The basic rules are applicable storewide. By default, they include all products of your store. You can also exclude an individual product from the storewide rule or set a custom rule by using the option named ***Exclude Min/Max Rules***. Apart from that, you can also target the ***cart*** and set conditions targetting it.
-
-> [Get The PRO Version]([https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)) | [Support]([https://www.pluginever.com/support/](https://www.pluginever.com/support/)) | [Documentation ]([https://pluginever.com/docs/min-max-quantities-for-woocommerce/](https://pluginever.com/docs/min-max-quantities-for-woocommerce/))
+These brilliant features will empower you to restrict your customers from purchasing items if the product quantity and price conditions are not met. For instance, if you set a minimum and maximum product quantity for a product, customers will not be able to check out if they attempt to purchase a quantity that is lower than the minimum or higher then the maximum you have set. Likewise, you can also set a minimum and maximum range for the product price. 
 
 === ✨ THE BENEFITS OF MIN MAX QUANTITIES FOR WOOCOMMERCE: ===
 
 * Some products are only profitable when ordered in larger quantities, otherwise you lose money. By setting a minimum order quantity or amount, you can get rid of unprofitable orders.
 * If you are not capable of delivering a product more than certain quantity, you can set a maximum order quantity or amount so that customers can not purchase a product if the quantity is more than the maximum.
-* Some products can be sold only in certain quantities for the Packaging purpose, you can set a quantity group so that customers can not purchase the product other than the predefined quantity group.
+* Some products can be sold only in certain quantities for the packaging purpose, you can set a quantity group so that customers can not purchase the product other than the predefined quantity group.
+
+=== 💻 Find Out More: ===
+
+* **[See The Live Demo Site](https://demo.pluginever.com/min-max-quantities "See the Live Demo Site")**
+* **[Plugin Documentation](https://pluginever.com/docs/min-max-quantities-for-woocommerce "Plugin Documentation")**
+* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
 
 === ✨ MIN MAX QUANTITIES FOR WOOCOMMERCE FEATURES: ===
 
@@ -41,9 +41,9 @@ The basic rules are applicable storewide. By default, they include all products 
 * Set rules for individual products or Globally (Flexibility to set rules for per product or storewide)
 * Ignore Min/Max Rules for specific products ( You can ignore any product from the min/max rules )
 
-** NOTE:** **You have to *Ignore Global Min/Max Rules* to make the individual product level rules effective.**
+> ➡️ Looking for more features? [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
-=== ⚡ [MIN MAX QUANTITIES FOR WOOCOMMERCE PRO](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/) FEATURES: ===
+=== ⚡ MIN MAX QUANTITIES FOR WOOCOMMERCE PRO FEATURES: ===
 
 * Multi Vendor Support for Dokan & WCFMP (Vendor can set their own rules)
 * Minimum Product Total Amount ( Product can not be purchased if the total amount is less than the minimum amount set )
@@ -53,6 +53,7 @@ The basic rules are applicable storewide. By default, they include all products 
 * Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category ( Set rules by product categories )
 * Customize Error Notices
 
+> ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
 === 💢 Supercharge Your WooCommerce Store With Our Other Plugins: ===
 
