@@ -31,26 +31,26 @@ These brilliant features will empower you to restrict your customers from purcha
 
 === ✨ MIN MAX QUANTITIES FOR WOOCOMMERCE FEATURES: ===
 
-* Minimum Product Quantity ( Product can not be purchased if the quantity is less than the minimum quantity set )
-* Maximum Product Quantity ( Product can not be purchased if the quantity is more than the maximum quantity set )
-* Quantity Step/Quantity Groups of Products ( Product can not be purchased if the quantity is not in the predefined quantity group )
-* Minimum Order Quantity ( Order can not be proceeded if the quantity is less than the minimum quantity set )
-* Maximum Order Quantity ( Order can not be proceeded if the quantity is more than the maximum quantity set )
-* Minimum Order Amount ( Order can not be proceeded if the amount is less than the minimum amount set )
-* Maximum Order Amount ( Order can not be proceeded if the amount is more than the maximum amount set )
+* Minimum Product Quantity (Product can't be purchased if the quantity is less than the minimum quantity set)
+* Maximum Product Quantity (Product can'tbe purchased if the quantity is more than the maximum quantity set)
+* Quantity Step/Quantity Groups of Products (Product can't be purchased if the quantity is not in the predefined quantity group)
+* Minimum Order Quantity (Order won't proceed if the quantity is less than the minimum quantity set)
+* Maximum Order Quantity (Order won't proceed if the quantity is more than the maximum quantity set)
+* Minimum Order Amount (Order won't proceed if the amount is less than the minimum amount set)
+* Maximum Order Amount (Order won't proceedif the amount is more than the maximum amount set)
 * Set rules for individual products or Globally (Flexibility to set rules for per product or storewide)
-* Ignore Min/Max Rules for specific products ( You can ignore any product from the min/max rules )
+* Ignore Min/Max Rules for specific products (You can ignore any product from the min/max rules)
 
 > ➡️ Looking for more features? [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
 === ⚡ MIN MAX QUANTITIES FOR WOOCOMMERCE PRO FEATURES: ===
 
 * Multi Vendor Support for Dokan & WCFMP (Vendor can set their own rules)
-* Minimum Product Total Amount ( Product can not be purchased if the total amount is less than the minimum amount set )
-* Maximum Product Total Amount ( Product can not be purchased if the total amount is more than the maximum amount set )
-* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support for Product Variations ( Ability to set customize rules for each product variation )
-* Apply Combined Rules for Variable Products instead of Per Variation Rules ( Ability to set combined rules for variable products )
-* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category ( Set rules by product categories )
+* Minimum Product Total Amount (Product can't be purchased if the total amount is less than the minimum amount set)
+* Maximum Product Total Amount (Product can't be purchased if the total amount is more than the maximum amount set)
+* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support for Product Variations (Ability to set customize rules for each product variation)
+* Apply Combined Rules for Variable Products instead of Per Variation Rules (Ability to set combined rules for variable products)
+* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category
 * Customize Error Notices
 
 > ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
