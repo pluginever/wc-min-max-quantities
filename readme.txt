@@ -8,20 +8,23 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Set required minimum and maximum order quanlities or amounts for products individually, category-wise or globally with step control. 
+Set the required minimum and maximum order quantities or amounts for individual products, categories, or globally with quantity step control.
 
 
 == Description ==
 
-**[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** lets set required minimum and maximum order quanlities or amounts in WooCommerce. You can set quantity and price thresholds for simple products as well as variable products. You can also set conditions targetting the cart.
+**[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** allows you to specify the minimum and maximum order quantities or amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify conditions that apply to the cart.
 
-These brilliant features will empower you to restrict your customers from purchasing items if the product quantity and price conditions are not met. For instance, if you set a minimum and maximum product quantity for a product, customers will not be able to check out if they attempt to purchase a quantity that is lower than the minimum or higher then the maximum you have set. Likewise, you can also set a minimum and maximum range for the product price. 
+These amazing features will allow you to restrict customers from purchasing items if the product quantity and price conditions are not met. 
+
+For example, if you specify a minimum and maximum product quantity for a product, customers will be unable to check out if they try to purchase a quantity that is less than the minimum or greater than the maximum. Similarly, you can specify a minimum and maximum price range for the product.
+
 
 === ✨ THE BENEFITS OF MIN MAX QUANTITIES FOR WOOCOMMERCE: ===
 
-* Some products are only profitable when ordered in larger quantities, otherwise you lose money. By setting a minimum order quantity or amount, you can get rid of unprofitable orders.
-* If you are not capable of delivering a product more than certain quantity, you can set a maximum order quantity or amount so that customers can not purchase a product if the quantity is more than the maximum.
-* Some products can be sold only in certain quantities for the packaging purpose, you can set a quantity group so that customers can not purchase the product other than the predefined quantity group.
+* Some products are only profitable when purchased in bulk; otherwise, you lose money. You can eliminate unprofitable orders by establishing a minimum order quantity or amount.
+* If you are unable to deliver more than a certain quantity of a product, you can set a maximum order quantity or amount so that customers cannot purchase a product if the quantity exceeds the maximum.
+* Some products can only be sold in specific quantities for packaging reasons; you can set a quantity group so that customers cannot purchase the product in any quantity other than the predefined quantity group.
 
 === 💻 Find Out More: ===
 
@@ -31,27 +34,26 @@ These brilliant features will empower you to restrict your customers from purcha
 
 === ✨ MIN MAX QUANTITIES FOR WOOCOMMERCE FEATURES: ===
 
-* Minimum Product Quantity (Product can't be purchased if the quantity is less than the minimum quantity set)
-* Maximum Product Quantity (Product can'tbe purchased if the quantity is more than the maximum quantity set)
-* Quantity Step/Quantity Groups of Products (Product can't be purchased if the quantity is not in the predefined quantity group)
-* Minimum Order Quantity (Order won't proceed if the quantity is less than the minimum quantity set)
-* Maximum Order Quantity (Order won't proceed if the quantity is more than the maximum quantity set)
-* Minimum Order Amount (Order won't proceed if the amount is less than the minimum amount set)
-* Maximum Order Amount (Order won't proceedif the amount is more than the maximum amount set)
-* Set rules for individual products or Globally (Flexibility to set rules for per product or storewide)
-* Ignore Min/Max Rules for specific products (You can ignore any product from the min/max rules)
+* **Minimum product quantity:** Products cannot be purchased if the quantity is less than the minimum quantity.
+* **Maximum product quantity:** Products cannot be purchased if the quantity is greater than the maximum quantity.
+* **Product quantity steps/quantity groups:** If the quantity is not within the predefined quantity group, the product cannot be purchased.
+* **Minimum order quantity:** If the quantity is less than the minimum order quantity, the order will be canceled.
+* **Maximum order quantity:** If the quantity exceeds the maximum quantity, the order will not be processed.
+* **Minimum order value/amount:** Orders that are less than the minimum amount will not be processed.
+* **Maximum order value/amount:** If the amount exceeds the maximum amount, the order will be canceled.
+* **Create rules for specific products or globally:** You have the ability to set rules per product or for the entire store.
+* **Ignore minimum/maximum rule:** You can ignore the minimum/maximum rules for any specific product.
 
 > ➡️ Looking for more features? [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
 === ⚡ MIN MAX QUANTITIES FOR WOOCOMMERCE PRO FEATURES: ===
 
-* Multi Vendor Support for Dokan & WCFMP (Vendor can set their own rules)
-* Minimum Product Total Amount (Product can't be purchased if the total amount is less than the minimum amount set)
-* Maximum Product Total Amount (Product can't be purchased if the total amount is more than the maximum amount set)
-* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support for Product Variations (Ability to set customize rules for each product variation)
-* Apply Combined Rules for Variable Products instead of Per Variation Rules (Ability to set combined rules for variable products)
-* Minimum/Maximum Quantity, Minimum/Maximum Amount & Quantity Step Support by Category
-* Customize Error Notices
+* **Support for multiple vendors:** Dokan and WCFMP are supported. Vendors can impose their own rules.
+* **Minimum product total amount:** If the total amount is less than the minimum, products cannot be purchased.
+* **Maximum product total amount:** Products cannot be purchased if the total amount exceeds the maximum amount.
+* **Customized rules for each product variation:** Minimum/maximum quantity, minimum/maximum amount, and quantity steps for product variations and categories are all supported.
+* **Combined rules for variable products:** Instead of using each variation rule, you can use combined rules.
+* **Customize error notifications:** Set customizable text/message for any restriction error that will appear if It doesn’t meet the conditions.
 
 > ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
@@ -76,12 +78,12 @@ These brilliant features will empower you to restrict your customers from purcha
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Minx Max Quantities for WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
 
-In the search field type "Minx Max Quantities for WooCommerce" and click Search Plugins. Once you have found the plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
+In the search field type "Min Max Quantities for WooCommerce" and click Search Plugins. Once you have found the plugin you can view details about it such as plugin version, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
 
 = Manual installation =
 
 1. Upload the plugin files to the `/wp-content/plugins/wc-mix-max-quantities` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
+1. Activate the plugin through the 'Plugins' screen in WordPress.
 
 = Updating =
 
@@ -98,13 +100,13 @@ There are multiple levels of min/max rules that you can assign to your products.
 ⏫ Global
 
 = How can I suggest a new feature? =
-We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wc-minmax-quantities/issues) as the feature request.
+We would love to hear your ideas! Feel free to open a new issue [here](https://github.com/pluginever/wc-minmax-quantities/issues) to request your feature.
 
 = What if I set the min-max product quantity or price value to zero? =
-Setting Min-Max product quantity or price to zero will not function as rules.
+Setting Min-Max product quantity or price to zero will not function as a rule.
 
 = What is quantity step or step count? =
-If your customers want to purchase a product, the minimum quantity of the product will be shown on the single product page and the cart page by default. If the customer intends to increase the product quantity from the product page or in the cart, it will increase collectively.
+If your customers want to purchase a product, the minimum quantity of the product will be shown on the single product page and the cart page by default. If the customer intends to increase the product quantity from the product page or in the cart, it will increase collectively accordling to the step count rule.
 
 = How can I override global settings with a single product min-max condition? =
 From the product page, go to general settings and select override global settings, and put values where necessary.
@@ -113,13 +115,12 @@ From the product page, go to general settings and select override global setting
 From the product page, go to general settings and select ignore min/max rules, and doing so, it will abrogate all min/max rules for the product.
 
 = Can I set the min-max rule for the variable products? =
-Yes, for the parent product, you can set the min/max quantity rule. You can choose any number of variations within the given condition in the parent product.
+Yes, you can set the min/max quantity rule for the parent product. You can choose any number of variations within the given condition in the parent product.
 
 = Does the cart have a separate min/max rule? =
-Yes, you need to set a separate cart rule from the settings, and it will act globally. Whatever min/max rule you are setting either global or productwise, eventually, the cart rule will be dominant.
-
+Yes, you need to set a separate cart rule from the settings. Whatever min/max rule you set, whether global or per product, the cart rule will eventually get priority.
 = What if I do not set the cart rule? =
-If the global rule or the product rules are set the cart will maintain the global or product rules if the cart rule is not set.
+The cart will maintain the global or product rules if the cart rule is not set.
 
 == Screenshots ==
 1. Per product settings
