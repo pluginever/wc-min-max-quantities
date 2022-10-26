@@ -1,7 +1,7 @@
 {
   "name": "wc-min-max-quantities",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": {
     "name": "pluginever",
     "email": "support@byteever.com",
