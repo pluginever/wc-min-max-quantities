@@ -44,7 +44,7 @@ For example, if you specify a minimum and maximum product quantity for a product
 * **Create rules for specific products or globally:** You have the ability to set rules per product or for the entire store.
 * **Ignore minimum/maximum rule:** You can ignore the minimum/maximum rules for any specific product.
 
-> ➡️ Looking for more features? [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
+> ➡️ Looking for more features? [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
 === ⚡ MIN MAX QUANTITIES FOR WOOCOMMERCE PRO FEATURES: ===
 
@@ -55,7 +55,7 @@ For example, if you specify a minimum and maximum product quantity for a product
 * **Combined rules for variable products:** Instead of using each variation rule, you can use combined rules.
 * **Customize error notifications:** Set customizable text/message for any restriction error that will appear if It doesn’t meet the conditions.
 
-> ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
+> ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
 
 === 💢 Supercharge Your WooCommerce Store With Our Other Plugins: ===
 
