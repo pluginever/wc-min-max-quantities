@@ -1,8 +1,8 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
-use WC_Min_Max_Quantities\Framework\Plugin_Aware;
+use WooCommerceMinMaxQuantities\Framework\Plugin_Aware;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit();
  * Abstract class for plugin handlers.
  *
  * @since 1.0.0
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  */
 abstract class Controller extends Plugin_Aware {
 

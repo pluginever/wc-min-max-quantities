@@ -1,6 +1,6 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -70,7 +70,7 @@ class Store extends Controller {
 	/**
 	 * Add quantity property to add to cart button on shop loop for simple products.
 	 *
-	 * @param string $html Add to cart link.
+	 * @param string      $html Add to cart link.
 	 * @param \WC_Product $product Product object.
 	 *
 	 * @return string
@@ -97,7 +97,7 @@ class Store extends Controller {
 	/**
 	 * Updates the quantity arguments.
 	 *
-	 * @param array $data List of data to update.
+	 * @param array       $data List of data to update.
 	 * @param \WC_Product $product Product object.
 	 *
 	 * @return array
@@ -151,7 +151,6 @@ class Store extends Controller {
 			$data['min_value'] = $limits['step'];
 		}
 
-
 		return $data;
 	}
 
@@ -161,7 +160,7 @@ class Store extends Controller {
 	 * @param mixed $pass Filter value.
 	 * @param mixed $product_id Product ID.
 	 * @param mixed $quantity Quantity.
-	 * @param int $variation_id Variation ID (default none).
+	 * @param int   $variation_id Variation ID (default none).
 	 *
 	 * @return mixed
 	 */
@@ -212,9 +211,9 @@ class Store extends Controller {
 			return false;
 		}
 
-		//For cart level check for maximum only.
-		$maximum_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
+		// For cart level check for maximum only.
+		$maximum_order_quantity = get_option( 'wcmmq_max_order_quantity' );
+		$maximum_order_total    = get_option( 'wcmmq_max_order_amount' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
 			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
@@ -227,7 +226,6 @@ class Store extends Controller {
 
 			return false;
 		}
-
 
 		return apply_filters( 'wc_min_max_quantities_add_to_cart_validation', $pass, $product_id, $quantity, $variation_id );
 	}
@@ -242,10 +240,10 @@ class Store extends Controller {
 		$product_ids        = [];
 		$quantities         = [];
 		$line_amount        = [];
-		$max_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$min_order_quantity = Plugin::get( 'settings' )->get_option( 'general_min_order_quantity' );
-		$max_order_amount   = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
-		$min_order_amount   = Plugin::get( 'settings' )->get_option( 'general_min_order_amount' );
+		$max_order_quantity = get_option( 'wcmmq_max_order_quantity' );
+		$min_order_quantity = get_option( 'wcmmq_min_order_quantity' );
+		$max_order_amount   = get_option( 'wcmmq_max_order_amount' );
+		$min_order_amount   = get_option( 'wcmmq_min_order_amount' );
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {
@@ -297,7 +295,6 @@ class Store extends Controller {
 				return;
 			}
 		}
-
 
 		$order_quantity = array_sum( array_values( $quantities ) );
 		$order_total    = array_sum( array_values( $line_amount ) );
@@ -404,7 +401,7 @@ class Store extends Controller {
 	 * If the minimum allowed quantity for purchase is lower than the current stock, we need to
 	 * let the user know that they are on backorder, or out of stock.
 	 *
-	 * @param array $args List of arguments.
+	 * @param array       $args List of arguments.
 	 * @param \WC_Product $product Product object.
 	 */
 	public function maybe_show_backorder_message( $args, $product ) {
@@ -444,8 +441,8 @@ class Store extends Controller {
 	/**
 	 * Adds variation min max settings to be used by JS.
 	 *
-	 * @param array $data Available variation data.
-	 * @param \WC_Product $product Product object.
+	 * @param array                $data Available variation data.
+	 * @param \WC_Product          $product Product object.
 	 * @param \WC_Product_Variable $variation Variation object.
 	 *
 	 * @return array $data

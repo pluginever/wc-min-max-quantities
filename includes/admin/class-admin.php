@@ -1,9 +1,8 @@
 <?php
 
-namespace WC_Min_Max_Quantities\Admin;
+namespace WooCommerceMinMaxQuantities\Admin;
 
-use WC_Min_Max_Quantities\Controller;
-use WC_Min_Max_Quantities\Framework;
+use WooCommerceMinMaxQuantities\Controller;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -11,7 +10,7 @@ defined( 'ABSPATH' ) || exit();
 /**
  * Admin class
  *
- * @package PluginEver\WC_Min_Max_Quantities\Admin
+ * @package PluginEver\WooCommerceMinMaxQuantities\Admin
  */
 class Admin extends Controller {
 
@@ -28,6 +27,7 @@ class Admin extends Controller {
 		add_filter( 'woocommerce_screen_ids', array( $this, 'screen_ids' ) );
 		add_action( 'admin_menu', array( $this, 'register_nav_items' ), 20 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		//add_filter( 'woocommerce_display_admin_footer_text', array( $this, 'admin_footer_text' ), 20 );
 	}
 
 	/**
@@ -86,4 +86,29 @@ class Admin extends Controller {
 		$this->get_plugin()->register_script( 'wc-min-max-quantities-admin', 'js/admin.js' );
 	}
 
+
+	/**
+	 * Add footer text.
+	 *
+	 * @since 1.0.0
+	 * @param string $footer_text Footer text.
+	 * @return string
+	 */
+	public function admin_footer_text( $footer_text ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) || ! function_exists( 'get_current_screen' ) ) {
+			return $footer_text;
+		}
+
+		$current_screen = get_current_screen();
+		if ( $current_screen && isset( $current_screen->id ) && 'woocommerce_page_wc-min-max-quantities-settings' === $current_screen->id ) {
+			$footer_text = sprintf(
+			/* translators: 1: plugin name 2: WordPress */
+				__( 'If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge thanks in advance!', 'wc-min-max-quantities' ),
+				__( 'WooCommerce Min Max Quantities', 'wc-min-max-quantities' ),
+				'<a href="https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post" target="_blank" class="wc-min-max-quantities-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'wc-min-max-quantities' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+			);
+		}
+
+		return $footer_text;
+	}
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace WC_Min_Max_Quantities\Admin;
+namespace WooCommerceMinMaxQuantities\Admin;
 
-use WC_Min_Max_Quantities\Controller;
+use WooCommerceMinMaxQuantities\Controller;
 
 defined( 'ABSPATH' ) || exit();
 
 /**
  * Class Meta Boxes.
  *
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  * @since   1.0.0
  */
 class Meta_Boxes extends Controller {

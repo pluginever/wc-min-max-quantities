@@ -1,6 +1,6 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit();
  * Handles autoloader related actions.
  *
  * @since  1.0.0
- * @package  WC_Min_Max_Quantities
+ * @package  WooCommerceMinMaxQuantities
  */
 class Autoloader {
 

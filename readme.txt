@@ -15,7 +15,7 @@ Set the required minimum and maximum order quantities or amounts for individual 
 
 **[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** allows you to specify the minimum and maximum order quantities or amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify conditions that apply to the cart.
 
-These amazing features will allow you to restrict customers from purchasing items if the product quantity and price conditions are not met. 
+These amazing features will allow you to restrict customers from purchasing items if the product quantity and price conditions are not met.
 
 For example, if you specify a minimum and maximum product quantity for a product, customers will be unable to check out if they try to purchase a quantity that is less than the minimum or greater than the maximum. Similarly, you can specify a minimum and maximum price range for the product.
 

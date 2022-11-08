@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6e8595745ab51341f5c604a8fbc6f76",
+    "content-hash": "0d6be448fe285b3017200bac87a358ab",
     "packages": [],
     "packages-dev": [
         {
@@ -3311,12 +3311,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:pluginever/framework-plugin.git",
-                "reference": "f8458452efc46047df08d56467b8820e0e24d474"
+                "reference": "760b40deb09987c4709924fcbb712bd51982a199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pluginever/framework-plugin/zipball/f8458452efc46047df08d56467b8820e0e24d474",
-                "reference": "f8458452efc46047df08d56467b8820e0e24d474",
+                "url": "https://api.github.com/repos/pluginever/framework-plugin/zipball/760b40deb09987c4709924fcbb712bd51982a199",
+                "reference": "760b40deb09987c4709924fcbb712bd51982a199",
                 "shasum": ""
             },
             "require": {
@@ -3353,7 +3353,7 @@
                 "source": "https://github.com/pluginever/framework-plugin/tree/release/v1.0.0",
                 "issues": "https://github.com/pluginever/framework-plugin/issues"
             },
-            "time": "2022-11-04T12:28:39+00:00"
+            "time": "2022-11-08T14:59:51+00:00"
         },
         {
             "name": "pluginever/framework-settings",
@@ -3361,12 +3361,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:pluginever/framework-settings.git",
-                "reference": "2760cdf9dc5b914fd62467708ef3cc3bde0a1186"
+                "reference": "68694c583d086a16654c869b2863d2cc331b1391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pluginever/framework-settings/zipball/2760cdf9dc5b914fd62467708ef3cc3bde0a1186",
-                "reference": "2760cdf9dc5b914fd62467708ef3cc3bde0a1186",
+                "url": "https://api.github.com/repos/pluginever/framework-settings/zipball/68694c583d086a16654c869b2863d2cc331b1391",
+                "reference": "68694c583d086a16654c869b2863d2cc331b1391",
                 "shasum": ""
             },
             "require": {
@@ -3403,7 +3403,7 @@
                 "source": "https://github.com/pluginever/framework-settings/tree/release/v1.0.0",
                 "issues": "https://github.com/pluginever/framework-settings/issues"
             },
-            "time": "2022-11-05T11:32:55+00:00"
+            "time": "2022-11-08T15:00:22+00:00"
         },
         {
             "name": "psr/container",

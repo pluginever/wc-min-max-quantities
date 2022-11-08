@@ -1,6 +1,6 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit();
  * Main plugin class.
  *
  * @since 1.0.0
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  */
 final class Plugin extends Framework\Plugin {
 	/**
@@ -44,13 +44,16 @@ final class Plugin extends Framework\Plugin {
 	 * @return void
 	 */
 	public function add_controllers() {
-		$this->add_controller(
-			[
-				'installer' => Installer::class,
-				'store'     => Store::class,
-				'admin'     => Admin\Admin::class,
-			]
+		$controllers = array(
+			'installer' => Installer::class,
+			'store'     => Store::class,
 		);
+
+		// If is admin, add admin controllers.
+		if ( self::is_request( 'admin' ) ) {
+			$controllers['admin'] = Admin\Admin::class;
+		}
+		$this->add_controller( $controllers );
 	}
 
 	/**
@@ -64,14 +67,24 @@ final class Plugin extends Framework\Plugin {
 	public function register_plugin_actions( $actions ) {
 		$actions = parent::register_plugin_actions( $actions );
 		// add upgrade to pro link.
-		if ( ! self::is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+		if ( ! $this->is_premium_active() ) {
 			$actions['upgrade_to_pro'] = sprintf(
 				'<a href="%s" target="_blank" style="color: #39b54a; font-weight: bold;">%s</a>',
-				self::generate_utm_url( 'https://pluginever.com/products/plugins/wc-min-max-quantities-pro/', 'upgrade-to-pro' ),
+				self::generate_utm_url( 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/', 'upgrade-to-pro' ),
 				__( 'Upgrade to Pro', 'wc-min-max-quantities' )
 			);
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * Is premium version active.
+	 *
+	 * @since 1.1.0
+	 * @return bool
+	 */
+	public function is_premium_active() {
+		return self::is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' );
 	}
 }

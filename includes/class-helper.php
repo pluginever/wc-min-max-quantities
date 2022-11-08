@@ -1,6 +1,6 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit();
 /**
  * Useful helper functions for the plugin
  *
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  * @since   1.0.0
  */
 class Helper {
@@ -53,9 +53,9 @@ class Helper {
 				$limits['min_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_min_qty' );
 				$limits['max_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_max_qty' );
 			} else {
-				$limits['step']    = (int) Plugin::get( 'settings' )->get_option( 'general_product_quantity_step' );
-				$limits['min_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_min_product_quantity' );
-				$limits['max_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_max_product_quantity' );
+				$limits['step']    = (int) get_option( 'wcmmq_product_quantity_step' );
+				$limits['min_qty'] = (int) get_option( 'wcmmq_min_product_quantity' );
+				$limits['max_qty'] = (int) get_option( 'wcmmq_max_product_quantity' );
 			}
 
 			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );

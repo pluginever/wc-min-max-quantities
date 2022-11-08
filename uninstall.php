@@ -4,7 +4,7 @@
  *
  * Uninstalling Starter Plugin deletes user roles, pages, tables, and options.
  *
- * @package     WC_Min_Max_Quantities
+ * @package     WooCommerceMinMaxQuantities
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;

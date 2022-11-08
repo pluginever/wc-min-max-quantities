@@ -12,10 +12,10 @@
  * WC requires at least: 3.0.0
  * WC tested up to: 7.0
  *
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  * @author  pluginever
  * Support URI:     http://pluginever.com/support
- * Document URI:    http://pluginever.com/docs
+ * Document URI:    https://pluginever.com/docs/min-max-quantities-for-woocommerce/
  * Review URI:      https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5
  * Settings Path:   admin.php?page=wc-min-max-quantities-settings
  *
@@ -30,7 +30,7 @@
  * GNU General Public License for more details.
  */
 
-use WC_Min_Max_Quantities\Plugin;
+use WooCommerceMinMaxQuantities\Plugin;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -41,8 +41,8 @@ require_once __DIR__ . '/includes/class-autoloader.php';
 /**
  * Missing WooCommerce notice.
  *
- * @return void
  * @since 1.0.0
+ * @return void
  */
 function wc_min_max_quantities_missing_wc_notice() {
 	$notice = sprintf(
@@ -62,6 +62,7 @@ function wc_min_max_quantities_missing_wc_notice() {
 // Check if WooCommerce is active.
 if ( ! Plugin::is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	add_action( 'admin_notices', 'wc_min_max_quantities_missing_wc_notice' );
+
 	return;
 }
 
@@ -75,12 +76,7 @@ if ( ! Plugin::is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
  * @return Plugin
  */
 function wc_min_max_quantities() {
-	return Plugin::create(
-		[
-			'file'    => __FILE__,
-			'item_id' => 12345,
-		]
-	);
+	return Plugin::create( __FILE__ );
 }
 
 // Initialize the plugin.

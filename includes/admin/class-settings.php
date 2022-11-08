@@ -1,8 +1,8 @@
 <?php
 
-namespace WC_Min_Max_Quantities\Admin;
+namespace WooCommerceMinMaxQuantities\Admin;
 
-use WC_Min_Max_Quantities\Framework;
+use WooCommerceMinMaxQuantities\Framework;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit();
  * Settings class.
  *
  * @since 1.0.0
- * @package WC_Min_Max_Quantities\Admin
+ * @package WooCommerceMinMaxQuantities\Admin
  */
 class Settings extends Framework\Settings {
 	/**
@@ -25,7 +25,9 @@ class Settings extends Framework\Settings {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 55 );
 		add_action( 'wc_min_max_quantities_settings_tabs', array( $this, 'add_extra_tabs' ), 20 );
 		add_action( 'wc_min_max_quantities_activated', array( $this, 'save_defaults' ) );
-		add_action( 'wc_min_max_quantities_settings_sidebar', array( $this, 'output_upgrade_widget' ) );
+		if ( ! $this->get_plugin()->is_premium_active() ) {
+			add_action( 'wc_min_max_quantities_settings_sidebar', array( $this, 'output_upgrade_widget' ) );
+		}
 		add_action( 'wc_min_max_quantities_settings_sidebar', array( $this, 'output_about_widget' ) );
 		add_action( 'wc_min_max_quantities_settings_sidebar', array( $this, 'output_help_widget' ) );
 		add_action( 'wc_min_max_quantities_settings_sidebar', array( $this, 'output_recommended_widget' ) );
@@ -67,8 +69,8 @@ class Settings extends Framework\Settings {
 	 */
 	public function get_settings_tabs() {
 		$tabs = [
-			'general'       => __( 'General', 'wc-min-max-quantities' ),
-			'localizations' => __( 'Localizations', 'wc-min-max-quantities' ),
+			'general' => __( 'General', 'wc-min-max-quantities' ),
+			// 'localizations' => __( 'Localizations', 'wc-min-max-quantities' ),
 		];
 
 		return apply_filters( 'wc_min_max_quantities_settings_tabs_array', $tabs );
@@ -175,6 +177,29 @@ class Settings extends Framework\Settings {
 	 * @return array Localizations settings.
 	 */
 	public function get_localizations_tab_settings() {
+		return array();
+	}
 
+
+	/**
+	 * Output upgrade widget.
+	 *
+	 * @since 1.0.0
+	 * @retun void
+	 */
+	public function output_upgrade_widget() {
+		?>
+		<div class="pluginever-settings__card highlighted">
+			<h3><?php esc_html_e( 'Want More?', 'framework-text-domain' ); ?></h3>
+			This plugin offers a premium version which comes with the following features:
+			<ul>
+				<li>- Feature 1</li>
+				<li>- Feature 2</li>
+				<li>- Feature 3</li>
+				<li>- Feature 4</li>
+			</ul>
+			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" class="button"><?php esc_html_e( 'Upgrade to PRO', 'framework-text-domain' ); ?></a>
+		</div>
+		<?php
 	}
 }

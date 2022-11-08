@@ -1,6 +1,6 @@
 <?php
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit();
@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit();
  * Class Installer.
  *
  * @since 1.0.0
- * @package WC_Min_Max_Quantities
+ * @package WooCommerceMinMaxQuantities
  */
 class Installer extends Controller {
 
@@ -27,6 +27,7 @@ class Installer extends Controller {
 			'update_110_categories',
 			'update_110_products',
 		),
+		'1.1.3' => 'update_113',
 	);
 
 	/**
@@ -209,7 +210,7 @@ class Installer extends Controller {
 		}
 
 		foreach ( $updated_settings as $key => $value ) {
-			Plugin::get( 'settings' )->update_option( $key, $value );
+			update_option( 'wc_minmax_quantities_' . $key, $value );
 		}
 
 	}
@@ -304,4 +305,45 @@ class Installer extends Controller {
 
 		return true;
 	}
+
+	/**
+	 * Upgrade to 1.1.3
+	 *
+	 * @since 1.1.3
+	 * @return void
+	 */
+	public static function update_113() {
+		$options = [
+			'general_min_product_quantity'       => 'wcmmq_min_product_quantity',
+			'general_max_product_quantity'       => 'wcmmq_max_product_quantity',
+			'general_product_quantity_step'      => 'wcmmq_product_quantity_step',
+			'general_min_product_total'          => 'wcmmq_min_product_total',
+			'general_max_product_total'          => 'wcmmq_max_product_total',
+			'general_min_order_quantity'         => 'wcmmq_min_order_quantity',
+			'general_max_order_quantity'         => 'wcmmq_max_order_quantity',
+			'general_min_order_amount'           => 'wcmmq_min_order_amount',
+			'general_max_order_amount'           => 'wcmmq_max_order_amount',
+			'translations_min_product_quantity'  => 'wcmmq_min_product_quantity_text',
+			'translations_max_product_quantity'  => 'wcmmq_max_product_quantity_text',
+			'translations_product_quantity_step' => 'wcmmq_product_quantity_step_text',
+			'translations_min_product_total'     => 'wcmmq_min_product_total_text',
+			'translations_max_product_total'     => 'wcmmq_max_product_total_text',
+			'translations_min_order_quantity'    => 'wcmmq_min_order_quantity_text',
+			'translations_max_order_quantity'    => 'wcmmq_max_order_quantity_text',
+			'translations_min_order_amount'      => 'wcmmq_min_order_amount_text',
+			'translations_max_order_amount'      => 'wcmmq_max_order_amount_text',
+			'translations_min_cat_quantity'      => 'wcmmq_min_cat_quantity_text',
+			'translations_max_cat_quantity'      => 'wcmmq_max_cat_quantity_text',
+			'general_disable_category_rules'     => 'wcmmq_disable_category_rules',
+		];
+
+		$settings = get_option( 'wc_min_max_quantities_settings', array() );
+		foreach ( $options as $old_key => $new_key ) {
+			if ( isset( $settings[ $old_key ] ) ) {
+				$settings[ $new_key ] = $settings[ $old_key ];
+				update_option( $new_key, $settings[ $old_key ] );
+			}
+		}
+	}
+
 }
