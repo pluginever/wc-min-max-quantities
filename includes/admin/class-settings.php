@@ -190,7 +190,7 @@ class Settings extends Framework\Settings {
 	public function output_upgrade_widget() {
 		?>
 		<div class="pluginever-settings__card highlighted">
-			<h3><?php esc_html_e( 'Want More?', 'framework-text-domain' ); ?></h3>
+			<h3><?php esc_html_e( 'Want More?', 'wc-min-max-quantities' ); ?></h3>
 			This plugin offers a premium version which comes with the following features:
 			<ul>
 				<li>- Feature 1</li>
@@ -198,7 +198,7 @@ class Settings extends Framework\Settings {
 				<li>- Feature 3</li>
 				<li>- Feature 4</li>
 			</ul>
-			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" class="button"><?php esc_html_e( 'Upgrade to PRO', 'framework-text-domain' ); ?></a>
+			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" class="button"><?php esc_html_e( 'Upgrade to PRO', 'wc-min-max-quantities' ); ?></a>
 		</div>
 		<?php
 	}
