@@ -1,55 +1,86 @@
 <?php
-/**
- * Includes the classes.
- *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities
- */
 
 namespace WC_Min_Max_Quantities;
 
+// don't call the file directly.
 defined( 'ABSPATH' ) || exit();
 
+/**
+ * Class Autoloader.
+ *
+ * Handles autoloader related actions.
+ *
+ * @since  1.0.0
+ * @package  WC_Min_Max_Quantities
+ */
 class Autoloader {
 
 	/**
+	 * Plugin root path.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	private $root;
+	/**
 	 * Autoloader constructor.
 	 *
-	 * @since 1.1.0
+	 * @param string $root path to the plugin.
+	 *
+	 * @since  1.0.0
 	 */
-	public function __construct() {
-		// Register autoloader.
-		spl_autoload_register( array( $this, 'autoload' ), true );
+	public function __construct( $root ) {
+		$this->root = $root;
+		spl_autoload_register( array( $this, 'autoload' ) );
 	}
 
 	/**
-	 * Autoloader for classes
+	 * Autoload.
 	 *
-	 * @param string $class Fully qualified classname to be loaded.
+	 * @param string $class The class name.
 	 *
-	 * @since 1.1.0
+	 * @since  1.0.0
+	 * @return void
 	 */
 	public function autoload( $class ) {
-		$class     = ltrim( $class, '\\' );
-		$namespace = 'WC_Min_Max_Quantities\\';
-		$len       = strlen( $namespace );
-		if ( strncmp( $namespace, $class, $len ) !== 0 || ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
+		$prefix = __NAMESPACE__;
+		$len    = strlen( $prefix );
+		if ( strncmp( $prefix, $class, $len ) !== 0 || ! preg_match( '/^(?P<namespace>.+)\\\\(?P<class_name>[^\\\\]+)$/', $class, $matches ) ) {
 			return;
 		}
+		$locations = array(
+			'lib',
+			'includes',
+		);
 
-		$include_path  = untrailingslashit( __DIR__ );
-		$class_name    = strtolower( $matches['class_name'] );
-		$file_name     = 'class-' . str_replace( '_', '-', $class_name ) . '.php';
-		$relative_path = str_replace( array( $namespace, '\\', $matches['class_name'] ), array( '', DIRECTORY_SEPARATOR, $file_name ), $class );
-		$file          = trailingslashit( $include_path ) . strtolower( $relative_path );
+		// take the last part of the class name as the file name.
+		$class      = str_replace( array( '\\', $prefix ), array( DIRECTORY_SEPARATOR, '' ), $class );
+		$class_name = $matches['class_name'];
+		$psr4_name  = $class_name . '.php';
+		$plain_name = 'class-' . strtolower( str_replace( '_', '-', $class_name ) ) . '.php';
+		// preg replace the $class_name with the file $psr4_name at the end of the $class.
+		$psr4_path  = preg_replace( '/' . $class_name . '$/', $psr4_name, $class );
+		$plain_path = preg_replace( '/' . $class_name . '$/', $plain_name, $class );
+		$plain_path = strtolower( str_replace( '_', '-', $plain_path ) );
 
-		// if the file exists, require it.
-		if ( file_exists( $file ) ) {
-			require $file;
+		foreach ( $locations as $location ) {
+			$psr4_file  = trailingslashit( $this->root ) . ltrim( $location, '/' ) . $psr4_path;
+			$plain_file = trailingslashit( $this->root ) . ltrim( $location, '/' ) . $plain_path;
+
+			if ( file_exists( $psr4_file ) && is_readable( $psr4_file ) ) {
+				require_once $psr4_file;
+
+				return;
+			}
+			if ( file_exists( $plain_file ) && is_readable( $plain_file ) ) {
+				require_once $plain_file;
+
+				return;
+			}
 		}
 	}
 
+
 }
 
-return new Autoloader();
+return new Autoloader( dirname( __FILE__, 2 ) );

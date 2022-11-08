@@ -1,39 +1,17 @@
 <?php
-/**
- * WC_Min_Max_Quantities Helper functions handlers
- *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities
- */
 
 namespace WC_Min_Max_Quantities;
 
+// don't call the file directly.
 defined( 'ABSPATH' ) || exit();
 
 /**
- * Helper class.
+ * Useful helper functions for the plugin
+ *
+ * @package WC_Min_Max_Quantities
+ * @since   1.0.0
  */
 class Helper {
-	/**
-	 * Log messages.
-	 *
-	 * @param mixed $message Log message.
-	 *
-	 * @since 1.1.0
-	 */
-	public static function log( $message ) {
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
-			return;
-		}
-
-		if ( ! is_string( $message ) ) {
-			$message = var_export( $message, true );
-		}
-
-		error_log( $message );
-	}
-
 	/**
 	 * Add an error.
 	 *

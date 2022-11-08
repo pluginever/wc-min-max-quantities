@@ -1,28 +1,29 @@
 <?php
-/**
- * Handles WooCommerce cart related functionalities.
- *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities\WC
- */
 
 namespace WC_Min_Max_Quantities;
 
+// don't call the file directly.
 defined( 'ABSPATH' ) || exit();
 
 /**
- * Class Cart_Manager.
+ * Class Store.
+ *
+ * Handles order related actions.
+ *
+ * @since  1.0.0
+ * @return Store
  */
-class Cart_Manager {
+class Store extends Controller {
 
 	/**
-	 * Cart_Manager constructor.
+	 * Set up the controller.
 	 *
-	 * @since 1.1.0
+	 * Load files or register hooks.
+	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public function __construct() {
+	protected function init() {
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
@@ -507,3 +508,4 @@ class Cart_Manager {
 		return $data;
 	}
 }
+

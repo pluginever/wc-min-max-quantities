@@ -1,171 +1,138 @@
 <?php
-/**
- * Class Lifecycle
- *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities
- */
 
 namespace WC_Min_Max_Quantities;
 
-use WC_Min_Max_Quantities\Admin\Admin_Notices;
-use WC_Min_Max_Quantities\Utilities\Background_Updater;
-
+// don't call the file directly.
 defined( 'ABSPATH' ) || exit();
 
 /**
- * LifeCycle class.
+ * Class Installer.
+ *
+ * @since 1.0.0
+ * @package WC_Min_Max_Quantities
  */
-class Lifecycle {
+class Installer extends Controller {
 
 	/**
-	 * Updates and callbacks that need to be run per version.
+	 * Update callbacks.
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 * @var array
 	 */
-	protected static $updates = array(
-		'1.0.8' => array( __CLASS__, 'update_108' ),
+	protected $updates = array(
+		'1.0.0' => 'update_100',
+		'1.0.8' => 'update_108',
 		'1.1.0' => array(
-			array( __CLASS__, 'update_110_settings' ),
-			array( __CLASS__, 'update_110_categories' ),
-			array( __CLASS__, 'update_110_products' ),
+			'update_110_settings',
+			'update_110_categories',
+			'update_110_products',
 		),
 	);
 
 	/**
-	 * Lifecycle constructor.
+	 * Set up the controller.
 	 *
-	 * @since 1.1.0
+	 * Load files or register hooks.
+	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public function __construct() {
-		add_action( 'init', array( __CLASS__, 'init_classes' ) );
-		add_action( 'init', array( __CLASS__, 'maybe_install' ) );
-		add_action( 'init', array( __CLASS__, 'maybe_update' ) );
-		add_action( 'admin_init', array( __CLASS__, 'maybe_add_notices' ) );
+	protected function init() {
+		add_action( 'wc_min_max_quantities_activated', array( $this, 'install' ) );
+		add_action( 'init', array( $this, 'check_version' ), 5 );
 	}
 
 	/**
-	 * Initialize the dependent classes.
+	 * Install the plugin.
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public static function init_classes() {
-	}
+	public function install() {
+		global $wpdb;
+		$wpdb->hide_errors();
+		$db_version = $this->get_plugin()->get_db_version();
+		$collate    = $wpdb->has_cap( 'collation' ) ? $wpdb->get_charset_collate() : '';
+		if ( ! is_blog_installed() ) {
+			return;
+		}
 
-	/**
-	 * Check version and run the installer if necessary.
-	 *
-	 * @since  1.1.0
-	 */
-	public static function maybe_install() {
-		if ( ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && ! defined( 'IFRAME_REQUEST' ) && Plugin::instance()->get( 'version' ) !== self::get_db_version() ) {
-			self::install();
+		add_option( $this->get_plugin()->get_db_version_name(), $this->get_plugin()->get_version() );
+		add_option( $this->get_plugin()->get_activation_date_name(), current_time( 'mysql' ) );
+
+		if ( ! $db_version ) {
+			/**
+			 * Fires after the plugin is installed for the first time.
+			 *
+			 * @since 1.0.0
+			 */
+			do_action( $this->get_plugin()->get_id() . '_newly_installed' );
+			set_transient( $this->get_plugin()->get_id() . '_activation_redirect', 1, 30 );
 		}
 	}
 
 	/**
-	 * Perform all the necessary upgrade routines.
+	 * Check plugin version and run the updater if necessary.
 	 *
-	 * @since 1.1.0
+	 * This check is done on all requests and runs if the versions do not match.
+	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public static function maybe_update() {
-		if ( self::needs_db_update() && Plugin::has( 'background_updater' ) ) {
-			$installed_version = self::get_db_version();
-			foreach ( self::$updates as $version => $update_callbacks ) {
-				if ( version_compare( $installed_version, $version, '<' ) ) {
+	public function check_version() {
+		$db_version      = $this->get_plugin()->get_db_version();
+		$current_version = $this->get_plugin()->get_version();
+		$requires_update = version_compare( $db_version, $current_version, '<' );
 
-					if ( is_callable( $update_callbacks ) ) {
-						$update_callbacks = [ $update_callbacks ];
-					}
+		if ( ! defined( 'IFRAME_REQUEST' ) && $requires_update ) {
+			$this->install();
 
-					foreach ( $update_callbacks as $update_callback ) {
-						Plugin::get( 'background_updater' )->push_to_queue( $update_callback );
+			$update_versions = array_keys( $this->updates );
+			usort( $update_versions, 'version_compare' );
+			$needs_update = ! is_null( $db_version ) && version_compare( $db_version, end( $update_versions ), '<' );
+			if ( $needs_update ) {
+				$this->update();
+				/**
+				 * Fires after the plugin is updated.
+				 *
+				 * @since 1.0.0
+				 */
+				do_action( $this->get_plugin()->get_id() . '_updated' );
+			} else {
+				$this->get_plugin()->update_db_version();
+			}
+		}
+	}
+
+	/**
+	 * Update the plugin.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function update() {
+		$db_version      = $this->get_plugin()->get_db_version();
+		$current_version = $this->get_plugin()->get_version();
+		foreach ( $this->updates as $version => $callbacks ) {
+			$callbacks = (array) $callbacks;
+			if ( version_compare( $db_version, $version, '<' ) ) {
+				foreach ( $callbacks as $callback ) {
+					$this->get_plugin()->log( sprintf( 'Updating to %s from %s', $version, $db_version ) );
+					// if the callback return false then we need to update the db version.
+					$continue = call_user_func( array( $this, $callback ) );
+					if ( ! $continue ) {
+						$this->get_plugin()->update_db_version( $version );
+						$notice = sprintf(
+						/* translators: 1: plugin name 2: version number */
+							__( '%1$s updated to version %2$s successfully.', 'wc-min-max-quantities' ),
+							'<strong>' . $this->get_plugin()->get_name() . '</strong>',
+							'<strong>' . $version . '</strong>'
+						);
+						$this->add_notice( $notice );
 					}
 				}
 			}
-			Plugin::get( 'background_updater' )->save()->dispatch();
-			self::update_db_version();
 		}
-	}
-
-	/**
-	 * Is a DB update needed?
-	 *
-	 * @since  1.1.0
-	 * @return boolean
-	 */
-	protected static function needs_db_update() {
-		$current_db_version = self::get_db_version();
-
-		return ! empty( $current_db_version ) && version_compare( $current_db_version, Plugin::instance()->get( 'version' ), '<' );
-	}
-
-	/**
-	 * Gets the currently installed plugin database version.
-	 *
-	 * @since 1.1.0
-	 * @return string
-	 */
-	protected static function get_db_version() {
-		return get_option( 'wc_min_max_quantities_version', null );
-	}
-
-	/**
-	 * Update the installed plugin database version.
-	 *
-	 * @param string $version version to set
-	 *
-	 * @since 1.1.0
-	 */
-	protected static function update_db_version( $version = null ) {
-		update_option( 'wc_min_max_quantities_version', is_null( $version ) ? Plugin::instance()->get( 'version' ) : $version );
-	}
-
-	/**
-	 * Performs any install tasks.
-	 *
-	 * @since 1.1.0
-	 */
-	public static function install() {
-		if ( ! self::get_db_version() ) {
-			self::update_db_version();
-		}
-
-		if ( ! get_option( 'wc_min_max_quantities_install_date' ) ) {
-			update_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
-		}
-
-		Plugin::get( 'settings' )->save_settings();
-	}
-
-	/**
-	 * Conditionally add admin notices.
-	 *
-	 * @since 1.1.0
-	 * @return void
-	 */
-	public static function maybe_add_notices() {
-		Admin_Notices::add_welcome_notice();
-		// Review notice after 1 day of installation.
-		$date = (int) get_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
-		if ( $date + ( DAY_IN_SECONDS * 1 ) < current_time( 'timestamp' ) ) {
-			Admin_Notices::add_review_notice();
-		}
-	}
-
-	/**
-	 * Remove plugin related options.
-	 *
-	 * @since 1.1.0
-	 * @return void
-	 */
-	public static function uninstall() {
-		// placeholder function.
 	}
 
 	/**
@@ -254,11 +221,13 @@ class Lifecycle {
 	 * @return void
 	 */
 	public static function update_110_categories() {
-		$categories = get_categories( array(
-			'taxonomy'   => 'product_cat',
-			'hide_empty' => false,
-			'fields'     => 'ids',
-		) );
+		$categories = get_categories(
+			array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+				'fields'     => 'ids',
+			)
+		);
 		$term_metas = array(
 			'cat_min_quantity' => '_wc_min_max_quantities_min_qty',
 			'cat_max_quantity' => '_wc_min_max_quantities_max_qty',
@@ -285,12 +254,14 @@ class Lifecycle {
 	 */
 	public static function update_110_products() {
 		$migrated = get_option( 'wc_minmax_quantities_migrated_products', array() );
-		$products = get_posts( array(
-			'post_type'   => [ 'product', 'product_variation' ],
-			'post_status' => 'any',
-			'exclude'     => wp_parse_id_list( $migrated ),
-			'fields'      => 'ids',
-		) );
+		$products = get_posts(
+			array(
+				'post_type'   => [ 'product', 'product_variation' ],
+				'post_status' => 'any',
+				'exclude'     => wp_parse_id_list( $migrated ),
+				'fields'      => 'ids',
+			)
+		);
 
 		if ( empty( $products ) ) {
 			delete_option( 'wc_minmax_quantities_migrated_products' );
@@ -326,8 +297,6 @@ class Lifecycle {
 
 				delete_post_meta( $product_id, $old_key );
 			}
-
-
 		}
 		$migrated = array_merge( $migrated, $products );
 

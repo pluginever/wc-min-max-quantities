@@ -1,60 +1,32 @@
 <?php
-/**
- * WC_Min_Max_Quantities admin related functionalities.
- *
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities\Admin
- */
 
 namespace WC_Min_Max_Quantities\Admin;
 
-use WC_Min_Max_Quantities\Plugin;
-use WC_Min_Max_Quantities\Settings;
+use WC_Min_Max_Quantities\Controller;
 
 defined( 'ABSPATH' ) || exit();
 
 /**
- * Admin_Manager class.
+ * Class Meta Boxes.
+ *
+ * @package WC_Min_Max_Quantities
+ * @since   1.0.0
  */
-class Admin_Manager {
+class Meta_Boxes extends Controller {
 
 	/**
-	 * Admin_Manager construct.
+	 * Set up the controller.
 	 *
-	 * @since 1.1.0
+	 * Load files or register hooks.
+	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	public function __construct() {
-		add_action( 'admin_init', array( $this, 'init' ), 0);
-		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
+	protected function init() {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 		add_action( 'woocommerce_process_product_meta', [ __CLASS__, 'save_product_meta' ] );
 	}
 
-	/**
-	 * Initialize services.
-	 *
-	 * @since 1.1.0
-	 */
-	public function init() {
-		Plugin::set( 'admin_notices', new Admin_Notices() );
-	}
-
-	/**
-	 * Add menu item.
-	 *
-	 * @since 1.1.0
-	 */
-	public function settings_menu() {
-		add_submenu_page(
-			'woocommerce',
-			__( 'Min Max Quantities Settings', 'wc-min-max-quantities' ),
-			__( 'Min Max Quantities', 'wc-min-max-quantities' ),
-			'manage_options',
-			'wc-min-max-quantities-settings',
-			array( Settings::class, 'output' )
-		);
-	}
 
 	/**
 	 * Add tab content in product edit page
