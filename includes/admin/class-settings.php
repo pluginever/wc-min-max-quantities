@@ -91,10 +91,6 @@ class Settings extends Framework\Settings {
 				'desc'  => esc_html__( 'The following options are for adding minimum maximum rules for products globally.', 'wc-min-max-quantities' ),
 			),
 			array(
-				'id'   => 'pluginever_license_key_' . $this->get_plugin()->get_item_id(),
-				'type' => 'pluginever_license_key_' . $this->get_plugin()->get_item_id(),
-			),
-			array(
 				'title'             => esc_html__( 'Minimum product quantity', 'wc-min-max-quantities' ),
 				'id'                => 'wcmmq_min_product_quantity',
 				'desc'              => esc_html__( 'Set an allowed minimum number of items for each product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
