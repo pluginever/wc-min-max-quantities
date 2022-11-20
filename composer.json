@@ -14,8 +14,8 @@
   ],
   "repositories": [
     {
-      "url": "https://github.com/byteever/php-coding-standards.git",
-      "type": "git"
+      "url": "git@github.com:byteever/byteever-sniffs.git",
+      "type": "github"
     }
   ],
   "minimum-stability": "dev",
@@ -24,7 +24,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
-    "byteever/php-coding-standards": "dev-master"
+    "byteever/byteever-sniffs": "dev-master"
   },
   "autoload": {
     "classmap": [
@@ -54,17 +54,10 @@
       "@install-scripts"
     ],
     "pre-commit": "@phpcs",
-    "phpcs": "phpcs -s -p .",
-    "phpcbf": "phpcbf -p ."
+    "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
+    "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
   "extra": {
-    "installer-disable": true,
-    "scripts-description": {
-      "test": "Run unit tests",
-      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
-      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
-      "makepot-audit": "Generate i18n/languages/wc_min_max_quantities.pot file and run audit",
-      "makepot": "Generate i18n/languages/wc_min_max_quantities.pot file"
-    }
+    "installer-disable": true
   }
 }

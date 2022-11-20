@@ -1,6 +1,33 @@
 <?xml version="1.0"?>
-<ruleset name="byteever Coding Standards">
-	<description>byteever PHPCS extended.</description>
-	<rule ref="byteever-Default" />
-	<exclude-pattern>*/bin/*</exclude-pattern>
+<ruleset name="WordPress Coding Standards">
+	<description>WooCommerce Min Max Sniffs dev ruleset.</description>
+	<file>.</file>
+	<exclude-pattern>languages/</exclude-pattern>
+	<exclude-pattern>tests/</exclude-pattern>
+	<exclude-pattern>assets/</exclude-pattern>
+	<exclude-pattern>dist/</exclude-pattern>
+	<exclude-pattern>bin/</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*\.(css|js|xml)</exclude-pattern>
+
+	<!-- Sets the minimum supported WP version to 5.8, which is over a year old. -->
+	<config name="minimum_supported_wp_version" value="5.8" />
+	<!-- Rules: Check PHP version compatibility -->
+	<!-- https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions -->
+	<config name="testVersion" value="5.6-"/>
+
+
+	<!-- Rules -->
+	<rule ref="ByteEver-Default"/>
+
+	<!-- Check that the proper text domain(s) is used everywhere. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wc-min-max-quantities"/>
+			</property>
+		</properties>
+	</rule>
+
 </ruleset>
