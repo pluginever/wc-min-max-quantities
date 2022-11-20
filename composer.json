@@ -20,44 +20,35 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": ">=7.0"
+    "php": ">=5.6|>=7.0"
   },
+  "autoload": {},
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^6.5",
     "byteever/byteever-sniffs": "dev-master"
   },
-  "autoload": {
-    "classmap": [
-      "includes/"
-    ],
-    "files": [
-      "includes/functions.php"
-    ]
-  },
   "config": {
     "optimize-autoloader": true,
+    "platform": {
+      "php": "7.0"
+    },
     "sort-packages": true,
-    "classmap-authoritative": true,
-    "preferred-install": "dist",
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "scripts": {
-    "install-scripts": [
-      "composer dump-autoload -o"
+    "pre-commit": [
+      "@phpcs"
     ],
-    "post-install-cmd": [
-      "@install-scripts"
-    ],
-    "post-update-cmd": [
-      "@install-scripts"
-    ],
-    "pre-commit": "@phpcs",
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
   "extra": {
-    "installer-disable": true
+    "scripts-description": {
+      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+    }
   }
 }
