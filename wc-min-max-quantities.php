@@ -41,9 +41,10 @@ if ( ! defined( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE' ) ) {
  */
 function wc_min_max_quantities_missing_wc_notice() {
 	/* translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link. */
-	$notice = '<div class="notice notice-error">';
+	$notice  = '<div class="notice notice-error">';
 	$notice .= '<p>';
 	$notice .= sprintf(
+		/* translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link. */
 		__( '%1$s requires %2$s to be installed and active. You can download WooCommerce %3$s.', 'wc-min-max-quantities' ),
 		'<strong>WC Min Max Quantities</strong>',
 		'<strong>WooCommerce</strong>',

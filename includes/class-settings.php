@@ -24,7 +24,6 @@ class Settings {
 
 	/**
 	 * Class constructor.
-	 *
 	 */
 	public function __construct() {
 		$this->option_key = 'wc_min_max_quantities_settings';
@@ -45,7 +44,7 @@ class Settings {
 			),
 			'translations' => array(
 				'title' => esc_html__( 'Translations', 'wc-min-max-quantities' ),
-			)
+			),
 		);
 
 		return apply_filters( 'wc_min_max_quantities_settings_tabs', $tabs );
@@ -58,7 +57,8 @@ class Settings {
 	 */
 	protected function get_fields() {
 		$fields = array(
-			'general'      => apply_filters( 'wc_min_max_quantities_general_settings_fields',
+			'general'      => apply_filters(
+				'wc_min_max_quantities_general_settings_fields',
 				array(
 					array(
 						'id'    => 'section_product_restrictions',
@@ -167,13 +167,13 @@ class Settings {
 		}
 		?>
 		<div id="wc-min-max-quantities-settings-wrap" class="wrap settings-wrap wcmmq-settings">
-			<h1><?php echo get_admin_page_title() ?></h1>
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<?php if ( ! empty( $tabs ) && count( $tabs ) > 1 ) : ?>
 
 				<nav class="nav-tab-wrapper">
 					<?php foreach ( $tabs as $tab_id => $tab ) : ?>
-						<a href="#<?php echo esc_attr( $tab_id ) ?>" class="nav-tab" id="<?php echo esc_attr( $tab_id ) ?>-tab"><?php echo esc_html( $tab['title'] ) ?></a>
+						<a href="#<?php echo esc_attr( $tab_id ); ?>" class="nav-tab" id="<?php echo esc_attr( $tab_id ); ?>-tab"><?php echo esc_html( $tab['title'] ); ?></a>
 					<?php endforeach; ?>
 				</nav>
 
@@ -366,7 +366,8 @@ class Settings {
 						'css'         => '',
 						'attrs'       => array(),
 						'tab_id'      => $tab_id,
-					) );
+					)
+				);
 
 				add_settings_field(
 					$field['id'],
@@ -395,7 +396,7 @@ class Settings {
 		if ( ! empty( $field['value'] ) && is_callable( $field['value'] ) ) {
 			$field['value'] = call_user_func( $field['value'] );
 		} else {
-			$field['value'] = $this->get_option( implode( '_', [ $field['tab_id'], $field['id'] ] ), $field['default'] );
+			$field['value'] = $this->get_option( implode( '_', array( $field['tab_id'], $field['id'] ) ), $field['default'] );
 		}
 
 		// Custom attribute handling.
@@ -422,14 +423,13 @@ class Settings {
 		switch ( $field['type'] ) {
 			case 'title':
 			case 'section':
-				$output = '';
 				if ( ! empty( $field['title'] ) ) {
-					$output .= '<h2>' . esc_html( $field['title'] ) . '</h2>';
+					echo '<h2>' . esc_html( $field['title'] ) . '</h2>';
 				}
 				if ( ! empty( $field['desc'] ) ) {
-					$output .= '<div id="' . esc_attr( sanitize_title( $field['id'] ) ) . '-description">';
-					$output .= wp_kses_post( wpautop( wptexturize( $field['desc'] ) ) );
-					$output .= '</div>';
+					echo '<div id="' . esc_attr( sanitize_title( $field['id'] ) ) . '-description">';
+					echo wp_kses_post( wpautop( wptexturize( $field['desc'] ) ) );
+					echo '</div>';
 				}
 				break;
 			case 'text':
@@ -444,7 +444,7 @@ class Settings {
 			case 'email':
 			case 'url':
 			case 'tel':
-				$output = sprintf(
+				echo sprintf(
 					'<input type="%1$s" name="%2$s[%3$s_%4$s]" id="%2$s_%3$s_%4$s" class="field-type-%1$s %5$s-text %6$s" style="%7$s" placeholder="%8$s" value="%9$s" %10$s/> %11$s %12$s',
 					esc_attr( $field['type'] ),
 					esc_attr( $this->option_key ),
@@ -463,7 +463,8 @@ class Settings {
 				break;
 			// Textarea.
 			case 'textarea':
-				$output = sprintf( '<textarea name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-textarea %4$s-text %5$s" style="%6$s" placeholder="%7$s"  %8$s>%9$s</textarea>%10$s %11$s',
+				echo sprintf(
+					'<textarea name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-textarea %4$s-text %5$s" style="%6$s" placeholder="%7$s"  %8$s>%9$s</textarea>%10$s %11$s',
 					esc_attr( $this->option_key ),
 					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
@@ -494,8 +495,7 @@ class Settings {
 					$options .= sprintf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $key ), $value, esc_html( $val ) );
 				}
 
-
-				$output = sprintf(
+				echo sprintf(
 					'<select name="%1$s[%2$s_%3$s]%4$s" id="%1$s_%2$s_%3$s" class="field-type-select %5$s-text %6$s" style="%7$s"  %8$s/> %9$s %10$s</select> %11$s',
 					esc_attr( $this->option_key ),
 					esc_attr( $field['tab_id'] ),
@@ -505,7 +505,7 @@ class Settings {
 					esc_attr( $field['class'] ),
 					esc_attr( $field['css'] ),
 					esc_attr( implode( ' ', $attrs ) ),
-					$options,
+					wp_kses_post( $options ),
 					wp_kses_post( $field['suffix'] ),
 					wp_kses_post( $description )
 				);
@@ -515,8 +515,9 @@ class Settings {
 				$options = '';
 				$value   = wp_parse_list( $field['value'] );
 				foreach ( $field['options'] as $key => $title ) {
-					$checked = isset( $value[ $key ] ) ? $value[ $key ] : 'no';
-					$options .= sprintf( '<li><label><input type="checkbox" name="%1$s[%2$s_%3$s][%4$s]" id="%1$s_%2$s_%3$s_%4$s" class="field-type-checkbox %5$s" style="%6$s" value="yes" %7$s %8$s/>%9$s</label></li>',
+					$checked  = isset( $value[ $key ] ) ? $value[ $key ] : 'no';
+					$options .= sprintf(
+						'<li><label><input type="checkbox" name="%1$s[%2$s_%3$s][%4$s]" id="%1$s_%2$s_%3$s_%4$s" class="field-type-checkbox %5$s" style="%6$s" value="yes" %7$s %8$s/>%9$s</label></li>',
 						esc_attr( $this->option_key ),
 						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] ),
@@ -529,9 +530,10 @@ class Settings {
 					);
 				}
 
-				$output .= sprintf( '<fieldset>%1$s<ul>%2$s</ul>%3$s</fieldset>',
+				echo sprintf(
+					'<fieldset>%1$s<ul>%2$s</ul>%3$s</fieldset>',
 					wp_kses_post( $description ),
-					$options,
+					wp_kses_post( $options ),
 					wp_kses_post( $field['suffix'] )
 				);
 
@@ -539,7 +541,8 @@ class Settings {
 			case 'radio':
 				$options = '';
 				foreach ( $field['options'] as $key => $title ) {
-					$options .= sprintf( '<li><label><input type="radio" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s_%6$s" class="field-type-radio %4$s" style="%5$s" value="%6$s" %7$s  %8$s/>%9$s</label></li>',
+					$options .= sprintf(
+						'<li><label><input type="radio" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s_%6$s" class="field-type-radio %4$s" style="%5$s" value="%6$s" %7$s  %8$s/>%9$s</label></li>',
 						esc_attr( $this->option_key ),
 						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] ),
@@ -551,15 +554,17 @@ class Settings {
 						esc_html( $title )
 					);
 				}
-				$output .= sprintf( '<fieldset>%1$s<ul>%2$s</ul>%3$s</fieldset>',
+				echo sprintf(
+					'<fieldset>%1$s<ul>%2$s</ul>%3$s</fieldset>',
 					wp_kses_post( $description ),
-					$options,
+					wp_kses_post( $options ),
 					wp_kses_post( $field['suffix'] )
 				);
 
 				break;
 			case 'checkbox':
-				$output = sprintf( '<label><input type="checkbox" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-checkbox %4$s" style="%5$s" value="yes" %6$s %7$s/>%8$s</label> %9$s',
+				echo sprintf(
+					'<label><input type="checkbox" name="%1$s[%2$s_%3$s]" id="%1$s_%2$s_%3$s" class="field-type-checkbox %4$s" style="%5$s" value="yes" %6$s %7$s/>%8$s</label> %9$s',
 					esc_attr( $this->option_key ),
 					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
@@ -572,16 +577,23 @@ class Settings {
 				);
 				break;
 			case 'wysiwyg':
-				$field    = (array) wp_parse_args( $field, array(
-					'settings' => array()
-				) );
-				$settings = wp_parse_args( $field['settings'], array(
-					'textarea_rows' => 10,
-				) );
+				$field    = (array) wp_parse_args(
+					$field,
+					array(
+						'settings' => array(),
+					)
+				);
+				$settings = wp_parse_args(
+					$field['settings'],
+					array(
+						'textarea_rows' => 10,
+					)
+				);
 				ob_start();
 				wp_editor(
 					stripslashes( $field['value'] ),
-					sprintf( '%1$s_%2$s_%3$s',
+					sprintf(
+						'%1$s_%2$s_%3$s',
 						esc_attr( $this->option_key ),
 						esc_attr( $field['tab_id'] ),
 						esc_attr( $field['id'] )
@@ -589,11 +601,12 @@ class Settings {
 					array_merge(
 						$settings,
 						array(
-							'textarea_name' => sprintf( '%1$s[%2$s_%3$s]',
+							'textarea_name' => sprintf(
+								'%1$s[%2$s_%3$s]',
 								esc_attr( $this->option_key ),
 								esc_attr( $field['tab_id'] ),
 								esc_attr( $field['id'] )
-							)
+							),
 						)
 					)
 				);
@@ -601,12 +614,8 @@ class Settings {
 
 				break;
 			default:
-				$output = '';
 				break;
 		}
-
-
-		echo $output;
 	}
 
 	/**
@@ -691,7 +700,7 @@ class Settings {
 				if ( empty( $field['id'] ) || ! isset( $field['default'] ) ) {
 					continue;
 				}
-				$id    = implode( '_', [ $tab_id, $field['id'] ] );
+				$id    = implode( '_', array( $tab_id, $field['id'] ) );
 				$value = isset( $field['default'] ) ? $field['default'] : null;
 				if ( ! empty( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 					$value = call_user_func( $field['sanitize_callback'], $value );
@@ -721,7 +730,7 @@ class Settings {
 	 * Gets an option from the settings API, using defaults if necessary to prevent undefined notices.
 	 *
 	 * @param string $key Option key.
-	 * @param mixed $default Value when empty.
+	 * @param mixed  $default Value when empty.
 	 *
 	 * @since 1.1.0
 	 * @return string The value specified for the option or a default value for the option.
@@ -740,7 +749,7 @@ class Settings {
 	 * Save new option.
 	 *
 	 * @param string $key Option key.
-	 * @param mixed $value Option value.
+	 * @param mixed  $value Option value.
 	 *
 	 * @since 1.1.0
 	 */
@@ -800,19 +809,19 @@ class Settings {
 		}
 
 		foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
-			$row_class = ! empty( $field['args']['row_class'] ) ? esc_attr( $field['args']['row_class'] ) : '';
-			$row_id    = ! empty( $field['args']['id'] ) ? $section . '_' . esc_attr( $field['args']['id'] ) : '';
+			$row_class  = ! empty( $field['args']['row_class'] ) ? esc_attr( $field['args']['row_class'] ) : '';
+			$row_id     = ! empty( $field['args']['id'] ) ? $section . '_' . esc_attr( $field['args']['id'] ) : '';
 			$row_class .= 'field-' . esc_attr( $field['args']['type'] );
 
-			printf( '<tr id="%1$s" class="%2$s">', $row_id, $row_class );
+			printf( '<tr id="%1$s" class="%2$s">', esc_attr( $row_id ), esc_attr( $row_class ) );
 
 			if ( isset( $field['args']['type'] ) && 'section' === $field['args']['type'] ) {
 				echo '<td colspan="2">';
 			} else {
 				if ( ! empty( $field['args']['id'] ) ) {
-					echo '<th scope="row"><label for="' . esc_attr( $field['args']['id'] ) . '">' . $field['title'] . '</label></th>';
+					echo '<th scope="row"><label for="' . esc_attr( $field['args']['id'] ) . '">' . esc_html( $field['title'] ) . '</label></th>';
 				} else {
-					echo '<th scope="row">' . $field['title'] . '</th>';
+					echo '<th scope="row">' . esc_html( $field['title'] ) . '</th>';
 				}
 
 				echo '<td>';

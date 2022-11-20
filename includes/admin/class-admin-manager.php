@@ -25,10 +25,10 @@ class Admin_Manager {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'admin_init', array( $this, 'init' ), 0);
+		add_action( 'admin_init', array( $this, 'init' ), 0 );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
-		add_action( 'woocommerce_process_product_meta', [ __CLASS__, 'save_product_meta' ] );
+		add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save_product_meta' ) );
 	}
 
 	/**
@@ -173,20 +173,20 @@ class Admin_Manager {
 	 */
 	public static function save_product_meta( $post_id ) {
 		$product        = wc_get_product( $post_id );
-		$numeric_fields = [
+		$numeric_fields = array(
 			'_wc_min_max_quantities_min_qty',
 			'_wc_min_max_quantities_max_qty',
 			'_wc_min_max_quantities_step',
-		];
+		);
 		foreach ( $numeric_fields as $numeric_field ) {
 			$value = filter_input( INPUT_POST, $numeric_field, FILTER_SANITIZE_NUMBER_FLOAT );
 			$product->update_meta_data( $numeric_field, (float) $value );
 		}
 
-		$check_fields = [
+		$check_fields = array(
 			'_wc_min_max_quantities_excluded',
-			'_wc_min_max_quantities_override',
-		];
+			'_wc_min_max_quantities_override'
+		);
 		foreach ( $check_fields as $check_field ) {
 			$value = filter_input( INPUT_POST, $check_field, FILTER_SANITIZE_STRING );
 			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );

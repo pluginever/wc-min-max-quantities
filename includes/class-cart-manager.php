@@ -57,7 +57,7 @@ class Cart_Manager {
 			wc_get_template(
 				'notices/error.php',
 				array(
-					'messages' => array_filter( $messages ), // @deprecated 3.9.0
+					'messages' => array_filter( $messages ),
 					'notices'  => array_filter( $notices ),
 				)
 			);
@@ -69,7 +69,7 @@ class Cart_Manager {
 	/**
 	 * Add quantity property to add to cart button on shop loop for simple products.
 	 *
-	 * @param string $html Add to cart link.
+	 * @param string      $html Add to cart link.
 	 * @param \WC_Product $product Product object.
 	 *
 	 * @return string
@@ -86,7 +86,7 @@ class Cart_Manager {
 					$quantity_attribute = $limits['step'];
 				}
 
-				$html = str_replace( '<a ', '<a data-quantity="' . $quantity_attribute . '" ', $html );
+				$html = str_replace( '<a ', '<a data-quantity="' . esc_attr( $quantity_attribute ) . '" ', $html );
 			}
 		}
 
@@ -96,7 +96,7 @@ class Cart_Manager {
 	/**
 	 * Updates the quantity arguments.
 	 *
-	 * @param array $data List of data to update.
+	 * @param array       $data List of data to update.
 	 * @param \WC_Product $product Product object.
 	 *
 	 * @return array
@@ -150,7 +150,6 @@ class Cart_Manager {
 			$data['min_value'] = $limits['step'];
 		}
 
-
 		return $data;
 	}
 
@@ -160,7 +159,7 @@ class Cart_Manager {
 	 * @param mixed $pass Filter value.
 	 * @param mixed $product_id Product ID.
 	 * @param mixed $quantity Quantity.
-	 * @param int $variation_id Variation ID (default none).
+	 * @param int   $variation_id Variation ID (default none).
 	 *
 	 * @return mixed
 	 */
@@ -191,7 +190,7 @@ class Cart_Manager {
 
 		if ( $limits['max_qty'] > 0 && ( $total_quantity > $limits['max_qty'] ) ) {
 			/* translators: %1$s: Product name, %2$d: Maximum quantity */
-			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $limits['max_qty'] ) );
+			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$d.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), number_format( $limits['max_qty'] ) );
 			Helper::add_error( $message );
 
 			return false;
@@ -211,7 +210,7 @@ class Cart_Manager {
 			return false;
 		}
 
-		//For cart level check for maximum only.
+		// For cart level check for maximum only.
 		$maximum_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
 		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
 
@@ -227,7 +226,6 @@ class Cart_Manager {
 			return false;
 		}
 
-
 		return apply_filters( 'wc_min_max_quantities_add_to_cart_validation', $pass, $product_id, $quantity, $variation_id );
 	}
 
@@ -238,9 +236,9 @@ class Cart_Manager {
 	 * @return void
 	 */
 	public static function check_cart_items() {
-		$product_ids        = [];
-		$quantities         = [];
-		$line_amount        = [];
+		$product_ids        = array();
+		$quantities         = array();
+		$line_amount        = array();
 		$max_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
 		$min_order_quantity = Plugin::get( 'settings' )->get_option( 'general_min_order_quantity' );
 		$max_order_amount   = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );

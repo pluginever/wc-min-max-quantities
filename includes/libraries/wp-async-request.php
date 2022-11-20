@@ -150,7 +150,7 @@ if ( ! class_exists( '\WP_Async_Request' ) ):
 		 * @since 1.1.0
 		 */
 		public function maybe_handle() {
-			// Don't lock up other requests while processing
+			// Don't lock up other requests while processing.
 			session_write_close();
 
 			check_ajax_referer( $this->identifier, 'nonce' );

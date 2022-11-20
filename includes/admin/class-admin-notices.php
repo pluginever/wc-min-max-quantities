@@ -2,8 +2,8 @@
 /**
  * Handle admin notice related functionalities.
  *
- * @version	1.1.0
- * @since	1.1.0
+ * @version 1.1.0
+ * @since   1.1.0
  * @package WC_Min_Max_Quantities\Admin
  */
 
@@ -35,7 +35,7 @@ class Admin_Notices {
 		self::$notices = get_option( 'wc_min_max_quantities_admin_notices', array() );
 		add_filter( 'wp_redirect', array( __CLASS__, 'redirect' ), 1 );
 		add_action( 'admin_notices', array( __CLASS__, 'render_notices' ), 15 );
-		add_action( 'wp_ajax_dismiss_admin_notice_' . Plugin::get('basename'), array( __CLASS__, 'handle_dismiss_notice' ) );
+		add_action( 'wp_ajax_dismiss_admin_notice_' . Plugin::get( 'basename' ), array( __CLASS__, 'handle_dismiss_notice' ) );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Admin_Notices {
 	public static function add_notice( $notice ) {
 		$defaults = array(
 			'id'          => null,
-			'type'        => 'notice-success', // | 'notice-warning' | 'notice-success' | 'notice-error' | 'notice-info',
+			'type'        => 'notice-success',
 			'message'     => '',
 			'dismissible' => false,
 			'dismissed'   => false,
@@ -89,11 +89,13 @@ class Admin_Notices {
 	 * @since 1.1.0
 	 */
 	public static function add_error( $message, $dismissible = false ) {
-		self::add_notice( array(
-			'message'     => $message,
-			'type'        => 'notice-error',
-			'dismissible' => $dismissible,
-		) );
+		self::add_notice(
+			array(
+				'message'     => $message,
+				'type'        => 'notice-error',
+				'dismissible' => $dismissible,
+			)
+		);
 	}
 
 
@@ -101,16 +103,18 @@ class Admin_Notices {
 	 * Adds a warning message.
 	 *
 	 * @param string $message warning message to add
-	 * @param bool $dismissible If message is dismissible.
+	 * @param bool   $dismissible If message is dismissible.
 	 *
 	 * @since 1.1.0
 	 */
 	public static function add_warning( $message, $dismissible = false ) {
-		self::add_notice( array(
-			'message'     => $message,
-			'type'        => 'notice-warning',
-			'dismissible' => $dismissible,
-		) );
+		self::add_notice(
+			array(
+				'message'     => $message,
+				'type'        => 'notice-warning',
+				'dismissible' => $dismissible,
+			)
+		);
 	}
 
 
@@ -118,16 +122,18 @@ class Admin_Notices {
 	 * Adds an info message.
 	 *
 	 * @param string $message info message to add
-	 * @param bool $dismissible If message is dismissible.
+	 * @param bool   $dismissible If message is dismissible.
 	 *
 	 * @since 1.1.0
 	 */
 	public static function add_info( $message, $dismissible = false ) {
-		self::add_notice( array(
-			'message'     => $message,
-			'type'        => 'notice-info',
-			'dismissible' => $dismissible,
-		) );
+		self::add_notice(
+			array(
+				'message'     => $message,
+				'type'        => 'notice-info',
+				'dismissible' => $dismissible,
+			)
+		);
 	}
 
 	/**
@@ -147,7 +153,7 @@ class Admin_Notices {
 	/**
 	 * Marks the identified admin notice as dismissed for the given user
 	 *
-	 * @param string $notice_id the message identifier
+	 * @param string $notice_id the message identifier.
 	 *
 	 * @since 1.1.0
 	 */
@@ -161,7 +167,7 @@ class Admin_Notices {
 	/**
 	 * Marks the identified admin notice as not dismissed for the identified user
 	 *
-	 * @param string $notice_id the message identifier
+	 * @param string $notice_id the message identifier.
 	 *
 	 * @since 1.1.0
 	 */
@@ -177,7 +183,7 @@ class Admin_Notices {
 	 * Returns true if the identified admin notice has been dismissed for the
 	 * given user
 	 *
-	 * @param string $notice_id the message identifier
+	 * @param string $notice_id the message identifier.
 	 *
 	 * @since 1.1.0
 	 * @return boolean true if the message has been dismissed by the admin user
@@ -205,7 +211,7 @@ class Admin_Notices {
 	 * @return string the URL to redirect to
 	 */
 	public static function redirect( $location ) {
-		// add the admin message id param to the
+		// add the admin message id param to the.
 		if ( ! empty( self::$notices ) ) {
 			self::save_notices();
 		}
@@ -268,17 +274,18 @@ class Admin_Notices {
 	 */
 	public static function render_notice( $notice ) {
 		$output            = '';
-		$plugin_class      = Plugin::get('slug');
+		$plugin_class      = Plugin::get( 'slug' );
 		$dismissible_class = $notice['dismissible'] ? 'is-dismissible' : '';
-		$nonce             = $notice['dismissible'] ? wp_create_nonce( Plugin::get('id') . '_dismiss_notice' ) : '';
+		$nonce             = $notice['dismissible'] ? wp_create_nonce( Plugin::get( 'id' ) . '_dismiss_notice' ) : '';
 
-		$output .= sprintf( '<div class="notice %2$s %3$s %4$s %5$s %7$s-admin-notice" data-notice-id="%5$s" data-plugin-id="%6$s" data-nonce="%8$s">%1$s</div>',
+		$output .= sprintf(
+			'<div class="notice %2$s %3$s %4$s %5$s %7$s-admin-notice" data-notice-id="%5$s" data-plugin-id="%6$s" data-nonce="%8$s">%1$s</div>',
 			wpautop( $notice['message'] ),
 			esc_attr( $notice['type'] ),
 			esc_attr( $dismissible_class ),
 			esc_attr( $notice['class'] ),
 			esc_attr( $notice['id'] ),
-			esc_attr( Plugin::get('basename') ),
+			esc_attr( Plugin::get( 'basename' ) ),
 			esc_attr( $plugin_class ),
 			esc_attr( $nonce )
 		);
@@ -296,13 +303,13 @@ class Admin_Notices {
 	 * @since 1.1.0
 	 */
 	public static function render_admin_notice_js() {
-		$plugin_class = Plugin::get('slug');
-		// if there were no notices, or we've already rendered the js, there's nothing to do
+		$plugin_class = Plugin::get( 'slug' );
+		// if there were no notices, or we've already rendered the js, there's nothing to do.
 		ob_start();
 		?>
 		<script type="text/javascript">
 			(function ($) {
-				$('.is-dismissible.<?php echo esc_js( $plugin_class );?>-admin-notice').on('click', '.notice-dismiss', function (e) {
+				$('.is-dismissible.<?php echo esc_js( $plugin_class ); ?>-admin-notice').on('click', '.notice-dismiss', function (e) {
 					var $notice = $(this).closest('.is-dismissible');
 					log_dismissed_notice(
 						$($notice).data('plugin-id'),
@@ -340,9 +347,9 @@ class Admin_Notices {
 		$notice_id    = filter_input( INPUT_GET, 'notice_id', FILTER_SANITIZE_STRING );
 		$plugin_id    = filter_input( INPUT_GET, 'plugin_id', FILTER_SANITIZE_STRING );
 		$nonce        = filter_input( INPUT_GET, 'nonce', FILTER_SANITIZE_STRING );
-		$nonce_action = Plugin::get('id') . '_dismiss_notice';
+		$nonce_action = Plugin::get( 'id' ) . '_dismiss_notice';
 
-		if ( empty( $notice_id ) || $plugin_id !== esc_attr( Plugin::get('basename') ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
+		if ( empty( $notice_id ) || $plugin_id !== esc_attr( Plugin::get( 'basename' ) ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
 			wp_send_json_error( esc_html__( 'Something does not look appropriate.', 'wc-min-max-quantities' ) );
 		}
 
@@ -360,18 +367,21 @@ class Admin_Notices {
 		$message = sprintf(
 		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'Thanks for installing %1$s! To get started, take a minute to %2$sread the documentation%3$s :)', 'wc-min-max-quantities' ),
-			'<strong>' . esc_html( Plugin::get('name') ) . '</strong>',
-			'<a href="' . esc_url( Plugin::get('docs_url') ) . '" target="_blank">', '</a>'
+			'<strong>' . esc_html( Plugin::get( 'name' ) ) . '</strong>',
+			'<a href="' . esc_url( Plugin::get( 'docs_url' ) ) . '" target="_blank">',
+			'</a>'
 		);
 
-		self::add_notice( array(
-			'id'          => 'welcome_notice',
-			'type'        => 'notice-success',
-			'message'     => $message,
-			'dismissible' => true,
-			'capability'  => 'manage_options',
-			'display_on'  => array(),
-		) );
+		self::add_notice(
+			array(
+				'id'          => 'welcome_notice',
+				'type'        => 'notice-success',
+				'message'     => $message,
+				'dismissible' => true,
+				'capability'  => 'manage_options',
+				'display_on'  => array(),
+			)
+		);
 	}
 
 
@@ -383,17 +393,20 @@ class Admin_Notices {
 		$message = sprintf(
 		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating to help us spread the word and boost our motivation? %2$s Sure! You deserve it! %3$s', 'wc-min-max-quantities' ),
-			'<strong>' . esc_html( Plugin::get('name') ) . '</strong>',
-			'<a href="' . esc_url( Plugin::get('reviews_url') ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>', '</a>'
+			'<strong>' . esc_html( Plugin::get( 'name' ) ) . '</strong>',
+			'<a href="' . esc_url( Plugin::get( 'reviews_url' ) ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>',
+			'</a>'
 		);
 
-		self::add_notice( array(
-			'id'          => 'reviews_url',
-			'type'        => 'notice-success',
-			'message'     => $message,
-			'dismissible' => true,
-			'capability'  => 'manage_options',
-			'display_on'  => array(),
-		) );
+		self::add_notice(
+			array(
+				'id'          => 'reviews_url',
+				'type'        => 'notice-success',
+				'message'     => $message,
+				'dismissible' => true,
+				'capability'  => 'manage_options',
+				'display_on'  => array(),
+			)
+		);
 	}
 }
