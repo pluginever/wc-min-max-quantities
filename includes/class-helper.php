@@ -28,10 +28,10 @@ class Helper {
 		}
 
 		if ( ! is_string( $message ) ) {
-			$message = var_export( $message, true );
+			$message = esc_html( var_export( $message, true ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 		}
 
-		error_log( $message );
+		error_log( $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Helper {
 	 * @return bool
 	 */
 	public static function is_product_excluded( $product_id, $variation_id = null ) {
-		if ( $variation_id !== null && 'yes' === get_post_meta( $variation_id, '_wc_min_max_quantities_excluded', true ) ) {
+		if ( ! is_null( $variation_id ) && get_post_meta( $variation_id, '_wc_min_max_quantities_excluded', true ) === 'yes' ) {
 			return true;
 		}
 

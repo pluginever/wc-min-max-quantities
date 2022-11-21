@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit();
 
-if ( ! class_exists( '\WP_Background_Process' ) ):
+if ( ! class_exists( '\WP_Background_Process' ) ) :
 	/**
 	 * Abstract WP_Background_Process class.
 	 */
@@ -60,7 +60,7 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 			$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
 			add_action( $this->cron_hook_identifier, array( $this, 'handle_cron_healthcheck' ) );
-			add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) );
+			add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) ); // phpcs:ignore WordPress.WP.CronInterval.ChangeDetected
 		}
 
 		/**
@@ -113,7 +113,7 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 		 * Update queue
 		 *
 		 * @param string $key Key.
-		 * @param array $data Data.
+		 * @param array  $data Data.
 		 *
 		 * @since 1.1.0
 		 * @return $this
@@ -152,7 +152,7 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 		 * @return string
 		 */
 		protected function generate_key( $length = 64 ) {
-			$unique  = md5( microtime() . mt_rand() );
+			$unique  = md5( microtime() . wp_rand() );
 			$prepend = $this->identifier . '_batch_';
 
 			return substr( $prepend . $unique, 0, $length );
@@ -165,7 +165,7 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 		 * the process is not already running.
 		 */
 		public function maybe_handle() {
-			// Don't lock up other requests while processing
+			// Don't lock up other requests while processing.
 			session_write_close();
 
 			if ( $this->is_process_running() ) {
@@ -204,11 +204,16 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 
 			$key = $this->identifier . '_batch_%';
 
-			$count = $wpdb->get_var( $wpdb->prepare( "
+			$count = $wpdb->get_var(
+				$wpdb->prepare(
+					"
 			SELECT COUNT(*)
 			FROM {$table}
 			WHERE {$column} LIKE %s
-		", $key ) );
+		",
+					$key
+				)
+			);
 
 			return ! ( $count > 0 );
 		}
@@ -285,13 +290,18 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 
 			$key = $this->identifier . '_batch_%';
 
-			$query = $wpdb->get_row( $wpdb->prepare( "
+			$query = $wpdb->get_row(
+				$wpdb->prepare(
+					"
 			SELECT *
 			FROM {$table}
 			WHERE {$column} LIKE %s
 			ORDER BY {$key_column} ASC
 			LIMIT 1
-		", $key ) );
+		",
+					$key
+				)
+			);
 
 			$batch       = new stdClass();
 			$batch->key  = $query->$column;
@@ -445,6 +455,7 @@ if ( ! class_exists( '\WP_Background_Process' ) ):
 			// Adds every 5 minutes to the existing schedules.
 			$schedules[ $this->identifier . '_cron_interval' ] = array(
 				'interval' => MINUTE_IN_SECONDS * $interval,
+				/* translators: %s: interval */
 				'display'  => sprintf( __( 'Every %d minutes', 'wc-min-max-quantities' ), $interval ),
 			);
 

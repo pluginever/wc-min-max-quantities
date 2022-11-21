@@ -185,7 +185,7 @@ class Admin_Manager {
 
 		$check_fields = array(
 			'_wc_min_max_quantities_excluded',
-			'_wc_min_max_quantities_override'
+			'_wc_min_max_quantities_override',
 		);
 		foreach ( $check_fields as $check_field ) {
 			$value = filter_input( INPUT_POST, $check_field, FILTER_SANITIZE_STRING );

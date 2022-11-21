@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit();
 
-if ( ! class_exists( '\WP_Async_Request' ) ):
+if ( ! class_exists( '\WP_Async_Request' ) ) :
 	/**
 	 * Abstract WP_Async_Request class.
 	 */

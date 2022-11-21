@@ -11,7 +11,7 @@
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*\.(css|js|xml)</exclude-pattern>
-
+	<arg name="basepath" value="./"/><!-- Strip the file paths down to the relevant bit -->
 	<!-- Sets the minimum supported WP version to 5.8, which is over a year old. -->
 	<config name="minimum_supported_wp_version" value="5.8" />
 	<!-- Rules: Check PHP version compatibility -->

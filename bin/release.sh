@@ -30,6 +30,11 @@ if [ -z "$SVN_USER" ] || [ -z "$SVN_PASSWORD" ]; then
 	exit 1
 fi
 
+# Replace the version in readme.txt
+sed -i '' "s/Stable tag: .*/Stable tag: $VERSION/" readme.txt
+# Replace the version in plugin file
+sed -i '' "s/Version: .*/Version: $VERSION/" $SLUG.php
+
 # if directory already exists, delete it
 if [ -d "$SVN_DIR" ]; then
 	rm -rf $SVN_DIR
@@ -57,9 +62,9 @@ find "$SVN_DIR/trunk/" -type d -empty -delete
 
 # Copy assets
 # If .wordpress-org is a directory and contains files, copy them to the SVN repo.
-if [[ -d "$WORKSPACE/.wordpress-org" ]]; then
+if [[ -d "$WORKING_DIR/.wordpress-org" ]]; then
 	echo "➤ Copying assets..."
-	rsync -rc "$WORKSPACE/.wordpress-org/" "$SVN_DIR/assets/" --delete --delete-excluded
+	rsync -rc "$WORKING_DIR/.wordpress-org/" "$SVN_DIR/assets/" --delete --delete-excluded
 	# Fix screenshots getting force downloaded when clicking them
 	# https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
 	if test -d "$SVN_DIR/assets" && test -n "$(find "$SVN_DIR/assets" -maxdepth 1 -name "*.png" -print -quit)"; then

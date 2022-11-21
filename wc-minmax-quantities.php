@@ -3,6 +3,7 @@
  * Backwards compat.
  *
  * @since 1.2.0
+ * @package WC_Min_Max_Quantities
  */
 
 defined( 'ABSPATH' ) || exit;

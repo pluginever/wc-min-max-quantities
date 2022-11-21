@@ -84,7 +84,8 @@ class Admin_Notices {
 	/**
 	 * Add an error message.
 	 *
-	 * @param string $message error message
+	 * @param string $message error message.
+	 * @param bool   $dismissible whether the notice is dismissible.
 	 *
 	 * @since 1.1.0
 	 */
@@ -102,7 +103,7 @@ class Admin_Notices {
 	/**
 	 * Adds a warning message.
 	 *
-	 * @param string $message warning message to add
+	 * @param string $message warning message to add.
 	 * @param bool   $dismissible If message is dismissible.
 	 *
 	 * @since 1.1.0
@@ -121,7 +122,7 @@ class Admin_Notices {
 	/**
 	 * Adds an info message.
 	 *
-	 * @param string $message info message to add
+	 * @param string $message info message to add.
 	 * @param bool   $dismissible If message is dismissible.
 	 *
 	 * @since 1.1.0
@@ -139,7 +140,7 @@ class Admin_Notices {
 	/**
 	 * Remove notice.
 	 *
-	 * @param $notice_id
+	 * @param string $notice_id notice id.
 	 *
 	 * @since 1.1.0
 	 */
@@ -237,11 +238,11 @@ class Admin_Notices {
 					continue;
 				}
 
-				if ( ! empty( $notice['start_time'] ) && current_time( 'timestamp' ) < absint( $notice['start_time'] ) ) {
+				if ( ! empty( $notice['start_time'] ) && strtotime( current_time( 'mysql' ) ) < absint( $notice['start_time'] ) ) {
 					continue;
 				}
 
-				if ( ! empty( $notice['end_time'] ) && current_time( 'timestamp' ) > absint( $notice['end_time'] ) ) {
+				if ( ! empty( $notice['end_time'] ) && strtotime( current_time( 'mysql' ) ) > absint( $notice['end_time'] ) ) {
 					self::dismiss_notice( $notice['id'] );
 					continue;
 				}
@@ -334,7 +335,7 @@ class Admin_Notices {
 		<?php
 		$javascript = ob_get_clean();
 
-		echo $javascript;
+		echo $javascript; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 
@@ -349,7 +350,7 @@ class Admin_Notices {
 		$nonce        = filter_input( INPUT_GET, 'nonce', FILTER_SANITIZE_STRING );
 		$nonce_action = Plugin::get( 'id' ) . '_dismiss_notice';
 
-		if ( empty( $notice_id ) || $plugin_id !== esc_attr( Plugin::get( 'basename' ) ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
+		if ( empty( $notice_id ) || esc_attr( Plugin::get( 'basename' ) !== $plugin_id ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
 			wp_send_json_error( esc_html__( 'Something does not look appropriate.', 'wc-min-max-quantities' ) );
 		}
 
@@ -358,14 +359,18 @@ class Admin_Notices {
 		exit();
 	}
 
-
+	/**
+	 * Render welcome notice.
+	 *
+	 * @since 1.1.0
+	 */
 	public static function add_welcome_notice() {
 		if ( ! Plugin::has( 'docs_url' ) ) {
 			return;
 		}
 
 		$message = sprintf(
-		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
+			/* translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'Thanks for installing %1$s! To get started, take a minute to %2$sread the documentation%3$s :)', 'wc-min-max-quantities' ),
 			'<strong>' . esc_html( Plugin::get( 'name' ) ) . '</strong>',
 			'<a href="' . esc_url( Plugin::get( 'docs_url' ) ) . '" target="_blank">',
@@ -384,14 +389,18 @@ class Admin_Notices {
 		);
 	}
 
-
+	/**
+	 * Render review notice.
+	 *
+	 * @since 1.1.0
+	 */
 	public static function add_review_notice() {
 		if ( ! Plugin::has( 'reviews_url' ) ) {
 			return;
 		}
 
 		$message = sprintf(
-		/** translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
+			/* translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a> tag */
 			__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating to help us spread the word and boost our motivation? %2$s Sure! You deserve it! %3$s', 'wc-min-max-quantities' ),
 			'<strong>' . esc_html( Plugin::get( 'name' ) ) . '</strong>',
 			'<a href="' . esc_url( Plugin::get( 'reviews_url' ) ) . '" target="_blank" style="text-decoration: none;"><span class="dashicons dashicons-external" style="margin-top: -2px;"></span>',

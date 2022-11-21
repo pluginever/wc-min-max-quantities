@@ -2,7 +2,7 @@
 Contributors: manikmist09, pluginever, b-07
 Tags: products,limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
 Requires at least: 3.0.1
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -15,7 +15,7 @@ Set the required minimum and maximum order quantities or amounts for individual 
 
 **[Min Max Quantities for WooCommerce](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** allows you to specify the minimum and maximum order quantities or amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify conditions that apply to the cart.
 
-These amazing features will allow you to restrict customers from purchasing items if the product quantity and price conditions are not met. 
+These amazing features will allow you to restrict customers from purchasing items if the product quantity and price conditions are not met.
 
 For example, if you specify a minimum and maximum product quantity for a product, customers will be unable to check out if they try to purchase a quantity that is less than the minimum or greater than the maximum. Similarly, you can specify a minimum and maximum price range for the product.
 
@@ -127,6 +127,11 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+= 1.1.3 =
+* Fix: Optimized the code for better performance.
+- Fix - Compatability with WP v6.0.0
+- Fix - Compatability with WC v6.5.1
+
 = 1.1.1 (24th May 2022) =
 - Fix - Fix typo
 - Fix - Rearrange action links

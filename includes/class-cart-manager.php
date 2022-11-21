@@ -215,12 +215,14 @@ class Cart_Manager {
 		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
+			/* translators: %d: Maximum quantity */
 			Helper::add_error( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $maximum_order_quantity ) ) );
 
 			return false;
 		}
 
 		if ( $maximum_order_total > 1 && (int) WC()->cart->get_cart_total() > (int) wc_price( $maximum_order_total ) ) {
+			/* translators: %s: Maximum amount */
 			Helper::add_error( sprintf( __( 'The maximum allowed order total is %s.', 'wc-min-max-quantities' ), wc_price( $maximum_order_total ) ) );
 
 			return false;
@@ -294,7 +296,6 @@ class Cart_Manager {
 				return;
 			}
 		}
-
 
 		$order_quantity = array_sum( array_values( $quantities ) );
 		$order_total    = array_sum( array_values( $line_amount ) );
@@ -401,7 +402,7 @@ class Cart_Manager {
 	 * If the minimum allowed quantity for purchase is lower than the current stock, we need to
 	 * let the user know that they are on backorder, or out of stock.
 	 *
-	 * @param array $args List of arguments.
+	 * @param array       $args List of arguments.
 	 * @param \WC_Product $product Product object.
 	 */
 	public function maybe_show_backorder_message( $args, $product ) {
@@ -441,8 +442,8 @@ class Cart_Manager {
 	/**
 	 * Adds variation min max settings to be used by JS.
 	 *
-	 * @param array $data Available variation data.
-	 * @param \WC_Product $product Product object.
+	 * @param array                $data Available variation data.
+	 * @param \WC_Product          $product Product object.
 	 * @param \WC_Product_Variable $variation Variation object.
 	 *
 	 * @return array $data

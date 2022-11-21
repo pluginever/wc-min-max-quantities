@@ -9,9 +9,6 @@
 
 namespace WC_Min_Max_Quantities\Utilities;
 
-use WC_Min_Max_Quantities\Helper;
-use WC_Min_Max_Quantities\Plugin;
-
 defined( 'ABSPATH' ) || exit();
 
 /**
@@ -21,6 +18,10 @@ class Background_Updater extends Background_Process {
 
 	/**
 	 * Background_Updater Constructor.
+	 *
+	 * @param string $id The identifier for this background process.
+	 *
+	 * @since 1.1.0
 	 */
 	public function __construct( $id = '' ) {
 		// Uses unique prefix per blog so each blog has separate queue.
@@ -91,32 +92,10 @@ class Background_Updater extends Background_Process {
 	protected function task( $callback ) {
 		$result = false;
 		if ( is_callable( $callback ) ) {
-			Helper::log( sprintf( 'Running updater %s callback ', var_export( $callback, true ) ) );
 			$result = (bool) call_user_func( $callback );
-
-			if ( $result ) {
-				Helper::log( sprintf( '%s callback needs to run again', var_export( $callback, true ) ) );
-			} else {
-				Helper::log( sprintf( 'Finished running %s callback', var_export( $callback, true ) ) );
-			}
-		} else {
-			Helper::log( sprintf( 'Could not find %s callback', var_export( $callback, true ) ) );
 		}
 
 		return $result ? $callback : false;
-	}
-
-	/**
-	 * Complete
-	 *
-	 * Override if applicable, but ensure that the below actions are
-	 * performed, or, call parent::complete().
-	 *
-	 * @since 1.1.0
-	 */
-	protected function complete() {
-		//Data update complete
-		parent::complete();
 	}
 
 	/**

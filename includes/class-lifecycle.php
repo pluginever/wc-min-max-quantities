@@ -118,7 +118,7 @@ class Lifecycle {
 	/**
 	 * Update the installed plugin database version.
 	 *
-	 * @param string $version version to set
+	 * @param string $version version to set.
 	 *
 	 * @since 1.1.0
 	 */
@@ -137,7 +137,7 @@ class Lifecycle {
 		}
 
 		if ( ! get_option( 'wc_min_max_quantities_install_date' ) ) {
-			update_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
+			update_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		}
 
 		Plugin::get( 'settings' )->save_settings();
@@ -152,8 +152,8 @@ class Lifecycle {
 	public static function maybe_add_notices() {
 		Admin_Notices::add_welcome_notice();
 		// Review notice after 1 day of installation.
-		$date = (int) get_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) );
-		if ( $date + ( DAY_IN_SECONDS * 1 ) < current_time( 'timestamp' ) ) {
+		$date = (int) get_option( 'wc_min_max_quantities_install_date', current_time( 'timestamp' ) ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+		if ( $date + ( DAY_IN_SECONDS * 1 ) < current_time( 'timestamp' ) ) { // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
 			Admin_Notices::add_review_notice();
 		}
 	}
@@ -191,7 +191,7 @@ class Lifecycle {
 		update_option( 'wc_minmax_quantities_max_product_price', $max_cart_price );
 
 		$hide_checkout = isset( $general_settings['hide_checkout'] ) ? $general_settings['hide_checkout'] : false;
-		if ( $hide_checkout === 'on' ) {
+		if ( 'on' === $hide_checkout ) {
 			$hide_checkout = 'yes';
 		}
 		update_option( 'wc_minmax_quantities_hide_checkout', $hide_checkout );
@@ -254,11 +254,13 @@ class Lifecycle {
 	 * @return void
 	 */
 	public static function update_110_categories() {
-		$categories = get_categories( array(
-			'taxonomy'   => 'product_cat',
-			'hide_empty' => false,
-			'fields'     => 'ids',
-		) );
+		$categories = get_categories(
+			array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+				'fields'     => 'ids',
+			)
+		);
 		$term_metas = array(
 			'cat_min_quantity' => '_wc_min_max_quantities_min_qty',
 			'cat_max_quantity' => '_wc_min_max_quantities_max_qty',
@@ -285,12 +287,14 @@ class Lifecycle {
 	 */
 	public static function update_110_products() {
 		$migrated = get_option( 'wc_minmax_quantities_migrated_products', array() );
-		$products = get_posts( array(
-			'post_type'   => [ 'product', 'product_variation' ],
-			'post_status' => 'any',
-			'exclude'     => wp_parse_id_list( $migrated ),
-			'fields'      => 'ids',
-		) );
+		$products = get_posts(
+			array(
+				'post_type'   => [ 'product', 'product_variation' ],
+				'post_status' => 'any',
+				'exclude'     => wp_parse_id_list( $migrated ),
+				'fields'      => 'ids',
+			)
+		);
 
 		if ( empty( $products ) ) {
 			delete_option( 'wc_minmax_quantities_migrated_products' );
@@ -326,8 +330,6 @@ class Lifecycle {
 
 				delete_post_meta( $product_id, $old_key );
 			}
-
-
 		}
 		$migrated = array_merge( $migrated, $products );
 

@@ -11,6 +11,9 @@ namespace WC_Min_Max_Quantities;
 
 defined( 'ABSPATH' ) || exit();
 
+/**
+ * Autoloader class.
+ */
 class Autoloader {
 
 	/**

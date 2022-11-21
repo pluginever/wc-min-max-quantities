@@ -19,7 +19,7 @@ final class Plugin {
 	 * Plugin version number.
 	 *
 	 * @since 1.1.0
-	 * @const string
+	 * @var string
 	 */
 	protected $version = '1.1.1';
 
@@ -62,7 +62,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cloning is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Unserializing instances of this class is forbidden.', 'wc-min-max-quantities' ), '1.1.0' );
 	}
 
 	/**
@@ -82,15 +82,16 @@ final class Plugin {
 	 * $plugin->method($arg, $arg1);
 	 *
 	 * @param string $method Method name.
-	 * @param array $arguments Array of arguments passed to the method.
+	 * @param array  $arguments Array of arguments passed to the method.
+	 * @throws \BadMethodCallException If method does not exist.
 	 */
 	public function __call( $method, $arguments ) {
 		switch ( $method ) {
-			case "get":
+			case 'get':
 				return $this->get( $arguments[0] );
-			case "set":
+			case 'set':
 				return $this->set( $arguments[0], $arguments[1] );
-			case "has":
+			case 'has':
 				return $this->has( $arguments[0] );
 			default:
 				throw new \BadMethodCallException( "Undefined method $method" );
@@ -101,7 +102,7 @@ final class Plugin {
 	 * Magic method for calling methods on the container.
 	 *
 	 * @param string $method Method name.
-	 * @param mixed $args Method arguments.
+	 * @param mixed  $args Method arguments.
 	 *
 	 * @mathod static get_version
 	 *
@@ -115,7 +116,7 @@ final class Plugin {
 	 * Call method or properties on demand.
 	 *
 	 * @param string $prop Property to return the value for.
-	 * @param mixed $default The value that should be returned if the variable key is not a registered one.
+	 * @param mixed  $default The value that should be returned if the variable key is not a registered one.
 	 *
 	 * @since 1.1.0
 	 * @return mixed Either the registered value or the default value if the variable is not registered.
@@ -132,7 +133,7 @@ final class Plugin {
 	 * Call method or properties on demand.
 	 *
 	 * @param string $prop Property to set a value for.
-	 * @param mixed $value Value to set.
+	 * @param mixed  $value Value to set.
 	 *
 	 * @since 1.1.0
 	 * @return Plugin
@@ -236,7 +237,7 @@ final class Plugin {
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
 		// Init the plugin after WordPress inits.
-		add_action( 'init', array( $this, 'init' ), 0);
+		add_action( 'init', array( $this, 'init' ), 0 );
 	}
 
 	/**
@@ -270,7 +271,7 @@ final class Plugin {
 
 		if ( ! $this->is_pro_exists() && $this->has( 'pro_url' ) ) {
 			$upgrade_links = array(
-				'upgrade' => sprintf( '<a href="%1$s" style="color:red; font-weight: bold;" target="_blank">%2$s</a>', esc_url( Plugin::instance()->get( 'pro_url' ) ), __( 'Go Pro', 'wc-min-max-quantities' ) ),
+				'upgrade' => sprintf( '<a href="%1$s" style="color:red; font-weight: bold;" target="_blank">%2$s</a>', esc_url( self::instance()->get( 'pro_url' ) ), __( 'Go Pro', 'wc-min-max-quantities' ) ),
 			);
 
 			$links = array_merge( $links, $upgrade_links );
@@ -283,7 +284,7 @@ final class Plugin {
 	 * Filters the array of row meta for each plugin in the Plugins list table.
 	 *
 	 * @param string[] $links An array of the plugin's metadata.
-	 * @param string $file Path to the plugin file relative to the plugins' directory.
+	 * @param string   $file Path to the plugin file relative to the plugins' directory.
 	 *
 	 * @since 1.1.0
 	 * @return string[] An array of the plugin's metadata.

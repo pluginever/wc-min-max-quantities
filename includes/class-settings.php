@@ -205,7 +205,7 @@ class Settings {
 		</div>
 		<?php
 		self::output_script();
-		echo ob_get_clean();
+		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -386,7 +386,7 @@ class Settings {
 	 *
 	 * @param array $field Field settings.
 	 *
-	 * @return string HTML to be displayed
+	 * @return void
 	 */
 	protected function render_field( $field ) {
 		if ( ! isset( $field['type'] ) ) {
@@ -409,15 +409,13 @@ class Settings {
 
 		// Description handling.
 		$description = $field['desc'];
-		if ( $description && $field['type'] === 'radio' ) {
+		if ( 'radio' === $description && $field['type'] ) {
 			$description = '<p class="description" style="margin-top:0;margin-bottom: 4px;">' . wp_kses_post( $description ) . '</p>';
 		} elseif ( $description && in_array( $field['type'], array( 'checkbox', 'section' ), true ) ) {
 			$description = wp_kses_post( $description );
 		} elseif ( $description ) {
 			$description = '<p class="description">' . wp_kses_post( $description ) . '</p>';
 		}
-
-		$output = '';
 
 		// Switch based on type.
 		switch ( $field['type'] ) {
@@ -500,7 +498,7 @@ class Settings {
 					esc_attr( $this->option_key ),
 					esc_attr( $field['tab_id'] ),
 					esc_attr( $field['id'] ),
-					( 'multiselect' === $field['type'] ) ? '[]' : '',
+					esc_attr( 'multiselect' === $field['type'] ? '[]' : '' ),
 					esc_attr( $field['size'] ),
 					esc_attr( $field['class'] ),
 					esc_attr( $field['css'] ),
@@ -620,6 +618,8 @@ class Settings {
 
 	/**
 	 * Sanitization callback for settings field values before save
+	 *
+	 * @param array $input The unsanitized collection of options.
 	 *
 	 * @since 1.1.0
 	 * @return array
