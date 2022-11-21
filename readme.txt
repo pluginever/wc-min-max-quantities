@@ -129,7 +129,8 @@ The cart will maintain the global or product rules if the cart rule is not set.
 == Changelog ==
 = 1.1.3 =
 * Fix: Optimized the code for better performance.
-- Fix - Compatability with WP v6.0.0
+- Fix - Compatability with WP v6.1
+
 - Fix - Compatability with WC v6.5.1
 
 = 1.1.1 (24th May 2022) =
