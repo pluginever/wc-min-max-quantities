@@ -1,57 +1,55 @@
 {
   "name": "wc-min-max-quantities",
-  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "title": "Min Max Quantities for WooCommerce",
   "version": "1.1.3",
-  "author": {
-    "name": "pluginever",
-    "email": "support@byteever.com",
-    "url": "https://www.pluginever.com"
-  },
-  "license": "GPL-2.0-or-later",
-  "keywords": [],
-  "homepage": "https://pluginever.com/plugins/wc-min-max-quantities/",
-  "repository": "",
-  "bugs": {},
-  "engines": {
-    "node": ">=8.9.3",
-    "npm": ">=5.5.1"
-  },
-  "dependencies": {
-    "-": "^0.0.1",
-    "grunt-cli": "^1.4.3"
+  "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "license": "GPL-3.0+",
+  "prettier": "@wordpress/prettier-config",
+  "scripts": {
+    "build": "wp-scripts build && grunt build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "grunt": "^1.4.1",
+    "@lodder/time-grunt": "^4.0.0",
+    "@wordpress/prettier-config": "^1.4.0",
+    "@wordpress/scripts": "^23.3.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "grunt": "^1.5.3",
     "grunt-checktextdomain": "^1.0.1",
-    "grunt-shell": "^3.0.1",
     "grunt-wp-i18n": "^1.0.3",
+    "grunt-wp-readme-to-markdown": "^2.1.0",
     "husky": "^7.0.4",
-    "matchdep": "^2.0.0"
+    "lint-staged": "^12.5.0",
+    "load-grunt-tasks": "^5.1.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "webpack-remove-empty-scripts": "^0.8.1",
+    "wp-prettier": "^2.6.2"
   },
-  "scripts": {
-    "postinstall": "husky install",
-    "build": "grunt build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+  "stylelint": {
+    "extends": "@wordpress/stylelint-config",
+    "defaultSeverity": "warning"
   },
   "lint-staged": {
-    "*.php": [
-      "php -d display_errors=1 -l",
-      "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s"
-    ],
     "*.scss": [
-      "stylelint --syntax=scss --fix"
-    ],
-    "*.{js}": [
-      "grunt jshint"
+      "wp-scripts lint-style --fix --custom-syntax postcss-scss"
     ]
   },
   "browserslist": [
-    "last 2 version",
-    "> 1%",
-    "IE 10"
+    "> 0.1%",
+    "ie 8",
+    "ie 9"
   ]
 }

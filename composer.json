@@ -2,60 +2,65 @@
   "name": "pluginever/wc-min-max-quantities",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-3.0-or-later",
   "prefer-stable": true,
-  "authors": [
-    {
-      "name": "pluginever",
-      "email": "support@pluginever.com",
-      "homepage": "https://pluginever.com",
-      "role": "developer"
-    }
-  ],
+  "minimum-stability": "dev",
   "repositories": [
     {
       "url": "git@github.com:byteever/byteever-sniffs.git",
       "type": "github"
+    },
+    {
+      "url": "git@github.com:pluginever/framework-plugin.git",
+      "type": "github"
+    },
+    {
+      "url": "git@github.com:pluginever/framework-settings.git",
+      "type": "github"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
-    "php": ">=5.6|>=7.0"
-  },
-  "autoload": {
-    "classmap": [
-      "includes/"
-    ],
-    "files": [
-      "includes/functions.php"
-    ]
+    "php": ">=7.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "phpunit/phpunit": "^6.5",
-    "byteever/byteever-sniffs": "dev-master"
+    "byteever/byteever-sniffs": "dev-master",
+    "coenjacobs/mozart": "^0.7.1",
+    "phpcompatibility/php-compatibility": "9.3.5",
+    "pluginever/framework-plugin": "^1.0.0",
+    "pluginever/framework-settings": "^1.0.0"
   },
   "config": {
     "optimize-autoloader": true,
-    "platform": {
-      "php": "7.0"
-    },
     "sort-packages": true,
     "allow-plugins": {
+      "composer/*": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
+  "autoload": {},
   "scripts": {
-    "pre-commit": [
-      "@phpcs"
+    "post-install-cmd": [
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
+    ],
+    "post-update-cmd": [
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
     ],
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
   "extra": {
-    "scripts-description": {
-      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
-      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+    "mozart": {
+      "dep_namespace": "WooCommerceMinMaxQuantities\\",
+      "dep_directory": "/lib/",
+      "classmap_directory": "/lib/classes/",
+      "classmap_prefix": "WooCommerceMinMaxQuantities_",
+      "delete_vendor_directories": true,
+      "packages": [
+        "pluginever/framework-plugin",
+        "pluginever/framework-settings"
+      ]
     }
   }
 }

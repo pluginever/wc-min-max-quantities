@@ -1,12 +1,7 @@
-node_modules
-bower_components
-release
-vendor
-.idea
-*.log
-
-
-# Editors
+# IDEs
+/.settings
+/.project
+/.idea
 *.esproj
 *.tmproj
 *.tmproject
@@ -15,7 +10,6 @@ tmtags
 *.un~
 Session.vim
 *.swp
-.husky
 
 # Mac OSX
 .DS_Store
@@ -27,11 +21,36 @@ Session.vim
 Thumbs.db
 Desktop.ini
 
-# Asset Files
-assets/**/*.map
-assets/**/*.css
-assets/**/*.min.js
+# NPM packages used by Grunt.js
+node_modules
+bower_components
+.idea
+*.log
+npm-debug.log
+
+# Composer
+/vendor
+
+# PHPUnit
+/tmp
+
+# Misc
+*.zip
+.cache
+.sass-cache*
+.husky
+*.lock
+
+# Tests
+codeception.yml
+.env
+/tests/_data/dump.sql
+.env.testing
+
+# Framework
+lib
 
 
-# Plugin Specific
-@next
+# Build
+assets/dist
+

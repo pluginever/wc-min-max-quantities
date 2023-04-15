@@ -1,23 +1,18 @@
 <?php
+
+namespace WooCommerceMinMaxQuantities;
+
+defined( 'ABSPATH' ) || exit;
+
 /**
- * Handles WooCommerce cart related functionalities.
+ * Class Cart
  *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities\WC
+ * @since   1.1.4
+ * @package WooCommerceMinMaxQuantities
  */
-
-namespace WC_Min_Max_Quantities;
-
-defined( 'ABSPATH' ) || exit();
-
-/**
- * Class Cart_Manager.
- */
-class Cart_Manager {
-
+class Cart extends Lib\Singleton {
 	/**
-	 * Cart_Manager constructor.
+	 * Restrictions constructor.
 	 *
 	 * @since 1.1.0
 	 * @return void
@@ -32,6 +27,7 @@ class Cart_Manager {
 		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
 	}
+
 
 	/**
 	 * Output any plugin specific error messages
@@ -78,12 +74,12 @@ class Cart_Manager {
 
 		if ( 'variable' !== $product->get_type() && ! Helper::is_product_excluded( $product->get_id() ) ) {
 			$limits = Helper::get_product_limits( $product->get_id() );
-			if ( ! empty( $limits['min_qty'] ) || ! empty( $limits['step'] ) ) {
+			if ( ! empty( $limits['min_qty'] ) || ! empty( $limits['quantity_step'] ) ) {
 
 				$quantity_attribute = $limits['min_qty'];
 
-				if ( $limits['step'] > 0 && $limits['min_qty'] < $limits['step'] ) {
-					$quantity_attribute = $limits['step'];
+				if ( $limits['quantity_step'] > 0 && $limits['min_qty'] < $limits['quantity_step'] ) {
+					$quantity_attribute = $limits['quantity_step'];
 				}
 
 				$html = str_replace( '<a ', '<a data-quantity="' . esc_attr( $quantity_attribute ) . '" ', $html );
@@ -138,7 +134,7 @@ class Cart_Manager {
 			}
 		}
 
-		if ( $limits['step'] > 0 ) {
+		if ( $limits['quantity_step'] > 0 ) {
 			$data['step'] = 1;
 			// If both minimum and maximum quantity are set, make sure both are equally divisible by group of quantity.
 			if ( ( empty( $limits['max_qty'] ) || absint( $limits['max_qty'] ) % absint( $limits['quantity_step'] ) === 0 ) && ( empty( $limits['min_qty'] ) || absint( $limits['min_qty'] ) % absint( $limits['quantity_step'] ) === 0 ) ) {
@@ -174,7 +170,7 @@ class Cart_Manager {
 		// If it's a variation and overridden from variation level we will use conditions
 		// from variation otherwise will check parent if that is not overridden fall back to global.
 		$minmax_product_id = $product_id;
-		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_wc_min_max_quantities_override', true ) ) {
+		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_wcmmq_override_global', true ) ) {
 			$minmax_product_id = $variation_id;
 		}
 
@@ -203,16 +199,16 @@ class Cart_Manager {
 			return false;
 		}
 
-		if ( ! Helper::is_allow_combination( $product_id ) && $limits['step'] > 0 && ( (int) $quantity % (int) $limits['step'] > 0 ) ) {
+		if ( ! Helper::is_allow_combination( $product_id ) && $limits['quantity_step'] > 0 && ( (int) $quantity % (int) $limits['quantity_step'] > 0 ) ) {
 			/* translators: %1$s: Product name, %2$d: Group amount */
-			Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
+			Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['quantity_step'], $limits['quantity_step'] - ( $quantity % $limits['quantity_step'] ) ) );
 
 			return false;
 		}
 
 		// For cart level check for maximum only.
-		$maximum_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$maximum_order_total    = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
+		$maximum_order_quantity = get_option( 'wcmmq_cart_max_qty' );
+		$maximum_order_total    = get_option( 'wcmmq_cart_max_total' );
 
 		if ( $maximum_order_quantity > 1 && WC()->cart->cart_contents_count > $maximum_order_quantity ) {
 			/* translators: %d: Maximum quantity */
@@ -241,10 +237,10 @@ class Cart_Manager {
 		$product_ids        = array();
 		$quantities         = array();
 		$line_amount        = array();
-		$max_order_quantity = Plugin::get( 'settings' )->get_option( 'general_max_order_quantity' );
-		$min_order_quantity = Plugin::get( 'settings' )->get_option( 'general_min_order_quantity' );
-		$max_order_amount   = Plugin::get( 'settings' )->get_option( 'general_max_order_amount' );
-		$min_order_amount   = Plugin::get( 'settings' )->get_option( 'general_min_order_amount' );
+		$max_order_quantity = get_option( 'wcmmq_cart_max_qty' );
+		$min_order_quantity = get_option( 'wcmmq_cart_min_qty' );
+		$max_order_amount   = get_option( 'wcmmq_cart_max_total' );
+		$min_order_amount   = get_option( 'wcmmq_cart_min_total' );
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {
@@ -288,9 +284,9 @@ class Cart_Manager {
 
 				return;
 			}
-			if ( $limits['step'] > 0 && ( (float) $quantity % (float) $limits['step'] > 0 ) ) {
+			if ( $limits['quantity_step'] > 0 && ( (float) $quantity % (float) $limits['quantity_step'] > 0 ) ) {
 				/* translators: %1$s: Product name, %2$d: quantity amount */
-				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['step'], $limits['step'] - ( $quantity % $limits['step'] ) ) );
+				Helper::add_error( sprintf( __( '%1$s must be bought in groups of %2$d. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $limits['quantity_step'], $limits['quantity_step'] - ( $quantity % $limits['quantity_step'] ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				return;
@@ -343,11 +339,11 @@ class Cart_Manager {
 	 * @return int
 	 */
 	public static function set_cart_quantity( $product_id ) {
-		$add_to_cart = isset($_GET['wc-ajax']) ? wc_clean($_GET['wc-ajax']): '';
+		$add_to_cart = isset( $_GET['wc-ajax'] ) ? wc_clean( $_GET['wc-ajax'] ) : '';
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
 		}
-		$quantity = isset($_POST['quantity']) ? absint($_POST['quantity']) : 1;
+		$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 1;
 		if ( empty( $quantity ) ) {
 			return $quantity;
 		}
@@ -377,19 +373,19 @@ class Cart_Manager {
 			return $product_id;
 		}
 
-		if ( $limits['step'] ) {
-			if ( $limits['step'] > $quantity ) {
-				$_REQUEST['quantity'] = $limits['step'] - $quantity;
+		if ( $limits['quantity_step'] ) {
+			if ( $limits['quantity_step'] > $quantity ) {
+				$_REQUEST['quantity'] = $limits['quantity_step'] - $quantity;
 
 				return $product_id;
 			}
 
-			$remainder = $quantity % $limits['step'];
+			$remainder = $quantity % $limits['quantity_step'];
 
 			if ( 0 === $remainder ) {
-				$_REQUEST['quantity'] = $limits['step'];
+				$_REQUEST['quantity'] = $limits['quantity_step'];
 			} else {
-				$_REQUEST['quantity'] = $limits['step'] - $remainder;
+				$_REQUEST['quantity'] = $limits['quantity_step'] - $remainder;
 			}
 
 			return $product_id;
@@ -477,27 +473,26 @@ class Cart_Manager {
 			}
 		}
 
-		if ( ! empty( $limits['step'] ) ) {
+		if ( ! empty( $limits['quantity_step'] ) ) {
 			$data['step'] = 1;
 			// If both minimum and maximum quantity are set, make sure both are equally divisible by quantity step of quantity.
 			if ( $limits['max_qty'] && $limits['min_qty'] ) {
-				if ( absint( $limits['max_qty'] ) % absint( $limits['min_qty'] ) === 0 && absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) {
-					$data['step'] = $limits['step'];
+				if ( absint( $limits['max_qty'] ) % absint( $limits['min_qty'] ) === 0 && absint( $limits['max_qty'] ) % absint( $limits['quantity_step'] ) === 0 ) {
+					$data['step'] = $limits['quantity_step'];
 				}
-			} elseif ( ! $limits['max_qty'] || absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) {
-
-				$data['step'] = $limits['step'];
+			} elseif ( ! $limits['max_qty'] || absint( $limits['max_qty'] ) % absint( $limits['quantity_step'] ) === 0 ) {
+				$data['step'] = $limits['quantity_step'];
 			}
 
 			// Set the minimum only when minimum is not set.
 			if ( ! $limits['min_qty'] ) {
-				$data['min_qty'] = $limits['step'];
+				$data['min_qty'] = $limits['quantity_step'];
 			}
 		}
 
 		if ( ! is_cart() ) {
-			if ( ! $limits['min_qty'] && $limits['step'] ) {
-				$data['input_value'] = $limits['step'];
+			if ( ! $limits['min_qty'] && $limits['quantity_step'] ) {
+				$data['input_value'] = $limits['quantity_step'];
 			} else {
 				$data['input_value'] = ! empty( $limits['min_qty'] ) ? $limits['min_qty'] : 1;
 			}

@@ -1,13 +1,6 @@
 <?php
-/**
- * WC_Min_Max_Quantities Helper functions handlers
- *
- * @version  1.1.0
- * @since    1.1.0
- * @package  WC_Min_Max_Quantities
- */
 
-namespace WC_Min_Max_Quantities;
+namespace WooCommerceMinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -69,15 +62,15 @@ class Helper {
 		$limits = wp_cache_get( $key );
 		if ( false === $limits ) {
 			$product  = wc_get_product( $product_id );
-			$override = 'yes' === get_post_meta( $product->get_id(), '_wc_min_max_quantities_override', true );
+			$override = 'yes' === get_post_meta( $product->get_id(), '_wcmmq_override_global', true );
 			if ( $override ) {
-				$limits['step']    = (int) $product->get_meta( '_wc_min_max_quantities_step' );
-				$limits['min_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_min_qty' );
-				$limits['max_qty'] = (int) $product->get_meta( '_wc_min_max_quantities_max_qty' );
+				$limits['quantity_step'] = (int) $product->get_meta( '_wcmmq_quantity_step' );
+				$limits['min_qty']       = (int) $product->get_meta( '_wcmmq_min_qty' );
+				$limits['max_qty']       = (int) $product->get_meta( '_wcmmq_max_qty' );
 			} else {
-				$limits['step']    = (int) Plugin::get( 'settings' )->get_option( 'general_product_quantity_step' );
-				$limits['min_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_min_product_quantity' );
-				$limits['max_qty'] = (int) Plugin::get( 'settings' )->get_option( 'general_max_product_quantity' );
+				$limits['quantity_step'] = (int) get_option( 'wcmmq_quantity_step' );
+				$limits['min_qty']       = (int) get_option( 'wcmmq_min_qty' );
+				$limits['max_qty']       = (int) get_option( 'wcmmq_max_qty' );
 			}
 
 			$limits = apply_filters( 'wc_min_max_quantities_product_limits', $limits, $product_id, $variation_id );
@@ -144,11 +137,11 @@ class Helper {
 	 * @return bool
 	 */
 	public static function is_product_excluded( $product_id, $variation_id = null ) {
-		if ( ! is_null( $variation_id ) && get_post_meta( $variation_id, '_wc_min_max_quantities_excluded', true ) === 'yes' ) {
+		if ( ! is_null( $variation_id ) && get_post_meta( $variation_id, '_wcmmq_excluded', true ) === 'yes' ) {
 			return true;
 		}
 
-		return 'yes' === get_post_meta( $product_id, '_wc_min_max_quantities_excluded', true );
+		return 'yes' === get_post_meta( $product_id, '_wcmmq_excluded', true );
 	}
 
 	/**

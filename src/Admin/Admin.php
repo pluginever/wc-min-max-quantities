@@ -1,0 +1,150 @@
+<?php
+
+namespace WooCommerceMinMaxQuantities\Admin;
+
+use WooCommerceMinMaxQuantities\Lib;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Class Admin
+ *
+ * @since 1.1.4
+ * @package WooCommerceMinMaxQuantities\Admin
+ */
+class Admin extends Lib\Singleton {
+	/**
+	 * Admin constructor.
+	 *
+	 * @since 1.1.4
+	 */
+	protected function __construct() {
+		add_action( 'init', array( $this, 'init' ), 1 );
+		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
+		add_filter( 'woocommerce_screen_ids', array( $this, 'screen_ids' ) );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), PHP_INT_MAX );
+		add_filter( 'update_footer', array( $this, 'update_footer' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * Init.
+	 *
+	 * @since 1.1.4
+	 */
+	public function init() {
+		MetaBoxes::instantiate();
+		Actions::instantiate();
+	}
+
+	/**
+	 * Add menu item.
+	 *
+	 * @since 1.1.0
+	 */
+	public function settings_menu() {
+		add_submenu_page(
+			'woocommerce',
+			__( 'Min Max Quantities Settings', 'wc-min-max-quantities' ),
+			__( 'Min Max Quantities', 'wc-min-max-quantities' ),
+			'manage_options',
+			'wc-min-max-quantities-settings',
+			array( Settings::class, 'output' )
+		);
+	}
+
+	/**
+	 * Add the plugin screens to the WooCommerce screens.
+	 * This will load the WooCommerce admin styles and scripts.
+	 *
+	 * @param array $ids Screen ids.
+	 *
+	 * @return array
+	 */
+	public function screen_ids( $ids ) {
+		return array_merge( $ids, self::get_screen_ids() );
+	}
+
+	/**
+	 * Admin footer text.
+	 *
+	 * @param string $footer_text Footer text.
+	 *
+	 * @since 1.1.4
+	 * @return string
+	 */
+	public function admin_footer_text( $footer_text ) {
+		if ( wc_min_max_quantities()->get_review_url() && in_array( get_current_screen()->id, self::get_screen_ids(), true ) ) {
+			$footer_text = sprintf(
+			/* translators: 1: Plugin name 2: WordPress */
+				__( 'Thank you for using %1$s. If you like it, please leave us a %2$s rating. A huge thank you from PluginEver in advance!', 'wc-min-max-quantities' ),
+				'<strong>' . esc_html( wc_min_max_quantities()->get_name() ) . '</strong>',
+				'<a href="' . esc_url( wc_min_max_quantities()->get_review_url() ) . '" target="_blank" class="wc-min-max-quantities-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'wc-min-max-quantities' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+			);
+		}
+
+		return $footer_text;
+	}
+
+	/**
+	 * Update footer.
+	 *
+	 * @param string $footer_text Footer text.
+	 *
+	 * @since 1.1.4
+	 * @return string
+	 */
+	public function update_footer( $footer_text ) {
+		if ( in_array( get_current_screen()->id, self::get_screen_ids(), true ) ) {
+			/* translators: 1: Plugin version */
+			$footer_text = sprintf( esc_html__( 'Version %s', 'wc-min-max-quantities' ), wc_min_max_quantities()->get_version() );
+		}
+
+		return $footer_text;
+	}
+
+	/**
+	 * Get screen ids.
+	 *
+	 * @since 1.1.4
+	 * @return array
+	 */
+	public static function get_screen_ids() {
+		$screen_ids = [
+			'woocommerce_page_wc-min-max-quantities-settings',
+		];
+
+		return apply_filters( 'wc_min_max_quantities_screen_ids', $screen_ids );
+	}
+
+	/**
+	 * Render a view.
+	 *
+	 * @param string $view The name of the view to render.
+	 * @param array $args The arguments to pass to the view.
+	 * @param string $path The path to the view file.
+	 *
+	 * @since 1.1.4
+	 * @return void
+	 */
+	public static function view( $view, $args = [], $path = '' ) {
+		if ( empty( $path ) ) {
+			$path = __DIR__ . '/Views/';
+		}
+		// replace .php extension if it was added.
+		$view = str_replace( '.php', '', $view );
+		$view = ltrim( $view, '/' );
+		$path = rtrim( $path, '/' );
+
+		$file = $path . '/' . $view . '.php';
+
+		if ( ! file_exists( $file ) ) {
+			return;
+		}
+
+		if ( $args && is_array( $args ) ) {
+			extract( $args ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
+		}
+
+		include $file;
+	}
+}

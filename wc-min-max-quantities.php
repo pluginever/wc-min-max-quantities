@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Min Max Quantities for WooCommerce
  * Description:  The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version: 1.1.3
+ * Version:      1.1.4
  * Plugin URI:   https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  * Author:       PluginEver
  * Author URI:   https://pluginever.com/
@@ -34,54 +34,66 @@ if ( ! defined( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE' ) ) {
 }
 
 /**
- * Missing WooCommerce notice.
+ * Auto load function.
  *
- * @since 1.1.0
+ * @param string $class_name Class name.
+ *
+ * @since 1.1.4
  * @return void
  */
-function wc_min_max_quantities_missing_wc_notice() {
-	/* translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link. */
-	$notice  = '<div class="notice notice-error">';
-	$notice .= '<p>';
-	$notice .= sprintf(
-		/* translators: %s Plugin Name, %s Missing Plugin Name, %s Download URL link. */
-		__( '%1$s requires %2$s to be installed and active. You can download WooCommerce %3$s.', 'wc-min-max-quantities' ),
-		'<strong>WC Min Max Quantities</strong>',
-		'<strong>WooCommerce</strong>',
-		'<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">here</a>'
+function wc_min_max_quantities_autoload( $class_name ) {
+	// WC_Min_Max_Quantities or WooCommerceMinMaxQuantities
+	if ( strpos( $class_name, 'WC_Min_Max_Quantities\\' ) !== 0 && strpos( $class_name, 'WooCommerceMinMaxQuantities\\' ) !== 0 ) {
+		return;
+	}
+
+	// If the class name starts with WC_Min_Max_Quantities, remove it.
+	if ( strpos( $class_name, 'WC_Min_Max_Quantities\\' ) === 0 ) {
+		$class_name = substr( $class_name, strlen( 'WC_Min_Max_Quantities\\' ) );
+	}
+	// If the class name starts with WooCommerceMinMaxQuantities, remove it.
+	if ( strpos( $class_name, 'WooCommerceMinMaxQuantities\\' ) === 0 ) {
+		$class_name = substr( $class_name, strlen( 'WooCommerceMinMaxQuantities\\' ) );
+	}
+
+	// Replace the namespace separator with the directory separator.
+	$class_name = str_replace( '\\', DIRECTORY_SEPARATOR, $class_name );
+	// Add the .php extension.
+	$class_name = $class_name . '.php';
+
+	$file_paths = array(
+		__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $class_name,
+		__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $class_name,
 	);
-	$notice .= '</p>';
-	$notice .= '</div>';
-	echo wp_kses_post( $notice );
+
+	foreach ( $file_paths as $file_path ) {
+		if ( file_exists( $file_path ) ) {
+			require_once $file_path;
+			break;
+		}
+	}
 }
+
+spl_autoload_register( 'wc_min_max_quantities_autoload' );
 
 /**
  * Returns the main instance of plugin.
  *
  * @since  1.1.0
- * @return WC_Min_Max_Quantities\Plugin
+ * @return WooCommerceMinMaxQuantities\Plugin
  */
 function wc_min_max_quantities() {
-	require_once __DIR__ . '/includes/class-plugin.php';
-	return WC_Min_Max_Quantities\Plugin::instance();
+	$data = array(
+		'file'             => __FILE__,
+		'settings_url'     => admin_url( 'admin.php?page=wc-min-max-quantities' ),
+		'support_url'      => 'https://pluginever.com/support/',
+		'docs_url'         => 'https://pluginever.com/docs/min-max-quantities-for-woocommerce/',
+		'premium_url'      => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
+		'premium_basename' => 'wc-min-max-quantities-pro',
+		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post',
+	);
+
+	return \WooCommerceMinMaxQuantities\Plugin::create( $data );
 }
-
-/**
- * Initialize the plugin.
- *
- * @since 1.1.0
- * @return void
- */
-function wc_min_max_quantities_init() {
-	if ( ! class_exists( '\WooCommerce' ) ) {
-		add_action( 'admin_notices', 'wc_min_max_quantities_missing_wc_notice' );
-
-		return;
-	}
-
-	// Kick off the plugin.
-	$GLOBALS['wc_min_max_quantities'] = wc_min_max_quantities();
-}
-
-// Kick off the plugin.
-add_action( 'plugins_loaded', 'wc_min_max_quantities_init', -1 );
+// Initialize the plugin.
+wc_min_max_quantities();
