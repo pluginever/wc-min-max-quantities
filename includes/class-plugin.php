@@ -21,7 +21,7 @@ final class Plugin {
 	 * @since 1.1.0
 	 * @var string
 	 */
-	protected $version = '1.1.1';
+	protected $version = '1.1.4';
 
 	/**
 	 * Plugin data container.
