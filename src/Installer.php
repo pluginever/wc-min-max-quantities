@@ -21,7 +21,7 @@ class Installer {
 	protected $updates = array(
 		'1.0.8' => 'update_108',
 		'1.1.0' => array( 'update_110_settings', 'update_110_categories', 'update_110_products' ),
-		'1.1.4' => 'update_114',
+		'1.1.5' => 'update_115',
 	);
 
 	/**
@@ -282,7 +282,7 @@ class Installer {
 	 * @since 1.1.4
 	 * @return void
 	 */
-	public static function update_114() {
+	public static function update_115() {
 		global $wpdb;
 		$settings = get_option( 'wc_min_max_quantities_settings', array() );
 		$map      = array(
