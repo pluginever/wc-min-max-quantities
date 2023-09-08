@@ -1,0 +1,361 @@
+# Copyright (C) 2023 PluginEver
+# This file is distributed under the same license as the WC Min Max Quantities package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Min Max Quantities for WooCommerce 1.1.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-08 18:19:02+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: lib/Lib/Plugin.php:309
+msgid "Go Pro"
+msgstr ""
+
+#: lib/Lib/Plugin.php:655 src/Admin/Settings.php:190
+msgid "Documentation"
+msgstr ""
+
+#: lib/Lib/Plugin.php:662
+msgid "Support"
+msgstr ""
+
+#: lib/Lib/Plugin.php:669
+msgid "Review"
+msgstr ""
+
+#: lib/Lib/Plugin.php:675
+msgid "More Plugins"
+msgstr ""
+
+#: lib/Lib/Plugin.php:692
+msgid "Settings"
+msgstr ""
+
+#: lib/Lib/Settings.php:96
+msgid "Settings saved."
+msgstr ""
+
+#: lib/Lib/Settings.php:260 lib/Lib/Settings.php:351 lib/Lib/Settings.php:360
+#: lib/Lib/Settings.php:369
+msgid "Recommended"
+msgstr ""
+
+#: lib/Lib/Settings.php:261 lib/Lib/Settings.php:352 lib/Lib/Settings.php:361
+#: lib/Lib/Settings.php:370
+msgid "Install Now"
+msgstr ""
+
+#: lib/Lib/Settings.php:322
+msgid "Need Help?"
+msgstr ""
+
+#: lib/Lib/Settings.php:384
+msgid "Join our Community"
+msgstr ""
+
+#: lib/Lib/Settings.php:388
+msgid "Request a Feature"
+msgstr ""
+
+#: lib/Lib/Settings.php:392
+msgid "Report a Bug"
+msgstr ""
+
+#: src/Admin/Admin.php:63
+msgid "Min Max Quantities Settings"
+msgstr ""
+
+#: src/Admin/Admin.php:64
+msgid "Min Max Quantities"
+msgstr ""
+
+#: src/Admin/Admin.php:95
+#. translators: 1: Plugin name 2: WordPress
+msgid ""
+"Thank you for using %1$s. If you like it, please leave us a %2$s rating. A "
+"huge thank you from PluginEver in advance!"
+msgstr ""
+
+#: src/Admin/Admin.php:97
+msgid "Thanks :)"
+msgstr ""
+
+#: src/Admin/Admin.php:115
+#. translators: 1: Plugin version
+msgid "Version %s"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:36
+msgid "Exclude Min/Max Rule"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:37
+msgid "Exclude this product from all Min/Max rules."
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:43
+msgid "Override Global"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:44
+msgid "Global Min/Max rules will be overridden by local settings if checked."
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:59 src/Admin/Settings.php:54
+#: src/Admin/Settings.php:88
+msgid "Minimum quantity"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:60
+msgid ""
+"Set an allowed minimum number of items customers can purchase for this "
+"product. For no restrictions, set 0."
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:73 src/Admin/Settings.php:62
+#: src/Admin/Settings.php:96
+msgid "Maximum quantity"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:74
+msgid ""
+"Set an allowed maximum number of items customers can purchase for this "
+"product. For no restrictions, set 0."
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:87 src/Admin/Settings.php:70
+msgid "Quantity step"
+msgstr ""
+
+#: src/Admin/MetaBoxes.php:88
+msgid ""
+"Enter a number that will increment or decrement every time a quantity is "
+"changed for this product."
+msgstr ""
+
+#: src/Admin/Settings.php:24
+msgid "General"
+msgstr ""
+
+#: src/Admin/Settings.php:25
+msgid "Roles"
+msgstr ""
+
+#: src/Admin/Settings.php:26
+msgid "Translations"
+msgstr ""
+
+#: src/Admin/Settings.php:47
+msgid "Product restrictions"
+msgstr ""
+
+#: src/Admin/Settings.php:50
+msgid ""
+"Set the minimum and maximum restrictions for products. Restrictions will be "
+"applied to every product individually."
+msgstr ""
+
+#: src/Admin/Settings.php:55
+msgid "Set an allowed minimum quantity for each product. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:63
+msgid "Set an allowed maximum quantity for each product. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:71
+msgid ""
+"Each time the quantity is changed, it will be increased or decreased by "
+"this value. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:82
+msgid "Cart restrictions"
+msgstr ""
+
+#: src/Admin/Settings.php:85
+msgid ""
+"Set the minimum and maximum restrictions for the order. Restrictions will "
+"be applied to the order total."
+msgstr ""
+
+#: src/Admin/Settings.php:89
+msgid "Set an allowed minimum quantity for the order. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:90 src/Admin/Settings.php:98
+msgid "This will be calculated by adding the quantity of all products in the cart."
+msgstr ""
+
+#: src/Admin/Settings.php:97
+msgid "Set an allowed maximum quantity for the order. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:104
+msgid "Minimum total"
+msgstr ""
+
+#: src/Admin/Settings.php:105
+msgid "Set an allowed minimum order total. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:106 src/Admin/Settings.php:114
+msgid ""
+"This will be calculated by adding the total of all products in the cart "
+"before any discounts have been applied."
+msgstr ""
+
+#: src/Admin/Settings.php:112
+msgid "Maximum total"
+msgstr ""
+
+#: src/Admin/Settings.php:113
+msgid "Set an allowed maximum order amount. Leave empty to disable."
+msgstr ""
+
+#: src/Admin/Settings.php:160
+msgid "Set restrictions for each product individually."
+msgstr ""
+
+#: src/Admin/Settings.php:161
+msgid "Set restrictions for each product category."
+msgstr ""
+
+#: src/Admin/Settings.php:162
+msgid "Set restrictions for variable products."
+msgstr ""
+
+#: src/Admin/Settings.php:163
+msgid ""
+"Allow your vendors to set their own minimum and maximum restrictions. "
+"Supports Dokan, WC Vendors"
+msgstr ""
+
+#: src/Admin/Settings.php:168
+msgid "Premium Features"
+msgstr ""
+
+#: src/Admin/Settings.php:174
+msgid "Get Premium"
+msgstr ""
+
+#: src/Cart.php:186 src/Cart.php:265
+#. translators: %1$s: Product name, %2$d: Maximum quantity
+msgid "The maximum allowed quantity for %1$s is %2$d."
+msgstr ""
+
+#: src/Cart.php:194 src/Cart.php:274
+#. translators: %1$s: Product name, %2$d: Minimum quantity
+msgid "The minimum required quantity for %1$s is %2$d."
+msgstr ""
+
+#: src/Cart.php:201
+#. translators: %1$s: Product name, %2$d: Group amount
+msgid "%1$s must be bought in groups of %2$d."
+msgstr ""
+
+#: src/Cart.php:211
+#. translators: %d: Maximum quantity
+msgid "The maximum allowed order quantity is %s."
+msgstr ""
+
+#: src/Cart.php:218
+#. translators: %s: Maximum amount
+msgid "The maximum allowed order total is %s."
+msgstr ""
+
+#: src/Cart.php:281
+#. translators: %1$s: Product name, %2$d: quantity amount
+msgid ""
+"%1$s must be bought in groups of %2$d. Please increase or decrease the "
+"quantity to continue."
+msgstr ""
+
+#: src/Cart.php:294
+#. translators: %d: Minimum amount of items in the cart
+msgid ""
+"The minimum required items in cart is %d. Please increase the quantity in "
+"your cart."
+msgstr ""
+
+#: src/Cart.php:303
+#. translators: %d: Maximum amount of items in the cart
+msgid ""
+"The maximum allowed order quantity is %d. Please decrease the quantity in "
+"your cart."
+msgstr ""
+
+#: src/Cart.php:311
+#. translators: %d: Minimum amount of items in the cart
+msgid ""
+"The minimum allowed order value %s. Please increase the quantity in your "
+"cart."
+msgstr ""
+
+#: src/Cart.php:320
+#. translators: %d: Maximum amount of items in the cart
+msgid ""
+"The maximum allowed order value is %s. Please decrease the quantity in your "
+"cart."
+msgstr ""
+
+#: src/Cart.php:417
+msgid "Available on backorder"
+msgstr ""
+
+#: src/Cart.php:423
+msgid "Out of stock"
+msgstr ""
+
+#: src/Installer.php:80
+#. translators: 1: plugin name 2: version number
+msgid "%1$s updated to version %2$s successfully."
+msgstr ""
+
+#: src/Plugin.php:77
+#. translators: 1: plugin name 2: WooCommerce
+msgid "%1$s requires %2$s to be installed and active."
+msgstr ""
+
+#: src/Plugin.php:79
+msgid "WooCommerce"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WC Min Max Quantities"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"The plugin allows you to Set minimum and maximum allowable product "
+"quantities and price per product and order."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "PluginEver"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://pluginever.com/"
+msgstr ""

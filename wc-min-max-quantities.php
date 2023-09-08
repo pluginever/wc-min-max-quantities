@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:  Min Max Quantities for WooCommerce
+ * Plugin Name:  WC Min Max Quantities
  * Description:  The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
  * Version:      1.1.4
  * Plugin URI:   https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
@@ -12,7 +12,7 @@
  * WC requires at least: 3.0.0
  * WC tested up to: 7.1
  *
- * @package     WC_Min_Max_Quantities
+ * @package     WooCommerceMinMaxQuantities
  * @author      pluginever
  * @link        https://pluginever.com/plugins/wc-min-max-quantities/
  *
@@ -27,11 +27,9 @@
  * GNU General Public License for more details.
  */
 
-defined( 'ABSPATH' ) || exit;
+use \WooCommerceMinMaxQuantities\Plugin;
 
-if ( ! defined( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE' ) ) {
-	define( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE', __FILE__ );
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Auto load function.
@@ -42,7 +40,7 @@ if ( ! defined( 'WC_MIN_MAX_QUANTITIES_PLUGIN_FILE' ) ) {
  * @return void
  */
 function wc_min_max_quantities_autoload( $class_name ) {
-	// WC_Min_Max_Quantities or WooCommerceMinMaxQuantities
+	// WC_Min_Max_Quantities or WooCommerceMinMaxQuantities.
 	if ( strpos( $class_name, 'WC_Min_Max_Quantities\\' ) !== 0 && strpos( $class_name, 'WooCommerceMinMaxQuantities\\' ) !== 0 ) {
 		return;
 	}
@@ -80,7 +78,7 @@ spl_autoload_register( 'wc_min_max_quantities_autoload' );
  * Returns the main instance of plugin.
  *
  * @since  1.1.0
- * @return WooCommerceMinMaxQuantities\Plugin
+ * @return Plugin
  */
 function wc_min_max_quantities() {
 	$data = array(
@@ -93,7 +91,7 @@ function wc_min_max_quantities() {
 		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post',
 	);
 
-	return \WooCommerceMinMaxQuantities\Plugin::create( $data );
+	return Plugin::create( $data );
 }
 // Initialize the plugin.
 wc_min_max_quantities();

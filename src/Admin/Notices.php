@@ -2,7 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities\Admin;
 
-
 defined( 'ABSPATH' ) || exit();
 
 /**
@@ -11,6 +10,6 @@ defined( 'ABSPATH' ) || exit();
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities\Admin
  */
-class Notices extends \WooCommerceMinMaxQuantities\Lib\Singleton {
+class Notices {
 
 }

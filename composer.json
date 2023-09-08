@@ -26,8 +26,8 @@
     "byteever/byteever-sniffs": "dev-master",
     "coenjacobs/mozart": "^0.7.1",
     "phpcompatibility/php-compatibility": "9.3.5",
-    "pluginever/framework-plugin": "^1.0.0",
-    "pluginever/framework-settings": "^1.0.0"
+    "pluginever/framework-plugin": "dev-master",
+    "pluginever/framework-settings": "dev-master"
   },
   "config": {
     "optimize-autoloader": true,

@@ -68,8 +68,8 @@ class Settings extends Lib\Settings {
 					// Quantity step.
 					array(
 						'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set the quantity step for each product. Leave empty to disable. Each time the quantity is changed, the quantity will be increased or decreased by this value.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_quantity_step',
+						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'id'      => 'wcmmq_step',
 						'default' => 0,
 						'type'    => 'number',
 					),
@@ -79,7 +79,7 @@ class Settings extends Lib\Settings {
 						'id'   => 'wcmmq_product_restrictions',
 					),
 					array(
-						'title' => esc_html__( 'Order restrictions', 'wc-min-max-quantities' ),
+						'title' => esc_html__( 'Cart restrictions', 'wc-min-max-quantities' ),
 						'type'  => 'title',
 						'id'    => 'wcmmq_order_restrictions',
 						'desc'  => __( 'Set the minimum and maximum restrictions for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
@@ -88,7 +88,7 @@ class Settings extends Lib\Settings {
 						'title'    => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
 						'desc'     => __( 'Set an allowed minimum quantity for the order. Leave empty to disable.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_order_min_qty',
+						'id'       => 'wcmmq_min_cart_qty',
 						'default'  => 0,
 						'type'     => 'number',
 					),
@@ -96,7 +96,7 @@ class Settings extends Lib\Settings {
 						'title'    => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
 						'desc'     => __( 'Set an allowed maximum quantity for the order. Leave empty to disable.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_order_max_qty',
+						'id'       => 'wcmmq_max_cart_qty',
 						'default'  => 0,
 						'type'     => 'number',
 					),
@@ -104,7 +104,7 @@ class Settings extends Lib\Settings {
 						'title'    => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
 						'desc'     => __( 'Set an allowed minimum order total. Leave empty to disable.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_order_min_total',
+						'id'       => 'wcmmq_min_cart_total',
 						'default'  => 0,
 						'type'     => 'number',
 					),
@@ -112,7 +112,7 @@ class Settings extends Lib\Settings {
 						'title'    => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
 						'desc'     => __( 'Set an allowed maximum order amount. Leave empty to disable.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_order_max_total',
+						'id'       => 'wcmmq_max_cart_total',
 						'default'  => 0,
 						'type'     => 'number',
 					),
@@ -159,21 +159,19 @@ class Settings extends Lib\Settings {
 		$features = array(
 			__( 'Set restrictions for each product individually.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions for each product category.', 'wc-min-max-quantities' ),
-			__( 'Set restrictions by user role.', 'wc-min-max-quantities' ),
-			__( 'Set restrictions by user.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions for variable products.', 'wc-min-max-quantities' ),
 			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports Dokan, WC Vendors', 'wc-min-max-quantities' ),
 		);
 
 		?>
-		<div class="pluginever-settings__widget highlighted">
-			<h3><?php _e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
+		<div class="pev-panel promo-panel">
+			<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
 			<ul>
 				<?php foreach ( $features as $feature ) : ?>
 					<li>- <?php echo esc_html( $feature ); ?></li>
 				<?php endforeach; ?>
 			</ul>
-			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php _e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
+			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php esc_html_e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
 		</div>
 		<?php
 	}
@@ -189,7 +187,7 @@ class Settings extends Lib\Settings {
 	public function output_tabs( $tabs ) {
 		parent::output_tabs( $tabs );
 		if ( wc_min_max_quantities()->get_docs_url() ) {
-			echo sprintf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', wc_min_max_quantities()->get_docs_url(), __( 'Documentation', 'wc-min-max-quantities' ) );
+			echo sprintf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
 		}
 	}
 

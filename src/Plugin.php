@@ -20,8 +20,24 @@ class Plugin extends Lib\Plugin {
 	 */
 	protected function __construct( $data ) {
 		parent::__construct( $data );
+		$this->define_constants();
 		$this->includes();
 		$this->init_hooks();
+	}
+
+	/**
+	 * Define constants.
+	 *
+	 * @since 1.1.4
+	 * @return void
+	 */
+	public function define_constants() {
+		$this->define( 'WCMMQ_FILE', $this->get_file() );
+		$this->define( 'WCMMQ_VERSION', $this->get_version() );
+		$this->define( 'WCMMQ_PLUGIN_PATH', $this->get_dir_path() );
+		$this->define( 'WCMMQ_PLUGIN_URL', $this->get_dir_url() );
+		$this->define( 'WCMMQ_ASSETS_PATH', $this->get_assets_path() );
+		$this->define( 'WCMMQ_ASSETS_URL', $this->get_assets_url() );
 	}
 
 	/**
@@ -31,7 +47,7 @@ class Plugin extends Lib\Plugin {
 	 * @return void
 	 */
 	public function includes() {
-		require_once __DIR__ . '/Deprecated/class-cart-manager.php';
+		require_once __DIR__ . '/Functions.php';
 	}
 
 	/**
@@ -58,9 +74,9 @@ class Plugin extends Lib\Plugin {
 		}
 		$notice = sprintf(
 		/* translators: 1: plugin name 2: WooCommerce */
-			__( '%1$s requires %2$s to be installed and active.', 'wc-serial-numbers' ),
+			__( '%1$s requires %2$s to be installed and active.', 'wc-min-max-quantities' ),
 			'<strong>' . esc_html( $this->get_name() ) . '</strong>',
-			'<strong>' . esc_html__( 'WooCommerce', 'wc-serial-numbers' ) . '</strong>'
+			'<strong>' . esc_html__( 'WooCommerce', 'wc-min-max-quantities' ) . '</strong>'
 		);
 
 		echo '<div class="notice notice-error"><p>' . wp_kses_post( $notice ) . '</p></div>';
@@ -73,12 +89,10 @@ class Plugin extends Lib\Plugin {
 	 * @return void
 	 */
 	public function init() {
-		Installer::instantiate();
-		Cart::instantiate();
-
-		// Load admin.
-		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-			Admin\Admin::instantiate();
+		$this->services->add( Installer::class );
+		$this->services->add( Cart::class );
+		if ( $this->is_request( 'admin' ) ) {
+			$this->services->add( Admin\Admin::class );
 		}
 
 		do_action( 'wc_min_max_quantities_loaded' );

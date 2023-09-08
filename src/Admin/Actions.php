@@ -2,8 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities\Admin;
 
-use WooCommerceMinMaxQuantities\Lib;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -12,13 +10,14 @@ defined( 'ABSPATH' ) || exit;
  * @package WooCommerceMinMaxQuantities\Admin
  * @since 1.1.4
  */
-class Actions extends Lib\Singleton {
+class Actions {
 
 	/**
 	 * Actions constructor.
+	 *
 	 * @since 1.1.4
 	 */
-	protected function __construct() {
+	public function __construct() {
 		add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save_product_meta' ) );
 	}
 
@@ -35,7 +34,7 @@ class Actions extends Lib\Singleton {
 		$numeric_fields = array(
 			'_wcmmq_min_qty',
 			'_wcmmq_max_qty',
-			'_wcmmq_quantity_step',
+			'_wcmmq_step',
 		);
 		foreach ( $numeric_fields as $numeric_field ) {
 			$value = isset( $_POST[ $numeric_field ] ) ? floatval( wp_unslash( $_POST[ $numeric_field ] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -44,10 +43,10 @@ class Actions extends Lib\Singleton {
 
 		$check_fields = array(
 			'_wcmmq_excluded',
-			'_wcmmq_override_global',
+			'_wcmmq_override',
 		);
 		foreach ( $check_fields as $check_field ) {
-			$value = isset( $_POST[ $check_field ] ) ? wp_unslash( $_POST[ $check_field ] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$value = isset( $_POST[ $check_field ] ) ? true : false;
 			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );
 		}
 

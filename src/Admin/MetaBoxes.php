@@ -2,9 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities\Admin;
 
-
-use WooCommerceMinMaxQuantities\Lib;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -12,12 +9,12 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package WooCommerceMinMaxQuantities\Admin
  */
-class MetaBoxes extends Lib\Singleton {
+class MetaBoxes {
 
 	/**
 	 * MetaBoxes constructor.
 	 */
-	protected function __construct() {
+	public function __construct() {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 	}
 
@@ -35,16 +32,14 @@ class MetaBoxes extends Lib\Singleton {
 			<?php
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'wcmmq_excluded',
-					'name'        => '_wcmmq_excluded',
+					'id'          => '_wcmmq_excluded',
 					'label'       => __( 'Exclude Min/Max Rule', 'wc-min-max-quantities' ),
 					'description' => __( 'Exclude this product from all Min/Max rules.', 'wc-min-max-quantities' ),
 				)
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'wcmmq_override_global',
-					'name'        => '_wcmmq_override_global',
+					'id'          => '_wcmmq_override',
 					'label'       => __( 'Override Global', 'wc-min-max-quantities' ),
 					'description' => __( 'Global Min/Max rules will be overridden by local settings if checked.', 'wc-min-max-quantities' ),
 				)
@@ -52,7 +47,7 @@ class MetaBoxes extends Lib\Singleton {
 
 			do_action( 'wc_min_max_quantities_before_override_settings' );
 
-			$settings = get_post_meta( $post->ID, '_wcmmq_override_global', true );
+			$settings = get_post_meta( $post->ID, '_wcmmq_override', true );
 			$css      = 'yes' === $settings ? '' : 'display:none;';
 			echo '<div class="wcmmq-override-settings" style="' . esc_attr( $css ) . '">';
 
@@ -60,8 +55,7 @@ class MetaBoxes extends Lib\Singleton {
 
 			woocommerce_wp_text_input(
 				array(
-					'id'                => 'wcmmq_min_qty',
-					'name'              => '_wcmmq_min_qty',
+					'id'                => '_wcmmq_min_qty',
 					'label'             => __( 'Minimum quantity', 'wc-min-max-quantities' ),
 					'description'       => __( 'Set an allowed minimum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
@@ -75,8 +69,7 @@ class MetaBoxes extends Lib\Singleton {
 
 			woocommerce_wp_text_input(
 				array(
-					'id'                => 'wcmmq_max_qty',
-					'name'              => '_wcmmq_max_qty',
+					'id'                => '_wcmmq_max_qty',
 					'label'             => __( 'Maximum quantity', 'wc-min-max-quantities' ),
 					'description'       => __( 'Set an allowed maximum number of items customers can purchase for this product. For no restrictions, set 0.', 'wc-min-max-quantities' ),
 					'desc_tip'          => true,
@@ -90,8 +83,7 @@ class MetaBoxes extends Lib\Singleton {
 
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'wcmmq_quantity_step',
-					'name'        => '_wcmmq_quantity_step',
+					'id'          => '_wcmmq_step',
 					'label'       => __( 'Quantity step', 'wc-min-max-quantities' ),
 					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
 					'desc_tip'    => true,
@@ -108,7 +100,7 @@ class MetaBoxes extends Lib\Singleton {
 
 			$js = "
 			jQuery( function( $ ) {
-				$( '.wcmmq-product-settings' ).on( 'change', '#wcmmq_override_global', function() {
+				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_override', function() {
 					var wrapper  = $( this ).closest( 'div' ).find( '.wcmmq-override-settings' );
 					if( $( this ).is(':checked') ){
 						wrapper.show();
@@ -117,7 +109,7 @@ class MetaBoxes extends Lib\Singleton {
 					}
 				});
 
-				$( '.wcmmq-product-settings #wcmmq_override_global' ).trigger( 'change' );
+				$( '.wcmmq-product-settings #_wcmmq_override' ).trigger( 'change' );
 			});
 		";
 

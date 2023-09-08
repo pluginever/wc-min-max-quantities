@@ -2,8 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities;
 
-use WC_Min_Max_Quantities\Plugin;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -12,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities
  */
-class Installer extends Lib\Singleton {
+class Installer {
 
 	/**
 	 * Update callbacks.
@@ -31,7 +29,7 @@ class Installer extends Lib\Singleton {
 	 *
 	 * @since 1.1.4
 	 */
-	protected function __construct() {
+	public function __construct() {
 		add_action( 'init', array( $this, 'check_update' ), 0 );
 	}
 
@@ -182,7 +180,7 @@ class Installer extends Lib\Singleton {
 		}
 
 		foreach ( $updated_settings as $key => $value ) {
-			Plugin::get( 'settings' )->update_option( $key, $value );
+			update_option( $key, $value );
 		}
 
 	}
@@ -290,11 +288,11 @@ class Installer extends Lib\Singleton {
 		$map      = array(
 			'general_min_product_quantity'  => 'wcmmq_min_qty',
 			'general_max_product_quantity'  => 'wcmmq_max_qty',
-			'general_product_quantity_step' => 'wcmmq_quantity_step',
-			'general_min_order_quantity'    => 'wcmmq_cart_min_qty',
-			'general_max_order_quantity'    => 'wcmmq_cart_max_qty',
-			'general_min_order_amount'      => 'wcmmq_cart_min_total',
-			'general_max_order_amount'      => 'wcmmq_cart_max_total',
+			'general_product_quantity_step' => 'wcmmq_step',
+			'general_min_order_quantity'    => 'wcmmq_min_cart_qty',
+			'general_max_order_quantity'    => 'wcmmq_max_cart_qty',
+			'general_min_order_amount'      => 'wcmmq_min_cart_total',
+			'general_max_order_amount'      => 'wcmmq_max_cart_total',
 		);
 
 		foreach ( $map as $old_key => $new_key ) {
@@ -307,9 +305,9 @@ class Installer extends Lib\Singleton {
 		$post_meta = array(
 			'_wc_min_max_quantities_min_qty'  => '_wcmmq_min_qty',
 			'_wc_min_max_quantities_max_qty'  => '_wcmmq_max_qty',
-			'_wc_min_max_quantities_step_qty' => '_wcmmq_quantity_step',
+			'_wc_min_max_quantities_step_qty' => '_wcmmq_step',
 			'_wc_min_max_quantities_excluded' => '_wcmmq_excluded',
-			'_wc_min_max_quantities_override' => '_wcmmq_override_global',
+			'_wc_min_max_quantities_override' => '_wcmmq_override',
 		);
 		foreach ( $post_meta as $old_key => $new_key ) {
 			$wpdb->query(
@@ -320,6 +318,5 @@ class Installer extends Lib\Singleton {
 				)
 			);
 		}
-
 	}
 }

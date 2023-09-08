@@ -2,8 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities\Admin;
 
-use WooCommerceMinMaxQuantities\Lib;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -12,14 +10,15 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities\Admin
  */
-class Admin extends Lib\Singleton {
+class Admin {
 	/**
 	 * Admin constructor.
 	 *
 	 * @since 1.1.4
 	 */
-	protected function __construct() {
+	public function __construct() {
 		add_action( 'init', array( $this, 'init' ), 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 55 );
 		add_filter( 'woocommerce_screen_ids', array( $this, 'screen_ids' ) );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), PHP_INT_MAX );
@@ -32,8 +31,25 @@ class Admin extends Lib\Singleton {
 	 * @since 1.1.4
 	 */
 	public function init() {
-		MetaBoxes::instantiate();
-		Actions::instantiate();
+		wc_min_max_quantities()->services->add( Settings::instance() );
+		wc_min_max_quantities()->services->add( MetaBoxes::class );
+		wc_min_max_quantities()->services->add( Actions::class );
+	}
+
+	/**
+	 * Enqueue admin scripts.
+	 *
+	 * @param string $hook Hook name.
+	 *
+	 * @since 1.1.4
+	 */
+	public function enqueue_scripts( $hook ) {
+		if ( ! in_array( $hook, self::get_screen_ids(), true ) ) {
+			return;
+		}
+
+		// Enqueue admin scripts.
+		wc_min_max_quantities()->enqueue_style( 'wcmmq-admin-style', 'css/admin.css' );
 	}
 
 	/**
@@ -114,37 +130,5 @@ class Admin extends Lib\Singleton {
 		];
 
 		return apply_filters( 'wc_min_max_quantities_screen_ids', $screen_ids );
-	}
-
-	/**
-	 * Render a view.
-	 *
-	 * @param string $view The name of the view to render.
-	 * @param array $args The arguments to pass to the view.
-	 * @param string $path The path to the view file.
-	 *
-	 * @since 1.1.4
-	 * @return void
-	 */
-	public static function view( $view, $args = [], $path = '' ) {
-		if ( empty( $path ) ) {
-			$path = __DIR__ . '/Views/';
-		}
-		// replace .php extension if it was added.
-		$view = str_replace( '.php', '', $view );
-		$view = ltrim( $view, '/' );
-		$path = rtrim( $path, '/' );
-
-		$file = $path . '/' . $view . '.php';
-
-		if ( ! file_exists( $file ) ) {
-			return;
-		}
-
-		if ( $args && is_array( $args ) ) {
-			extract( $args ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-		}
-
-		include $file;
 	}
 }
