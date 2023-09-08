@@ -7,7 +7,7 @@
  * Author:       PluginEver
  * Author URI:   https://pluginever.com/
  * Text Domain:  wc-min-max-quantities
- * Domain Path: /i18n/languages/
+ * Domain Path: /languages
  * Requires PHP: 5.6
  * WC requires at least: 3.0.0
  * WC tested up to: 7.1
