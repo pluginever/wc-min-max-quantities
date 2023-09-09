@@ -18,7 +18,6 @@ class MetaBoxes {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 	}
 
-
 	/**
 	 * Add tab content in product edit page
 	 *
@@ -32,14 +31,14 @@ class MetaBoxes {
 			<?php
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => '_wcmmq_excluded',
+					'id'          => '_wcmmq_disable',
 					'label'       => __( 'Exclude Min/Max Rule', 'wc-min-max-quantities' ),
 					'description' => __( 'Exclude this product from all Min/Max rules.', 'wc-min-max-quantities' ),
 				)
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => '_wcmmq_override',
+					'id'          => '_wcmmq_enable',
 					'label'       => __( 'Override Global', 'wc-min-max-quantities' ),
 					'description' => __( 'Global Min/Max rules will be overridden by local settings if checked.', 'wc-min-max-quantities' ),
 				)
@@ -47,7 +46,7 @@ class MetaBoxes {
 
 			do_action( 'wc_min_max_quantities_before_override_settings' );
 
-			$settings = get_post_meta( $post->ID, '_wcmmq_override', true );
+			$settings = get_post_meta( $post->ID, '_wcmmq_enable', true );
 			$css      = 'yes' === $settings ? '' : 'display:none;';
 			echo '<div class="wcmmq-override-settings" style="' . esc_attr( $css ) . '">';
 
@@ -100,7 +99,7 @@ class MetaBoxes {
 
 			$js = "
 			jQuery( function( $ ) {
-				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_override', function() {
+				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_enable', function() {
 					var wrapper  = $( this ).closest( 'div' ).find( '.wcmmq-override-settings' );
 					if( $( this ).is(':checked') ){
 						wrapper.show();
@@ -109,7 +108,7 @@ class MetaBoxes {
 					}
 				});
 
-				$( '.wcmmq-product-settings #_wcmmq_override' ).trigger( 'change' );
+				$( '.wcmmq-product-settings #_wcmmq_enable' ).trigger( 'change' );
 			});
 		";
 

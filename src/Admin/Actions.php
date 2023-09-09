@@ -42,8 +42,8 @@ class Actions {
 		}
 
 		$check_fields = array(
-			'_wcmmq_excluded',
-			'_wcmmq_override',
+			'_wcmmq_disable',
+			'_wcmmq_enable',
 		);
 		foreach ( $check_fields as $check_field ) {
 			$value = isset( $_POST[ $check_field ] ) ? true : false;

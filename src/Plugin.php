@@ -95,6 +95,6 @@ class Plugin extends Lib\Plugin {
 			$this->services->add( Admin\Admin::class );
 		}
 
-		do_action( 'wc_min_max_quantities_loaded' );
+		do_action( 'wc_min_max_quantities_init' );
 	}
 }

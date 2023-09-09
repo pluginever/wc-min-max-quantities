@@ -22,8 +22,6 @@ class Settings extends Lib\Settings {
 	public function get_tabs() {
 		$tabs = array(
 			'general'      => __( 'General', 'wc-min-max-quantities' ),
-			'roles'        => __( 'Roles', 'wc-min-max-quantities' ),
-			'translations' => __( 'Translations', 'wc-min-max-quantities' ),
 		);
 
 		return apply_filters( 'wc_min_max_quantities_settings_tabs', $tabs );
@@ -136,7 +134,7 @@ class Settings extends Lib\Settings {
 		/**
 		 * Filter the settings for the plugin.
 		 *
-		 * @param array $settings The settings.
+		 * @param array  $settings The settings.
 		 * @param string $tab The current tab.
 		 *
 		 * @since 1.1.4
@@ -158,9 +156,12 @@ class Settings extends Lib\Settings {
 
 		$features = array(
 			__( 'Set restrictions for each product individually.', 'wc-min-max-quantities' ),
-			__( 'Set restrictions for each product category.', 'wc-min-max-quantities' ),
-			__( 'Set restrictions for variable products.', 'wc-min-max-quantities' ),
-			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports Dokan, WC Vendors', 'wc-min-max-quantities' ),
+			__( 'Set restrictions for each product variation.', 'wc-min-max-quantities' ),
+			__( 'Set restrictions for all products from a category.', 'wc-min-max-quantities' ),
+			__( 'Set restrictions based on product categories.', 'wc-min-max-quantities' ),
+			__( 'Set restrictions for the order total.', 'wc-min-max-quantities' ),
+			__( 'Set restrictions for based on the user role.', 'wc-min-max-quantities' ),
+			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports Dokan, MultiVendorX and WCFM Marketplace.', 'wc-min-max-quantities' ),
 		);
 
 		?>

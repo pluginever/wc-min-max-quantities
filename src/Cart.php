@@ -167,7 +167,7 @@ class Cart {
 		// If it's a variation and overridden from variation level we will use conditions
 		// from variation otherwise will check parent if that is not overridden fall back to global.
 		$minmax_product_id = $product_id;
-		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_wcmmq_override', true ) ) {
+		if ( ! empty( $variation_id ) && 'yes' === get_post_meta( $variation_id, '_wcmmq_enable', true ) ) {
 			$minmax_product_id = $variation_id;
 		}
 
@@ -198,7 +198,7 @@ class Cart {
 
 		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['step'] > 0 && ( (int) $quantity % (int) $product_limits['step'] > 0 ) ) {
 			/* translators: %1$s: Product name, %2$d: Group amount */
-			wcmmq_add_cart_notice( sprintf( __( '%1$s must be bought in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The quantity of %1$s must be purchased in groups of %2$d.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
 
 			return false;
 		}
@@ -291,7 +291,7 @@ class Cart {
 
 		if ( (int) $cart_limits['min_qty'] > 0 && $order_quantity < (int) $cart_limits['min_qty'] ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum required items in cart is %d. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['min_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity in the cart is %d. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['min_qty'] ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -300,7 +300,7 @@ class Cart {
 
 		if ( (int) $cart_limits['max_qty'] > 0 && $order_quantity > (int) $cart_limits['max_qty'] ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %d. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['max_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %d. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['max_qty'] ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -308,7 +308,7 @@ class Cart {
 
 		if ( (int) $cart_limits['min_total'] > 0 && $order_total < (int) $cart_limits['min_total'] ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum allowed order value %s. Please increase the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['min_total'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum allowed order total value is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['min_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
@@ -317,7 +317,7 @@ class Cart {
 
 		if ( (int) $cart_limits['max_total'] > 0 && $order_total > (int) $cart_limits['max_total'] ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order value is %s. Please decrease the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['max_total'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order total value is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['max_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
