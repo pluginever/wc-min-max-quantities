@@ -176,7 +176,9 @@ function wcmmq_is_allow_combination( $product_id ) {
 		return false;
 	}
 
-	return 'yes' === $product->get_meta( '_wcmmq_allow_combination' );
+	$allow =  'yes' === $product->get_meta( '_wcmmq_allow_combination' );
+
+	return apply_filters( 'wc_min_max_quantities_allow_combination', $allow, $product_id );
 }
 
 /**

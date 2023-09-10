@@ -126,8 +126,6 @@ class Settings extends Lib\Settings {
 		 * Filter the settings for the plugin.
 		 *
 		 * @param array $settings The settings.
-		 *
-		 * @deprecated 1.1.4
 		 */
 		$settings = apply_filters( 'wc_min_max_quantities_' . $tab . '_settings', $settings );
 
