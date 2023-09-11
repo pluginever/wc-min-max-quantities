@@ -31,37 +31,25 @@ use \WooCommerceMinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Auto load function.
- *
- * @param string $class_name Class name.
- *
- * @since 1.1.4
- * @return void
- */
-function wc_min_max_quantities_autoload( $class_name ) {
-	// WC_Min_Max_Quantities or WooCommerceMinMaxQuantities.
-	if ( strpos( $class_name, 'WC_Min_Max_Quantities\\' ) !== 0 && strpos( $class_name, 'WooCommerceMinMaxQuantities\\' ) !== 0 ) {
+// Autoload function.
+spl_autoload_register( function ( $class ) {
+	$prefix = 'WooCommerceMinMaxQuantities\\';
+	$len    = strlen( $prefix );
+
+	// Bail out if the class name doesn't start with our prefix.
+	if ( strncmp( $prefix, $class, $len ) !== 0 ) {
 		return;
 	}
 
-	// If the class name starts with WC_Min_Max_Quantities, remove it.
-	if ( strpos( $class_name, 'WC_Min_Max_Quantities\\' ) === 0 ) {
-		$class_name = substr( $class_name, strlen( 'WC_Min_Max_Quantities\\' ) );
-	}
-	// If the class name starts with WooCommerceMinMaxQuantities, remove it.
-	if ( strpos( $class_name, 'WooCommerceMinMaxQuantities\\' ) === 0 ) {
-		$class_name = substr( $class_name, strlen( 'WooCommerceMinMaxQuantities\\' ) );
-	}
-
+	// Remove the prefix from the class name.
+	$relative_class = substr( $class, $len );
 	// Replace the namespace separator with the directory separator.
-	$class_name = str_replace( '\\', DIRECTORY_SEPARATOR, $class_name );
-	// Add the .php extension.
-	$class_name = $class_name . '.php';
+	$file = str_replace( '\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
 
+	// Look for the file in the src and lib directories.
 	$file_paths = array(
-		__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $class_name,
-		__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $class_name,
+		__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $file,
+		__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $file,
 	);
 
 	foreach ( $file_paths as $file_path ) {
@@ -70,9 +58,7 @@ function wc_min_max_quantities_autoload( $class_name ) {
 			break;
 		}
 	}
-}
-
-spl_autoload_register( 'wc_min_max_quantities_autoload' );
+} );
 
 /**
  * Returns the main instance of plugin.
@@ -93,5 +79,6 @@ function wc_min_max_quantities() {
 
 	return Plugin::create( $data );
 }
+
 // Initialize the plugin.
 wc_min_max_quantities();
