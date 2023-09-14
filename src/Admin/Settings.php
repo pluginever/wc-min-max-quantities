@@ -159,7 +159,7 @@ class Settings extends Lib\Settings {
 			__( 'Set restrictions based on product categories.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions for the order total.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions for based on the user role.', 'wc-min-max-quantities' ),
-			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports Dokan, MultiVendorX and WCFM Marketplace.', 'wc-min-max-quantities' ),
+			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports MultiVendorX and WCFM Marketplace.', 'wc-min-max-quantities' ),
 		);
 
 		?>

@@ -103,7 +103,7 @@ class Cart {
 			$product_id   = $product->get_parent_id();
 			$variation_id = $product->get_id();
 		}
-
+		error_log(wcmmq_is_allow_combination( $product_id ));
 		if ( wcmmq_is_product_excluded( $product_id, $variation_id ) || wcmmq_is_allow_combination( $product_id ) ) {
 			return $data;
 		}

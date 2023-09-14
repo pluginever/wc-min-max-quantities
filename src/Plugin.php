@@ -59,6 +59,7 @@ class Plugin extends Lib\Plugin {
 	public function init_hooks() {
 		register_activation_hook( $this->get_file(), array( Installer::class, 'install' ) );
 		add_action( 'admin_notices', array( $this, 'dependencies_notices' ) );
+		add_action( 'before_woocommerce_init', array( $this, 'enable_hpos_support' ) );
 		add_action( 'woocommerce_loaded', array( $this, 'init' ), 0 );
 	}
 
@@ -80,6 +81,18 @@ class Plugin extends Lib\Plugin {
 		);
 
 		echo '<div class="notice notice-error"><p>' . wp_kses_post( $notice ) . '</p></div>';
+	}
+
+	/**
+	 * Enable HPOS support.
+	 *
+	 * @since 1.1.5
+	 * @return void
+	 */
+	public function enable_hpos_support() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $this->get_file(), true );
+		}
 	}
 
 	/**
