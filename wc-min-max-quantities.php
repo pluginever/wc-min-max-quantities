@@ -32,33 +32,34 @@ use \WooCommerceMinMaxQuantities\Plugin;
 defined( 'ABSPATH' ) || exit;
 
 // Autoload function.
-spl_autoload_register( function ( $class ) {
-	$prefix = 'WooCommerceMinMaxQuantities\\';
-	$len    = strlen( $prefix );
+spl_autoload_register(
+	function ( $class ) {
+		$prefix = 'WooCommerceMinMaxQuantities\\';
+		$len    = strlen( $prefix );
+		// Bail out if the class name doesn't start with our prefix.
+		if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+			return;
+		}
 
-	// Bail out if the class name doesn't start with our prefix.
-	if ( strncmp( $prefix, $class, $len ) !== 0 ) {
-		return;
-	}
+		// Remove the prefix from the class name.
+		$relative_class = substr( $class, $len );
+		// Replace the namespace separator with the directory separator.
+		$file = str_replace( '\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
 
-	// Remove the prefix from the class name.
-	$relative_class = substr( $class, $len );
-	// Replace the namespace separator with the directory separator.
-	$file = str_replace( '\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
+		// Look for the file in the src and lib directories.
+		$file_paths = array(
+			__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $file,
+			__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $file,
+		);
 
-	// Look for the file in the src and lib directories.
-	$file_paths = array(
-		__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $file,
-		__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $file,
-	);
-
-	foreach ( $file_paths as $file_path ) {
-		if ( file_exists( $file_path ) ) {
-			require_once $file_path;
-			break;
+		foreach ( $file_paths as $file_path ) {
+			if ( file_exists( $file_path ) ) {
+				require_once $file_path;
+				break;
+			}
 		}
 	}
-} );
+);
 
 /**
  * Returns the main instance of plugin.

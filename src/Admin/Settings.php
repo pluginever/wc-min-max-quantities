@@ -21,7 +21,7 @@ class Settings extends Lib\Settings {
 	 */
 	public function get_tabs() {
 		$tabs = array(
-			'general'      => __( 'General', 'wc-min-max-quantities' ),
+			'general' => __( 'General', 'wc-min-max-quantities' ),
 		);
 
 		return apply_filters( 'wc_min_max_quantities_settings_tabs', $tabs );
