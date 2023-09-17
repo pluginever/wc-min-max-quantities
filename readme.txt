@@ -143,7 +143,6 @@ The cart will maintain the global or product rules if the cart rule is not set.
 == Changelog ==
 
 = 1.1.5 (17th Sep 2023)
-- Fix: Product Min/Max Rules Exclusion
 - Fix: PHP 8.1 deprecated issue
 - Fix: Compatability with WP v6.3
 - Fix: Compatability with WC v8.1
