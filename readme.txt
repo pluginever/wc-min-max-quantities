@@ -141,6 +141,15 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+
+= 1.1.5 (17th Sep 2023)
+- Fix: Product Min/Max Rules Exclusion
+- Fix: PHP 8.1 deprecated issue
+- Fix: Compatability with WP v6.3
+- Fix: Compatability with WC v8.1
+- Add: WooCommerce HPOS/COT feature
+- Enhance: Core codebase 
+
 = 1.1.4 (16th Aug 2022) =
 - Fix - Compatability with WP v6.3
 - Fix - Compatability with WC v8.0
