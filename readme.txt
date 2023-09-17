@@ -4,7 +4,7 @@ Tags: products,limit quantity, limit cost, woocommerce limits, range to buy, min
 Requires at least: 3.0.1
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.1.3
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Set the required minimum and maximum order quantities or amounts for individual 
 
 == Description ==
 
-**[WC Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the most powerful quantity, price, and step control manager plugin created for WooCommerce store owners. You can set both minimum and maximum purchase limits for individual products or categories or globally to prevent overselling and underselling your products. 
+**[WC Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the most powerful quantity, price, and step control manager plugin created for WooCommerce store owners. You can set both minimum and maximum purchase limits for individual products or categories or globally to prevent overselling and underselling your products.
 
 Set minimum and maximum limits for the product quantity itself, order quantities, or total cart amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify rules that will only apply to the cart. These amazing features of WC Min Max Quantities will allow you to restrict customers from purchasing items if the product quantity and/or price conditions are not met.
 
@@ -111,7 +111,7 @@ Yes, the Min Max Quantities Plugin allows you to set unique minimum and maximum 
 
 = Can I apply different values for different variations of the same variable product? =
 
-Yes, you can apply different values for different variations of the same variable product and also you can apply the same rules for variables combined. 
+Yes, you can apply different values for different variations of the same variable product and also you can apply the same rules for variables combined.
 
 = From where do I get the documentation? =
 
@@ -171,7 +171,7 @@ The cart will maintain the global or product rules if the cart rule is not set.
 - Fix: Compatability with WP v6.3
 - Fix: Compatability with WC v8.1
 - Add: WooCommerce HPOS/COT feature
-- Enhance: Core codebase 
+- Enhance: Core codebase
 
 = 1.1.4 (16th Aug 2022) =
 - Fix - Compatability with WP v6.3
