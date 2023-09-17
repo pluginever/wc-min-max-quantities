@@ -305,7 +305,7 @@ class Installer {
 		$post_meta = array(
 			'_wc_min_max_quantities_min_qty'  => '_wcmmq_min_qty',
 			'_wc_min_max_quantities_max_qty'  => '_wcmmq_max_qty',
-			'_wc_min_max_quantities_step_qty' => '_wcmmq_step',
+			'_wc_min_max_quantities_step'     => '_wcmmq_step',
 			'_wc_min_max_quantities_excluded' => '_wcmmq_disable',
 			'_wc_min_max_quantities_override' => '_wcmmq_enable',
 		);

@@ -34,6 +34,7 @@ class Admin {
 		wc_min_max_quantities()->services->add( Settings::instance() );
 		wc_min_max_quantities()->services->add( MetaBoxes::class );
 		wc_min_max_quantities()->services->add( Actions::class );
+		wc_min_max_quantities()->services->add( Notices::class );
 	}
 
 	/**
@@ -63,7 +64,7 @@ class Admin {
 			__( 'Min Max Quantities Settings', 'wc-min-max-quantities' ),
 			__( 'Min Max Quantities', 'wc-min-max-quantities' ),
 			'manage_options',
-			'wc-min-max-quantities-settings',
+			'wc-min-max-quantities',
 			array( Settings::class, 'output' )
 		);
 	}
@@ -126,7 +127,7 @@ class Admin {
 	 */
 	public static function get_screen_ids() {
 		$screen_ids = [
-			'woocommerce_page_wc-min-max-quantities-settings',
+			'woocommerce_page_wc-min-max-quantities',
 		];
 
 		return apply_filters( 'wc_min_max_quantities_screen_ids', $screen_ids );

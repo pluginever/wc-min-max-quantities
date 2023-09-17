@@ -48,6 +48,8 @@ For example, if you specify a minimum and maximum product quantity for a product
 
 === ⚡ MIN MAX QUANTITIES FOR WOOCOMMERCE PRO FEATURES: ===
 
+* **Category-based rules:** You can set different rules for different categories.
+* **Role-based rules:** You can set different rules for different user roles.
 * **Support for multiple vendors:** Dokan and WCFMP are supported. Vendors can impose their own rules.
 * **Minimum product total amount:** If the total amount is less than the minimum, products cannot be purchased.
 * **Maximum product total amount:** Products cannot be purchased if the total amount exceeds the maximum amount.
@@ -127,10 +129,17 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+= 1.1.5 (17th Sep 2023)
+- Fix: Product Min/Max Rules Exclusion
+- Fix: PHP 8.1 deprecated issue
+- Fix: Compatability with WP v6.3
+- Fix: Compatability with WC v8.1
+- Add: WooCommerce HPOS/COT feature
+- Enhance: Core codebase
+
 = 1.1.3 =
 * Fix: Optimized the code for better performance.
 - Fix - Compatability with WP v6.1
-
 - Fix - Compatability with WC v7.1
 
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Min Max Quantities for WooCommerce 1.1.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-11 09:52:49+00:00\n"
+"POT-Creation-Date: 2023-09-14 04:18:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -249,7 +249,7 @@ msgstr ""
 #: src/Admin/Settings.php:162
 msgid ""
 "Allow your vendors to set their own minimum and maximum restrictions. "
-"Supports Dokan, MultiVendorX and WCFM Marketplace."
+"Supports MultiVendorX and WCFM Marketplace."
 msgstr ""
 
 #: src/Admin/Settings.php:167
@@ -333,20 +333,13 @@ msgstr ""
 msgid "%1$s updated to version %2$s successfully."
 msgstr ""
 
-#: src/Plugin.php:77
+#: src/Plugin.php:78
 #. translators: 1: plugin name 2: WooCommerce
 msgid "%1$s requires %2$s to be installed and active."
 msgstr ""
 
-#: src/Plugin.php:79
+#: src/Plugin.php:80
 msgid "WooCommerce"
-msgstr ""
-
-#: wc-min-max-quantities.php:82
-msgid ""
-"You have installed an outdated version of <strong>WooCommerce Min Max "
-"Quantities Pro</strong>. Please deactivate the outdated version and install "
-"the latest version from <a href=\"%s\">here</a>."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
