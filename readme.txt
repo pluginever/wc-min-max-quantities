@@ -165,7 +165,6 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
-
 = 1.1.5 (17th Sep 2023)
 - Fix: PHP 8.1 deprecated issue
 - Fix: Compatability with WP v6.3
