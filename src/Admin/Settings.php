@@ -42,15 +42,15 @@ class Settings extends Lib\Settings {
 				$settings = array(
 					array(
 						// Product restrictions section.
-						'title' => __( 'Product restrictions', 'wc-min-max-quantities' ),
+						'title' => __( 'Product Limits', 'wc-min-max-quantities' ),
 						'type'  => 'title',
 						'id'    => 'wcmmq_product_restrictions',
-						'desc'  => __( 'Set the minimum and maximum restrictions for products. Restrictions will be applied to every product individually.', 'wc-min-max-quantities' ),
+						'desc'  => __( 'Set the minimum and maximum limits for products. Restrictions will be applied to every product individually.', 'wc-min-max-quantities' ),
 					),
 					// set the minimum quantity.
 					array(
 						'title'   => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set an allowed minimum quantity for each product. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'    => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'id'      => 'wcmmq_min_qty',
 						'default' => 0,
 						'type'    => 'number',
@@ -58,7 +58,7 @@ class Settings extends Lib\Settings {
 					// set the maximum quantity.
 					array(
 						'title'   => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set an allowed maximum quantity for each product. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'    => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'id'      => 'wcmmq_max_qty',
 						'default' => 0,
 						'type'    => 'number',
@@ -66,7 +66,7 @@ class Settings extends Lib\Settings {
 					// Quantity step.
 					array(
 						'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'id'      => 'wcmmq_step',
 						'default' => 0,
 						'type'    => 'number',
@@ -77,14 +77,14 @@ class Settings extends Lib\Settings {
 						'id'   => 'wcmmq_product_restrictions',
 					),
 					array(
-						'title' => esc_html__( 'Cart restrictions', 'wc-min-max-quantities' ),
+						'title' => esc_html__( 'Cart Limits', 'wc-min-max-quantities' ),
 						'type'  => 'title',
 						'id'    => 'wcmmq_order_restrictions',
-						'desc'  => __( 'Set the minimum and maximum restrictions for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
+						'desc'  => __( 'Set the minimum and maximum limits for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
 					),
 					array(
 						'title'    => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set an allowed minimum quantity for the order. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'     => __( 'Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
 						'id'       => 'wcmmq_min_cart_qty',
 						'default'  => 0,
@@ -92,7 +92,7 @@ class Settings extends Lib\Settings {
 					),
 					array(
 						'title'    => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set an allowed maximum quantity for the order. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'     => __( 'Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
 						'id'       => 'wcmmq_max_cart_qty',
 						'default'  => 0,
@@ -100,7 +100,7 @@ class Settings extends Lib\Settings {
 					),
 					array(
 						'title'    => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set an allowed minimum order total. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'     => __( 'Set minimum order total. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
 						'id'       => 'wcmmq_min_cart_total',
 						'default'  => 0,
@@ -108,7 +108,7 @@ class Settings extends Lib\Settings {
 					),
 					array(
 						'title'    => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set an allowed maximum order amount. Leave empty to disable.', 'wc-min-max-quantities' ),
+						'desc'     => __( 'Set maximum order amount. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
 						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
 						'id'       => 'wcmmq_max_cart_total',
 						'default'  => 0,
