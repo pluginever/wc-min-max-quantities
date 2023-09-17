@@ -105,6 +105,30 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == Frequently Asked Questions ==
 
+= Can I set different quantity limits for different products? =
+
+Yes, the Min Max Quantities Plugin allows you to set unique minimum and maximum purchase quantities for each product and product variation. You have complete control over these quantity limits.
+
+= Can I apply different values for different variations of the same variable product? =
+
+Yes, you can apply different values for different variations of the same variable product and also you can apply the same rules for variables combined. 
+
+= From where do I get the documentation? =
+
+You have to visit the site to view the documentation/user manual.
+
+= Will the plugin restrict customers from purchasing more than the maximum quantity? =
+
+Yes, customers will not be able to add more than the specified maximum quantity of a product to their cart. The plugin ensures that the maximum quantity limit is reached.
+
+= Can I customize the error messages for quantity requirements? =
+
+Yes, the Min Max Quantities Plugin provides options to customize the error messages displayed to customers when they try to add quantities outside the set limits. You can effectively communicate the quantity requirements to your customers.
+
+= Can I set quantity limits across my entire store or only for specific products? =
+
+With the Min Max Quantities Plugin, you have the flexibility to set quantity limits either globally across your entire store or for specific products and variations. The choice is yours.
+
 = Which min/max rule takes priority over the other? =
 There are multiple levels of min/max rules that you can assign to your products. The rules have a hierarchy to prioritize one rule over the other. Find below the priority of min/max rules from high to low:
 
