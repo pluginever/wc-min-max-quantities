@@ -13,6 +13,8 @@ Set the required minimum and maximum order quantities or amounts for individual 
 
 == Description ==
 
+= Ultimate solution for purchase control and quantity limits =
+
 **[WC Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the most powerful quantity, price, and step control manager plugin created for WooCommerce store owners. You can set both minimum and maximum purchase limits for individual products or categories or globally to prevent overselling and underselling your products.
 
 Set minimum and maximum limits for the product quantity itself, order quantities, or total cart amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify rules that will only apply to the cart. These amazing features of WC Min Max Quantities will allow you to restrict customers from purchasing items if the product quantity and/or price conditions are not met.
@@ -165,7 +167,8 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
-= 1.1.5 (17th Sep 2023)
+
+= 1.1.5 (17th Sep 2023) =
 - Fix: PHP 8.1 deprecated issue
 - Fix: Compatability with WP v6.3
 - Fix: Compatability with WC v8.1
