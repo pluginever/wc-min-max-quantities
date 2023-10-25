@@ -99,7 +99,7 @@ class Installer {
 			return;
 		}
 
-		Admin\Settings::get_instance()->save_defaults();
+		Admin\Settings::instance()->save_defaults();
 		wc_min_max_quantities()->update_db_version( wc_min_max_quantities()->get_version(), false );
 		add_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		set_transient( 'wc_min_max_quantities_activated', true, 30 );
