@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the WC Min Max Quantities package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Min Max Quantities for WooCommerce 1.1.5\n"
+"Project-Id-Version: Min Max Quantities for WooCommerce 1.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-17 09:05:42+00:00\n"
+"POT-Creation-Date: 2023-10-25 03:39:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -78,26 +78,26 @@ msgstr ""
 msgid "Report a Bug"
 msgstr ""
 
-#: src/Admin/Admin.php:64
+#: src/Admin/Admin.php:65
 msgid "Min Max Quantities Settings"
 msgstr ""
 
-#: src/Admin/Admin.php:65
+#: src/Admin/Admin.php:66
 msgid "Min Max Quantities"
 msgstr ""
 
-#: src/Admin/Admin.php:96
+#: src/Admin/Admin.php:97
 #. translators: 1: Plugin name 2: WordPress
 msgid ""
 "Thank you for using %1$s. If you like it, please leave us a %2$s rating. A "
 "huge thank you from PluginEver in advance!"
 msgstr ""
 
-#: src/Admin/Admin.php:98
+#: src/Admin/Admin.php:99
 msgid "Thanks :)"
 msgstr ""
 
-#: src/Admin/Admin.php:116
+#: src/Admin/Admin.php:117
 #. translators: 1: Plugin version
 msgid "Version %s"
 msgstr ""
@@ -289,17 +289,17 @@ msgstr ""
 
 #: src/Cart.php:186 src/Cart.php:265
 #. translators: %1$s: Product name, %2$d: Maximum quantity
-msgid "The maximum allowed quantity for %1$s is %2$d."
+msgid "The maximum allowed quantity for %1$s is %2$s."
 msgstr ""
 
 #: src/Cart.php:194 src/Cart.php:274
 #. translators: %1$s: Product name, %2$d: Minimum quantity
-msgid "The minimum required quantity for %1$s is %2$d."
+msgid "The minimum required quantity for %1$s is %2$s."
 msgstr ""
 
 #: src/Cart.php:201
 #. translators: %1$s: Product name, %2$d: Group amount
-msgid "The quantity of %1$s must be purchased in groups of %2$d."
+msgid "The quantity of %1$s must be purchased in groups of %2$s."
 msgstr ""
 
 #: src/Cart.php:211
@@ -315,21 +315,21 @@ msgstr ""
 #: src/Cart.php:281
 #. translators: %1$s: Product name, %2$d: quantity amount
 msgid ""
-"%1$s must be bought in groups of %2$d. Please increase or decrease the "
+"%1$s must be bought in groups of %2$s. Please increase or decrease the "
 "quantity to continue."
 msgstr ""
 
 #: src/Cart.php:294
 #. translators: %d: Minimum amount of items in the cart
 msgid ""
-"The minimum required quantity in the cart is %d. Please consider increasing "
+"The minimum required quantity in the cart is %s. Please consider increasing "
 "the quantity in your cart."
 msgstr ""
 
 #: src/Cart.php:303
 #. translators: %d: Maximum amount of items in the cart
 msgid ""
-"The maximum allowed order quantity is %d. Please reduce the quantity in "
+"The maximum allowed order quantity is %s. Please reduce the quantity in "
 "your cart."
 msgstr ""
 

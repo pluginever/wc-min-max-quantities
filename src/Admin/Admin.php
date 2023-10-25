@@ -51,6 +51,7 @@ class Admin {
 
 		// Enqueue admin scripts.
 		wc_min_max_quantities()->enqueue_style( 'wcmmq-admin-style', 'css/admin.css' );
+		wp_add_inline_style( 'common', ':root{--wp-admin-theme-color:#0073aa;}' );
 	}
 
 	/**
