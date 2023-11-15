@@ -16,12 +16,6 @@ fi
 
 echo "Preparing release $VERSION for $SLUG..."
 
-echo "➤ Building plugin..."
-npm install && npm run build
-composer install
-composer update --no-dev --no-scripts
-echo "✓ Plugin built!"
-
 # Check if svn user name is provided with -u flag and password with -p flag
 while getopts u:p: flag; do
 	case "${flag}" in
@@ -36,15 +30,22 @@ if [ -z "$SVN_USER" ] || [ -z "$SVN_PASSWORD" ]; then
 	exit 1
 fi
 
-# Replace the version in readme.txt
-sed -i '' "s/Stable tag: .*/Stable tag: $VERSION/" readme.txt
-# Replace the version in plugin file
-sed -i '' "s/Version: .*/Version: $VERSION/" $SLUG.php
+#verify if the versions in plugin file and package.json are same
+#if ! grep -q "Version: $VERSION" "$SLUG.php"; then
+#	echo "Version in $SLUG.php and package.json don't match. Exiting."
+#	exit 1
+#fi
+#
+##verify if the versions in plugin file and readme.txt are same
+#if ! grep -q "Stable tag: $VERSION" readme.txt; then
+#	echo "Version in readme.txt and package.json don't match. Exiting."
+#	exit 1
+#fi
 
 echo "➤ Building plugin..."
-npm install && npm run build
 composer install
 composer update --no-dev --no-scripts
+npm install && npm run build # This should always be run after composer update.
 echo "✓ Plugin built!"
 
 # if directory already exists, delete it
