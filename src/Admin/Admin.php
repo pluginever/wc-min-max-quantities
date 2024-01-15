@@ -127,9 +127,9 @@ class Admin {
 	 * @return array
 	 */
 	public static function get_screen_ids() {
-		$screen_ids = [
+		$screen_ids = array(
 			'woocommerce_page_wc-min-max-quantities',
-		];
+		);
 
 		return apply_filters( 'wc_min_max_quantities_screen_ids', $screen_ids );
 	}

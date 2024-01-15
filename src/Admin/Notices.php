@@ -26,10 +26,10 @@ class Notices {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		add_action( 'admin_init', [ $this, 'add_notices' ] );
-		add_action( 'admin_notices', [ $this, 'output_notices' ] );
-		add_action( 'wp_ajax_wcmmq_dismiss_notice', [ $this, 'dismiss_notice' ] );
-		add_action( 'admin_footer', [ $this, 'add_notice_script' ] );
+		add_action( 'admin_init', array( $this, 'add_notices' ) );
+		add_action( 'admin_notices', array( $this, 'output_notices' ) );
+		add_action( 'wp_ajax_wcmmq_dismiss_notice', array( $this, 'dismiss_notice' ) );
+		add_action( 'admin_footer', array( $this, 'add_notice_script' ) );
 	}
 
 	/**

@@ -186,7 +186,7 @@ class Settings extends Lib\Settings {
 	public function output_tabs( $tabs ) {
 		parent::output_tabs( $tabs );
 		if ( wc_min_max_quantities()->get_docs_url() ) {
-			echo sprintf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
+			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
 		}
 	}
 
@@ -203,5 +203,4 @@ class Settings extends Lib\Settings {
 		do_action( 'wc_min_max_quantities_settings_' . $current_tab );
 		parent::output_form( $settings );
 	}
-
 }
