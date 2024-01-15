@@ -99,20 +99,28 @@ class Settings extends Lib\Settings {
 						'type'     => 'number',
 					),
 					array(
-						'title'    => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set minimum order total. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_min_cart_total',
-						'default'  => 0,
-						'type'     => 'number',
+						'title'             => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set minimum order total. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_min_cart_total',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					array(
-						'title'    => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set maximum order amount. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_max_cart_total',
-						'default'  => 0,
-						'type'     => 'number',
+						'title'             => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set maximum order amount. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_max_cart_total',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					array(
 						'type' => 'sectionend',
@@ -186,7 +194,7 @@ class Settings extends Lib\Settings {
 	public function output_tabs( $tabs ) {
 		parent::output_tabs( $tabs );
 		if ( wc_min_max_quantities()->get_docs_url() ) {
-			echo sprintf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
+			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
 		}
 	}
 
@@ -203,5 +211,4 @@ class Settings extends Lib\Settings {
 		do_action( 'wc_min_max_quantities_settings_' . $current_tab );
 		parent::output_form( $settings );
 	}
-
 }

@@ -122,6 +122,4 @@ class MetaBoxes {
 		</div>
 		<?php
 	}
-
-
 }

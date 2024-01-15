@@ -148,7 +148,7 @@ class Installer {
 	 * @return void
 	 */
 	public static function update_110_settings() {
-		$updated_settings  = [];
+		$updated_settings  = array();
 		$general_settings  = get_option( 'wc_minmax_quantity_general_settings', array() );
 		$advanced_settings = get_option( 'wc_minmax_quantity_advanced_settings', array() );
 
@@ -182,7 +182,6 @@ class Installer {
 		foreach ( $updated_settings as $key => $value ) {
 			update_option( $key, $value );
 		}
-
 	}
 
 	/**
@@ -227,7 +226,7 @@ class Installer {
 		$migrated = get_option( 'wc_minmax_quantities_migrated_products', array() );
 		$products = get_posts(
 			array(
-				'post_type'   => [ 'product', 'product_variation' ],
+				'post_type'   => array( 'product', 'product_variation' ),
 				'post_status' => 'any',
 				'exclude'     => wp_parse_id_list( $migrated ),
 				'fields'      => 'ids',
