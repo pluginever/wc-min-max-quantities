@@ -169,7 +169,7 @@ The cart will maintain the global or product rules if the cart rule is not set.
 == Changelog ==
 = 1.1.8 (15 Dec 2024) =
 - Fix: PHP 8.1 deprecated issue
-- Fix: Compatability with WP v6.4.2
+- Fix: Compatibility with WP v6.4.2
 - Fix: Support decimal value for min and max value
 
 = 1.1.7 (15 Nov 2023) =
