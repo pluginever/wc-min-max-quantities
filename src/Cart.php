@@ -26,6 +26,71 @@ class Cart {
 		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'set_cart_quantity' ) );
 		add_filter( 'woocommerce_get_availability', array( $this, 'maybe_show_backorder_message' ), 10, 2 );
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
+
+		// wc-cart Block compatibility.
+		add_filter( 'woocommerce_store_api_product_quantity_multiple_of', array( $this, 'filter_cart_item_quantity_multiple_of' ), 10, 2 );
+		add_filter( 'woocommerce_store_api_product_quantity_minimum', array( $this, 'filter_cart_item_quantity_minimum' ), 10, 2 );
+		add_filter( 'woocommerce_store_api_product_quantity_maximum', array( $this, 'filter_cart_item_quantity_maximum' ), 10, 2 );
+	}
+
+	/**
+	 * Filter the multiple of value for cart items.
+	 *
+	 * @param int         $multiple_of The multiple of value.
+	 * @param \WC_Product $cart_item The cart item.
+	 *
+	 * @return int
+	 */
+	public function filter_cart_item_quantity_multiple_of( $multiple_of, $cart_item ) {
+		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
+		if ( ! empty( $product_id ) ) {
+			$limits = wcmmq_get_product_limits( $product_id );
+			if ( ! empty( $limits['step'] ) ) {
+				$multiple_of = $limits['step'];
+			}
+		}
+
+		return $multiple_of;
+	}
+
+	/**
+	 * Filter the minimum value for cart items.
+	 *
+	 * @param int         $minimum The minimum value.
+	 * @param \WC_Product $cart_item The cart item.
+	 *
+	 * @return int
+	 */
+	public function filter_cart_item_quantity_minimum( $minimum, $cart_item ) {
+		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
+		if ( ! empty( $product_id ) ) {
+			$limits = wcmmq_get_product_limits( $product_id );
+			if ( ! empty( $limits['min_qty'] ) ) {
+				$minimum = $limits['min_qty'];
+			}
+		}
+
+		return $minimum;
+	}
+
+	/**
+	 * Filter the maximum value for cart items.
+	 *
+	 * @param int         $maximum The maximum value.
+	 * @param \WC_Product $cart_item The cart item.
+	 *
+	 * @return int
+	 */
+	public function filter_cart_item_quantity_maximum( $maximum, $cart_item ) {
+		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
+		if ( ! empty( $product_id ) ) {
+			$limits = wcmmq_get_product_limits( $product_id );
+			if ( ! empty( $limits['max_qty'] ) ) {
+				$maximum = $limits['max_qty'];
+			}
+		}
+
+		return $maximum;
 	}
 
 
