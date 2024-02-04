@@ -43,7 +43,7 @@ class Cart {
 	 */
 	public function filter_cart_item_quantity_multiple_of( $multiple_of, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! empty( $product_id ) ) {
+		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
 			if ( ! empty( $limits['step'] ) ) {
 				$multiple_of = $limits['step'];
@@ -63,7 +63,7 @@ class Cart {
 	 */
 	public function filter_cart_item_quantity_minimum( $minimum, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! empty( $product_id ) ) {
+		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
 			if ( ! empty( $limits['min_qty'] ) ) {
 				$minimum = $limits['min_qty'];
@@ -83,7 +83,7 @@ class Cart {
 	 */
 	public function filter_cart_item_quantity_maximum( $maximum, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! empty( $product_id ) ) {
+		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
 			if ( ! empty( $limits['max_qty'] ) ) {
 				$maximum = $limits['max_qty'];
