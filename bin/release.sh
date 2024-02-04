@@ -30,15 +30,23 @@ if [ -z "$SVN_USER" ] || [ -z "$SVN_PASSWORD" ]; then
 	exit 1
 fi
 
-# Replace the version in readme.txt
-sed -i '' "s/Stable tag: .*/Stable tag: $VERSION/" readme.txt
-# Replace the version in plugin file
-sed -i '' "s/Version: .*/Version: $VERSION/" $SLUG.php
+#verify if the versions in plugin file and package.json are same
+#if ! grep -q "Version: $VERSION" "$SLUG.php"; then
+#	echo "Version in $SLUG.php and package.json don't match. Exiting."
+#	exit 1
+#fi
+#
+##verify if the versions in plugin file and readme.txt are same
+#if ! grep -q "Stable tag: $VERSION" readme.txt; then
+#	echo "Version in readme.txt and package.json don't match. Exiting."
+#	exit 1
+#fi
 
-# Build the plugin
-npm install
-npm run build
-composer update --no-dev --optimize-autoloader
+echo "➤ Building plugin..."
+composer install
+composer update --no-dev --no-scripts
+npm install && npm run build # This should always be run after composer update.
+echo "✓ Plugin built!"
 
 # if directory already exists, delete it
 if [ -d "$SVN_DIR" ]; then

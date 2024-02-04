@@ -1,10 +1,10 @@
 ===WC Min Max Quantities - Set Minimum/Maximum Quantity & Price Limits with Step Control for WooCommerce===
-Contributors: manikmist09, pluginever, b-07
-Tags:limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
+Contributors: pluginever
+Tags: limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
 Requires at least: 3.0.1
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.1.6
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,14 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+= 1.1.8 (15 Dec 2024) =
+- Fix: PHP 8.1 deprecated issue
+- Fix: Compatibility with WP v6.4.2
+- Fix: Support decimal value for min and max value
+
+= 1.1.7 (15 Nov 2023) =
+- Fix: Compatibility with WP v6.4
+
 = 1.1.6 (22nd Oct 2023) =
 - Fix: Settings page link from plugin meta links not working
 - Fix: When max limit is reached, alert message showing wrong quantity.
