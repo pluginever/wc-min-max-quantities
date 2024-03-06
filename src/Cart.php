@@ -397,6 +397,8 @@ class Cart {
 	 * @return int
 	 */
 	public static function set_cart_quantity( $product_id ) {
+		check_ajax_referer( 'add-to-cart', 'security' );
+
 		$add_to_cart = filter_input( INPUT_GET, 'wc-ajax' );
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
