@@ -55,7 +55,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'step' => 'any',
+							'step' => '1',
 							'min'  => '0',
 						),
 					),
@@ -67,7 +67,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'step' => 'any',
+							'step' => '1',
 							'min'  => '0',
 						),
 					),
@@ -79,7 +79,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'step' => 'any',
+							'step' => '1',
 							'min'  => '0',
 						),
 					),
@@ -102,7 +102,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'step' => 'any',
+							'step' => '1',
 							'min'  => '0',
 						),
 					),
@@ -114,7 +114,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'step' => 'any',
+							'step' => '1',
 							'min'  => '0',
 						),
 					),

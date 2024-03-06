@@ -60,7 +60,7 @@ class MetaBoxes {
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
-						'step' => 'any',
+						'step' => '1',
 						'min'  => '0',
 					),
 				)
@@ -74,7 +74,7 @@ class MetaBoxes {
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
-						'step' => 'any',
+						'step' => '1',
 						'min'  => '0',
 					),
 				)
@@ -87,7 +87,10 @@ class MetaBoxes {
 					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
 					'desc_tip'    => true,
 					'type'        => 'number',
-					'min'         => '0',
+					'custom_attributes' => array(
+						'step' => '1',
+						'min'  => '0',
+					),
 				)
 			);
 
