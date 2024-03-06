@@ -99,6 +99,17 @@ class MetaBoxes {
 
 			$js = "
 			jQuery( function( $ ) {
+				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_disable', function() {
+					if( $( this ).is(':checked') ){
+						$( '#_wcmmq_enable' ).prop('checked',false);
+						$( this ).closest( 'div' ).find( '._wcmmq_enable_field' ).hide();
+						$( this ).closest( 'div' ).find( '.wcmmq-override-settings' ).hide();
+					} else {
+						$( this ).closest( 'div' ).find( '._wcmmq_enable_field' ).show();
+					}
+				});
+				$( '.wcmmq-product-settings #_wcmmq_disable' ).trigger( 'change' );
+
 				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_enable', function() {
 					var wrapper  = $( this ).closest( 'div' ).find( '.wcmmq-override-settings' );
 					if( $( this ).is(':checked') ){
