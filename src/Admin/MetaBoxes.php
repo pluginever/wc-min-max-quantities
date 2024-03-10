@@ -82,11 +82,11 @@ class MetaBoxes {
 
 			woocommerce_wp_text_input(
 				array(
-					'id'          => '_wcmmq_step',
-					'label'       => __( 'Quantity step', 'wc-min-max-quantities' ),
-					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
-					'desc_tip'    => true,
-					'type'        => 'number',
+					'id'                => '_wcmmq_step',
+					'label'             => __( 'Quantity step', 'wc-min-max-quantities' ),
+					'description'       => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
+					'desc_tip'          => true,
+					'type'              => 'number',
 					'custom_attributes' => array(
 						'step' => '1',
 						'min'  => '0',
@@ -105,10 +105,15 @@ class MetaBoxes {
 				$( '.wcmmq-product-settings' ).on( 'change', '#_wcmmq_disable', function() {
 					if( $( this ).is(':checked') ){
 						$( '#_wcmmq_enable' ).prop('checked',false);
-						$( this ).closest( 'div' ).find( '._wcmmq_enable_field' ).hide();
-						$( this ).closest( 'div' ).find( '.wcmmq-override-settings' ).hide();
+						$( '#_wcmmq_ignore_category_rules' ).prop('checked',false);
+						if( $( '#_wcmmq_allow_combination' ) ){
+							$( '#_wcmmq_allow_combination' ).prop('checked',false);
+						}
+						$( this ).parent().siblings().hide();
+						$( '.wcmmq-product-settings #_wcmmq_enable' ).trigger( 'change' );
 					} else {
-						$( this ).closest( 'div' ).find( '._wcmmq_enable_field' ).show();
+						$( this ).parent().siblings().show();
+						$( '.wcmmq-product-settings #_wcmmq_enable' ).trigger( 'change' );
 					}
 				});
 				$( '.wcmmq-product-settings #_wcmmq_disable' ).trigger( 'change' );
