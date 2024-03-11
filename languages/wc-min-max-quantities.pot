@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Min Max Quantities for WooCommerce 1.1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-04 05:50:24+00:00\n"
+"POT-Creation-Date: 2024-03-10 04:01:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: lib/Lib/Plugin.php:655 src/Admin/Settings.php:197
+#: lib/Lib/Plugin.php:655 src/Admin/Settings.php:217
 msgid "Documentation"
 msgstr ""
 
@@ -48,33 +48,31 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: lib/Lib/Settings.php:96
+#: lib/Lib/Settings.php:97
 msgid "Settings saved."
 msgstr ""
 
-#: lib/Lib/Settings.php:310 lib/Lib/Settings.php:398 lib/Lib/Settings.php:406
-#: lib/Lib/Settings.php:414
+#: lib/Lib/Settings.php:236 lib/Lib/Settings.php:324
 msgid "Recommended"
 msgstr ""
 
-#: lib/Lib/Settings.php:311 lib/Lib/Settings.php:399 lib/Lib/Settings.php:407
-#: lib/Lib/Settings.php:415
+#: lib/Lib/Settings.php:237 lib/Lib/Settings.php:325
 msgid "Install Now"
 msgstr ""
 
-#: lib/Lib/Settings.php:370
+#: lib/Lib/Settings.php:296
 msgid "Need Help?"
 msgstr ""
 
-#: lib/Lib/Settings.php:429
+#: lib/Lib/Settings.php:339
 msgid "Join our Community"
 msgstr ""
 
-#: lib/Lib/Settings.php:433
+#: lib/Lib/Settings.php:343
 msgid "Request a Feature"
 msgstr ""
 
-#: lib/Lib/Settings.php:437
+#: lib/Lib/Settings.php:347
 msgid "Report a Bug"
 msgstr ""
 
@@ -119,7 +117,7 @@ msgid "Global Min/Max rules will be overridden by local settings if checked."
 msgstr ""
 
 #: src/Admin/MetaBoxes.php:58 src/Admin/Settings.php:52
-#: src/Admin/Settings.php:86
+#: src/Admin/Settings.php:98
 msgid "Minimum quantity"
 msgstr ""
 
@@ -129,8 +127,8 @@ msgid ""
 "product. For no restrictions, set 0."
 msgstr ""
 
-#: src/Admin/MetaBoxes.php:72 src/Admin/Settings.php:60
-#: src/Admin/Settings.php:94
+#: src/Admin/MetaBoxes.php:72 src/Admin/Settings.php:64
+#: src/Admin/Settings.php:110
 msgid "Maximum quantity"
 msgstr ""
 
@@ -140,7 +138,7 @@ msgid ""
 "product. For no restrictions, set 0."
 msgstr ""
 
-#: src/Admin/MetaBoxes.php:86 src/Admin/Settings.php:68
+#: src/Admin/MetaBoxes.php:86 src/Admin/Settings.php:76
 msgid "Quantity step"
 msgstr ""
 
@@ -185,105 +183,105 @@ msgid ""
 "set any rule for this."
 msgstr ""
 
-#: src/Admin/Settings.php:61
+#: src/Admin/Settings.php:65
 msgid ""
 "Set maximum quantity for each product. Keep it blank if you don’t want to "
 "set any rule for this."
 msgstr ""
 
-#: src/Admin/Settings.php:69
+#: src/Admin/Settings.php:77
 msgid ""
 "Each time the quantity is changed, it will be increased or decreased by "
 "this value. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
-#: src/Admin/Settings.php:80
+#: src/Admin/Settings.php:92
 msgid "Cart Limits"
 msgstr ""
 
-#: src/Admin/Settings.php:83
+#: src/Admin/Settings.php:95
 msgid ""
 "Set the minimum and maximum limits for the order. Restrictions will be "
 "applied to the order total."
 msgstr ""
 
-#: src/Admin/Settings.php:87
+#: src/Admin/Settings.php:99
 msgid ""
 "Set minimum quantity for the order. Keep it blank if you don’t want to set "
 "any rule for this."
 msgstr ""
 
-#: src/Admin/Settings.php:88 src/Admin/Settings.php:96
+#: src/Admin/Settings.php:100 src/Admin/Settings.php:112
 msgid "This will be calculated by adding the quantity of all products in the cart."
 msgstr ""
 
-#: src/Admin/Settings.php:95
+#: src/Admin/Settings.php:111
 msgid ""
 "Set maximum quantity for the order. Keep it blank if you don’t want to set "
 "any rule for this."
 msgstr ""
 
-#: src/Admin/Settings.php:102
+#: src/Admin/Settings.php:122
 msgid "Minimum total"
 msgstr ""
 
-#: src/Admin/Settings.php:103
+#: src/Admin/Settings.php:123
 msgid ""
 "Set minimum order total. Keep it blank if you don’t want to set any rule "
 "for this."
 msgstr ""
 
-#: src/Admin/Settings.php:104 src/Admin/Settings.php:116
+#: src/Admin/Settings.php:124 src/Admin/Settings.php:136
 msgid ""
 "This will be calculated by adding the total of all products in the cart "
 "before any discounts have been applied."
 msgstr ""
 
-#: src/Admin/Settings.php:114
+#: src/Admin/Settings.php:134
 msgid "Maximum total"
 msgstr ""
 
-#: src/Admin/Settings.php:115
+#: src/Admin/Settings.php:135
 msgid ""
 "Set maximum order amount. Keep it blank if you don’t want to set any rule "
 "for this."
 msgstr ""
 
-#: src/Admin/Settings.php:164
+#: src/Admin/Settings.php:184
 msgid "Set restrictions for each product individually."
 msgstr ""
 
-#: src/Admin/Settings.php:165
+#: src/Admin/Settings.php:185
 msgid "Set restrictions for each product variation."
 msgstr ""
 
-#: src/Admin/Settings.php:166
+#: src/Admin/Settings.php:186
 msgid "Set restrictions for all products from a category."
 msgstr ""
 
-#: src/Admin/Settings.php:167
+#: src/Admin/Settings.php:187
 msgid "Set restrictions based on product categories."
 msgstr ""
 
-#: src/Admin/Settings.php:168
+#: src/Admin/Settings.php:188
 msgid "Set restrictions for the order total."
 msgstr ""
 
-#: src/Admin/Settings.php:169
+#: src/Admin/Settings.php:189
 msgid "Set restrictions for based on the user role."
 msgstr ""
 
-#: src/Admin/Settings.php:170
+#: src/Admin/Settings.php:190
 msgid ""
 "Allow your vendors to set their own minimum and maximum restrictions. "
 "Supports MultiVendorX and WCFM Marketplace."
 msgstr ""
 
-#: src/Admin/Settings.php:175
+#: src/Admin/Settings.php:195
 msgid "Premium Features"
 msgstr ""
 
-#: src/Admin/Settings.php:181
+#: src/Admin/Settings.php:201
 msgid "Get Premium"
 msgstr ""
 
@@ -347,11 +345,11 @@ msgid ""
 "your cart."
 msgstr ""
 
-#: src/Cart.php:482
+#: src/Cart.php:484
 msgid "Available on backorder"
 msgstr ""
 
-#: src/Cart.php:488
+#: src/Cart.php:490
 msgid "Out of stock"
 msgstr ""
 

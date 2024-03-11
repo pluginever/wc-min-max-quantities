@@ -401,6 +401,8 @@ class Cart {
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
 		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 1;
 		if ( empty( $quantity ) ) {
 			return $quantity;

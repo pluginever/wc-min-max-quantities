@@ -224,11 +224,12 @@ class Installer {
 	 */
 	public static function update_110_products() {
 		$migrated = get_option( 'wc_minmax_quantities_migrated_products', array() );
+
 		$products = get_posts(
 			array(
 				'post_type'   => array( 'product', 'product_variation' ),
 				'post_status' => 'any',
-				'exclude'     => wp_parse_id_list( $migrated ),
+				'exclude'     => wp_parse_id_list( $migrated ), // phpcs:disable WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 				'fields'      => 'ids',
 			)
 		);
@@ -309,6 +310,7 @@ class Installer {
 			'_wc_min_max_quantities_override' => '_wcmmq_enable',
 		);
 		foreach ( $post_meta as $old_key => $new_key ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
 			$wpdb->query(
 				$wpdb->prepare(
 					"UPDATE {$wpdb->postmeta} SET meta_key = %s WHERE meta_key = %s",
