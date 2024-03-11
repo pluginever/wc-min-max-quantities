@@ -55,7 +55,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'min'  => '0',
+							'min' => '0',
 						),
 					),
 					// set the maximum quantity.
@@ -66,7 +66,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'min'  => '0',
+							'min' => '0',
 						),
 					),
 					// Quantity step.
@@ -77,7 +77,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'min'  => '0',
+							'min' => '0',
 						),
 					),
 					// end product restrictions section.
@@ -99,7 +99,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'min'  => '0',
+							'min' => '0',
 						),
 					),
 					array(
@@ -110,7 +110,7 @@ class Settings extends Lib\Settings {
 						'default'           => 0,
 						'type'              => 'number',
 						'custom_attributes' => array(
-							'min'  => '0',
+							'min' => '0',
 						),
 					),
 					array(
