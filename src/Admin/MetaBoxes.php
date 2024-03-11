@@ -60,7 +60,6 @@ class MetaBoxes {
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
-						'step' => '1',
 						'min'  => '0',
 					),
 				)
@@ -74,7 +73,6 @@ class MetaBoxes {
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
-						'step' => '1',
 						'min'  => '0',
 					),
 				)
@@ -88,7 +86,6 @@ class MetaBoxes {
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'custom_attributes' => array(
-						'step' => '1',
 						'min'  => '0',
 					),
 				)
