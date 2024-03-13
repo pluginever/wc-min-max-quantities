@@ -229,7 +229,7 @@ class Installer {
 			array(
 				'post_type'   => array( 'product', 'product_variation' ),
 				'post_status' => 'any',
-				'exclude'     => wp_parse_id_list( $migrated ), // phpcs:disable WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
+				'exclude'     => wp_parse_id_list( $migrated ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 				'fields'      => 'ids',
 			)
 		);
