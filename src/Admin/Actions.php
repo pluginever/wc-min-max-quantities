@@ -45,8 +45,9 @@ class Actions {
 			'_wcmmq_disable',
 			'_wcmmq_enable',
 		);
+
 		foreach ( $check_fields as $check_field ) {
-			$value = isset( $_POST[ $check_field ] ) ? true : false;
+			$value = isset( $_POST[ $check_field ] ) ? true : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$product->update_meta_data( $check_field, empty( $value ) ? 'no' : 'yes' );
 		}
 
