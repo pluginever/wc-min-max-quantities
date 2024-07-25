@@ -298,6 +298,10 @@ class Cart {
 		$product_ids = array();
 		$quantities  = array();
 		$line_amount = array();
+
+		// if all the products in the cart is excluded product.
+		$cart_excluded = true;
+
 		foreach ( WC()->cart->get_cart() as $item ) {
 			$product_id = $item['product_id'];
 			if ( ! isset( $quantities[ $product_id ] ) ) {
@@ -315,8 +319,13 @@ class Cart {
 			if ( wcmmq_is_product_excluded( $product_id ) ) {
 				continue;
 			}
-
+			$cart_excluded = false;
 			$product_ids[] = $product_id;
+		}
+
+		// bail if all the items in the cart is excluded.
+		if ( $cart_excluded ) {
+			return;
 		}
 
 		foreach ( $product_ids as $product_id ) {
