@@ -82,4 +82,6 @@ Thumbs.db
 # Build related files
 /assets/js
 /assets/css
+/assets/src
+/assets/images
 vendor
