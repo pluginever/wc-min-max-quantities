@@ -1,7 +1,7 @@
 {
   "name": "wc-min-max-quantities",
   "title": "Min Max Quantities for WooCommerce",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "license": "GPL-3.0+",
   "prettier": "@wordpress/prettier-config",
