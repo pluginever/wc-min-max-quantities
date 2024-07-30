@@ -1,10 +1,10 @@
 ===WC Min Max Quantities - Set Minimum/Maximum Quantity & Price Limits with Step Control for WooCommerce===
 Contributors: pluginever,manikmist09
 Tags: limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
-Requires at least: 3.0.1
+Requires at least: 5.2
 Tested up to: 6.6
-Requires PHP: 5.6
-Stable tag: 1.2.1
+Requires PHP: 7.4
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,10 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+= 1.2.1 (30th Jul 2024) =
+- Fix: WP 6.6 compatibility issue
+- Fix: WC 9.1 compatibility issue
+
 = 1.2.1 (25th Jul 2024) =
 - Enhance: When cart contains only excluded products do not apply cart rules.
 
