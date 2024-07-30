@@ -167,7 +167,7 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
-= 1.2.1 (30th Jul 2024) =
+= 1.2.2 (30th Jul 2024) =
 - Fix: WP 6.6 compatibility issue
 - Fix: WC 9.1 compatibility issue
 

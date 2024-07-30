@@ -2,10 +2,10 @@ module.exports = function ( grunt ) {
 	'use strict';
 
 	// Load all grunt tasks matching the `grunt-*` pattern.
-	require( 'load-grunt-tasks' )( grunt );
+	require('load-grunt-tasks')(grunt);
 
 	// Show elapsed time.
-	require( '@lodder/time-grunt' )( grunt );
+	require('@lodder/time-grunt')(grunt);
 
 	// Project configuration.
 	grunt.initConfig(
@@ -65,11 +65,9 @@ module.exports = function ( grunt ) {
 					options: {
 						domainPath: 'languages',
 						exclude: [ 'packages/*', '.git/*', 'node_modules/*', 'tests/*', 'vendor/*' ],
-						mainFile: '<%= package.name %>.php',
-						potFilename: '<%= package.name %>.pot',
+						mainFile: 'wc-min-max-quantities.php',
+						potFilename: 'wc-min-max-quantities.pot',
 						potHeaders: {
-							'report-msgid-bugs-to': '<%= package.homepage %>',
-							'project-id-version': '<%= package.title %> <%= package.version %>',
 							poedit: true,
 							'x-poedit-keywordslist': true,
 						},
@@ -88,6 +86,6 @@ module.exports = function ( grunt ) {
 		}
 	);
 
-	grunt.registerTask( 'i18n', [ 'addtextdomain', 'checktextdomain', 'makepot' ] );
-	grunt.registerTask( 'build', [ 'i18n' ] );
+	grunt.registerTask('i18n', ['addtextdomain', 'checktextdomain', 'makepot']);
+	grunt.registerTask('build', ['i18n']);
 };
