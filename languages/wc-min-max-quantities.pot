@@ -1,10 +1,11 @@
 # Copyright (C) 2024 PluginEver
-# This file is distributed under the same license as the WC Min Max Quantities package.
+# This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Min Max Quantities for WooCommerce 1.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 15:05:33+00:00\n"
+"Project-Id-Version: WC Min Max Quantities 1.2.3\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/wc-min-max-quantities\n"
+"POT-Creation-Date: 2024-08-25 11:53:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -285,12 +286,12 @@ msgstr ""
 msgid "Get Premium"
 msgstr ""
 
-#: src/Cart.php:251 src/Cart.php:330
+#: src/Cart.php:251 src/Cart.php:339
 #. translators: %1$s: Product name, %2$d: Maximum quantity
 msgid "The maximum allowed quantity for %1$s is %2$s."
 msgstr ""
 
-#: src/Cart.php:259 src/Cart.php:339
+#: src/Cart.php:259 src/Cart.php:348
 #. translators: %1$s: Product name, %2$d: Minimum quantity
 msgid "The minimum required quantity for %1$s is %2$s."
 msgstr ""
@@ -310,46 +311,46 @@ msgstr ""
 msgid "The maximum allowed order total is %s."
 msgstr ""
 
-#: src/Cart.php:346
+#: src/Cart.php:355
 #. translators: %1$s: Product name, %2$d: quantity amount
 msgid ""
 "%1$s must be bought in groups of %2$s. Please increase or decrease the "
 "quantity to continue."
 msgstr ""
 
-#: src/Cart.php:359
+#: src/Cart.php:368
 #. translators: %d: Minimum amount of items in the cart
 msgid ""
 "The minimum required quantity in the cart is %s. Please consider increasing "
 "the quantity in your cart."
 msgstr ""
 
-#: src/Cart.php:368
+#: src/Cart.php:377
 #. translators: %d: Maximum amount of items in the cart
 msgid ""
 "The maximum allowed order quantity is %s. Please reduce the quantity in "
 "your cart."
 msgstr ""
 
-#: src/Cart.php:376
+#: src/Cart.php:385
 #. translators: %d: Minimum amount of items in the cart
 msgid ""
 "The minimum allowed order total value is %s. Please consider increasing the "
 "quantity in your cart."
 msgstr ""
 
-#: src/Cart.php:385
+#: src/Cart.php:394
 #. translators: %d: Maximum amount of items in the cart
 msgid ""
 "The maximum allowed order total value is %s. Please reduce the quantity in "
 "your cart."
 msgstr ""
 
-#: src/Cart.php:482
+#: src/Cart.php:491
 msgid "Available on backorder"
 msgstr ""
 
-#: src/Cart.php:488
+#: src/Cart.php:497
 msgid "Out of stock"
 msgstr ""
 
