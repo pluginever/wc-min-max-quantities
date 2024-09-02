@@ -81,7 +81,7 @@ class Installer {
 							'<strong>' . wc_min_max_quantities()->get_name() . '</strong>',
 							'<strong>' . $version . '</strong>'
 						);
-						wc_min_max_quantities()->add_notice( $notice, 'success' );
+						wc_min_max_quantities()->flash->success( $notice );
 					}
 				}
 			}

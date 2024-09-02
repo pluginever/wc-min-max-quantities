@@ -171,14 +171,18 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 		);
 
 		?>
-		<div class="pev-panel promo-panel">
-			<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
-			<ul>
-				<?php foreach ( $features as $feature ) : ?>
-					<li>- <?php echo esc_html( $feature ); ?></li>
-				<?php endforeach; ?>
-			</ul>
-			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php esc_html_e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
+		<div class="bk-card promo-panel">
+			<div class="bk-card__header">
+				<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
+			</div>
+			<div class="bk-card__body">
+				<ul>
+					<?php foreach ( $features as $feature ) : ?>
+						<li>- <?php echo esc_html( $feature ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+				<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php esc_html_e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
+			</div>
 		</div>
 		<?php
 	}

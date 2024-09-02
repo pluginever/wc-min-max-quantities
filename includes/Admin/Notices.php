@@ -45,7 +45,7 @@ class Notices {
 				'message' => sprintf(
 				/* translators: %1$s: link to the plugin page, %2$s: link to the plugin page */
 					__( '%s is not functional because you are using outdated version of the plugin, please update to the version 1.0.5 or higher.', 'wc-min-max-quantities' ),
-					'<a href="' . esc_url( wc_min_max_quantities()->get_data( 'premium_url' ) ) . '" target="_blank">WC Min Max Quantities Pro</a>'
+					'<a href="' . esc_url( wc_min_max_quantities()->data['premium_url'] ) . '" target="_blank">WC Min Max Quantities Pro</a>'
 				),
 			);
 		}
@@ -61,7 +61,7 @@ class Notices {
 					__( '🚀 Maximize your revenue with %1$sWC Min Max Quantities%2$s and take it to the next level! %3$sUpgrade today%4$s to unlock the full potential and enjoy an exclusive %5$s limited-time discount using promo code FREE2PRO.', 'wc-min-max-quantities' ),
 					'<strong>',
 					'</strong>',
-					'<a href="' . esc_url( wc_min_max_quantities()->get_data( 'premium_url' ) ) . '" target="_blank">',
+					'<a href="' . esc_url( wc_min_max_quantities()->data['premium_url'] ) . '" target="_blank">',
 					'</a>',
 					'<strong>10%</strong>'
 				),

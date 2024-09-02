@@ -50,8 +50,8 @@ class Admin {
 		}
 
 		// Enqueue admin scripts.
-		wc_min_max_quantities()->scripts->enqueue_style( 'bytekit-layout' );
-		wc_min_max_quantities()->scripts->enqueue_style( 'bytekit-components' );
+		wc_min_max_quantities()->scripts->register_style( 'wcmmq-admin', wc_min_max_quantities()->assets_url . 'css/admin.css', array( 'bytekit-layout', 'bytekit-components' ), wc_min_max_quantities()->get_version() );
+		wc_min_max_quantities()->scripts->enqueue_style( 'wcmmq-admin' );
 		wc_min_max_quantities()->scripts->enqueue_script( 'bytekit-admin' );
 		wp_add_inline_style( 'common', ':root{--wp-admin-theme-color:#0073aa;}' );
 	}

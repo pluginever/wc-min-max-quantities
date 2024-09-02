@@ -32,21 +32,14 @@
  * GNU General Public License for more details.
  */
 
-use WooCommerceMinMaxQuantities\Plugin;
-
 defined( 'ABSPATH' ) || exit;
 
 // Autoload classes.
 require_once __DIR__ . '/vendor/autoload.php';
 
-/**
- * Returns the main instance of plugin.
- *
- * @since  1.1.0
- * @return Plugin
- */
-function wc_min_max_quantities() {
-	$data = array(
+// Instantiate the plugin.
+WooCommerceMinMaxQuantities\Plugin::create(
+	array(
 		'file'             => __FILE__,
 		'settings_url'     => admin_url( 'admin.php?page=wc-min-max-quantities' ),
 		'support_url'      => 'https://pluginever.com/support/',
@@ -54,10 +47,5 @@ function wc_min_max_quantities() {
 		'premium_url'      => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
 		'premium_basename' => 'wc-min-max-quantities-pro',
 		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post',
-	);
-
-	return Plugin::create( $data );
-}
-
-// Initialize the plugin.
-wc_min_max_quantities();
+	)
+);
