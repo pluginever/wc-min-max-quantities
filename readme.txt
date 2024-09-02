@@ -41,9 +41,9 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 
 === 💻 Find Out More: ===
 
-* **[See The Live Demo Site](https://demo.pluginever.com/min-max-quantities "See the Live Demo Site")**
-* **[Plugin Documentation](https://pluginever.com/docs/min-max-quantities-for-woocommerce "Plugin Documentation")**
-* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
+* **[See The Live Demo Site](https://demo.pluginever.com/min-max-quantities/ "See the Live Demo Site")**
+* **[Plugin Documentation](https://pluginever.com/docs/wc-min-max-quantities/ "Plugin Documentation")**
+* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support/ "Need Help? Contact Our 24/7 Support")**
 
 === ✨ WC MIN MAX QUANTITIES FEATURES: ===
 

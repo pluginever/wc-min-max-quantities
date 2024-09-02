@@ -3,9 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WC Min Max Quantities 1.2.4\n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/wc-min-max-quantities\n"
-"POT-Creation-Date: 2024-08-27 11:15:37+00:00\n"
+"Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
+"POT-Creation-Date: 2024-09-02 10:42:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,56 +24,63 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: lib/Lib/Plugin.php:309
-msgid "Go Pro"
+#: lib/ByteKit/Admin/Notices.php:129
+msgid "Dismiss this notice"
 msgstr ""
 
-#: lib/Lib/Plugin.php:655 src/Admin/Settings.php:197
-msgid "Documentation"
-msgstr ""
-
-#: lib/Lib/Plugin.php:662
-msgid "Support"
-msgstr ""
-
-#: lib/Lib/Plugin.php:669
-msgid "Review"
-msgstr ""
-
-#: lib/Lib/Plugin.php:675
-msgid "More Plugins"
-msgstr ""
-
-#: lib/Lib/Plugin.php:692
-msgid "Settings"
-msgstr ""
-
-#: lib/Lib/Settings.php:97
+#: lib/ByteKit/Admin/Settings.php:87 lib/Lib/Settings.php:97
 msgid "Settings saved."
 msgstr ""
 
+#: lib/ByteKit/Admin/Settings.php:251 lib/ByteKit/Admin/Settings.php:346
 #: lib/Lib/Settings.php:236 lib/Lib/Settings.php:324
 msgid "Recommended"
 msgstr ""
 
+#: lib/ByteKit/Admin/Settings.php:252 lib/ByteKit/Admin/Settings.php:347
 #: lib/Lib/Settings.php:237 lib/Lib/Settings.php:325
 msgid "Install Now"
 msgstr ""
 
-#: lib/Lib/Settings.php:296
+#: lib/ByteKit/Admin/Settings.php:315 lib/Lib/Settings.php:296
 msgid "Need Help?"
 msgstr ""
 
-#: lib/Lib/Settings.php:339
+#: lib/ByteKit/Admin/Settings.php:361 lib/Lib/Settings.php:339
 msgid "Join our Community"
 msgstr ""
 
-#: lib/Lib/Settings.php:343
+#: lib/ByteKit/Admin/Settings.php:365 lib/Lib/Settings.php:343
 msgid "Request a Feature"
 msgstr ""
 
-#: lib/Lib/Settings.php:347
+#: lib/ByteKit/Admin/Settings.php:369 lib/Lib/Settings.php:347
 msgid "Report a Bug"
+msgstr ""
+
+#: lib/ByteKit/Traits/HasPlugin.php:216 lib/Lib/Plugin.php:655
+#: src/Admin/Settings.php:197
+msgid "Documentation"
+msgstr ""
+
+#: lib/ByteKit/Traits/HasPlugin.php:223 lib/Lib/Plugin.php:662
+msgid "Support"
+msgstr ""
+
+#: lib/ByteKit/Traits/HasPlugin.php:230 lib/Lib/Plugin.php:669
+msgid "Review"
+msgstr ""
+
+#: lib/ByteKit/Traits/HasPlugin.php:255 lib/Lib/Plugin.php:692
+msgid "Settings"
+msgstr ""
+
+#: lib/Lib/Plugin.php:309
+msgid "Go Pro"
+msgstr ""
+
+#: lib/Lib/Plugin.php:675
+msgid "More Plugins"
 msgstr ""
 
 #: src/Admin/Admin.php:65
