@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.1.4
  * @package WooCommerceMinMaxQuantities\Admin
  */
-class Settings extends Lib\Settings {
+class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	/**
 	 * Get settings tabs.
 	 *
@@ -156,7 +156,7 @@ class Settings extends Lib\Settings {
 	 */
 	protected function output_premium_widget() {
 		// bail if premium is active.
-		if ( wc_min_max_quantities()->is_premium_active() ) {
+		if ( wc_min_max_quantities()->is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
 			return;
 		}
 
