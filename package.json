@@ -3,38 +3,36 @@
   "title": "Min Max Quantities for WooCommerce",
   "version": "1.2.4",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
+  "homepage": "https://pluginever.com/",
   "license": "GPL v2 or laterr",
-  "prettier": "@wordpress/prettier-config",
   "scripts": {
-    "start": "wp-scripts start --webpack-src-dir=assets/src",
-    "build": "wp-scripts build --webpack-src-dir=assets/src && grunt build",
-    "analyze-bundles": "cross-env WP_BUNDLE_ANALYZER=1 npm run build",
-    "reformat-files": "prettier --ignore-path .eslintignore --write \"**/*.{js,jsx,json,ts,tsx}\"",
-    "packages-update": "wp-scripts packages-update"
+    "build": "wp-scripts build --webpack-src-dir=.assets && grunt build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start --webpack-src-dir=.assets",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js"
   },
   "devDependencies": {
     "@lodder/time-grunt": "^4.0.0",
-    "@wordpress/scripts": "^26.11.0",
-    "postcss-editor-styles": "^0.3.0",
-    "webpack-remove-empty-scripts": "^1.0.3",
-    "grunt": "^1.5.3",
+    "@wordpress/scripts": "^26.6.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
     "grunt-wp-i18n": "^1.0.3",
     "grunt-wp-readme-to-markdown": "^2.1.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.5.0",
     "load-grunt-tasks": "^5.1.0",
-    "wp-prettier": "^2.6.2"
+    "webpack-remove-empty-scripts": "^1.0.4"
   },
-  "stylelint": {
-    "extends": "@wordpress/stylelint-config",
-    "defaultSeverity": "warning"
-  },
-  "lint-staged": {
-    "*.scss": [
-      "wp-scripts lint-style --fix --custom-syntax postcss-scss"
-    ]
-  },
+  "dependencies": {},
   "browserslist": [
     "> 0.1%",
     "ie 8",
