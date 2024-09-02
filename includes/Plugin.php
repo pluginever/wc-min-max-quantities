@@ -10,7 +10,8 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities
  */
-class Plugin extends Lib\Plugin {
+final class Plugin extends ByteKit\Plugin {
+
 	/**
 	 * Plugin constructor.
 	 *
@@ -47,7 +48,7 @@ class Plugin extends Lib\Plugin {
 	 * @return void
 	 */
 	public function includes() {
-		require_once __DIR__ . '/Functions.php';
+		require_once __DIR__ . '/functions.php';
 	}
 
 	/**
@@ -92,6 +93,7 @@ class Plugin extends Lib\Plugin {
 	public function enable_hpos_support() {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $this->get_file(), true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', $this->get_file(), true );
 		}
 	}
 
@@ -102,12 +104,16 @@ class Plugin extends Lib\Plugin {
 	 * @return void
 	 */
 	public function init() {
-		$this->services->add( Installer::class );
-		$this->services->add( Cart::class );
-		if ( $this->is_request( 'admin' ) ) {
+		// Common classes.
+		$this->set( Installer::class );
+		$this->set( Cart::class );
+
+		// Admin only classes.
+		if ( is_admin() ) {
 			$this->services->add( Admin\Admin::class );
 		}
 
+		// Do action after plugin loaded.
 		do_action( 'wc_min_max_quantities_loaded' );
 	}
 }
