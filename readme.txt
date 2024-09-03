@@ -174,6 +174,9 @@ The cart will maintain the global or product rules if the cart rule is not set.
 - Fix: Few known issues.
 - Update: Update the plugin banner and icon.
 
+= 1.2.4 (28th Aug 2024) =
+- Compatibility: Checked compatibility with latest version of WordPress and WooCommerce.
+
 = 1.2.3 (25th Oct 2024) =
 - Compatibility: Checked compatibility with latest version of WordPress and WooCommerce
 
