@@ -14,7 +14,7 @@ class Notices {
 	/**
 	 * Notices constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_notices' ) );
@@ -23,7 +23,8 @@ class Notices {
 	/**
 	 * Admin notices.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
+	 * @return void
 	 */
 	public function admin_notices() {
 		$installed_time = get_option( 'wc_min_max_quantities_installed' );
