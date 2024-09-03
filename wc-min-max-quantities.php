@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:          WC Min Max Quantities
- * Plugin URI:           https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
+ * Plugin URI:           https://pluginever.com/
  * Description:          The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
  * Version:              1.2.4
  * Author:               PluginEver
@@ -19,7 +19,7 @@
  *
  * @package     WooCommerceMinMaxQuantities
  * @author      pluginever
- * @link        https://pluginever.com/plugins/wc-min-max-quantities/
+ * @link        https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,48 +32,14 @@
  * GNU General Public License for more details.
  */
 
-use WooCommerceMinMaxQuantities\Plugin;
-
 defined( 'ABSPATH' ) || exit;
 
-// Autoload function.
-spl_autoload_register(
-	function ( $class_name ) {
-		$prefix = 'WooCommerceMinMaxQuantities\\';
-		$len    = strlen( $prefix );
-		// Bail out if the class name doesn't start with our prefix.
-		if ( strncmp( $prefix, $class_name, $len ) !== 0 ) {
-			return;
-		}
+// Autoload classes.
+require_once __DIR__ . '/vendor/autoload.php';
 
-		// Remove the prefix from the class name.
-		$relative_class = substr( $class_name, $len );
-		// Replace the namespace separator with the directory separator.
-		$file = str_replace( '\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
-
-		// Look for the file in the src and lib directories.
-		$file_paths = array(
-			__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . $file,
-			__DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $file,
-		);
-
-		foreach ( $file_paths as $file_path ) {
-			if ( file_exists( $file_path ) ) {
-				require_once $file_path;
-				break;
-			}
-		}
-	}
-);
-
-/**
- * Returns the main instance of plugin.
- *
- * @since  1.1.0
- * @return Plugin
- */
-function wc_min_max_quantities() {
-	$data = array(
+// Instantiate the plugin.
+WooCommerceMinMaxQuantities\Plugin::create(
+	array(
 		'file'             => __FILE__,
 		'settings_url'     => admin_url( 'admin.php?page=wc-min-max-quantities' ),
 		'support_url'      => 'https://pluginever.com/support/',
@@ -81,10 +47,5 @@ function wc_min_max_quantities() {
 		'premium_url'      => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
 		'premium_basename' => 'wc-min-max-quantities-pro',
 		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post',
-	);
-
-	return Plugin::create( $data );
-}
-
-// Initialize the plugin.
-wc_min_max_quantities();
+	)
+);

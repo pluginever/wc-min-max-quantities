@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.1.4
  * @package WooCommerceMinMaxQuantities\Admin
  */
-class Settings extends Lib\Settings {
+class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	/**
 	 * Get settings tabs.
 	 *
@@ -156,7 +156,7 @@ class Settings extends Lib\Settings {
 	 */
 	protected function output_premium_widget() {
 		// bail if premium is active.
-		if ( wc_min_max_quantities()->is_premium_active() ) {
+		if ( wc_min_max_quantities()->is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
 			return;
 		}
 
@@ -171,14 +171,18 @@ class Settings extends Lib\Settings {
 		);
 
 		?>
-		<div class="pev-panel promo-panel">
-			<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
-			<ul>
-				<?php foreach ( $features as $feature ) : ?>
-					<li>- <?php echo esc_html( $feature ); ?></li>
-				<?php endforeach; ?>
-			</ul>
-			<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php esc_html_e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
+		<div class="bk-card promo-panel">
+			<div class="bk-card__header">
+				<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
+			</div>
+			<div class="bk-card__body">
+				<ul>
+					<?php foreach ( $features as $feature ) : ?>
+						<li>- <?php echo esc_html( $feature ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+				<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities" target="_blank" class="button"><?php esc_html_e( 'Get Premium', 'wc-min-max-quantities' ); ?></a>
+			</div>
 		</div>
 		<?php
 	}

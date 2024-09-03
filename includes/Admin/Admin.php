@@ -31,10 +31,10 @@ class Admin {
 	 * @since 1.1.4
 	 */
 	public function init() {
-		wc_min_max_quantities()->services->add( Settings::instance() );
-		wc_min_max_quantities()->services->add( MetaBoxes::class );
-		wc_min_max_quantities()->services->add( Actions::class );
-		wc_min_max_quantities()->services->add( Notices::class );
+		wc_min_max_quantities()->set( 'settings', Settings::instance() );
+		wc_min_max_quantities()->set( 'meta_boxes', MetaBoxes::class );
+		wc_min_max_quantities()->set( 'actions', Actions::class );
+		wc_min_max_quantities()->set( 'notices', Notices::class );
 	}
 
 	/**
@@ -45,13 +45,17 @@ class Admin {
 	 * @since 1.1.4
 	 */
 	public function enqueue_scripts( $hook ) {
+		// Enqueue common scripts.
+		wc_min_max_quantities()->scripts->enqueue_style( 'bytekit-components' );
+		wc_min_max_quantities()->scripts->enqueue_script( 'bytekit-admin' );
+
 		if ( ! in_array( $hook, self::get_screen_ids(), true ) ) {
 			return;
 		}
 
 		// Enqueue admin scripts.
-		wc_min_max_quantities()->enqueue_style( 'wcmmq-admin-style', 'css/admin.css' );
-		wp_add_inline_style( 'common', ':root{--wp-admin-theme-color:#0073aa;}' );
+		wc_min_max_quantities()->scripts->register_style( 'wcmmq-admin', wc_min_max_quantities()->assets_url . 'css/admin.css', array( 'bytekit-layout' ), wc_min_max_quantities()->get_version() );
+		wc_min_max_quantities()->scripts->enqueue_style( 'wcmmq-admin' );
 	}
 
 	/**

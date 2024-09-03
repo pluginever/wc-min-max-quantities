@@ -1,6 +1,18 @@
 <?php
 
-defined( 'ABSPATH' ) || exit();
+use WooCommerceMinMaxQuantities\Plugin;
+
+defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
+
+/**
+ * Get the plugin instance.
+ *
+ * @since 1.0.0
+ * @return \WooCommerceMinMaxQuantities\Plugin
+ */
+function wc_min_max_quantities() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+	return Plugin::instance();
+}
 
 /**
  * Check if the product is excluded from min/max quantity.

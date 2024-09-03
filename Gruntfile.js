@@ -15,7 +15,7 @@ module.exports = function ( grunt ) {
 				options: {
 					expand: true,
 					text_domain: 'wc-min-max-quantities',
-					updateDomains: [ 'framework-text-domain' ],
+					updateDomains: [ 'textdomain', 'bytekit-textdomain' ],
 				},
 				plugin: {
 					files: {
@@ -29,6 +29,37 @@ module.exports = function ( grunt ) {
 					},
 				},
 			},
+			checktextdomain: {
+				options: {
+					text_domain: 'wc-min-max-quantities',
+					keywords: [
+						'__:1,2d',
+						'_e:1,2d',
+						'_x:1,2c,3d',
+						'esc_html__:1,2d',
+						'esc_html_e:1,2d',
+						'esc_html_x:1,2c,3d',
+						'esc_attr__:1,2d',
+						'esc_attr_e:1,2d',
+						'esc_attr_x:1,2c,3d',
+						'_ex:1,2c,3d',
+						'_n:1,2,4d',
+						'_nx:1,2,4c,5d',
+						'_n_noop:1,2,3d',
+						'_nx_noop:1,2,3c,4d',
+					],
+				},
+				files: {
+					src: [
+						'**/*.php',
+						'!packages/**',
+						'!node_modules/**',
+						'!tests/**',
+						'!vendor/**',
+					],
+					expand: true,
+				},
+			},
 			makepot: {
 				target: {
 					options: {
@@ -37,6 +68,7 @@ module.exports = function ( grunt ) {
 						mainFile: 'wc-min-max-quantities.php',
 						potFilename: 'wc-min-max-quantities.pot',
 						potHeaders: {
+							'report-msgid-bugs-to': 'https://pluginever.com/support/',
 							poedit: true,
 							'x-poedit-keywordslist': true,
 						},
@@ -44,17 +76,10 @@ module.exports = function ( grunt ) {
 						updateTimestamp: false,
 					},
 				},
-			},
-			wp_readme_to_markdown: {
-				your_target: {
-					files: {
-						'readme.md': 'readme.txt',
-					},
-				},
-			},
+			}
 		}
 	);
 
-	grunt.registerTask('i18n', ['addtextdomain', 'makepot']);
+	grunt.registerTask('i18n', ['addtextdomain', 'checktextdomain', 'makepot']);
 	grunt.registerTask('build', ['i18n']);
 };
