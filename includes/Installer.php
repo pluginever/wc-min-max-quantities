@@ -104,6 +104,7 @@ class Installer {
 		add_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		set_transient( 'wc_min_max_quantities_activated', true, 30 );
 		set_transient( 'wc_min_max_quantities_activation_redirect', true, 30 );
+		add_option( 'wc_min_max_quantities_installed', wp_date( 'U' ) );
 	}
 
 	/**

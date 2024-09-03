@@ -41,14 +41,14 @@ module.exports = [
 		plugins: [
 			...defaultConfig.plugins,
 			// Copy images to the build folder.
-			// new CopyWebpackPlugin({
-			// 	patterns: [
-			// 		{
-			// 			from: path.resolve(__dirname, '.assets/images'),
-			// 			to: path.resolve(__dirname, 'assets/images'),
-			// 		}
-			// 	]
-			// }),
+			new CopyWebpackPlugin({
+				patterns: [
+					{
+						from: path.resolve(__dirname, '.assets/images'),
+						to: path.resolve(__dirname, 'assets/images'),
+					}
+				]
+			}),
 
 			new RemoveEmptyScriptsPlugin({
 				stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
