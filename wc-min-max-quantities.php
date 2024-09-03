@@ -18,7 +18,7 @@
  * WC tested up to:      9.2
  *
  * @package     WooCommerceMinMaxQuantities
- * @author      pluginever
+ * @author      PluginEver
  * @link        https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/
  *
  * This program is free software; you can redistribute it and/or modify
