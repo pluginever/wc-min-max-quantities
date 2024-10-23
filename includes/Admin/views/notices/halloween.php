@@ -2,8 +2,8 @@
 /**
  * Admin notice: Halloween offer.
  *
- * @package WooCommerceDonationManager
- * @since 1.1.2
+ * @package WooCommerceMinMaxQuantities
+ * @since 2.0.2
  * @return void
  */
 
@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 ?>
 <div class="notice-body">
 	<div class="notice-icon">
-		<img src="<?php echo esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-icon.svg' ) ); ?>" alt="Min Max Quantities Halloween Offer">
+		<img src="<?php echo esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-icon.svg' ) ); ?>" alt="WooCommerce Min-Max Quantities Halloween Offer">
 	</div>
 	<div class="notice-content">
 		<h3>
