@@ -110,7 +110,8 @@ final class Plugin extends ByteKit\Plugin {
 
 		// Admin only classes.
 		if ( is_admin() ) {
-			$this->services->add( Admin\Admin::class );
+			$this->set( Admin\Admin::class );
+			$this->set( Admin\Notices::class );
 		}
 
 		// Do action after plugin loaded.

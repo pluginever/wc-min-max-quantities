@@ -30,6 +30,20 @@ class Notices {
 		$installed_time = get_option( 'wc_min_max_quantities_installed' );
 		$current_time   = wp_date( 'U' );
 
+		// Halloween's promotion notice.
+		$halloween_time = date_i18n( strtotime( '2024-11-11 00:00:00' ) );
+		if ( $current_time < $halloween_time ) {
+			wc_min_max_quantities()->notices->add(
+				array(
+					'message'     => __DIR__ . '/views/notices/halloween.php',
+					'dismissible' => false,
+					'notice_id'   => 'wcdm_halloween_promotion',
+					'style'       => 'border-left-color: #8500ff;background-image: url("' . esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-banner.svg' ) ) . '");',
+					'class'       => 'notice-halloween',
+				)
+			);
+		}
+
 		if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
 			wc_min_max_quantities()->notices->add(
 				array(
