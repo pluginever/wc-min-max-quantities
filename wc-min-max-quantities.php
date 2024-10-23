@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:          WC Min Max Quantities
- * Plugin URI:           https://pluginever.com/
+ * Plugin URI:           https://pluginever.com/woocommerce-min-max-quantities-pro/
  * Description:          The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
  * Version:              2.0.1
  * Requires at least:    5.0
