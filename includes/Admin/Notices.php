@@ -37,7 +37,7 @@ class Notices {
 				array(
 					'message'     => __DIR__ . '/views/notices/halloween.php',
 					'dismissible' => false,
-					'notice_id'   => 'wcdm_halloween_promotion',
+					'notice_id'   => 'wcmmq_halloween_promotion',
 					'style'       => 'border-left-color: #8500ff;background-image: url("' . esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-banner.svg' ) ) . '");',
 					'class'       => 'notice-halloween',
 				)
