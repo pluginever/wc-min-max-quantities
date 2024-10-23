@@ -1,5 +1,19 @@
+@import "halloween.scss";
 .bk-card {
 	&.promo-panel{
-		background: #0a7aff;
+		background: #2563eb;
+		.bk-card__header {
+			color: #fff;
+			background: #1048c4;
+		}
+	}
+	&__body {
+		li{
+			color: #fff;
+		}
+		.button{
+			width: 100%;
+			text-align: center;
+		}
 	}
 }

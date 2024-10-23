@@ -44,18 +44,9 @@ class Admin {
 	 *
 	 * @since 1.1.4
 	 */
-	public function enqueue_scripts( $hook ) {
-		// Enqueue common scripts.
-		wc_min_max_quantities()->scripts->enqueue_style( 'bytekit-components' );
-		wc_min_max_quantities()->scripts->enqueue_script( 'bytekit-admin' );
-
-		if ( ! in_array( $hook, self::get_screen_ids(), true ) ) {
-			return;
-		}
-
-		// Enqueue admin scripts.
-		wc_min_max_quantities()->scripts->register_style( 'wcmmq-admin', wc_min_max_quantities()->assets_url . 'css/admin.css', array( 'bytekit-layout' ), wc_min_max_quantities()->get_version() );
-		wc_min_max_quantities()->scripts->enqueue_style( 'wcmmq-admin' );
+	public function enqueue_scripts( $hook ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+		// Enqueue scripts.
+		wc_min_max_quantities()->scripts->enqueue_style( 'wcmmq-admin', 'css/admin.css', array( 'bytekit-layout', 'bytekit-components' ) );
 	}
 
 	/**
