@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 	</div>
 	<div class="notice-content">
 		<h3>
-			<?php esc_html_e( 'Black Friday & Cyber Monday: Flat 40% OFF All Premium Plugins!', 'wc-min-max-quantities' ); ?>
+			<?php esc_html_e( 'Black Friday & Cyber Monday: Flat 40% OFF on All Premium Plugins!', 'wc-min-max-quantities' ); ?>
 		</h3>
 		<p>
 			<?php
@@ -47,5 +47,5 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 			<span class="btn-text"><?php esc_html_e( 'DISMISS', 'wc-min-max-quantities' ); ?></span>
 		</a>
 	</div>
-	<span class="black-friday-footer-text"><?php esc_html_e( 'Valid until November 10, 2024', 'wc-min-max-quantities' ); ?></span>
+	<span class="black-friday-footer-text"><?php esc_html_e( 'Valid until November 07, 2024', 'wc-min-max-quantities' ); ?></span>
 </div>
