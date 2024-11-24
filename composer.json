@@ -4,6 +4,7 @@
   "homepage": "https://pluginever.com/",
   "type": "wordpress-plugin",
   "license": "GPL v2 or later",
+  "prefer-stable": true,
   "require": {
     "php": ">=7.4"
   },
@@ -28,7 +29,6 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
   "repositories": [
     {
       "type": "github",
