@@ -59,8 +59,25 @@ final class Plugin extends ByteKit\Plugin {
 	 */
 	public function init_hooks() {
 		register_activation_hook( $this->get_file(), array( Installer::class, 'install' ) );
+		add_filter( 'plugin_action_links_' . $this->get_basename(), array( $this, 'plugin_action_links' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'enable_hpos_support' ) );
 		add_action( 'woocommerce_loaded', array( $this, 'init' ), 0 );
+	}
+
+	/**
+	 * Add plugin action links.
+	 *
+	 * @param array $links The plugin action links.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public function plugin_action_links( $links ) {
+		if ( ! $this->is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+			$links['go_pro'] = '<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" target="_blank" style="color: #39b54a; font-weight: bold;">' . esc_html__( 'Go Pro', 'wc-min-max-quantities' ) . '</a>';
+		}
+
+		return $links;
 	}
 
 	/**
