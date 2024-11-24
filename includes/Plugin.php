@@ -59,29 +59,8 @@ final class Plugin extends ByteKit\Plugin {
 	 */
 	public function init_hooks() {
 		register_activation_hook( $this->get_file(), array( Installer::class, 'install' ) );
-		add_action( 'admin_notices', array( $this, 'dependencies_notices' ) );
 		add_action( 'before_woocommerce_init', array( $this, 'enable_hpos_support' ) );
 		add_action( 'woocommerce_loaded', array( $this, 'init' ), 0 );
-	}
-
-	/**
-	 * Missing dependencies notice.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function dependencies_notices() {
-		if ( $this->is_plugin_active( 'woocommerce' ) ) {
-			return;
-		}
-		$notice = sprintf(
-		/* translators: 1: plugin name 2: WooCommerce */
-			__( '%1$s requires %2$s to be installed and active.', 'wc-min-max-quantities' ),
-			'<strong>' . esc_html( $this->get_name() ) . '</strong>',
-			'<strong>' . esc_html__( 'WooCommerce', 'wc-min-max-quantities' ) . '</strong>'
-		);
-
-		echo '<div class="notice notice-error"><p>' . wp_kses_post( $notice ) . '</p></div>';
 	}
 
 	/**
