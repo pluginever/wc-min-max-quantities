@@ -47,5 +47,5 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 			<span class="btn-text"><?php esc_html_e( 'DISMISS', 'wc-min-max-quantities' ); ?></span>
 		</a>
 	</div>
-	<span class="black-friday-footer-text"><?php esc_html_e( 'Valid until November 7, 2024', 'wc-min-max-quantities' ); ?></span>
+	<span class="black-friday-footer-text"><?php esc_html_e( 'Valid until November 10, 2024', 'wc-min-max-quantities' ); ?></span>
 </div>
