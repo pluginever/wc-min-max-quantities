@@ -8,12 +8,11 @@ module.exports = [
         ...defaultConfig,
         entry: {
             ...defaultConfig.entry(),
-            'css/admin': './.assets/css/admin.scss',
+            'css/admin': './assets/css/admin.scss',
         },
         output: {
             ...defaultConfig.output,
             filename: '[name].js',
-            path: __dirname + '/assets/',
         },
 		module: {
 			rules: [
@@ -44,8 +43,8 @@ module.exports = [
 			new CopyWebpackPlugin({
 				patterns: [
 					{
-						from: path.resolve(__dirname, '.assets/images'),
-						to: path.resolve(__dirname, 'assets/images'),
+						from: path.resolve(__dirname, 'assets/images'),
+						to: path.resolve(__dirname, 'build/images'),
 					}
 				]
 			}),
