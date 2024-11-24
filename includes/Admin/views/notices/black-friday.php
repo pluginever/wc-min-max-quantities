@@ -3,7 +3,7 @@
  * Admin notice: Black Friday offer.
  *
  * @package WooCommerceMinMaxQuantities
- * @since 2.0.2
+ * @since 2.0.3
  * @return void
  */
 

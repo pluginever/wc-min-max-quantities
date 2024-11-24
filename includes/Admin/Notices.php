@@ -38,7 +38,7 @@ class Notices {
 					'message'     => __DIR__ . '/views/notices/black-friday.php',
 					'notice_id'   => 'wcmmq_black_friday_promotion_24',
 					'class'       => 'notice-black-friday',
-					'style'       => 'border-left-color: #2271b1;',
+					'style'       => 'border-left-color:#2271b1;',
 					'dismissible' => false,
 				)
 			);
