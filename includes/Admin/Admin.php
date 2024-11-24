@@ -34,7 +34,7 @@ class Admin {
 		wc_min_max_quantities()->set( 'settings', Settings::instance() );
 		wc_min_max_quantities()->set( 'meta_boxes', MetaBoxes::class );
 		wc_min_max_quantities()->set( 'actions', Actions::class );
-		// TODO: Need to include Notices class: wc_min_max_quantities()->set( 'notices', Notices::class );.
+		wc_min_max_quantities()->set( 'notices', Notices::class );
 	}
 
 	/**

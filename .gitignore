@@ -1,4 +1,4 @@
-# IDEs
+# IDE related files
 /.settings
 /.project
 /.idea
@@ -11,45 +11,46 @@ tmtags
 Session.vim
 *.swp
 
-# Mac OSX
+# Mac OSX specific files
 .DS_Store
 ._*
 .Spotlight-V100
 .Trashes
 
-# Windows
+# Windows specific files
 Thumbs.db
 Desktop.ini
 
-# NPM packages used by Grunt.js
+# NPM and Grunt.js related files
 node_modules
 bower_components
 .idea
 *.log
 npm-debug.log
 
-# Composer
+# Composer related files
 /vendor
+/vendor-prefixed
 
-# PHPUnit
+# PHPUnit related files
 /tmp
 
-# Misc
+# Miscellaneous files
 *.zip
 .cache
 .sass-cache*
 .husky
 *.lock
 
-# Tests
+# Tests related files
 codeception.yml
 .env
 /tests/_data/dump.sql
 .env.testing
 
-# Framework
-lib
+# Language files
+languages/*.
 
-# Build
-assets
-
+# Build related files
+/bin/strauss.phar
+build

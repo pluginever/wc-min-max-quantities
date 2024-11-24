@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities
  */
-final class Plugin extends ByteKit\Plugin {
+final class Plugin extends \WooCommerceMinMaxQuantities\ByteKit\Plugin {
 
 	/**
 	 * Plugin constructor.
@@ -69,7 +69,7 @@ final class Plugin extends ByteKit\Plugin {
 	 *
 	 * @param array $links The plugin action links.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.3
 	 * @return array
 	 */
 	public function plugin_action_links( $links ) {
@@ -107,7 +107,6 @@ final class Plugin extends ByteKit\Plugin {
 		// Admin only classes.
 		if ( is_admin() ) {
 			$this->set( Admin\Admin::class );
-			$this->set( Admin\Notices::class );
 		}
 
 		// Do action after plugin loaded.
