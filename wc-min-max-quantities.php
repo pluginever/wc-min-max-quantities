@@ -12,10 +12,10 @@
  * Domain Path:          /languages
  * License:              GPL v2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
- * Requires Plugins:     woocommerce
- * Tested up to:         6.6
+ * Tested up to:         6.7
  * WC requires at least: 3.0.0
  * WC tested up to:      9.3
+ * Requires Plugins:     woocommerce
  *
  * @package     WooCommerceMinMaxQuantities
  * @author      PluginEver

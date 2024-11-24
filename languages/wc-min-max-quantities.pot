@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WC Min Max Quantities 2.0.2\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-10-23 11:54:38+00:00\n"
+"POT-Creation-Date: 2024-11-24 05:06:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -376,35 +376,35 @@ msgstr ""
 msgid "WooCommerce"
 msgstr ""
 
-#: lib/ByteKit/Admin/Notices.php:129
+#: lib/ByteKit/Admin/Notices.php:130
 msgid "Dismiss this notice"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:87
+#: lib/ByteKit/Admin/Settings.php:90
 msgid "Settings saved."
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:251 lib/ByteKit/Admin/Settings.php:346
+#: lib/ByteKit/Admin/Settings.php:254 lib/ByteKit/Admin/Settings.php:349
 msgid "Recommended"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:252 lib/ByteKit/Admin/Settings.php:347
+#: lib/ByteKit/Admin/Settings.php:255 lib/ByteKit/Admin/Settings.php:350
 msgid "Install Now"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:315
+#: lib/ByteKit/Admin/Settings.php:318
 msgid "Need Help?"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:361
+#: lib/ByteKit/Admin/Settings.php:364
 msgid "Join our Community"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:365
+#: lib/ByteKit/Admin/Settings.php:368
 msgid "Request a Feature"
 msgstr ""
 
-#: lib/ByteKit/Admin/Settings.php:369
+#: lib/ByteKit/Admin/Settings.php:372
 msgid "Report a Bug"
 msgstr ""
 
