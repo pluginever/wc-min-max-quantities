@@ -4,7 +4,7 @@ Tags: limit quantity, limit cost, woocommerce limits, range to buy, min and max 
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,9 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
+= 2.0.4 (26th Jan 2025) =
+- Fix: Downgrade the required PHP version to 7.4
+
 = 2.0.3 (24th Nov 2024) =
 - New: Update the plugin framework.
 - Enhance: Improved the optimized autoload class for better performance.
