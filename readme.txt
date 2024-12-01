@@ -167,7 +167,10 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
-= 2.0.4 (26th Jan 2025) =
+= 2.0.5 (1st Dec 2024) =
+- Fix: Framework Small Issue
+
+= 2.0.4 (26th Jan 2024) =
 - Fix: Downgrade the required PHP version to 7.4
 
 = 2.0.3 (24th Nov 2024) =
