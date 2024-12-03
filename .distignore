@@ -15,6 +15,7 @@ README.md
 
 # Composer related files
 composer.*
+/vendor/byteever/
 
 # NPM related files
 npm-debug.log
