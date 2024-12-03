@@ -10,7 +10,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Set the required minimum and maximum order quantities or amounts for individual products, categories, or globally with quantity step control.
 
-
 == Description ==
 
 = Ultimate solution for purchase control and quantity limits =
@@ -167,8 +166,8 @@ The cart will maintain the global or product rules if the cart rule is not set.
 2. Global settings
 
 == Changelog ==
-= 2.0.5 (1st Dec 2024) =
-- Fix: Framework Small Issue
+= 2.0.5 (3rd Dec 2024) =
+- Fix: Remove the unused code
 
 = 2.0.4 (26th Jan 2024) =
 - Fix: Downgrade the required PHP version to 7.4
