@@ -36,12 +36,6 @@ phpunit.xml.dist
 tests
 *.yml
 
-# Test related files
-phpunit.xml
-phpunit.xml.dist
-tests
-*.yml
-
 # PHPCS related files
 phpcs.xml
 phpcs.xml.dist
