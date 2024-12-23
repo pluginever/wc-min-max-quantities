@@ -14,7 +14,7 @@
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
  * Tested up to:         6.7
  * WC requires at least: 3.0.0
- * WC tested up to:      9.4
+ * WC tested up to:      9.5
  * Requires Plugins:     woocommerce
  *
  * @package     WooCommerceMinMaxQuantities
@@ -32,7 +32,7 @@
  * GNU General Public License for more details.
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 // Autoload classes.
 require_once __DIR__ . '/vendor/autoload.php';
