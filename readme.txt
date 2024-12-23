@@ -4,7 +4,7 @@ Tags: limit quantity, limit cost, woocommerce limits, range to buy, min and max 
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,7 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 * **Disable Category Rule (PRO):** You can ignore the minimum/maximum rules for any specific category.
 * **Enable Multiple Vendor Support (PRO):** Your vendors can implement their own rules if you’re using WCFM, Multivendor X, Dokan, etc. multivendor plugins for your WooCommerce store.
 * **Set Limits for Each Product Variation (PRO):** Minimum/maximum quantity, minimum/maximum amount, and quantity steps for product variations and categories are all supported.
+* **Set Limits for Grouped Products:** Set minimum/maximum quantity, minimum/maximum amount, and quantity steps for grouped products.
 * **Allow Combination for Variable Products (PRO):** Instead of using each variation rule, you can use combined rules.
 * **Translations (PRO):** Set customizable text/message for any restriction error that will appear if It doesn’t meet the Min Max requirements/conditions.
 
@@ -155,6 +156,15 @@ From the product page, go to general settings and select ignore min/max rules, a
 
 = Can I set the min-max rule for the variable products? =
 Yes, you can set the min/max quantity rule for the parent product. You can choose any number of variations within the given condition in the parent product.
+
+= Can I set the min-max rule for the variable product variations? =
+Yes, you can set the min/max quantity rule for the variable product variations. You can choose any number of variations within the given condition in the parent product.
+
+= Can I set the min-max rule for the grouped products? =
+Yes, you can set the min/max quantity rule for the grouped products. You can choose any number of products within the given condition in the grouped product.
+
+= Can I set the min-max rule for the product category? =
+Yes, you can set the min/max quantity rule for the product category. You can choose any number of products within the given condition in the product category.
 
 = Does the cart have a separate min/max rule? =
 Yes, you need to set a separate cart rule from the settings. Whatever min/max rule you set, whether global or per product, the cart rule will eventually get priority.
