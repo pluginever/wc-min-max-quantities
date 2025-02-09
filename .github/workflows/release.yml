@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: |
           composer install
-          composer update --no-dev
+          composer install --no-dev
           npm install && npm run build
 
       - name: Release
