@@ -27,7 +27,7 @@ class Notices {
 	 * @return void
 	 */
 	public function admin_notices() {
-		$installed_time = get_option( 'wc_min_max_quantities_installed' );
+		$installed_time = absint( get_option( 'wc_min_max_quantities_installed' ) );
 		$current_time   = wp_date( 'U' );
 
 		// Promotional notice for Black Friday.
