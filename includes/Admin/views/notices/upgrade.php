@@ -35,8 +35,12 @@ defined( 'ABSPATH' ) || exit;
 		<span class="dashicons dashicons-cart"></span>
 		<?php esc_attr_e( 'Upgrade now', 'wc-min-max-quantities' ); ?>
 	</a>
-	<a href="#" data-snooze="<?php echo esc_attr( MONTH_IN_SECONDS ); ?>">
+	<a href="#" data-snooze>
 		<span class="dashicons dashicons-clock"></span>
-		<?php esc_attr_e( 'Maybe later', 'wc-min-max-quantities' ); ?>
+		<?php esc_html_e( 'Maybe later', 'wc-min-max-quantities' ); ?>
+	</a>
+	<a href="#" data-dismiss>
+		<span class="dashicons dashicons-no-alt"></span>
+		<?php esc_html_e( 'Close permanently', 'wc-min-max-quantities' ); ?>
 	</a>
 </div>

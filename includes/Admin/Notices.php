@@ -28,35 +28,24 @@ class Notices {
 	 */
 	public function admin_notices() {
 		$installed_time = absint( get_option( 'wc_min_max_quantities_installed' ) );
-		$current_time   = wp_date( 'U' );
-
-		// Promotional notice for Black Friday.
-		$offer_time = date_i18n( strtotime( '2024-12-07 00:00:00' ) );
-		if ( $current_time < $offer_time ) {
-			wc_min_max_quantities()->notices->add(
-				array(
-					'message'     => __DIR__ . '/views/notices/black-friday.php',
-					'notice_id'   => 'wcmmq_black_friday_promotion_24',
-					'class'       => 'notice-black-friday',
-					'style'       => 'border-left-color:#2271b1;',
-					'dismissible' => false,
-				)
-			);
-		}
-
-		if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
-			wc_min_max_quantities()->notices->add(
-				array(
-					'message'     => __DIR__ . '/views/notices/upgrade.php',
-					'notice_id'   => 'wcmmq_upgrade',
-					'style'       => 'border-left-color:#0542fa;',
-					'dismissible' => false,
-				)
-			);
-		}
+		$current_time   = absint( wp_date( 'U' ) );
 
 		// Show after 5 days.
-		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
+		if ( $installed_time && $current_time < ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
+
+			if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
+				// Upgrade notice.
+				wc_min_max_quantities()->notices->add(
+					array(
+						'message'     => __DIR__ . '/views/notices/upgrade.php',
+						'notice_id'   => 'wcmmq_upgrade',
+						'style'       => 'border-left-color:#0542fa;',
+						'dismissible' => false,
+					)
+				);
+			}
+
+			// Review notice.
 			wc_min_max_quantities()->notices->add(
 				array(
 					'message'     => __DIR__ . '/views/notices/review.php',
