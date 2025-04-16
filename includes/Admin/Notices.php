@@ -31,7 +31,7 @@ class Notices {
 		$current_time   = absint( wp_date( 'U' ) );
 
 		// Show after 5 days.
-		if ( $installed_time && $current_time < ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
+		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 
 			if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
 				// Upgrade notice.
