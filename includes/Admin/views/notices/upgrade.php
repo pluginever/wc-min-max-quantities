@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 					// translators: %1$s: WC Min Max Quantities Pro link, %2$s: Coupon code.
 					__( 'Enjoy a <strong>10%% discount</strong> on %1$s! Use coupon code %2$s at checkout to grab the deal. Don’t miss out — this offer won’t last forever!', 'wc-min-max-quantities' ),
 					'<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin&utm_medium=notice&utm_campaign=flash-sale" target="_blank"><strong>WC Min Max Quantities Pro</strong></a>',
-					'<strong>PRO10</strong>'
+					'<strong>FLASH10</strong>'
 				)
 			);
 			?>
