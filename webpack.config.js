@@ -40,12 +40,12 @@ module.exports = [
 		},
 		plugins: [
 			...defaultConfig.plugins,
-			// Copy images to the build folder.
+			// Copy images to the assets folder.
 			new CopyWebpackPlugin({
 				patterns: [
 					{
 						from: path.resolve(__dirname, 'resources/images'),
-						to: path.resolve(__dirname, 'build/images'),
+						to: path.resolve(__dirname, 'assets/images'),
 					}
 				]
 			}),
