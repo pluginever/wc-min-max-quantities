@@ -36,7 +36,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 // Autoload classes.
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/vendor-prefixed/autoload.php';
+require_once __DIR__ . '/libraries/autoload.php';
 
 // Instantiate the plugin.
 WooCommerceMinMaxQuantities\Plugin::create(

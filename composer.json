@@ -12,7 +12,7 @@
     "byteever/bytekit-settings": "^1.0"
   },
   "require-dev": {
-    "byteever/byteever-sniffs": "dev-master"
+    "byteever/byteever-sniffs": "^1.1"
   },
   "autoload": {
     "psr-4": {
@@ -43,14 +43,14 @@
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v",
     "strauss": [
-      "test -d ./bin || mkdir bin",
-      "test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar",
-      "@php bin/strauss.phar"
+      "test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/download/0.21.1/strauss.phar",
+      "@php bin/strauss.phar",
+      "@composer dump-autoload"
     ]
   },
   "extra": {
     "strauss": {
-      "target_directory": "vendor-prefixed",
+      "target_directory": "libraries",
       "classmap_prefix": "WooCommerceMinMaxQuantities__",
       "namespace_prefix": "WooCommerceMinMaxQuantities",
       "delete_vendor_packages": true,
