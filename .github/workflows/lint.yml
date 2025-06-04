@@ -1,9 +1,11 @@
 name: Linting
 
 on:
-  push:
+  pull_request:
     branches:
       - master
+      - feature/*
+      - release/*
   workflow_dispatch:
     inputs:
       ref:
@@ -21,7 +23,7 @@ jobs:
       - name: Setup PHP version
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: 8.2
           coverage: none
           tools: composer, cs2pr
 
