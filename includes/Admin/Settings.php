@@ -190,7 +190,7 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	/**
 	 * Get promo plugins.
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.3
 	 * @return array
 	 */
 	public function get_promo_plugins() {
