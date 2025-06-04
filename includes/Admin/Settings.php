@@ -188,6 +188,29 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	}
 
 	/**
+	 * Get promo plugins.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public function get_promo_plugins() {
+		$promo_plugins = parent::get_promo_plugins();
+
+		$other_plugins = array(
+			array(
+				'name'        => 'WC Key Manager',
+				'slug'        => 'wc-key-manager',
+				'description' => 'Manage WooCommerce product keys and licenses with ease.',
+				'link'        => 'https://wordpress.org/plugins/wc-key-manager/',
+				'badge'       => esc_html__( 'Recommended', 'wc-min-max-quantities' ),
+				'button'      => esc_html__( 'Install Now', 'wc-min-max-quantities' ),
+			),
+		);
+
+		return array_merge( $promo_plugins, $other_plugins );
+	}
+
+	/**
 	 * Output tabs.
 	 *
 	 * @param array $tabs Tabs.
