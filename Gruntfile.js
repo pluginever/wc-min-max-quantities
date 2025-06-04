@@ -2,10 +2,10 @@ module.exports = function ( grunt ) {
 	'use strict';
 
 	// Load all grunt tasks matching the `grunt-*` pattern.
-	require('load-grunt-tasks')(grunt);
+	require( 'load-grunt-tasks' )( grunt );
 
 	// Show elapsed time.
-	require('@lodder/time-grunt')(grunt);
+	require( '@lodder/time-grunt' )( grunt );
 
 	// Project configuration.
 	grunt.initConfig(
@@ -22,6 +22,7 @@ module.exports = function ( grunt ) {
 						src: [
 							'*.php',
 							'**/*.php',
+							'vendor/namespaced/**/*.php',
 							'!node_modules/**',
 							'!tests/**',
 							'!vendor/**',
@@ -76,10 +77,10 @@ module.exports = function ( grunt ) {
 						updateTimestamp: false,
 					},
 				},
-			}
+			},
 		}
 	);
 
-	grunt.registerTask('i18n', ['addtextdomain', 'checktextdomain', 'makepot']);
-	grunt.registerTask('build', ['i18n']);
+	grunt.registerTask( 'i18n', [ 'addtextdomain', 'checktextdomain', 'makepot' ] );
+	grunt.registerTask( 'build', [ 'i18n' ] );
 };

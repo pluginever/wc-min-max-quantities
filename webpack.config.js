@@ -8,12 +8,13 @@ module.exports = [
         ...defaultConfig,
         entry: {
             ...defaultConfig.entry(),
-            'css/admin': './assets/css/admin.scss',
+            'css/admin': './resources/css/admin.scss',
         },
         output: {
             ...defaultConfig.output,
             filename: '[name].js',
-        },
+			path: __dirname + '/assets/',
+		},
 		module: {
 			rules: [
 				...defaultConfig.module.rules,
@@ -39,16 +40,15 @@ module.exports = [
 		},
 		plugins: [
 			...defaultConfig.plugins,
-			// Copy images to the build folder.
+			// Copy images to the assets folder.
 			new CopyWebpackPlugin({
 				patterns: [
 					{
-						from: path.resolve(__dirname, 'assets/images'),
-						to: path.resolve(__dirname, 'build/images'),
+						from: path.resolve(__dirname, 'resources/images'),
+						to: path.resolve(__dirname, 'assets/images'),
 					}
 				]
 			}),
-
 			new RemoveEmptyScriptsPlugin({
 				stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
 				remove: /\.(js)$/,
