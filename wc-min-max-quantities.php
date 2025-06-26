@@ -32,9 +32,10 @@
  * GNU General Public License for more details.
  */
 
-defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+// Don't call the file directly.
+defined( 'ABSPATH' ) || exit;
 
-// Autoload classes.
+// Require the autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/libraries/autoload.php';
 
