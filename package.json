@@ -4,7 +4,7 @@
   "version": "2.1.5",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
   "homepage": "https://pluginever.com/",
-  "license": "GPL v2 or laterr",
+  "license": "GPL v2 or later",
   "scripts": {
     "build": "wp-scripts build --webpack-src-dir=resources && grunt build",
     "check-engines": "wp-scripts check-engines",
