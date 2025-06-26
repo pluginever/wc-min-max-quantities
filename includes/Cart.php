@@ -146,6 +146,19 @@ class Cart {
 				}
 
 				$html = str_replace( '<a ', '<a data-quantity="' . esc_attr( $quantity_attribute ) . '" ', $html );
+
+				// Add quantity param to URL for non-AJAX fallback.
+				if ( 'yes' !== get_option( 'woocommerce_enable_ajax_add_to_cart' ) ) {
+					$html = preg_replace_callback(
+						'/href="([^"]+)"/',
+						function ( $matches ) use ( $quantity_attribute ) {
+							$url = $matches[1];
+							$url = add_query_arg( 'quantity', $quantity_attribute, $url );
+							return 'href="' . esc_url( $url ) . '"';
+						},
+						$html
+					);
+				}
 			}
 		}
 
