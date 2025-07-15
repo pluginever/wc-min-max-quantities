@@ -84,7 +84,7 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 
 = Minimum requirements =
 
-* WordPress 5.0 or greater
+* WordPress 5.2 or greater
 * WooCommerce 3.0 or greater
 * PHP version 7.4 or greater
 * MySQL version 5.6 or greater
