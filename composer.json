@@ -1,7 +1,7 @@
 {
   "name": "pluginever/wc-min-max-quantities",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
-  "homepage": "https://pluginever.com/",
+  "homepage": "https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/",
   "type": "wordpress-plugin",
   "license": "GPL v2 or later",
   "prefer-stable": true,

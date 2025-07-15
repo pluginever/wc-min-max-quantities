@@ -1,9 +1,9 @@
 {
   "name": "wc-min-max-quantities",
   "title": "Min Max Quantities for WooCommerce",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.",
-  "homepage": "https://pluginever.com/",
+  "homepage": "https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/",
   "license": "GPL v2 or later",
   "scripts": {
     "build": "wp-scripts build --webpack-src-dir=resources && grunt build",
@@ -21,8 +21,8 @@
     "test:unit": "wp-scripts test-unit-js"
   },
   "devDependencies": {
+    "@wordpress/scripts": "^30.19.0",
     "@lodder/time-grunt": "^4.0.0",
-    "@wordpress/scripts": "^30.14.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "grunt": "^1.6.1",
