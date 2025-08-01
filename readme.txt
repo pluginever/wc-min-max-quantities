@@ -177,7 +177,7 @@ The cart will maintain the global or product rules if the cart rule is not set.
 
 == Changelog ==
 = 2.1.7 (1st Aug 2025) =
-- Fix: Fixed few known issues.
+- Fix: Fixed known bug.
 
 = 2.1.6 (15th July 2025) =
 - Compatibility: Checked compatibility with the WooCommerce v10.0.
