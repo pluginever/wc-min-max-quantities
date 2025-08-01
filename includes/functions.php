@@ -40,10 +40,12 @@ function wcmmq_is_product_excluded( $product_id, $variation_id = 0 ) {
  */
 function wcmmq_get_product_limits( $product_id, $variation_id = 0 ) {
 	$limits = wp_cache_get( "wcmmq-{$product_id}-{$variation_id}", 'wc-min-max-quantities' );
+
 	if ( false === $limits ) {
 		$product = wc_get_product( $product_id );
 		// If the product lever overrides are enabled, use them otherwise use the global settings.
-		$override = 'yes' === get_post_meta( $product->get_id(), '_wcmmq_enable', true );
+		$override = ( $product instanceof WC_Product ) && 'yes' === get_post_meta( $product->get_id(), '_wcmmq_enable', true );
+
 		if ( $override ) {
 			$limits = array(
 				'step'    => (int) get_post_meta( $product->get_id(), '_wcmmq_step', true ),
