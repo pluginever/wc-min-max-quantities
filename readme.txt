@@ -178,7 +178,7 @@ Yes, you can set the min/max quantity rule for the product category. You can cho
 2. Global settings
 
 == Changelog ==
-= 2.2.0 (22th Oct 2025) =
+= 2.2.0 (22nd Oct 2025) =
 - Enhance: Update the plugin notices.
 
 = 2.1.9 (24th Sep 2025) =
