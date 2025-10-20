@@ -2,7 +2,7 @@
 /**
  * Admin notice: Halloween offer.
  *
- * @since 1.2.8
+ * @since 2.2.0
  * @return void
  *
  * @package WooCommerceMinMaxQuantities\Admin\Notices
