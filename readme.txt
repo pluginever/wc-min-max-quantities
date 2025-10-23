@@ -174,12 +174,24 @@ The cart will maintain the global or product rules if the cart rule is not set.
 Yes, you can set the min/max quantity rule for the product category. You can choose any number of products within the given condition in the product category.
 
 == Screenshots ==
-1. Per product settings
-2. Global settings
+1. General > Product Limits
+2. General > Cart Limits
+3. General > Discount Coupon Settings (Pro)
+4. Min Max Conditional Message Customization (Pro)
+5. Roles Limit (Pro)
+6. Roles > Shop Manager > Product Limits (Pro)
+7. Roles > Shop Manager > Cart Limits (Pro)
+8. Translation > Cart Limit Notices (Pro)
+9. Translation > Product Limit Notices (Pro)
+10. Translation > Category Limit Notice (Pro)
+11. Product Data > General
+12. Product > Categories (Pro)
 
 == Changelog ==
-= 2.2.0 (22nd Oct 2025) =
+= 2.2.0 (23rd Oct 2025) =
 - Enhance: Update the plugin notices.
+- Compatibility: Checked compatibility with the WooCommerce v10.3 and WordPress v6.8.
+- New: Added plugin screenshots with mentioning the pro features.
 
 = 2.1.9 (24th Sep 2025) =
 - Compatibility: Checked compatibility with the WooCommerce v10.2 and WordPress v6.8.
