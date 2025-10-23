@@ -14,7 +14,7 @@
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
  * Tested up to:         6.8
  * WC requires at least: 3.0.0
- * WC tested up to:      10.2
+ * WC tested up to:      10.3
  * Requires Plugins:     woocommerce
  *
  * @package WooCommerceMinMaxQuantities
