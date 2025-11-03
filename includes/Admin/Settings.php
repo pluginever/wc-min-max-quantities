@@ -2,8 +2,6 @@
 
 namespace WooCommerceMinMaxQuantities\Admin;
 
-use WooCommerceMinMaxQuantities\Lib;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
