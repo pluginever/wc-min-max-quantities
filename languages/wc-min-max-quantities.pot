@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Min Max Quantities 2.2.0\n"
+"Project-Id-Version: Min Max Quantities 2.2.1\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-10-23 11:24:03+00:00\n"
+"POT-Creation-Date: 2025-11-03 10:37:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Min Max Quantities Settings"
 msgstr ""
 
-#: includes/Admin/Admin.php:61
+#. Plugin Name of the plugin/theme
 msgid "Min Max Quantities"
 msgstr ""
 
@@ -64,8 +64,8 @@ msgstr ""
 msgid "Global Min/Max rules will be overridden by local settings if checked."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:58 includes/Admin/Settings.php:52
-#: includes/Admin/Settings.php:86
+#: includes/Admin/MetaBoxes.php:58 includes/Admin/Settings.php:50
+#: includes/Admin/Settings.php:84
 msgid "Minimum quantity"
 msgstr ""
 
@@ -75,8 +75,8 @@ msgid ""
 "product. For no restrictions, set 0."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:72 includes/Admin/Settings.php:60
-#: includes/Admin/Settings.php:94
+#: includes/Admin/MetaBoxes.php:72 includes/Admin/Settings.php:58
+#: includes/Admin/Settings.php:92
 msgid "Maximum quantity"
 msgstr ""
 
@@ -86,7 +86,7 @@ msgid ""
 "product. For no restrictions, set 0."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:86 includes/Admin/Settings.php:68
+#: includes/Admin/MetaBoxes.php:86 includes/Admin/Settings.php:66
 msgid "Quantity step"
 msgstr ""
 
@@ -96,141 +96,141 @@ msgid ""
 "changed for this product."
 msgstr ""
 
-#: includes/Admin/Settings.php:24
+#: includes/Admin/Settings.php:22
 msgid "General"
 msgstr ""
 
-#: includes/Admin/Settings.php:45
+#: includes/Admin/Settings.php:43
 msgid "Product Limits"
 msgstr ""
 
-#: includes/Admin/Settings.php:48
+#: includes/Admin/Settings.php:46
 msgid ""
 "Set the minimum and maximum limits for products. Restrictions will be "
 "applied to every product individually."
 msgstr ""
 
-#: includes/Admin/Settings.php:53
+#: includes/Admin/Settings.php:51
 msgid ""
 "Set minimum quantity for each product. Keep it blank if you don’t want to "
 "set any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:61
+#: includes/Admin/Settings.php:59
 msgid ""
 "Set maximum quantity for each product. Keep it blank if you don’t want to "
 "set any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:69
+#: includes/Admin/Settings.php:67
 msgid ""
 "Each time the quantity is changed, it will be increased or decreased by "
 "this value. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:80
+#: includes/Admin/Settings.php:78
 msgid "Cart Limits"
 msgstr ""
 
-#: includes/Admin/Settings.php:83
+#: includes/Admin/Settings.php:81
 msgid ""
 "Set the minimum and maximum limits for the order. Restrictions will be "
 "applied to the order total."
 msgstr ""
 
-#: includes/Admin/Settings.php:87
+#: includes/Admin/Settings.php:85
 msgid ""
 "Set minimum quantity for the order. Keep it blank if you don’t want to set "
 "any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:88 includes/Admin/Settings.php:96
+#: includes/Admin/Settings.php:86 includes/Admin/Settings.php:94
 msgid "This will be calculated by adding the quantity of all products in the cart."
 msgstr ""
 
-#: includes/Admin/Settings.php:95
+#: includes/Admin/Settings.php:93
 msgid ""
 "Set maximum quantity for the order. Keep it blank if you don’t want to set "
 "any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:102
+#: includes/Admin/Settings.php:100
 msgid "Minimum total"
 msgstr ""
 
-#: includes/Admin/Settings.php:103
+#: includes/Admin/Settings.php:101
 msgid ""
 "Set minimum order total. Keep it blank if you don’t want to set any rule "
 "for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:104 includes/Admin/Settings.php:116
+#: includes/Admin/Settings.php:102 includes/Admin/Settings.php:114
 msgid ""
 "This will be calculated by adding the total of all products in the cart "
 "before any discounts have been applied."
 msgstr ""
 
-#: includes/Admin/Settings.php:114
+#: includes/Admin/Settings.php:112
 msgid "Maximum total"
 msgstr ""
 
-#: includes/Admin/Settings.php:115
+#: includes/Admin/Settings.php:113
 msgid ""
 "Set maximum order amount. Keep it blank if you don’t want to set any rule "
 "for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:164
+#: includes/Admin/Settings.php:162
 msgid "Set restrictions for each product individually."
 msgstr ""
 
-#: includes/Admin/Settings.php:165
+#: includes/Admin/Settings.php:163
 msgid "Set restrictions for each product variation."
 msgstr ""
 
-#: includes/Admin/Settings.php:166
+#: includes/Admin/Settings.php:164
 msgid "Set restrictions for all products from a category."
 msgstr ""
 
-#: includes/Admin/Settings.php:167
+#: includes/Admin/Settings.php:165
 msgid "Set restrictions based on product categories."
 msgstr ""
 
-#: includes/Admin/Settings.php:168
+#: includes/Admin/Settings.php:166
 msgid "Set restrictions for the order total."
 msgstr ""
 
-#: includes/Admin/Settings.php:169
+#: includes/Admin/Settings.php:167
 msgid "Set restrictions for based on the user role."
 msgstr ""
 
-#: includes/Admin/Settings.php:170
+#: includes/Admin/Settings.php:168
 msgid ""
 "Allow your vendors to set their own minimum and maximum restrictions. "
 "Supports MultiVendorX and WCFM Marketplace."
 msgstr ""
 
-#: includes/Admin/Settings.php:176
+#: includes/Admin/Settings.php:174
 msgid "Premium Features"
 msgstr ""
 
-#: includes/Admin/Settings.php:184
+#: includes/Admin/Settings.php:182
 msgid "Get Premium"
 msgstr ""
 
-#: includes/Admin/Settings.php:205
+#: includes/Admin/Settings.php:203
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:254
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:349
 msgid "Recommended"
 msgstr ""
 
-#: includes/Admin/Settings.php:206
+#: includes/Admin/Settings.php:204
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:255
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:350
 msgid "Install Now"
 msgstr ""
 
-#: includes/Admin/Settings.php:224
+#: includes/Admin/Settings.php:222
 #: libraries/byteever/bytekit-plugin/src/Traits/HasPlugin.php:216
 msgid "Documentation"
 msgstr ""
@@ -271,7 +271,7 @@ msgid "Enjoying Min Max Quantities?"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:24
-#. translators: %1$s: WC Min Max Quantities Pro link, %2$s: Coupon code.
+#. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
 msgid ""
 "We hope you had a wonderful experience using %1$s. Please take a moment to "
 "show us your support by leaving a 5-star review on <a href=\"%2$s\" "
@@ -296,7 +296,7 @@ msgid "Flash Sale Alert!"
 msgstr ""
 
 #: includes/Admin/views/notices/upgrade.php:24
-#. translators: %1$s: WC Min Max Quantities Pro link, %2$s: Coupon code.
+#. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
 msgid ""
 "Enjoy a <strong>10%% discount</strong> on %1$s! Use coupon code %2$s at "
 "checkout to grab the deal. Don’t miss out — this offer won’t last forever!"
@@ -421,10 +421,6 @@ msgstr ""
 
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:372
 msgid "Report a Bug"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "WC Min Max Quantities"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

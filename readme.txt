@@ -1,34 +1,33 @@
-===WC Min Max Quantities - Set Minimum/Maximum Quantity & Price Limits with Step Control for WooCommerce===
+=== Min Max Quantities - Set Minimum/Maximum Quantity & Price Limits with Step Control for WooCommerce ===
 Contributors: pluginever,manikmist09
-Tags: limit quantity, limit cost, woocommerce limits, range to buy, min and max to purchase, product limits to buy, products min, products max, set min and max, woocommerce min and max, quantity limits for products, quantity limits for product variations, quantity limits for products in cart, cost limits for products in cart, minimum product quantity, maximum product quantity, product quantity, product quantity category, quantity order, minimum, maximum, quantity, minimum purchase, maximum purchase, max quantity, cart maximum, max purchase, cart max, order limit, products purchase limit, limit products purchase, min max products purchase limit, min and max quantity for woocommerce
+Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Set the required minimum and maximum order quantities or amounts for individual products, categories, or globally with quantity step control.
+Set minimum and maximum order quantities or amounts for individual products, categories, or globally, with quantity-step control for WooCommerce stores.
 
 == Description ==
 
-= Ultimate solution for purchase control and quantity limits =
+= A Complete Solution for Purchase Control and Quantity Limits =
 
-**[WC Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)** is the most powerful quantity, price, and step control manager plugin created for WooCommerce store owners. You can set both minimum and maximum purchase limits for individual products or categories or globally to prevent overselling and underselling your products.
+**[Min Max Quantities](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=product-page-wordpress.org&utm_medium=product-page-wordpress.org&utm_campaign=product-page-wordpress.org)** is a feature-rich quantity, price, and step control manager plugin for WooCommerce store owners. Set both minimum and maximum purchase limits for individual products, categories, or globally to prevent overselling and underselling your products.
 
-Set minimum and maximum limits for the product quantity itself, order quantities, or total cart amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify rules that will only apply to the cart. These amazing features of WC Min Max Quantities will allow you to restrict customers from purchasing items if the product quantity and/or price conditions are not met.
+Set minimum and maximum limits for the product quantity itself, order quantities, or total cart amounts in WooCommerce. You can set quantity and price thresholds for both simple and variable products. You can also specify rules that will only apply to the cart. These amazing features of Min Max Quantities will allow you to restrict customers from purchasing items if the product quantity and/or price conditions are not met.
 
-=== ✨ This plugin is ideal for store owners who want to: ===
+=== ✨ This Plugin is ideal for Store Owners Who Want to: ===
 
 * Control their inventory stock efficiently
 * Lower their inventory cost
 * Maximize their profit margin
 * Avoid the shortage of inventory stock
-* Keep their products in stock always
+* Keep their products in stock consistently
 * Reach more potential customers
 
+Min Max Quantities for WooCommerce is a widely used plugin across various use cases. To ensure a smooth, efficient purchase process, it provides complete control over your product quantities for each product and variation, aligned with your business requirements.
 
-WC Min Max Quantities is a versatile and powerful plugin when it comes to use cases. For ensuring a smooth and efficient purchase process, WC Min Max Quantities provides you with complete control over your product quantities for each product and variation to align with your business requirements.
-
-=== ✨ With WC Min Max Quantities, you can: ===
+=== ✨ With Min Max Quantities, you can: ===
 
 * Set minimum and maximum purchase quantities for WooCommerce products
 * Enforce quantity limits to prevent customers from purchasing insufficient or excessive quantities
@@ -36,13 +35,9 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 * Streamlined purchase process by setting quantity limits across your entire store or for specific products
 * Enhance the overall shopping experience for your customers
 
-=== 💻 Find Out More: ===
+[**💻 Live Demo Site**](https://demo.pluginever.com/min-max-quantities/ "Live Demo Site") | [**📄 Plugin Documentation**](https://pluginever.com/docs/wc-min-max-quantities/ "Plugin Documentation") | [**🛒 Upgrade to PRO**](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=product-page-wordpress.org&utm_medium=product-page-wordpress.org&utm_campaign=product-page-wordpress.org)
 
-* **[See The Live Demo Site](https://demo.pluginever.com/min-max-quantities/ "See the Live Demo Site")**
-* **[Plugin Documentation](https://pluginever.com/docs/wc-min-max-quantities/ "Plugin Documentation")**
-* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support/ "Need Help? Contact Our 24/7 Support")**
-
-=== ✨ WC MIN MAX QUANTITIES FEATURES: ===
+=== ✨ MIN MAX QUANTITIES FEATURES: ===
 
 * **Minimum Product Quantity:** Products cannot be purchased if the quantity is less than the minimum quantity limit.
 * **Maximum Product Quantity:** Products cannot be purchased if the quantity is greater than the maximum quantity limit.
@@ -63,20 +58,21 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 * **Create Rules for Specific Products or Globally:** You have the ability to set rules per product or for the entire store.
 * **Ignore Minimum/Maximum Rule:** You can ignore the minimum/maximum rules for any specific product
 * **Disable Category Rule (PRO):** You can ignore the minimum/maximum rules for any specific category.
-* **Enable Multiple Vendor Support (PRO):** Your vendors can implement their own rules if you’re using WCFM, Multivendor X, Dokan, etc. multivendor plugins for your WooCommerce store.
+* **Enable Multiple Vendor Support (PRO):** Your vendors can implement their own rules if you’re using WCFM, and MultivendorX multivendor plugins for your WooCommerce store.
 * **Set Limits for Each Product Variation (PRO):** Minimum/maximum quantity, minimum/maximum amount, and quantity steps for product variations and categories are all supported.
 * **Set Limits for Grouped Products:** Set minimum/maximum quantity, minimum/maximum amount, and quantity steps for grouped products.
 * **Allow Combination for Variable Products (PRO):** Instead of using each variation rule, you can use combined rules.
-* **Translations (PRO):** Set customizable text/message for any restriction error that will appear if It doesn’t meet the Min Max requirements/conditions.
+* **Minimum Total after Discount (PRO)**: Set a minimum total price for the order after discount applied.
+* **Custom Error Messages (PRO):** Set customizable text/message for any restriction error that will appear if It doesn’t meet the Min Max requirements/conditions.
 
-> ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/)
+> ➡️ [Get The PRO Version.](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=product-page-wordpress.org&utm_medium=product-page-wordpress.org&utm_campaign=product-page-wordpress.org)
 
-=== 💢 Supercharge Your WooCommerce Store With Our Other Plugins: ===
+=== 💢 Enhance Your WooCommerce Store With Our Other Plugins: ===
 
-* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
-* **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
-* **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
-* **[WooCommerce Variation Swatches](https://wordpress.org/plugins/wc-variation-swatches "WooCommerce Variation Swatches")**
+* **[Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "Serial Numbers")**
+* **[Product Category Slider for WooCommerce](https://wordpress.org/plugins/woo-category-slider-by-pluginever/ "Product Category Slider for WooCommerce")**
+* **[Product Category Showcase for WooCommerce](https://wordpress.org/plugins/wc-category-showcase/ "Product Category Showcase for WooCommerce")**
+* **[Product Variation Swatches for WooCommerce](https://wordpress.org/plugins/wc-variation-swatches/ "Product Variation Swatches for WooCommerce")**
 
 == Installation ==
 
@@ -90,18 +86,24 @@ WC Min Max Quantities is a versatile and powerful plugin when it comes to use ca
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Minx Max Quantities for WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
+Automatic installation is the easiest option as WordPress handles the file transfers itself. To install Min Max Quantities for WooCommerce:
 
-In the search field type "Min Max Quantities for WooCommerce" and click Search Plugins. Once you have found the plugin you can view details about it such as plugin version, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
+1. Log in to your WordPress dashboard
+2. Navigate to the Plugins menu and click "Add New"
+3. In the search field, type "Min Max Quantities for WooCommerce"
+4. Click Search Plugins
+5. Find the plugin in the results
+6. Click "Install Now"
+7. Activate the plugin through the 'Plugins' screen
 
 = Manual installation =
 
-1. Upload the plugin files to the `/wp-content/plugins/wc-mix-max-quantities` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress.
+1. Upload the plugin files to the `/wp-content/plugins/wc-min-max-quantities` directory, or install through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
 
 = Updating =
 
-Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+Automatic updates should work smoothly. As always, ensure you back up your site before updating.
 
 == Frequently Asked Questions ==
 
@@ -132,9 +134,10 @@ With the Min Max Quantities Plugin, you have the flexibility to set quantity lim
 = Which min/max rule takes priority over the other? =
 There are multiple levels of min/max rules that you can assign to your products. The rules have a hierarchy to prioritize one rule over the other. Find below the priority of min/max rules from high to low:
 
-⏫ Product variation. [Premium]
-⏫ Product.
-⏫ Category. [Premium]
+⏫ Role-Based [Premium]
+⏫ Product variation [Premium]
+⏫ Product
+⏫ Category [Premium]
 ⏫ Global
 
 = How can I suggest a new feature? =
@@ -164,14 +167,38 @@ Yes, you can set the min/max quantity rule for the grouped products. You can cho
 = Can I set the min-max rule for the product category? =
 Yes, you can set the min/max quantity rule for the product category. You can choose any number of products within the given condition in the product category.
 
-= Does the cart have a separate min/max rule? =
-Yes, you need to set a separate cart rule from the settings. Whatever min/max rule you set, whether global or per product, the cart rule will eventually get priority.
+= Does the cart have separate min/max rules? =
+Yes, you can set separate cart-level rules from the settings. Whatever min/max rule you set, whether global or per product, the cart rule will eventually get priority.
 
 = What if I do not set the cart rule? =
 The cart will maintain the global or product rules if the cart rule is not set.
 
-= Can I set the min-max rule for the product category? =
-Yes, you can set the min/max quantity rule for the product category. You can choose any number of products within the given condition in the product category.
+= Can I set different rules for different user roles? =
+Yes, the PRO version includes role-based rules. You can set different quantity and amount limits for wholesale customers, retail customers, or any custom user role.
+
+= Is the plugin compatible with multivendor plugins? =
+Yes, the PRO version is compatible with popular multivendor plugins, including WCFM and MultivendorX. Vendors can set their own product limits.
+
+= Does the plugin work with other WooCommerce extensions? =
+Yes, Min Max Quantities is designed to work seamlessly with most WooCommerce extensions. If you encounter compatibility issues, please contact our support team.
+
+= What happens when a customer violates the quantity rules? =
+Customers see clear error messages explaining which requirements aren't met. They cannot proceed to checkout until they adjust their cart to comply with your rules.
+
+= Can I set min-max rules for product categories? =
+Yes, you can set the min/max quantity rules for the product categories. You can choose any number of products within the given condition in the product categories.
+
+= Can I set quantity steps for products? =
+Yes, you can define quantity increments. Customers can only purchase in multiples of your specified step value, ideal for products sold in sets or bulk quantities.
+
+= Will the plugin slow down my store? =
+No, Min Max Quantities is optimized for performance. It only performs validation checks when customers add items to their cart or proceed to checkout.
+
+= Can I use the plugin on multiple sites? =
+Yes, you can use the free version on unlimited sites. The PRO version license terms depend on your purchased plan.
+
+= How do I get support? =
+For support, visit our [support page](https://pluginever.com/support/) or use the WordPress.org support forum.
 
 == Screenshots ==
 1. General > Product Limits
@@ -183,11 +210,15 @@ Yes, you can set the min/max quantity rule for the product category. You can cho
 7. Roles > Shop Manager > Cart Limits (Pro)
 8. Translation > Cart Limit Notices (Pro)
 9. Translation > Product Limit Notices (Pro)
-10. Translation > Category Limit Notice (Pro)
+10. Translation > Category Limit Notices (Pro)
 11. Product Data > General
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.1 (3rd Nov 2025) =
+* Fix: Updated plugin naming to comply with WordPress.org trademark guidelines.
+* Enhance: Improved readme content clarity and removed promotional language per guidelines.
+
 = 2.2.0 (23rd Oct 2025) =
 - Enhance: Update the plugin notices.
 - Compatibility: Checked compatibility with the WooCommerce v10.3 and WordPress v6.8.
