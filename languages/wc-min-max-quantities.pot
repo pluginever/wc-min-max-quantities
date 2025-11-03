@@ -2,7 +2,7 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Min Max Quantities 2.2.0\n"
+"Project-Id-Version: Min Max Quantities 2.2.0\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
 "POT-Creation-Date: 2025-11-03 06:55:12+00:00\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Min Max Quantities Settings"
 msgstr ""
 
-#: includes/Admin/Admin.php:61
+#. Plugin Name of the plugin/theme
 msgid "Min Max Quantities"
 msgstr ""
 
@@ -271,7 +271,7 @@ msgid "Enjoying Min Max Quantities?"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:24
-#. translators: %1$s: WC Min Max Quantities Pro link, %2$s: Coupon code.
+#. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
 msgid ""
 "We hope you had a wonderful experience using %1$s. Please take a moment to "
 "show us your support by leaving a 5-star review on <a href=\"%2$s\" "
@@ -296,7 +296,7 @@ msgid "Flash Sale Alert!"
 msgstr ""
 
 #: includes/Admin/views/notices/upgrade.php:24
-#. translators: %1$s: WC Min Max Quantities Pro link, %2$s: Coupon code.
+#. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
 msgid ""
 "Enjoy a <strong>10%% discount</strong> on %1$s! Use coupon code %2$s at "
 "checkout to grab the deal. Don’t miss out — this offer won’t last forever!"
@@ -421,10 +421,6 @@ msgstr ""
 
 #: libraries/byteever/bytekit-settings/src/Admin/Settings.php:372
 msgid "Report a Bug"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "WC Min Max Quantities"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

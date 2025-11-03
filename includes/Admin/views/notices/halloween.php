@@ -15,7 +15,7 @@ $plugin_url = defined( 'WCMMQ_PRO_VERSION' ) ? trailingslashit( wc_min_max_quant
 ?>
 <div class="notice-body">
 	<div class="notice-icon">
-		<img src="<?php echo esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-icon.svg' ) ); ?>" alt="WC Min Max Quantities Halloween Offer">
+		<img src="<?php echo esc_url( wc_min_max_quantities()->get_assets_url( 'images/halloween-icon.svg' ) ); ?>" alt="Min Max Quantities Halloween Offer">
 	</div>
 	<div class="notice-content">
 		<h3>
