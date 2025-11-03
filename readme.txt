@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,8 +25,7 @@ Set minimum and maximum limits for the product quantity itself, order quantities
 * Keep their products in stock consistently
 * Reach more potential customers
 
-
-Min Max Quantities is a versatile plugin across various use cases. To ensure a smooth, efficient purchase process, it provides complete control over your product quantities for each product and variation, aligned with your business requirements.
+Min Max Quantities for WooCommerce is a widely used plugin across various use cases. To ensure a smooth, efficient purchase process, it provides complete control over your product quantities for each product and variation, aligned with your business requirements.
 
 === ✨ With Min Max Quantities, you can: ===
 
@@ -36,11 +35,7 @@ Min Max Quantities is a versatile plugin across various use cases. To ensure a s
 * Streamlined purchase process by setting quantity limits across your entire store or for specific products
 * Enhance the overall shopping experience for your customers
 
-=== 💻 Discover More: ===
-
-* **[Live Demo Site](https://demo.pluginever.com/min-max-quantities/ "Live Demo Site")**
-* **[Plugin Documentation](https://pluginever.com/docs/wc-min-max-quantities/ "Plugin Documentation")**
-* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support/ "Need Help? Contact Our 24/7 Support")**
+[**💻 Live Demo Site**](https://demo.pluginever.com/min-max-quantities/ "Live Demo Site") | [**📄 Plugin Documentation**](https://pluginever.com/docs/wc-min-max-quantities/ "Plugin Documentation") | [**🛒 Upgrade to PRO**](https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=product-page-wordpress.org&utm_medium=product-page-wordpress.org&utm_campaign=product-page-wordpress.org)
 
 === ✨ MIN MAX QUANTITIES FEATURES: ===
 
@@ -220,6 +215,10 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.1 (3rd Nov 2025) =
+* Fix: Updated plugin naming to comply with WordPress.org trademark guidelines.
+* Enhance: Improved readme content clarity and removed promotional language per guidelines.
+
 = 2.2.0 (23rd Oct 2025) =
 - Enhance: Update the plugin notices.
 - Compatibility: Checked compatibility with the WooCommerce v10.3 and WordPress v6.8.
