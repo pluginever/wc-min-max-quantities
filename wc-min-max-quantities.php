@@ -48,6 +48,6 @@ WooCommerceMinMaxQuantities\Plugin::create(
 		'docs_url'         => 'https://pluginever.com/docs/min-max-quantities-for-woocommerce/',
 		'premium_url'      => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
 		'premium_basename' => 'wc-min-max-quantities-pro',
-		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/?filter=5#new-post',
+		'review_url'       => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post',
 	)
 );
