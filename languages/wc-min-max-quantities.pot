@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Min Max Quantities 2.2.1\n"
+"Project-Id-Version: Min Max Quantities 2.2.2\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-11-03 10:37:35+00:00\n"
+"POT-Creation-Date: 2025-11-24 10:09:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -235,35 +235,27 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: includes/Admin/views/notices/halloween.php:22
-msgid "Limited Time Offer! PluginEver Halloween Sale: 30% OFF!!"
+#: includes/Admin/views/notices/black-friday.php:19
+msgid "Black Friday Mega Sale! Get Flat 40% OFF on Min Max Quantities Pro !!"
 msgstr ""
 
-#: includes/Admin/views/notices/halloween.php:29
-#. translators: 1.Offer Percentage, 2. Coupon Code.
+#: includes/Admin/views/notices/black-friday.php:26
+#. translators: 1. Offer Percentage, 2. Coupon Code.
 msgid ""
-"Spectacular Halloween Deal! Get %1$s on all premium plugins with code %2$s. "
-"Don't miss out — this offer vanishes soon! 👻"
+"Unlock premium features at an unbeatable price this Black Friday! Enjoy "
+"%1$s on Min Max Quantities Pro with code %2$s. Hurry, this deal ends soon!"
 msgstr ""
 
-#: includes/Admin/views/notices/halloween.php:42
-msgid "Claim your discount!!"
+#: includes/Admin/views/notices/black-friday.php:38
+msgid "Claim your discount !!"
 msgstr ""
 
-#: includes/Admin/views/notices/halloween.php:46
+#: includes/Admin/views/notices/black-friday.php:42
 msgid "Remind me later"
 msgstr ""
 
-#: includes/Admin/views/notices/halloween.php:50
+#: includes/Admin/views/notices/black-friday.php:46
 msgid "Never show this again!"
-msgstr ""
-
-#: includes/Admin/views/notices/halloween.php:54
-msgid "DISMISS"
-msgstr ""
-
-#: includes/Admin/views/notices/halloween.php:57
-msgid "Valid until November 8, 2025"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:18

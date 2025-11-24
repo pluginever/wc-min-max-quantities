@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.8
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,10 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.2 (24th Nov 2025) =
+* Enhance: Improved the plugin notices.
+* Fix: Fixed few known issues.
+
 = 2.2.1 (3rd Nov 2025) =
 * Fix: Updated plugin naming to comply with WordPress.org trademark guidelines.
 * Enhance: Improved readme content clarity and removed promotional language per guidelines.
