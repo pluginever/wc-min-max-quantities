@@ -196,7 +196,7 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 
 		$other_plugins = array(
 			array(
-				'name'        => 'WC Key Manager',
+				'name'        => 'Key Manager',
 				'slug'        => 'wc-key-manager',
 				'description' => 'Manage WooCommerce product keys and licenses with ease.',
 				'link'        => 'https://wordpress.org/plugins/wc-key-manager/',
