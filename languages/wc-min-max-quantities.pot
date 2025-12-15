@@ -3,48 +3,60 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Min Max Quantities 2.2.2\n"
-"Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-11-24 10:09:14+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-min-max-quantities\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-12-15T11:25:11+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wc-min-max-quantities\n"
+
+#. Plugin Name of the plugin
+#: wc-min-max-quantities.php
+#: includes/Admin/Admin.php:61
+msgid "Min Max Quantities"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wc-min-max-quantities.php
+msgid "https://pluginever.com/woocommerce-min-max-quantities-pro/"
+msgstr ""
+
+#. Description of the plugin
+#: wc-min-max-quantities.php
+msgid "The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order."
+msgstr ""
+
+#. Author of the plugin
+#: wc-min-max-quantities.php
+msgid "PluginEver"
+msgstr ""
+
+#. Author URI of the plugin
+#: wc-min-max-quantities.php
+msgid "https://pluginever.com/"
+msgstr ""
 
 #: includes/Admin/Admin.php:60
 msgid "Min Max Quantities Settings"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "Min Max Quantities"
-msgstr ""
-
-#: includes/Admin/Admin.php:92
 #. translators: 1: Plugin name 2: WordPress
-msgid ""
-"Thank you for using %1$s. If you like it, please leave us a %2$s rating. A "
-"huge thank you from PluginEver in advance!"
+#: includes/Admin/Admin.php:92
+#, php-format
+msgid "Thank you for using %1$s. If you like it, please leave us a %2$s rating. A huge thank you from PluginEver in advance!"
 msgstr ""
 
 #: includes/Admin/Admin.php:94
 msgid "Thanks :)"
 msgstr ""
 
-#: includes/Admin/Admin.php:112
 #. translators: 1: Plugin version
+#: includes/Admin/Admin.php:112
+#, php-format
 msgid "Version %s"
 msgstr ""
 
@@ -64,36 +76,33 @@ msgstr ""
 msgid "Global Min/Max rules will be overridden by local settings if checked."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:58 includes/Admin/Settings.php:50
+#: includes/Admin/MetaBoxes.php:58
+#: includes/Admin/Settings.php:50
 #: includes/Admin/Settings.php:84
 msgid "Minimum quantity"
 msgstr ""
 
 #: includes/Admin/MetaBoxes.php:59
-msgid ""
-"Set an allowed minimum number of items customers can purchase for this "
-"product. For no restrictions, set 0."
+msgid "Set an allowed minimum number of items customers can purchase for this product. For no restrictions, set 0."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:72 includes/Admin/Settings.php:58
+#: includes/Admin/MetaBoxes.php:72
+#: includes/Admin/Settings.php:58
 #: includes/Admin/Settings.php:92
 msgid "Maximum quantity"
 msgstr ""
 
 #: includes/Admin/MetaBoxes.php:73
-msgid ""
-"Set an allowed maximum number of items customers can purchase for this "
-"product. For no restrictions, set 0."
+msgid "Set an allowed maximum number of items customers can purchase for this product. For no restrictions, set 0."
 msgstr ""
 
-#: includes/Admin/MetaBoxes.php:86 includes/Admin/Settings.php:66
+#: includes/Admin/MetaBoxes.php:86
+#: includes/Admin/Settings.php:66
 msgid "Quantity step"
 msgstr ""
 
 #: includes/Admin/MetaBoxes.php:87
-msgid ""
-"Enter a number that will increment or decrement every time a quantity is "
-"changed for this product."
+msgid "Enter a number that will increment or decrement every time a quantity is changed for this product."
 msgstr ""
 
 #: includes/Admin/Settings.php:22
@@ -105,27 +114,19 @@ msgid "Product Limits"
 msgstr ""
 
 #: includes/Admin/Settings.php:46
-msgid ""
-"Set the minimum and maximum limits for products. Restrictions will be "
-"applied to every product individually."
+msgid "Set the minimum and maximum limits for products. Restrictions will be applied to every product individually."
 msgstr ""
 
 #: includes/Admin/Settings.php:51
-msgid ""
-"Set minimum quantity for each product. Keep it blank if you don’t want to "
-"set any rule for this."
+msgid "Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
 #: includes/Admin/Settings.php:59
-msgid ""
-"Set maximum quantity for each product. Keep it blank if you don’t want to "
-"set any rule for this."
+msgid "Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
 #: includes/Admin/Settings.php:67
-msgid ""
-"Each time the quantity is changed, it will be increased or decreased by "
-"this value. Keep it blank if you don’t want to set any rule for this."
+msgid "Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
 #: includes/Admin/Settings.php:78
@@ -133,25 +134,20 @@ msgid "Cart Limits"
 msgstr ""
 
 #: includes/Admin/Settings.php:81
-msgid ""
-"Set the minimum and maximum limits for the order. Restrictions will be "
-"applied to the order total."
+msgid "Set the minimum and maximum limits for the order. Restrictions will be applied to the order total."
 msgstr ""
 
 #: includes/Admin/Settings.php:85
-msgid ""
-"Set minimum quantity for the order. Keep it blank if you don’t want to set "
-"any rule for this."
+msgid "Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:86 includes/Admin/Settings.php:94
+#: includes/Admin/Settings.php:86
+#: includes/Admin/Settings.php:94
 msgid "This will be calculated by adding the quantity of all products in the cart."
 msgstr ""
 
 #: includes/Admin/Settings.php:93
-msgid ""
-"Set maximum quantity for the order. Keep it blank if you don’t want to set "
-"any rule for this."
+msgid "Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
 #: includes/Admin/Settings.php:100
@@ -159,15 +155,12 @@ msgid "Minimum total"
 msgstr ""
 
 #: includes/Admin/Settings.php:101
-msgid ""
-"Set minimum order total. Keep it blank if you don’t want to set any rule "
-"for this."
+msgid "Set minimum order total. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
-#: includes/Admin/Settings.php:102 includes/Admin/Settings.php:114
-msgid ""
-"This will be calculated by adding the total of all products in the cart "
-"before any discounts have been applied."
+#: includes/Admin/Settings.php:102
+#: includes/Admin/Settings.php:114
+msgid "This will be calculated by adding the total of all products in the cart before any discounts have been applied."
 msgstr ""
 
 #: includes/Admin/Settings.php:112
@@ -175,9 +168,7 @@ msgid "Maximum total"
 msgstr ""
 
 #: includes/Admin/Settings.php:113
-msgid ""
-"Set maximum order amount. Keep it blank if you don’t want to set any rule "
-"for this."
+msgid "Set maximum order amount. Keep it blank if you don’t want to set any rule for this."
 msgstr ""
 
 #: includes/Admin/Settings.php:162
@@ -205,9 +196,7 @@ msgid "Set restrictions for based on the user role."
 msgstr ""
 
 #: includes/Admin/Settings.php:168
-msgid ""
-"Allow your vendors to set their own minimum and maximum restrictions. "
-"Supports MultiVendorX and WCFM Marketplace."
+msgid "Allow your vendors to set their own minimum and maximum restrictions. Supports MultiVendorX and WCFM Marketplace."
 msgstr ""
 
 #: includes/Admin/Settings.php:174
@@ -219,19 +208,14 @@ msgid "Get Premium"
 msgstr ""
 
 #: includes/Admin/Settings.php:203
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:254
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:349
 msgid "Recommended"
 msgstr ""
 
 #: includes/Admin/Settings.php:204
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:255
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:350
 msgid "Install Now"
 msgstr ""
 
 #: includes/Admin/Settings.php:222
-#: libraries/byteever/bytekit-plugin/src/Traits/HasPlugin.php:216
 msgid "Documentation"
 msgstr ""
 
@@ -239,11 +223,10 @@ msgstr ""
 msgid "Black Friday Mega Sale! Get Flat 40% OFF on Min Max Quantities Pro !!"
 msgstr ""
 
-#: includes/Admin/views/notices/black-friday.php:26
 #. translators: 1. Offer Percentage, 2. Coupon Code.
-msgid ""
-"Unlock premium features at an unbeatable price this Black Friday! Enjoy "
-"%1$s on Min Max Quantities Pro with code %2$s. Hurry, this deal ends soon!"
+#: includes/Admin/views/notices/black-friday.php:26
+#, php-format
+msgid "Unlock premium features at an unbeatable price this Black Friday! Enjoy %1$s on Min Max Quantities Pro with code %2$s. Hurry, this deal ends soon!"
 msgstr ""
 
 #: includes/Admin/views/notices/black-friday.php:38
@@ -262,12 +245,10 @@ msgstr ""
 msgid "Enjoying Min Max Quantities?"
 msgstr ""
 
-#: includes/Admin/views/notices/review.php:24
 #. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
-msgid ""
-"We hope you had a wonderful experience using %1$s. Please take a moment to "
-"show us your support by leaving a 5-star review on <a href=\"%2$s\" "
-"target=\"_blank\"><strong>WordPress.org</strong></a>. Thank you! 😊"
+#: includes/Admin/views/notices/review.php:24
+#, php-format
+msgid "We hope you had a wonderful experience using %1$s. Please take a moment to show us your support by leaving a 5-star review on <a href=\"%2$s\" target=\"_blank\"><strong>WordPress.org</strong></a>. Thank you! 😊"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:36
@@ -287,11 +268,10 @@ msgstr ""
 msgid "Flash Sale Alert!"
 msgstr ""
 
-#: includes/Admin/views/notices/upgrade.php:24
 #. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
-msgid ""
-"Enjoy a <strong>10%% discount</strong> on %1$s! Use coupon code %2$s at "
-"checkout to grab the deal. Don’t miss out — this offer won’t last forever!"
+#: includes/Admin/views/notices/upgrade.php:24
+#, php-format
+msgid "Enjoy a <strong>10%% discount</strong> on %1$s! Use coupon code %2$s at checkout to grab the deal. Don’t miss out — this offer won’t last forever!"
 msgstr ""
 
 #: includes/Admin/views/notices/upgrade.php:36
@@ -302,64 +282,66 @@ msgstr ""
 msgid "Close permanently"
 msgstr ""
 
-#: includes/Cart.php:264 includes/Cart.php:352
 #. translators: %1$s: Product name, %2$d: Maximum quantity
+#: includes/Cart.php:264
+#: includes/Cart.php:352
+#, php-format
 msgid "The maximum allowed quantity for %1$s is %2$s."
 msgstr ""
 
-#: includes/Cart.php:272 includes/Cart.php:361
 #. translators: %1$s: Product name, %2$d: Minimum quantity
+#: includes/Cart.php:272
+#: includes/Cart.php:361
+#, php-format
 msgid "The minimum required quantity for %1$s is %2$s."
 msgstr ""
 
-#: includes/Cart.php:279
 #. translators: %1$s: Product name, %2$d: Group amount
+#: includes/Cart.php:279
+#, php-format
 msgid "The quantity of %1$s must be purchased in groups of %2$s."
 msgstr ""
 
-#: includes/Cart.php:289
 #. translators: %d: Maximum quantity
+#: includes/Cart.php:289
+#, php-format
 msgid "The maximum allowed order quantity is %s."
 msgstr ""
 
-#: includes/Cart.php:296
 #. translators: %s: Maximum amount
+#: includes/Cart.php:296
+#, php-format
 msgid "The maximum allowed order total is %s."
 msgstr ""
 
-#: includes/Cart.php:368
 #. translators: %1$s: Product name, %2$d: quantity amount
-msgid ""
-"%1$s must be bought in groups of %2$s. Please increase or decrease the "
-"quantity to continue."
+#: includes/Cart.php:368
+#, php-format
+msgid "%1$s must be bought in groups of %2$s. Please increase or decrease the quantity to continue."
 msgstr ""
 
+#. translators: %d: Minimum amount of items in the cart
 #: includes/Cart.php:381
-#. translators: %d: Minimum amount of items in the cart
-msgid ""
-"The minimum required quantity in the cart is %s. Please consider increasing "
-"the quantity in your cart."
+#, php-format
+msgid "The minimum required quantity in the cart is %s. Please consider increasing the quantity in your cart."
 msgstr ""
 
+#. translators: %d: Maximum amount of items in the cart
 #: includes/Cart.php:390
-#. translators: %d: Maximum amount of items in the cart
-msgid ""
-"The maximum allowed order quantity is %s. Please reduce the quantity in "
-"your cart."
+#, php-format
+msgid "The maximum allowed order quantity is %s. Please reduce the quantity in your cart."
 msgstr ""
 
-#: includes/Cart.php:398
 #. translators: %d: Minimum amount of items in the cart
-msgid ""
-"The minimum allowed order total value is %s. Please consider increasing the "
-"quantity in your cart."
+#: includes/Cart.php:398
+#, php-format
+msgid "The minimum allowed order total value is %s. Please consider increasing the quantity in your cart."
 msgstr ""
 
-#: includes/Cart.php:407
 #. translators: %d: Maximum amount of items in the cart
-msgid ""
-"The maximum allowed order total value is %s. Please reduce the quantity in "
-"your cart."
+#: includes/Cart.php:407
+#, php-format
+msgid "The maximum allowed order total value is %s. Please reduce the quantity in your cart."
 msgstr ""
 
 #: includes/Cart.php:504
@@ -370,65 +352,12 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
-#: includes/Installer.php:80
 #. translators: 1: plugin name 2: version number
+#: includes/Installer.php:80
+#, php-format
 msgid "%1$s updated to version %2$s successfully."
 msgstr ""
 
 #: includes/Plugin.php:77
 msgid "Go Pro"
-msgstr ""
-
-#: libraries/byteever/bytekit-plugin/src/Admin/Notices.php:130
-msgid "Dismiss this notice"
-msgstr ""
-
-#: libraries/byteever/bytekit-plugin/src/Traits/HasPlugin.php:223
-msgid "Support"
-msgstr ""
-
-#: libraries/byteever/bytekit-plugin/src/Traits/HasPlugin.php:230
-msgid "Review"
-msgstr ""
-
-#: libraries/byteever/bytekit-plugin/src/Traits/HasPlugin.php:255
-msgid "Settings"
-msgstr ""
-
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:90
-msgid "Settings saved."
-msgstr ""
-
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:318
-msgid "Need Help?"
-msgstr ""
-
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:364
-msgid "Join our Community"
-msgstr ""
-
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:368
-msgid "Request a Feature"
-msgstr ""
-
-#: libraries/byteever/bytekit-settings/src/Admin/Settings.php:372
-msgid "Report a Bug"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "https://pluginever.com/woocommerce-min-max-quantities-pro/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"The plugin allows you to Set minimum and maximum allowable product "
-"quantities and price per product and order."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "PluginEver"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://pluginever.com/"
 msgstr ""
