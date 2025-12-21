@@ -9,7 +9,6 @@ node_modules/
 vendor/
 composer.lock
 
-
 # Catch All ( Miscellaneous )
 # ───────────────────────────────
 *.log
