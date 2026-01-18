@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 				sprintf(
 				// translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
 					__( '🎉 We hit 10,000+ users! To celebrate with you, enjoy <strong>20%% discount</strong> OFF on %1$s our Premium plan. Use code: %2$s at checkout to grab the deal.', 'wc-min-max-quantities' ),
-					'<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-notice&utm_medium=admin-notice&utm_campaign=10k-celebration&utm_id=10k-celebration" target="_blank"><strong>Min Max Quantities Pro</strong></a>',
+					'<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-notice&utm_medium=admin-notice&utm_campaign=10k-celebration&utm_id=10k-celebration&discount=THANKYOU10K#pricing-list" target="_blank"><strong>Min Max Quantities Pro</strong></a>',
 					'<strong>THANKYOU10K</strong>'
 				)
 			);
@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 </div>
 <div class="notice-footer">
-	<a class="primary" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-notice&utm_medium=admin-notice&utm_campaign=10k-celebration&utm_id=10k-celebration" target="_blank">
+	<a class="primary" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-notice&utm_medium=admin-notice&utm_campaign=10k-celebration&utm_id=10k-celebration&discount=THANKYOU10K#pricing-list" target="_blank">
 		<span class="dashicons dashicons-cart"></span>
 		<?php esc_html_e( 'Grab the Deal', 'wc-min-max-quantities' ); ?>
 	</a>
