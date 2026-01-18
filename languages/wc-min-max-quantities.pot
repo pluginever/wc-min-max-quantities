@@ -1,15 +1,15 @@
-# Copyright (C) 2025 PluginEver
+# Copyright (C) 2026 PluginEver
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Min Max Quantities 2.2.3\n"
+"Project-Id-Version: Min Max Quantities 2.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-min-max-quantities\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-21T11:39:56+00:00\n"
+"POT-Creation-Date: 2026-01-18T11:52:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wc-min-max-quantities\n"
@@ -17,6 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: wc-min-max-quantities.php
 #: includes/Admin/Admin.php:61
+#: includes/Admin/views/notices/tenk-celebrate.php:15
 msgid "Min Max Quantities"
 msgstr ""
 
@@ -219,28 +220,6 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: includes/Admin/views/notices/black-friday.php:19
-msgid "Black Friday Mega Sale! Get Flat 40% OFF on Min Max Quantities Pro !!"
-msgstr ""
-
-#. translators: 1. Offer Percentage, 2. Coupon Code.
-#: includes/Admin/views/notices/black-friday.php:26
-#, php-format
-msgid "Unlock premium features at an unbeatable price this Black Friday! Enjoy %1$s on Min Max Quantities Pro with code %2$s. Hurry, this deal ends soon!"
-msgstr ""
-
-#: includes/Admin/views/notices/black-friday.php:38
-msgid "Claim your discount !!"
-msgstr ""
-
-#: includes/Admin/views/notices/black-friday.php:42
-msgid "Remind me later"
-msgstr ""
-
-#: includes/Admin/views/notices/black-friday.php:46
-msgid "Never show this again!"
-msgstr ""
-
 #: includes/Admin/views/notices/review.php:18
 msgid "Enjoying Min Max Quantities?"
 msgstr ""
@@ -256,12 +235,32 @@ msgid "Sure, I'd love to help!"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:40
+#: includes/Admin/views/notices/tenk-celebrate.php:40
 #: includes/Admin/views/notices/upgrade.php:40
 msgid "Maybe later"
 msgstr ""
 
 #: includes/Admin/views/notices/review.php:44
 msgid "I've already left a review"
+msgstr ""
+
+#: includes/Admin/views/notices/tenk-celebrate.php:18
+msgid "10,000+ Users Celebration!"
+msgstr ""
+
+#. translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
+#: includes/Admin/views/notices/tenk-celebrate.php:24
+#, php-format
+msgid "🎉 We hit 10,000+ users! To celebrate with you, enjoy <strong>20%% discount</strong> OFF on %1$s our Premium plan. Use code: %2$s at checkout to grab the deal."
+msgstr ""
+
+#: includes/Admin/views/notices/tenk-celebrate.php:36
+msgid "Grab the Deal"
+msgstr ""
+
+#: includes/Admin/views/notices/tenk-celebrate.php:44
+#: includes/Admin/views/notices/upgrade.php:44
+msgid "Close permanently"
 msgstr ""
 
 #: includes/Admin/views/notices/upgrade.php:18
@@ -276,10 +275,6 @@ msgstr ""
 
 #: includes/Admin/views/notices/upgrade.php:36
 msgid "Upgrade now"
-msgstr ""
-
-#: includes/Admin/views/notices/upgrade.php:44
-msgid "Close permanently"
 msgstr ""
 
 #. translators: %1$s: Product name, %2$d: Maximum quantity
