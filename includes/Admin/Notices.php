@@ -31,7 +31,7 @@ class Notices {
 		$current_time   = absint( wp_date( 'U' ) );
 
 		// 10k celebration offer notice.
-		$tenk_celebrate_end_time = date_i18n( strtotime( '2026-01-29 00:00:00' ) );
+		$tenk_celebrate_end_time = strtotime( '2026-01-29 00:00:00' );
 		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $tenk_celebrate_end_time ) {
 			wc_min_max_quantities()->notices->add(
 				array(

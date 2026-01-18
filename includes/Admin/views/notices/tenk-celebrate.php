@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="notice-footer">
 	<a class="primary" href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-notice&utm_medium=admin-notice&utm_campaign=10k-celebration&utm_id=10k-celebration" target="_blank">
 		<span class="dashicons dashicons-cart"></span>
-		<?php esc_attr_e( 'Grab the Deal', 'wc-min-max-quantities' ); ?>
+		<?php esc_html_e( 'Grab the Deal', 'wc-min-max-quantities' ); ?>
 	</a>
 	<a href="#" data-snooze>
 		<span class="dashicons dashicons-clock"></span>
