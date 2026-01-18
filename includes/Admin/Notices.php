@@ -30,16 +30,16 @@ class Notices {
 		$installed_time = absint( get_option( 'wc_min_max_quantities_installed' ) );
 		$current_time   = absint( wp_date( 'U' ) );
 
-		// Black Friday offer notice.
-		$black_friday_end_time = date_i18n( strtotime( '2025-12-05 00:00:00' ) );
-		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $black_friday_end_time ) {
+		// 10k celebration offer notice.
+		$tenk_celebrate_end_time = date_i18n( strtotime( '2026-01-29 00:00:00' ) );
+		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $tenk_celebrate_end_time ) {
 			wc_min_max_quantities()->notices->add(
 				array(
-					'message'     => __DIR__ . '/views/notices/black-friday.php',
+					'message'     => __DIR__ . '/views/notices/tenk-celebrate.php',
 					'dismissible' => false,
-					'notice_id'   => 'wcmmq_black_friday_promo_2025',
-					'style'       => 'border-left-color: #000000;',
-					'class'       => 'notice-black-friday',
+					'notice_id'   => 'wcmmq_tenk_celebrate_jan_2026',
+					'style'       => 'border-left-color: #0542fa;',
+					'class'       => 'notice-tenk-celebrate',
 				)
 			);
 		}
@@ -48,7 +48,7 @@ class Notices {
 		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 
 			// phpcs:disable
-			// TODO: Uncomment the below code when black friday offer is over.
+			// TODO: Uncomment the below code when other offer is over.
 			/*
 			if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
 				// Upgrade notice.
