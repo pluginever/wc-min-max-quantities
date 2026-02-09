@@ -42,8 +42,8 @@ class Installer {
 	 * @return void
 	 */
 	public function check_update() {
-		$db_version      = wc_min_max_quantities()->get_db_version();
-		$current_version = wc_min_max_quantities()->get_version();
+		$db_version      = wc_min_max_quantities()->options->get_db_version();
+		$current_version = wc_min_max_quantities()->version;
 		$requires_update = version_compare( $db_version, $current_version, '<' );
 		$can_install     = ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && ! defined( 'IFRAME_REQUEST' );
 		if ( $can_install && $requires_update ) {
@@ -53,7 +53,7 @@ class Installer {
 			if ( ! is_null( $db_version ) && version_compare( $db_version, end( $update_versions ), '<' ) ) {
 				$this->update();
 			} else {
-				wc_min_max_quantities()->update_db_version( $current_version );
+				wc_min_max_quantities()->options->update_db_version( $current_version, true );
 			}
 		}
 	}
@@ -65,20 +65,19 @@ class Installer {
 	 * @return void
 	 */
 	public function update() {
-		$db_version = wc_min_max_quantities()->get_db_version();
+		$db_version = wc_min_max_quantities()->options->get_db_version();
 		foreach ( $this->updates as $version => $callbacks ) {
 			$callbacks = (array) $callbacks;
 			if ( version_compare( $db_version, $version, '<' ) ) {
 				foreach ( $callbacks as $callback ) {
-					wc_min_max_quantities()->log( sprintf( 'Updating to %s from %s', $version, $db_version ) );
-					// if the callback return false then we need to update the db version.
+					wc_min_max_quantities()->logger->info( sprintf( 'Updating to %s from %s', $version, $db_version ) );
 					$continue = call_user_func( array( $this, $callback ) );
 					if ( ! $continue ) {
-						wc_min_max_quantities()->update_db_version( $version );
+						wc_min_max_quantities()->options->update_db_version( $version, true );
 						$notice = sprintf(
 						/* translators: 1: plugin name 2: version number */
 							__( '%1$s updated to version %2$s successfully.', 'wc-min-max-quantities' ),
-							'<strong>' . wc_min_max_quantities()->get_name() . '</strong>',
+							'<strong>' . __( 'Min Max Quantities', 'wc-min-max-quantities' ) . '</strong>',
 							'<strong>' . $version . '</strong>'
 						);
 						wc_min_max_quantities()->flash->success( $notice );
@@ -100,7 +99,7 @@ class Installer {
 		}
 
 		Admin\Settings::instance()->save_defaults();
-		wc_min_max_quantities()->update_db_version( wc_min_max_quantities()->get_version(), false );
+		wc_min_max_quantities()->options->update_db_version( wc_min_max_quantities()->version, true );
 		add_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		set_transient( 'wc_min_max_quantities_activated', true, 30 );
 		set_transient( 'wc_min_max_quantities_activation_redirect', true, 30 );

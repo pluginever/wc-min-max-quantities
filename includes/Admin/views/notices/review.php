@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="notice-body">
 	<div class="notice-icon">
-		<img src="<?php echo esc_attr( wc_min_max_quantities()->get_assets_url( 'images/plugin-icon.png' ) ); ?>" alt="Min Max Quantities">
+		<img src="<?php echo esc_attr( wc_min_max_quantities()->assets_url( 'images/plugin-icon.png' ) ); ?>" alt="Min Max Quantities">
 	</div>
 	<div class="notice-content">
 		<h3><?php esc_html_e( 'Enjoying Min Max Quantities?', 'wc-min-max-quantities' ); ?></h3>

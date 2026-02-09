@@ -154,7 +154,7 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	 */
 	protected function output_premium_widget() {
 		// bail if premium is active.
-		if ( wc_min_max_quantities()->is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+		if ( wc_min_max_quantities()->utils->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
 			return;
 		}
 
@@ -218,8 +218,8 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	 */
 	public function output_tabs( $tabs ) {
 		parent::output_tabs( $tabs );
-		if ( wc_min_max_quantities()->get_docs_url() ) {
-			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
+		if ( wc_min_max_quantities()->docs_url ) {
+			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->docs_url ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
 		}
 	}
 
