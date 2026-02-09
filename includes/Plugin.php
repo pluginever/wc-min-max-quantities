@@ -19,7 +19,7 @@ final class Plugin extends B8\Plugin\App {
 	/**
 	 * Bootstraps the plugin.
 	 *
-	 * @since 1.1.4
+	 * @since 2.2.4
 	 * @return void
 	 */
 	protected function bootstrap(): void {
@@ -107,7 +107,7 @@ final class Plugin extends B8\Plugin\App {
 	/**
 	 * Register plugin services.
 	 *
-	 * @since 1.0.0
+	 * @since 2.2.4
 	 * @return void
 	 */
 	public function register_services(): void {

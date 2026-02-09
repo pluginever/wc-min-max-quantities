@@ -14,7 +14,7 @@
  * Text Domain:          wc-min-max-quantities
  * Domain Path:          /languages
  * WC requires at least: 3.0.0
- * WC tested up to:      10.4
+ * WC tested up to:      10.5
  * Requires Plugins:     woocommerce
  *
  * @link                 https://pluginever.com
@@ -33,7 +33,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * @author              Sultan Nasir Uddin <manikdrmc@gmail.com>
- * @copyright           2025 ByteEver
+ * @copyright           2026 ByteEver
  * @license             GPL-2.0+
  * @package             WooCommerceMinMaxQuantities
  */
