@@ -35,7 +35,7 @@ defined( 'ABSPATH' ) || exit;
 		<span class="dashicons dashicons-cart"></span>
 		<?php esc_html_e( 'Grab the Deal', 'wc-min-max-quantities' ); ?>
 	</a>
-	<a href="#" data-snooze>
+	<a href="#" data-snooze="<?php echo esc_attr( MONTH_IN_SECONDS ); ?>">
 		<span class="dashicons dashicons-clock"></span>
 		<?php esc_html_e( 'Maybe later', 'wc-min-max-quantities' ); ?>
 	</a>

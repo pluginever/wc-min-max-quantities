@@ -9,6 +9,10 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.1.4
  * @package WooCommerceMinMaxQuantities
+ *
+ * @property-read string $settings_url Settings page URL.
+ * @property-read string $docs_url     Documentation URL.
+ * @property-read string $support_url  Support page URL.
  */
 final class Plugin extends B8\Plugin\App {
 

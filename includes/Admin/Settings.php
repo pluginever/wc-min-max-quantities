@@ -169,11 +169,11 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 		);
 
 		?>
-		<div class="bk-card promo-panel">
-			<div class="bk-card__header">
+		<div class="b8-card promo-panel">
+			<div class="b8-card__header">
 				<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
 			</div>
-			<div class="bk-card__body">
+			<div class="b8-card__body">
 				<ul>
 					<?php foreach ( $features as $feature ) : ?>
 						<li>- <?php echo esc_html( $feature ); ?></li>
