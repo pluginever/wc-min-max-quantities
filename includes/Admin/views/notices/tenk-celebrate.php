@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="notice-body">
 	<div class="notice-icon">
-		<img src="<?php echo esc_attr( wc_min_max_quantities()->get_assets_url( 'images/plugin-icon.png' ) ); ?>" alt="<?php esc_attr_e( 'Min Max Quantities', 'wc-min-max-quantities' ); ?>" />
+		<img src="<?php echo esc_attr( wc_min_max_quantities()->assets_url( 'images/plugin-icon.png' ) ); ?>" alt="<?php esc_attr_e( 'Min Max Quantities', 'wc-min-max-quantities' ); ?>" />
 	</div>
 	<div class="notice-content">
 		<h3><?php esc_html_e( '10,000+ Users Celebration!', 'wc-min-max-quantities' ); ?></h3>
@@ -35,7 +35,7 @@ defined( 'ABSPATH' ) || exit;
 		<span class="dashicons dashicons-cart"></span>
 		<?php esc_html_e( 'Grab the Deal', 'wc-min-max-quantities' ); ?>
 	</a>
-	<a href="#" data-snooze>
+	<a href="#" data-snooze="<?php echo esc_attr( MONTH_IN_SECONDS ); ?>">
 		<span class="dashicons dashicons-clock"></span>
 		<?php esc_html_e( 'Maybe later', 'wc-min-max-quantities' ); ?>
 	</a>

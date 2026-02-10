@@ -5,7 +5,7 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git@github.com:byteever/bytekit-plugin.git"
+			"url": "git@github.com:byteever/plugin.git"
 		},
 		{
 			"type": "vcs",
@@ -14,7 +14,7 @@
 	],
 	"require": {
 		"php": ">=7.4",
-		"byteever/bytekit-plugin": "dev-trunk",
+		"byteever/plugin": "dev-trunk",
 		"byteever/bytekit-settings": "dev-trunk"
 	},
 	"require-dev": {
@@ -53,7 +53,7 @@
 			"namespace_prefix": "WooCommerceMinMaxQuantities\\",
 			"classmap_prefix": "WooCommerceMinMaxQuantities__",
 			"packages": [
-				"byteever/bytekit-plugin",
+				"byteever/plugin",
 				"byteever/bytekit-settings"
 			]
 		}

@@ -154,7 +154,7 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	 */
 	protected function output_premium_widget() {
 		// bail if premium is active.
-		if ( wc_min_max_quantities()->is_plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+		if ( wc_min_max_quantities()->utils->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
 			return;
 		}
 
@@ -169,11 +169,11 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 		);
 
 		?>
-		<div class="bk-card promo-panel">
-			<div class="bk-card__header">
+		<div class="b8-card promo-panel">
+			<div class="b8-card__header">
 				<h3><?php esc_html_e( 'Premium Features', 'wc-min-max-quantities' ); ?></h3>
 			</div>
-			<div class="bk-card__body">
+			<div class="b8-card__body">
 				<ul>
 					<?php foreach ( $features as $feature ) : ?>
 						<li>- <?php echo esc_html( $feature ); ?></li>
@@ -218,8 +218,8 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	 */
 	public function output_tabs( $tabs ) {
 		parent::output_tabs( $tabs );
-		if ( wc_min_max_quantities()->get_docs_url() ) {
-			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->get_docs_url() ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
+		if ( wc_min_max_quantities()->docs_url ) {
+			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->docs_url ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
 		}
 	}
 
