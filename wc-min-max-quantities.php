@@ -42,6 +42,7 @@ defined( 'ABSPATH' ) || exit;
 
 // Autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/includes/functions.php';
 
 // Instantiate the plugin.
 WooCommerceMinMaxQuantities\Plugin::create(
