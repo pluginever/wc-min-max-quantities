@@ -1,6 +1,9 @@
+@forward "layout"; // TODO: remove when the old card (bk) is removed
+.bk-card, // TODO: remove when the old card (bk) is removed
 .b8-card {
 	&.promo-panel{
 		background: #2563eb;
+		.bk-card__header,
 		.b8-card__header {
 			color: #fff;
 			background: #1048c4;
