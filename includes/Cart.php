@@ -11,11 +11,9 @@ defined( 'ABSPATH' ) || exit;
  * @package WooCommerceMinMaxQuantities
  */
 class Cart {
+
 	/**
 	 * Restrictions constructor.
-	 *
-	 * @since 1.1.0
-	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
@@ -37,10 +35,11 @@ class Cart {
 	 * Filter the multiple of value for cart items.
 	 *
 	 * @param int         $multiple_of The multiple of value.
-	 * @param \WC_Product $product The cart item.
+	 * @param \WC_Product $product Product instance.
 	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int The multiple of quantity.
+	 * @since 1.1.4
+	 * @return int The multiple of cart item quantity.
 	 */
 	public function filter_cart_item_quantity_multiple_of( $multiple_of, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
@@ -58,10 +57,11 @@ class Cart {
 	 * Filter the minimum value for cart items.
 	 *
 	 * @param int         $minimum The minimum value.
-	 * @param \WC_Product $product The cart item.
+	 * @param \WC_Product $product Product instance.
 	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int The minimum quantity.
+	 * @since 1.1.4
+	 * @return int The minimum of cart item quantity.
 	 */
 	public function filter_cart_item_quantity_minimum( $minimum, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
@@ -79,10 +79,11 @@ class Cart {
 	 * Filter the maximum value for cart items.
 	 *
 	 * @param int         $maximum The maximum value.
-	 * @param \WC_Product $product The cart item.
+	 * @param \WC_Product $product Product instance.
 	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int The maximum quantity.
+	 * @since 1.1.4
+	 * @return int The maximum of cart item quantity.
 	 */
 	public function filter_cart_item_quantity_maximum( $maximum, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
@@ -101,6 +102,9 @@ class Cart {
 	 *
 	 * We use this instead of wc_print_notices so we
 	 * can remove any error notices that aren't from us.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public static function output_errors() {
 		$notices  = wc_get_notices( 'error' );
@@ -135,6 +139,7 @@ class Cart {
 	 * @param string      $html Add to cart link.
 	 * @param \WC_Product $product Product object.
 	 *
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public static function add_to_cart_link( $html, $product ) {
