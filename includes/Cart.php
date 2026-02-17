@@ -26,31 +26,9 @@ class Cart {
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
 
 		// wc-cart Block compatibility.
-		add_filter( 'woocommerce_store_api_product_quantity_multiple_of', array( $this, 'filter_cart_item_quantity_multiple_of' ), 10, 3 );
 		add_filter( 'woocommerce_store_api_product_quantity_minimum', array( $this, 'filter_cart_item_quantity_minimum' ), 10, 3 );
 		add_filter( 'woocommerce_store_api_product_quantity_maximum', array( $this, 'filter_cart_item_quantity_maximum' ), 10, 3 );
-	}
-
-	/**
-	 * Filter the multiple of value for cart items.
-	 *
-	 * @param int         $multiple_of The multiple of value.
-	 * @param \WC_Product $product Product instance.
-	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
-	 *
-	 * @since 1.1.4
-	 * @return int The multiple of cart item quantity.
-	 */
-	public function filter_cart_item_quantity_multiple_of( $multiple_of, $product, $cart_item ) {
-		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
-			$limits = wcmmq_get_product_limits( $product_id );
-			if ( ! empty( $limits['step'] ) ) {
-				$multiple_of = $limits['step'];
-			}
-		}
-
-		return $multiple_of;
+		add_filter( 'woocommerce_store_api_product_quantity_multiple_of', array( $this, 'filter_cart_item_quantity_multiple_of' ), 10, 3 );
 	}
 
 	/**
@@ -64,15 +42,7 @@ class Cart {
 	 * @return int The minimum of cart item quantity.
 	 */
 	public function filter_cart_item_quantity_minimum( $minimum, $product, $cart_item ) {
-		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
-			$limits = wcmmq_get_product_limits( $product_id );
-			if ( ! empty( $limits['min_qty'] ) ) {
-				$minimum = $limits['min_qty'];
-			}
-		}
-
-		return $minimum;
+		return $this->get_cart_item_quantity_limit( $minimum, $cart_item, 'min_qty' );
 	}
 
 	/**
@@ -86,15 +56,48 @@ class Cart {
 	 * @return int The maximum of cart item quantity.
 	 */
 	public function filter_cart_item_quantity_maximum( $maximum, $product, $cart_item ) {
-		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
-		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
-			$limits = wcmmq_get_product_limits( $product_id );
-			if ( ! empty( $limits['max_qty'] ) ) {
-				$maximum = $limits['max_qty'];
+		return $this->get_cart_item_quantity_limit( $maximum, $cart_item, 'max_qty' );
+	}
+
+	/**
+	 * Filter the multiple of value for cart items.
+	 *
+	 * @param int         $multiple_of The multiple of value.
+	 * @param \WC_Product $product Product instance.
+	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
+	 *
+	 * @since 1.1.4
+	 * @return int The multiple of cart item quantity.
+	 */
+	public function filter_cart_item_quantity_multiple_of( $multiple_of, $product, $cart_item ) {
+		return $this->get_cart_item_quantity_limit( $multiple_of, $cart_item, 'step' );
+	}
+
+	/**
+	 * Get the quantity limit for cart item.
+	 *
+	 * @param int    $default_limit The default limit value.
+	 * @param array  $cart_item The cart item.
+	 * @param string $limit_key The limit key to check, either 'min_qty' or 'max_qty'.
+	 *
+	 * @return int The quantity limit for the cart item.
+	 */
+	protected function get_cart_item_quantity_limit( $default_limit, $cart_item, $limit_key ) {
+		if ( ! is_array( $cart_item ) ) {
+			return $default_limit;
+		}
+
+		$product_id   = $cart_item['product_id'] ?? 0;
+		$variation_id = $cart_item['variation_id'] ?? 0;
+
+		if ( ! empty( $product_id ) && ! wcmmq_is_product_excluded( $product_id, $variation_id ) ) {
+			$limits = wcmmq_get_product_limits( $product_id, $variation_id );
+			if ( ! empty( $limits[ $limit_key ] ) ) {
+				return $limits[ $limit_key ];
 			}
 		}
 
-		return $maximum;
+		return $default_limit;
 	}
 
 	/**
