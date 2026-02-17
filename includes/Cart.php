@@ -28,20 +28,21 @@ class Cart {
 		add_filter( 'woocommerce_available_variation', array( __CLASS__, 'available_variation' ), 10, 3 );
 
 		// wc-cart Block compatibility.
-		add_filter( 'woocommerce_store_api_product_quantity_multiple_of', array( $this, 'filter_cart_item_quantity_multiple_of' ), 10, 2 );
-		add_filter( 'woocommerce_store_api_product_quantity_minimum', array( $this, 'filter_cart_item_quantity_minimum' ), 10, 2 );
-		add_filter( 'woocommerce_store_api_product_quantity_maximum', array( $this, 'filter_cart_item_quantity_maximum' ), 10, 2 );
+		add_filter( 'woocommerce_store_api_product_quantity_multiple_of', array( $this, 'filter_cart_item_quantity_multiple_of' ), 10, 3 );
+		add_filter( 'woocommerce_store_api_product_quantity_minimum', array( $this, 'filter_cart_item_quantity_minimum' ), 10, 3 );
+		add_filter( 'woocommerce_store_api_product_quantity_maximum', array( $this, 'filter_cart_item_quantity_maximum' ), 10, 3 );
 	}
 
 	/**
 	 * Filter the multiple of value for cart items.
 	 *
 	 * @param int         $multiple_of The multiple of value.
-	 * @param \WC_Product $cart_item The cart item.
+	 * @param \WC_Product $product The cart item.
+	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int
+	 * @return int The multiple of quantity.
 	 */
-	public function filter_cart_item_quantity_multiple_of( $multiple_of, $cart_item ) {
+	public function filter_cart_item_quantity_multiple_of( $multiple_of, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
 		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
@@ -57,11 +58,12 @@ class Cart {
 	 * Filter the minimum value for cart items.
 	 *
 	 * @param int         $minimum The minimum value.
-	 * @param \WC_Product $cart_item The cart item.
+	 * @param \WC_Product $product The cart item.
+	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int
+	 * @return int The minimum quantity.
 	 */
-	public function filter_cart_item_quantity_minimum( $minimum, $cart_item ) {
+	public function filter_cart_item_quantity_minimum( $minimum, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
 		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
@@ -77,11 +79,12 @@ class Cart {
 	 * Filter the maximum value for cart items.
 	 *
 	 * @param int         $maximum The maximum value.
-	 * @param \WC_Product $cart_item The cart item.
+	 * @param \WC_Product $product The cart item.
+	 * @param array|null  $cart_item The cart item if the product exists in the cart, or null.
 	 *
-	 * @return int
+	 * @return int The maximum quantity.
 	 */
-	public function filter_cart_item_quantity_maximum( $maximum, $cart_item ) {
+	public function filter_cart_item_quantity_maximum( $maximum, $product, $cart_item ) {
 		$product_id = is_callable( array( $cart_item, 'get_id' ) ) ? $cart_item->get_id() : null;
 		if ( ! wcmmq_is_product_excluded( $product_id ) && ! empty( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id );
@@ -92,7 +95,6 @@ class Cart {
 
 		return $maximum;
 	}
-
 
 	/**
 	 * Output any plugin specific error messages
@@ -443,7 +445,7 @@ class Cart {
 		foreach ( WC()->cart->get_cart() as $cart_item ) {
 			if ( (int) $product_id === (int) $cart_item['product_id'] ) {
 				$quantity = $cart_item['quantity'];
-				break; // stop the loop if product is found.
+				break; // Stop the loop if product is found.
 			}
 		}
 
