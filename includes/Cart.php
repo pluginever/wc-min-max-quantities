@@ -78,7 +78,7 @@ class Cart {
 	 *
 	 * @param int    $default_limit The default limit value.
 	 * @param array  $cart_item The cart item.
-	 * @param string $limit_key The limit key to check, either 'min_qty' or 'max_qty'.
+	 * @param string $limit_key The limit key to check, either 'min_qty' or 'max_qty' or 'step'.
 	 *
 	 * @return int The quantity limit for the cart item.
 	 */
