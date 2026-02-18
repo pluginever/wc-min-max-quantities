@@ -30,16 +30,16 @@ class Notices {
 		$installed_time = absint( get_option( 'wc_min_max_quantities_installed' ) );
 		$current_time   = absint( wp_date( 'U' ) );
 
-		// 10k celebration offer notice.
-		$tenk_celebrate_end_time = strtotime( '2026-01-29 00:00:00' );
-		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $tenk_celebrate_end_time ) {
+		// Limited time special offer!
+		$special_offer_end_time = strtotime( '2026-02-28 00:00:00' );
+		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $special_offer_end_time ) {
 			wc_min_max_quantities()->notices->add(
 				array(
-					'message'     => __DIR__ . '/views/notices/tenk-celebrate.php',
+					'message'     => __DIR__ . '/views/notices/special-offer.php',
 					'dismissible' => false,
-					'notice_id'   => 'wcmmq_tenk_celebrate_jan_2026',
+					'notice_id'   => 'wcmmq_special_offer_feb_2026',
 					'style'       => 'border-left-color: #0542fa;',
-					'class'       => 'notice-tenk-celebrate',
+					'class'       => 'notice-special-offer',
 				)
 			);
 		}
