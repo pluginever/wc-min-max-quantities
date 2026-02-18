@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.9
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,13 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.5 (18th Feb 2026) =
+* New: Updated the plugin framework to the latest version.
+* Enhance: Optimized the plugin codebase for better performance and security.
+* Compatibility: Checked compatibility with the WooCommerce v10.5 and WordPress v6.9.
+* Block Compatibility: Fixed compatibility issue with the WooCommerce cart block.
+* Fix: Fixed few minor issues.
+
 = 2.2.3 (21st Dec 2025) =
 * Enhance: Updated the plugin assets for better performance.
 * Fix: Fixed few known issues.
@@ -403,3 +410,7 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 
 = 1.0.0 (7th October 2018) =
 * Initial Release
+
+== Upgrade Notice ==
+= 2.2.5 (18th Feb 2026) =
+Major update with plugin framework update, performance improvements, and compatibility checks with the latest versions of WordPress and WooCommerce. Please update to the latest version for the best experience. 
