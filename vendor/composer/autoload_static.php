@@ -4,12 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5
+class ComposerStaticInite5163d7f7cd2c85f8153b7a673bec476
 {
     public static $prefixLengthsPsr4 = array (
         'W' =>
         array (
             'WooCommerceMinMaxQuantities\\ByteKit\\' => 36,
+            'WooCommerceMinMaxQuantities\\B8\\Plugin\\' => 38,
             'WooCommerceMinMaxQuantities\\' => 28,
         ),
     );
@@ -18,7 +19,10 @@ class ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5
         'WooCommerceMinMaxQuantities\\ByteKit\\' =>
         array (
             0 => __DIR__ . '/..' . '/byteever/bytekit-settings/src',
-            1 => __DIR__ . '/..' . '/byteever/bytekit-plugin/src',
+        ),
+        'WooCommerceMinMaxQuantities\\B8\\Plugin\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/byteever/plugin/src',
         ),
         'WooCommerceMinMaxQuantities\\' =>
         array (
@@ -33,9 +37,9 @@ class ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2c5484f17494d294d1a69a2b8f9d67b5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite5163d7f7cd2c85f8153b7a673bec476::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite5163d7f7cd2c85f8153b7a673bec476::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite5163d7f7cd2c85f8153b7a673bec476::$classMap;
 
         }, null, ClassLoader::class);
     }

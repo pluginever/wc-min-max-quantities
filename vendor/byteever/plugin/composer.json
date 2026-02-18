@@ -1,13 +1,13 @@
 {
-  "name": "byteever/bytekit-plugin",
+  "name": "byteever/plugin",
   "type": "library",
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-2.0-or-later",
   "require": {
     "php": ">=7.4"
   },
   "autoload": {
     "psr-4": {
-      "ByteKit\\": "src/"
+      "B8\\Plugin\\": "src/"
     }
   }
 }
