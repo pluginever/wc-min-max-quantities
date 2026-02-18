@@ -220,7 +220,7 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 * Enhance: Optimized the plugin codebase for better performance and security.
 * Compatibility: Checked compatibility with the WooCommerce v10.5 and WordPress v6.9.
 * Block Compatibility: Fixed compatibility issue with the WooCommerce cart block.
-* Fix: Fixed few minor issues.
+* Fix: Fixed a few minor issues.
 
 = 2.2.3 (21st Dec 2025) =
 * Enhance: Updated the plugin assets for better performance.
@@ -413,4 +413,4 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 
 == Upgrade Notice ==
 = 2.2.5 (18th Feb 2026) =
-Major update with plugin framework update, performance improvements, and compatibility checks with the latest versions of WordPress and WooCommerce. Please update to the latest version for the best experience. 
+Major release including an updated plugin framework, performance improvements, and compatibility checks with the latest versions of WordPress and WooCommerce. Please update to the latest version for the best experience.
