@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.9
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,10 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.6 (12th Mar 2026) =
+* Fix: Allow Combination for Variable Products (PRO) feature is not working properly.
+* Compatibility: Checked compatibility with the latest version of WooCommerce v10.6 and WordPress v6.9.4.
+
 = 2.2.5 (18th Feb 2026) =
 * New: Updated the plugin framework to the latest version.
 * Enhance: Optimized the plugin codebase for better performance and security.
