@@ -3,7 +3,7 @@
         'name' => 'pluginever/wc-min-max-quantities',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '407e7a40d01514d24d38fcce59585cba280d6036',
+        'reference' => '6223f66d339ae5c0beb7e0e601f23a4175eb68bf',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'pluginever/wc-min-max-quantities' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '407e7a40d01514d24d38fcce59585cba280d6036',
+            'reference' => '6223f66d339ae5c0beb7e0e601f23a4175eb68bf',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
