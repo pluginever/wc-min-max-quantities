@@ -95,7 +95,7 @@ class Notices
             if (empty($message)) {
                 continue;
             }
-            $prepared[] = array('id' => $notice['notice_id'], 'type' => $notice['type'], 'message' => $message, 'dismissible' => $notice['dismissible'], 'class' => $notice['class'], 'style' => $notice['style']);
+            $prepared[] = array('id' => $notice['notice_id'], 'type' => $notice['type'], 'message' => $message, 'dismissible' => $notice['dismissible'], 'class' => $notice['class'], 'style' => $notice['style'], 'nonce' => wp_create_nonce($this->ajax_action), 'action' => $this->ajax_action);
         }
         return $prepared;
     }
@@ -122,7 +122,7 @@ class Notices
             if (!preg_match('/<[^>]+>/', $message)) {
                 $message = wpautop($message);
             }
-            printf('<div class="notice b8-notice notice-%1$s %2$s" data-notice_id="%3$s" data-nonce="%4$s" data-action="%5$s" style="%6$s">%7$s%8$s</div>', esc_attr($notice['type']), esc_attr(implode(' ', $classes)), esc_attr($notice['id']), esc_attr(wp_create_nonce($this->ajax_action)), esc_attr($this->ajax_action), esc_attr($notice['style']), wp_kses_post(wptexturize($message)), $notice['dismissible'] ? '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice</span></button>' : '');
+            printf('<div class="notice b8-notice notice-%1$s %2$s" data-notice_id="%3$s" data-nonce="%4$s" data-action="%5$s" style="%6$s">%7$s%8$s</div>', esc_attr($notice['type']), esc_attr(implode(' ', $classes)), esc_attr($notice['id']), esc_attr($notice['nonce']), esc_attr($notice['action']), esc_attr($notice['style']), wp_kses_post(wptexturize($message)), $notice['dismissible'] ? '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice</span></button>' : '');
         }
     }
     /**
@@ -138,7 +138,7 @@ class Notices
         ?>
 		<script>
 		jQuery(($) => {
-			$('.notice.b8-notice').on('click', '.notice-dismiss, [data-dismiss]', function (e) {
+			$('.notice.b8-notice').on('click', '.notice-dismiss, [data-dismiss], [data-snooze]', function (e) {
 				e.preventDefault();
 				const $notice = $(this).closest('.notice');
 				$.post(ajaxurl, $notice.data(), (r) => r.success && $notice.fadeOut());
@@ -157,7 +157,7 @@ class Notices
      */
     public function ajax_dismiss_notice(): void
     {
-        if (!check_ajax_referer($this->ajax_action, 'nonce', false) || !current_user_can('manage_options')) {
+        if (!check_ajax_referer($this->ajax_action, 'nonce', false) || !is_user_logged_in()) {
             wp_send_json_error('Invalid request');
         }
         $notice_id = isset($_POST['notice_id']) ? sanitize_text_field(wp_unslash($_POST['notice_id'])) : '';

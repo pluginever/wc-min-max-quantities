@@ -3,7 +3,6 @@
 namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
 
 use WooCommerceMinMaxQuantities\B8\Plugin\App;
-use WooCommerceMinMaxQuantities\B8\Plugin\Utils;
 use Exception;
 defined('ABSPATH') || exit;
 /**
@@ -64,7 +63,7 @@ class Template
          * @param string $base_path Base path for templates.
          */
         $file_path = $this->app->apply_filters('template_path', $file_path, $template, $base_path);
-        if (!$this->app->utils->file_exists($file_path)) {
+        if (!$this->app->fs->exists($file_path)) {
             throw new Exception(esc_html("The view file [{$file_path}] doesn't exist!"));
         }
         extract($data, EXTR_SKIP);
@@ -86,6 +85,6 @@ class Template
         if (empty($base_path)) {
             $base_path = $this->app->templates_path();
         }
-        return $this->app->utils->path_join($base_path, $template . '.php');
+        return rtrim($base_path, '/') . '/' . $template . '.php';
     }
 }

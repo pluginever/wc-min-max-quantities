@@ -43,18 +43,18 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:byteever/plugin.git",
-                "reference": "eef32537d162506f25cc085647037346207fe074"
+                "reference": "c9b7019ff5fd17b22ca4ed9fafbbe5fc51df9133"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/byteever/plugin/zipball/eef32537d162506f25cc085647037346207fe074",
-                "reference": "eef32537d162506f25cc085647037346207fe074",
+                "url": "https://api.github.com/repos/byteever/plugin/zipball/c9b7019ff5fd17b22ca4ed9fafbbe5fc51df9133",
+                "reference": "c9b7019ff5fd17b22ca4ed9fafbbe5fc51df9133",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4"
             },
-            "time": "2026-02-15T18:24:02+00:00",
+            "time": "2026-03-09T14:07:02+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

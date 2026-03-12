@@ -48,7 +48,7 @@ interface ContainerInterface
      *
      * @param Closure|string|array $id The abstract type or array with alias (e.g., array('alias' => AbstractClass::class)).
      * @param Closure|string|null  $concrete The concrete implementation.
-     * @param bool                 $shared Whether the binding should be shared (default: false).
+     * @param bool                 $shared Whether the binding should be shared (default: true).
      *
      * @return static Static instance for method chaining.
      * @throws ContainerException If the concrete type is not a string or Closure.

@@ -457,8 +457,10 @@ class Queue
     {
         try {
             if (!has_action($action['hook'])) {
-                throw new \Exception(sprintf('Action for %1$s cannot be processed as no callbacks are registered.', $action['hook']));
+                $this->remove_action($action['id']);
+                return;
             }
+            $this->remove_action($action['id']);
             /**
              * Fires when processing a queued action.
              *
@@ -467,7 +469,6 @@ class Queue
              * @param mixed ...$args Action arguments.
              */
             do_action_ref_array($action['hook'], array_values($action['args']));
-            $this->remove_action($action['id']);
             /**
              * Fires when an action completes successfully.
              *
@@ -481,7 +482,6 @@ class Queue
         } catch (\Exception $e) {
             ++$action['attempts'];
             if ($action['attempts'] >= $action['max_attempts']) {
-                $this->remove_action($action['id']);
                 /**
                  * Fires when an action fails after maximum retry attempts.
                  *
@@ -494,7 +494,9 @@ class Queue
                  */
                 do_action($this->hook_prefix . '_action_failed', $action['id'], $action['hook'], $action['args'], $e->getMessage());
             } else {
-                $this->update_action($action);
+                $data = $this->get_queue_data();
+                $data['actions'][] = $action;
+                $this->update_queue_data($data);
             }
         }
     }

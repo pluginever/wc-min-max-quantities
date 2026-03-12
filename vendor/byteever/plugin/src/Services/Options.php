@@ -176,7 +176,7 @@ class Options implements \ArrayAccess
         if (str_starts_with($key, $clean_prefix . '_')) {
             return $key;
         }
-        return $this->app->utils->str_join(array($clean_prefix, $key), '_');
+        return $clean_prefix . '_' . $key;
     }
     // ==============================================
     // ArrayAccess Implementation

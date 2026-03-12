@@ -52,7 +52,7 @@ class Logger
     {
         $this->app = $app;
         $this->name = $name ?? $this->app->slug;
-        $this->log_level = $this->app->log_level ?? 'error';
+        $this->log_level = $this->app->log_level;
     }
     /**
      * Log an emergency message.
@@ -186,8 +186,8 @@ class Logger
     {
         $upload_dir = wp_upload_dir();
         $log_dir = $upload_dir['basedir'] . '/' . $this->app->slug;
-        if (!$this->app->utils->fs()->exists($log_dir)) {
-            $this->app->utils->fs()->mkdir($log_dir, FS_CHMOD_DIR);
+        if (!$this->app->fs->exists($log_dir)) {
+            $this->app->fs->protect($log_dir);
         }
         $auth_key = defined('AUTH_KEY') ? AUTH_KEY : 'default-key';
         $hash = substr(md5($auth_key), 0, 8);
@@ -204,10 +204,10 @@ class Logger
     {
         $upload_dir = wp_upload_dir();
         $log_dir = $upload_dir['basedir'] . '/' . $this->app->slug;
-        if (!$this->app->utils->fs()->exists($log_dir)) {
+        if (!$this->app->fs->exists($log_dir)) {
             return true;
         }
-        return $this->app->utils->fs()->rmdir($log_dir, true);
+        return $this->app->fs->rmdir($log_dir, true);
     }
     /**
      * Check if message should be logged based on minimum log level.
@@ -277,13 +277,13 @@ class Logger
     protected function log_rotate(): void
     {
         $log_file = $this->get_file();
-        $max_size = $this->app->log_max_size ?? 5 * 1024 * 1024;
-        if (!$this->app->utils->file_exists($log_file)) {
+        $max_size = $this->app->log_max_size;
+        if (!$this->app->fs->exists($log_file)) {
             return;
         }
-        $size = $this->app->utils->file_size($log_file);
+        $size = $this->app->fs->size($log_file);
         if (false !== $size && $size >= $max_size) {
-            $this->app->utils->file_delete($log_file);
+            $this->app->fs->delete($log_file);
         }
     }
     /**
@@ -298,7 +298,7 @@ class Logger
     {
         $this->log_rotate();
         $log_file = $this->get_file();
-        $existing = $this->app->utils->file_exists($log_file) ? $this->app->utils->file_get_contents($log_file) : '';
-        $this->app->utils->file_put_contents($log_file, $existing . $message . PHP_EOL);
+        $existing = $this->app->fs->exists($log_file) ? $this->app->fs->get($log_file) : '';
+        $this->app->fs->put($log_file, $existing . $message . PHP_EOL);
     }
 }

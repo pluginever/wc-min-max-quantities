@@ -21,21 +21,21 @@ class Router
      * @since 1.0.0
      * @var App
      */
-    protected $app;
+    protected App $app;
     /**
      * REST API namespace.
      *
      * @since 1.0.0
      * @var string
      */
-    protected $namespace;
+    protected string $namespace;
     /**
      * Current route prefix.
      *
      * @since 1.0.0
      * @var string
      */
-    protected $prefix = '';
+    protected string $prefix = '';
     /**
      * Current route permission.
      *
@@ -49,14 +49,14 @@ class Router
      * @since 1.0.0
      * @var string|null
      */
-    protected $controller = null;
+    protected ?string $controller = null;
     /**
      * Route group stack.
      *
      * @since 1.0.0
      * @var array
      */
-    protected $group_stack = array();
+    protected array $group_stack = array();
     /**
      * Constructor.
      *
@@ -238,6 +238,30 @@ class Router
         return $this;
     }
     /**
+     * Make an internal REST API request.
+     *
+     * @since 1.0.0
+     *
+     * @param string $endpoint REST API endpoint path.
+     * @param array  $params   Request parameters.
+     * @param string $method   HTTP method (GET, POST, PUT, PATCH, DELETE).
+     *
+     * @return mixed Response data.
+     */
+    public function request($endpoint, $params = array(), $method = 'GET')
+    {
+        $request = new \WP_REST_Request($method, $endpoint);
+        if ($params && 'GET' === $method) {
+            $request->set_query_params($params);
+        } elseif ($params && in_array($method, array('POST', 'PUT', 'PATCH', 'DELETE'), true)) {
+            $request->set_body_params($params);
+        }
+        $response = rest_do_request($request);
+        $server = rest_get_server();
+        $json = wp_json_encode($server->response_to_data($response, false));
+        return json_decode($json, true);
+    }
+    /**
      * Add and register a route with WordPress REST API.
      *
      * @param string          $method HTTP method.
@@ -249,10 +273,12 @@ class Router
      */
     protected function add_route($method, $route, $handler): self
     {
-        $pattern = ($this->prefix ? rtrim($this->prefix, '/') . '/' : '') . ltrim($route, '/');
-        $controller_class = $this->controller;
+        $pattern = rtrim(($this->prefix ? rtrim($this->prefix, '/') . '/' : '') . ltrim($route, '/'), '/');
+        $controller_class = null;
         if (is_array($handler) && 2 === count($handler) && is_string($handler[0])) {
             $controller_class = $handler[0];
+        } elseif (is_string($handler) && $this->controller) {
+            $controller_class = $this->controller;
         }
         $args = array('methods' => $method, 'callback' => $handler, 'permission_callback' => $this->permission, 'args' => array());
         if ($controller_class) {

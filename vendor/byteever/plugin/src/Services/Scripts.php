@@ -133,7 +133,7 @@ class Scripts
      */
     protected function get_asset_url($src): string
     {
-        return preg_match('/^(https?:)?\/\//', $src) ? $src : $this->app->assets_url($src);
+        return preg_match('/^(https?:)?\/\//', $src) ? $src : $this->app->assets_url($this->app->build_dir . '/' . $src);
     }
     /**
      * Get asset path from source.
@@ -145,6 +145,6 @@ class Scripts
      */
     protected function get_asset_path($src): string
     {
-        return preg_match('/^(https?:)?\/\//', $src) ? str_replace($this->app->plugin_url(), $this->app->plugin_path(), $src) : $this->app->assets_path($src);
+        return preg_match('/^(https?:)?\/\//', $src) ? str_replace($this->app->plugin_url(), $this->app->plugin_path(), $src) : $this->app->assets_path($this->app->build_dir . '/' . $src);
     }
 }

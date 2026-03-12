@@ -66,6 +66,17 @@ namespace WooCommerceMinMaxQuantities {
     array (
     ),
   ),
+  'B8\\Plugin\\Services\\Filesystem' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Filesystem',
+    'isabstract' => false,
+    'namespace' => 'B8\\Plugin\\Services',
+    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Filesystem',
+    'implements' => 
+    array (
+    ),
+  ),
   'B8\\Plugin\\Services\\Flash' => 
   array (
     'type' => 'class',
@@ -122,6 +133,17 @@ namespace WooCommerceMinMaxQuantities {
     array (
     ),
   ),
+  'B8\\Plugin\\Services\\Request' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Request',
+    'isabstract' => false,
+    'namespace' => 'B8\\Plugin\\Services',
+    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Request',
+    'implements' => 
+    array (
+    ),
+  ),
   'B8\\Plugin\\Services\\Router' => 
   array (
     'type' => 'class',
@@ -129,17 +151,6 @@ namespace WooCommerceMinMaxQuantities {
     'isabstract' => false,
     'namespace' => 'B8\\Plugin\\Services',
     'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Router',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Sanitizer' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Sanitizer',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Sanitizer',
     'implements' => 
     array (
     ),
@@ -155,18 +166,6 @@ namespace WooCommerceMinMaxQuantities {
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Settings' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Settings',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Settings',
-    'implements' => 
-    array (
-      0 => 'ArrayAccess',
-    ),
-  ),
   'B8\\Plugin\\Services\\Template' => 
   array (
     'type' => 'class',
@@ -178,26 +177,24 @@ namespace WooCommerceMinMaxQuantities {
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Validator' => 
+  'B8\\Plugin\\Traits\\HookableTrait' => 
   array (
-    'type' => 'class',
-    'classname' => 'Validator',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Validator',
-    'implements' => 
+    'type' => 'trait',
+    'traitname' => 'HookableTrait',
+    'namespace' => 'B8\\Plugin\\Traits',
+    'use' => 
     array (
+      0 => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Traits\\HookableTrait',
     ),
   ),
-  'B8\\Plugin\\Utils' => 
+  'B8\\Plugin\\Traits\\PathableTrait' => 
   array (
-    'type' => 'class',
-    'classname' => 'Utils',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Utils',
-    'implements' => 
+    'type' => 'trait',
+    'traitname' => 'PathableTrait',
+    'namespace' => 'B8\\Plugin\\Traits',
+    'use' => 
     array (
+      0 => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Traits\\PathableTrait',
     ),
   ),
   'B8\\Plugin\\Container\\ContainerInterface' => 
