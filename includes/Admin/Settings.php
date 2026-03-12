@@ -153,8 +153,7 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 	 * @return void
 	 */
 	protected function output_premium_widget() {
-		// bail if premium is active.
-		if ( wc_min_max_quantities()->utils->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+		if ( wc_min_max_quantities()->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
 			return;
 		}
 
