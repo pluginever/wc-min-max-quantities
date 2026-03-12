@@ -90,7 +90,7 @@ class Cart {
 		$product_id   = $cart_item['product_id'] ?? 0;
 		$variation_id = $cart_item['variation_id'] ?? 0;
 
-		if ( ! empty( $product_id ) && ! wcmmq_is_product_excluded( $product_id, $variation_id ) ) {
+		if ( ! empty( $product_id ) && ! wcmmq_is_product_excluded( $product_id, $variation_id ) && ! wcmmq_is_allow_combination( $product_id ) ) {
 			$limits = wcmmq_get_product_limits( $product_id, $variation_id );
 			if ( ! empty( $limits[ $limit_key ] ) ) {
 				return $limits[ $limit_key ];
