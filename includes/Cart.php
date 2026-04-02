@@ -223,13 +223,21 @@ class Cart {
 		if ( $limits['step'] > 0 ) {
 			$data['step'] = 1;
 			// If both minimum and maximum quantity are set, make sure both are equally divisible by group of quantity.
-			if ( ( empty( $limits['max_qty'] ) || absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) && ( empty( $limits['min_qty'] ) || absint( $limits['min_qty'] ) % absint( $limits['step'] ) === 0 ) ) {
+			if ( ( empty( $limits['max_qty'] ) || fmod( floatval( $limits['max_qty'] ), floatval( $limits['step'] ) ) < 1e-9 ) && ( empty( $limits['min_qty'] ) || fmod( floatval( $limits['max_qty'] ), floatval( $limits['step'] ) ) < 1e-9 ) ) {
 				$data['step'] = $limits['step'];
 			}
 		}
 
 		if ( empty( $limits['min_qty'] ) && ! $product->is_type( 'group' ) && $limits['step'] > 0 ) {
 			$data['min_value'] = $limits['step'];
+		}
+
+		// Change input type to decimal if step, min or max value is decimal.
+		if ( ( isset( $data['step'] ) && is_numeric( $data['step'] ) && fmod( $data['step'], 1.0 ) !== 0.0 ) ||
+			( isset( $data['min_value'] ) && is_numeric( $data['min_value'] ) && fmod( $data['min_value'], 1.0 ) !== 0.0 ) ||
+			( isset( $data['max_value'] ) && is_numeric( $data['max_value'] ) && fmod( $data['max_value'], 1.0 ) !== 0.0 ) ) {
+			$data['inputmode'] = 'decimal';
+			// $data['pattern']   = '[0-9]*[.,]?[0-9]+';
 		}
 
 		return $data;
@@ -271,7 +279,7 @@ class Cart {
 
 		if ( $product_limits['max_qty'] > 0 && ( $total_quantity > $product_limits['max_qty'] ) ) {
 			/* translators: %1$s: Product name, %2$d: Maximum quantity */
-			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), number_format( $product_limits['max_qty'] ) );
+			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), wc_format_decimal( $product_limits['max_qty'] ) );
 			wcmmq_add_cart_notice( $message );
 
 			return false;
@@ -279,14 +287,14 @@ class Cart {
 
 		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['min_qty'] > 0 && $total_quantity < $product_limits['min_qty'] ) {
 			/* translators: %1$s: Product name, %2$d: Minimum quantity */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $product_limits['min_qty'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['min_qty'] ) ) );
 
 			return false;
 		}
 
-		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['step'] > 0 && ( (int) $quantity % (int) $product_limits['step'] > 0 ) ) {
+		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['step'] > 0 && fmod( $quantity, $product_limits['step'] ) > 0 ) {
 			/* translators: %1$s: Product name, %2$d: Group amount */
-			wcmmq_add_cart_notice( sprintf( __( 'The quantity of %1$s must be purchased in groups of %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The quantity of %1$s must be purchased in groups of %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['step'] ) ) );
 
 			return false;
 		}
@@ -322,7 +330,6 @@ class Cart {
 		$quantities  = array();
 		$line_amount = array();
 
-		// if all the products in the cart is excluded product.
 		$cart_excluded = true;
 
 		foreach ( WC()->cart->get_cart() as $item ) {
@@ -346,7 +353,6 @@ class Cart {
 			$product_ids[] = $product_id;
 		}
 
-		// bail if all the items in the cart is excluded.
 		if ( $cart_excluded ) {
 			return;
 		}
@@ -359,25 +365,23 @@ class Cart {
 
 			if ( $product_limits['max_qty'] > 0 && ( $quantity > $product_limits['max_qty'] ) ) {
 				/* translators: %1$s: Product name, %2$d: Maximum quantity */
-				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_title() ), number_format( $product_limits['max_qty'] ) );
+				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_title() ), wc_format_decimal( $product_limits['max_qty'] ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 				wcmmq_add_cart_notice( $message );
-
 				return;
 			}
 
 			if ( $product_limits['min_qty'] > 0 && $quantity < $product_limits['min_qty'] ) {
 				/* translators: %1$s: Product name, %2$d: Minimum quantity */
-				wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), number_format( $product_limits['min_qty'] ) ) );
+				wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), wc_format_decimal( $product_limits['min_qty'] ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-
 				return;
 			}
-			if ( $product_limits['step'] > 0 && ( (float) $quantity % (float) $product_limits['step'] > 0 ) ) {
-				/* translators: %1$s: Product name, %2$d: quantity amount */
-				wcmmq_add_cart_notice( sprintf( __( '%1$s must be bought in groups of %2$s. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
-				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
+			if ( $product_limits['step'] > 0 && fmod( $quantity, $product_limits['step'] ) > 1e-9 ) {
+				/* translators: %1$s: Product name, %2$d: quantity amount */
+				wcmmq_add_cart_notice( sprintf( __( '%1$s must be bought in groups of %2$s. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['step'] ) ) );
+				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 				return;
 			}
 		}
@@ -386,37 +390,31 @@ class Cart {
 		$order_total    = array_sum( array_values( $line_amount ) );
 		$cart_limits    = wcmmq_get_cart_limits();
 
-		if ( (int) $cart_limits['min_qty'] > 0 && $order_quantity < (int) $cart_limits['min_qty'] ) {
+		if ( floatval( $cart_limits['min_qty'] ) > 0 && $order_quantity < floatval( $cart_limits['min_qty'] ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity in the cart is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['min_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity in the cart is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), wc_format_decimal( $cart_limits['min_qty'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-
 			return;
-
 		}
 
-		if ( (int) $cart_limits['max_qty'] > 0 && $order_quantity > (int) $cart_limits['max_qty'] ) {
+		if ( floatval( $cart_limits['max_qty'] ) > 0 && $order_quantity > floatval( $cart_limits['max_qty'] ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['max_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), wc_format_decimal( $cart_limits['max_qty'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-
 			return;
 		}
 
-		if ( (int) $cart_limits['min_total'] > 0 && $order_total < (int) $cart_limits['min_total'] ) {
+		if ( floatval( $cart_limits['min_total'] ) > 0 && $order_total < floatval( $cart_limits['min_total'] ) ) {
 			/* translators: %d: Minimum amount of items in the cart */
 			wcmmq_add_cart_notice( sprintf( __( 'The minimum allowed order total value is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['min_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-
 			return;
-
 		}
 
-		if ( (int) $cart_limits['max_total'] > 0 && $order_total > (int) $cart_limits['max_total'] ) {
+		if ( floatval( $cart_limits['max_total'] ) > 0 && $order_total > floatval( $cart_limits['max_total'] ) ) {
 			/* translators: %d: Maximum amount of items in the cart */
 			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order total value is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['max_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-
 			return;
 		}
 	}
@@ -433,7 +431,9 @@ class Cart {
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
 		}
-		$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 1;
+//		$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 1;
+		$quantity = isset( $_POST['quantity'] ) ? floatval( wp_unslash( $_POST['quantity'] ) ) : 1;
+
 		if ( empty( $quantity ) ) {
 			return $quantity;
 		}

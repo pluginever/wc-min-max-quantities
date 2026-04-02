@@ -113,6 +113,7 @@ final class Plugin extends B8\Plugin\App {
 	public function register_services(): void {
 		$this->make( Installer::class );
 		$this->make( Cart::class );
+		$this->make( DecimalQuantity::class );
 
 		if ( is_admin() ) {
 			$this->make( Admin\Admin::class );

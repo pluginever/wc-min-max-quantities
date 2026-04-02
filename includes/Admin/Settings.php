@@ -39,37 +39,44 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 			case 'general':
 				$settings = array(
 					array(
-						// Product restrictions section.
 						'title' => __( 'Product Limits', 'wc-min-max-quantities' ),
 						'type'  => 'title',
 						'id'    => 'wcmmq_product_restrictions',
 						'desc'  => __( 'Set the minimum and maximum limits for products. Restrictions will be applied to every product individually.', 'wc-min-max-quantities' ),
 					),
-					// set the minimum quantity.
 					array(
-						'title'   => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_min_qty',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Minimum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_min_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => '0.5',
+							'min'  => '0',
+						),
 					),
-					// set the maximum quantity.
 					array(
-						'title'   => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_max_qty',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Maximum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_max_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => '0.5',
+							'min'  => '0',
+						),
 					),
-					// Quantity step.
 					array(
-						'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_step',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Quantity step', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_step',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => '0.5',
+							'min'  => '0',
+						),
 					),
-					// end product restrictions section.
 					array(
 						'type' => 'sectionend',
 						'id'   => 'wcmmq_product_restrictions',
