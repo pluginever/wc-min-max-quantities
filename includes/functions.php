@@ -15,6 +15,61 @@ function wc_min_max_quantities() { // phpcs:ignore WordPress.NamingConventions.V
 }
 
 /**
+ * Whether WooCommerce is currently treating stock quantities as integers.
+ *
+ * Wraps wc_is_stock_amount_integer() (WC 10.1+) with a safe fallback to true for
+ * older WooCommerce versions that don't expose the helper.
+ *
+ * @since 2.3.0
+ * @return bool
+ */
+function wcmmq_is_integer_qty() {
+	return ! function_exists( 'wc_is_stock_amount_integer' ) || wc_is_stock_amount_integer();
+}
+
+/**
+ * Format a quantity for display in user-facing messages.
+ *
+ * Uses localized integer formatting when WooCommerce is in integer mode, otherwise
+ * preserves decimal precision and trims trailing zeros.
+ *
+ * @since 2.3.0
+ * @param int|float $qty The quantity to format.
+ * @return string
+ */
+function wcmmq_format_qty( $qty ) {
+	if ( wcmmq_is_integer_qty() ) {
+		return number_format_i18n( (int) $qty );
+	}
+
+	return wc_trim_zeros( (string) (float) $qty );
+}
+
+/**
+ * Check whether a quantity is a valid multiple of a given step.
+ *
+ * Uses integer modulo when WooCommerce is in integer mode, and `fmod` with a
+ * floating-point epsilon tolerance otherwise. Returns true when the step is
+ * zero or negative so callers can skip the check for products without a step.
+ *
+ * @since 2.3.0
+ * @param int|float $qty  The quantity to check.
+ * @param int|float $step The step value.
+ * @return bool
+ */
+function wcmmq_is_valid_step( $qty, $step ) {
+	if ( $step <= 0 ) {
+		return true;
+	}
+
+	if ( wcmmq_is_integer_qty() ) {
+		return absint( $qty ) % absint( $step ) === 0;
+	}
+
+	return abs( fmod( (float) $qty, (float) $step ) ) < 0.000001;
+}
+
+/**
  * Check if the product is excluded from min/max quantity.
  *
  * @param int $product_id Product ID.
@@ -48,16 +103,16 @@ function wcmmq_get_product_limits( $product_id, $variation_id = 0 ) {
 
 		if ( $override ) {
 			$limits = array(
-				'step'    => (int) get_post_meta( $product->get_id(), '_wcmmq_step', true ),
-				'min_qty' => (int) get_post_meta( $product->get_id(), '_wcmmq_min_qty', true ),
-				'max_qty' => (int) get_post_meta( $product->get_id(), '_wcmmq_max_qty', true ),
+				'step'    => (float) get_post_meta( $product->get_id(), '_wcmmq_step', true ),
+				'min_qty' => (float) get_post_meta( $product->get_id(), '_wcmmq_min_qty', true ),
+				'max_qty' => (float) get_post_meta( $product->get_id(), '_wcmmq_max_qty', true ),
 				'rule'    => 'product',
 			);
 		} else {
 			$limits = array(
-				'step'    => (int) get_option( 'wcmmq_step', 1 ),
-				'min_qty' => (int) get_option( 'wcmmq_min_qty', 1 ),
-				'max_qty' => (int) get_option( 'wcmmq_max_qty', 0 ),
+				'step'    => (float) get_option( 'wcmmq_step', 1 ),
+				'min_qty' => (float) get_option( 'wcmmq_min_qty', 1 ),
+				'max_qty' => (float) get_option( 'wcmmq_max_qty', 0 ),
 				'rule'    => 'global',
 			);
 		}
@@ -79,10 +134,10 @@ function wcmmq_get_cart_limits() {
 	$limits = apply_filters(
 		'wc_min_max_quantities_cart_limits',
 		array(
-			'min_qty'   => (int) get_option( 'wcmmq_min_cart_qty' ),
-			'max_qty'   => (int) get_option( 'wcmmq_max_cart_qty' ),
-			'min_total' => (int) get_option( 'wcmmq_min_cart_total' ),
-			'max_total' => (int) get_option( 'wcmmq_max_cart_total' ),
+			'min_qty'   => (float) get_option( 'wcmmq_min_cart_qty' ),
+			'max_qty'   => (float) get_option( 'wcmmq_max_cart_qty' ),
+			'min_total' => (float) get_option( 'wcmmq_min_cart_total' ),
+			'max_total' => (float) get_option( 'wcmmq_max_cart_total' ),
 		)
 	);
 

@@ -47,27 +47,47 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 					),
 					// set the minimum quantity.
 					array(
-						'title'   => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_min_qty',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Minimum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_min_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					// set the maximum quantity.
 					array(
-						'title'   => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_max_qty',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Maximum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_max_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					// Quantity step.
 					array(
-						'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_step',
-						'default' => 0,
-						'type'    => 'number',
+						'title'             => __( 'Quantity step', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_step',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
+					),
+					// Allow decimal quantities.
+					array(
+						'title'   => __( 'Allow decimal quantities', 'wc-min-max-quantities' ),
+						'desc'    => __( 'Allow products and cart items to use fractional quantities (e.g., 0.5, 1.25). Some third-party integrations, reports, and stock sync tools may assume whole numbers — test on staging before enabling in production.', 'wc-min-max-quantities' ),
+						'id'      => 'wcmmq_decimal_quantities',
+						'default' => 'no',
+						'type'    => 'checkbox',
 					),
 					// end product restrictions section.
 					array(
@@ -81,20 +101,28 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 						'desc'  => __( 'Set the minimum and maximum limits for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
 					),
 					array(
-						'title'    => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_min_cart_qty',
-						'default'  => 0,
-						'type'     => 'number',
+						'title'             => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'desc_tip'          => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_min_cart_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					array(
-						'title'    => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_max_cart_qty',
-						'default'  => 0,
-						'type'     => 'number',
+						'title'             => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
+						'desc'              => __( 'Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+						'desc_tip'          => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
+						'id'                => 'wcmmq_max_cart_qty',
+						'default'           => 0,
+						'type'              => 'number',
+						'custom_attributes' => array(
+							'step' => 'any',
+							'min'  => '0',
+						),
 					),
 					array(
 						'title'             => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
