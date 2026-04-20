@@ -3,7 +3,7 @@
  * Plugin Name:          Min Max Quantities
  * Plugin URI:           https://pluginever.com/woocommerce-min-max-quantities-pro/
  * Description:          The plugin allows you to Set minimum and maximum allowable product quantities and price per product and order.
- * Version:              2.2.8
+ * Version:              2.2.9
  * Requires at least:    5.2
  * Tested up to:         6.9
  * Requires PHP:         7.4
@@ -14,7 +14,7 @@
  * Text Domain:          wc-min-max-quantities
  * Domain Path:          /languages
  * WC requires at least: 3.0.0
- * WC tested up to:      10.6
+ * WC tested up to:      10.7
  * Requires Plugins:     woocommerce
  *
  * @link                 https://pluginever.com
@@ -48,7 +48,7 @@ require_once __DIR__ . '/includes/functions.php';
 WooCommerceMinMaxQuantities\Plugin::create(
 	__FILE__,
 	array(
-		'version'       => '2.2.8',
+		'version'       => '2.2.9',
 		'option_prefix' => 'wcmmq',
 		'hook_prefix'   => 'wc_min_max_quantities',
 		'settings_url'  => admin_url( 'admin.php?page=wc-min-max-quantities' ),

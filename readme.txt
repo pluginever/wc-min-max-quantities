@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 6.9
-Stable tag: 2.2.8
+Stable tag: 2.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,13 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.2.9 (20th Apr 2026) =
+* Fix: Stale product min/max quantity values when a persistent object cache (e.g., Redis, Memcached) is active. Product limit caches are now declared non-persistent so updates take effect immediately without a manual cache flush.
+* Compatibility: Checked compatibility with WooCommerce v10.7.
+
+= 2.2.8 (31st Mar 2026) =
+* Enhance: Updated development dependencies for improved build-chain security.
+
 = 2.2.7 (12th Mar 2026) =
 * Fix: Addressed a minor issue related to the plugin's compatibility with the framework update in version 2.2.6.
 
