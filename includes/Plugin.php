@@ -30,6 +30,12 @@ final class Plugin extends B8\Plugin\App {
 		define( 'WCMMQ_ASSETS_PATH', $this->assets_path() );
 		define( 'WCMMQ_ASSETS_URL', $this->assets_url() );
 
+		// Keep our caches request-scoped. The cached product limits pass through
+		// filters whose output can depend on the current user (e.g. role-based
+		// overrides from the Pro add-on), so persisting them across requests in
+		// Redis/Memcached/etc. would leak one user's limits to another.
+		wp_cache_add_non_persistent_groups( array( 'wc-min-max-quantities' ) );
+
 		register_activation_hook( $this->file, array( Installer::class, 'install' ) );
 		add_filter( 'plugin_action_links_' . $this->basename(), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
