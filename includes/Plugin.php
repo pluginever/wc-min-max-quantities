@@ -36,6 +36,11 @@ final class Plugin extends B8\Plugin\App {
 		// Redis/Memcached/etc. would leak one user's limits to another.
 		wp_cache_add_non_persistent_groups( array( 'wc-min-max-quantities' ) );
 
+		if ( 'yes' === get_option( 'wcmmq_decimal_quantities', 'no' ) ) {
+			remove_filter( 'woocommerce_stock_amount', 'intval' );
+			add_filter( 'woocommerce_stock_amount', 'floatval' );
+		}
+
 		register_activation_hook( $this->file, array( Installer::class, 'install' ) );
 		add_filter( 'plugin_action_links_' . $this->basename(), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
