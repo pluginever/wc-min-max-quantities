@@ -1,8 +1,8 @@
 === Min Max Quantities - Set Minimum/Maximum Quantity & Price Limits with Step Control for WooCommerce ===
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
-Tested up to: 6.9
-Stable tag: 2.2.9
+Tested up to: 7.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,10 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.3.0 (21st May 2026) =
+* Enhance: Added flash sale notice.
+* Compatibility: Checked compatibility with latest version of WordPress 7.0.
+
 = 2.2.9 (20th Apr 2026) =
 * Fix: Stale product min/max quantity values when a persistent object cache (e.g., Redis, Memcached) is active. Product limit caches are now declared non-persistent so updates take effect immediately without a manual cache flush.
 * Compatibility: Checked compatibility with WooCommerce v10.7.

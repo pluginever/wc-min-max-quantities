@@ -93,7 +93,7 @@ abstract class App extends Container
      * Retrieves the singleton instance.
      *
      * @since 1.0.0
-     * @return self The instance of the plugin.
+     * @return static The instance of the plugin.
      */
     public static function instance(): self
     {

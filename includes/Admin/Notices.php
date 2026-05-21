@@ -47,9 +47,6 @@ class Notices {
 		// Show after 5 days.
 		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 
-			// phpcs:disable
-			// TODO: Uncomment the below code when other offer is over.
-			/*
 			if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
 				// Upgrade notice.
 				wc_min_max_quantities()->notices->add(
@@ -61,8 +58,6 @@ class Notices {
 					)
 				);
 			}
-			*/
-			// phpcs:enable
 
 			// Review notice.
 			wc_min_max_quantities()->notices->add(
