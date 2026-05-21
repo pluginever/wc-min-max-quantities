@@ -216,7 +216,7 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 
 == Changelog ==
 = 2.3.0 (21st May 2026) =
-* Enhance: Added FLASH10 coupon notice for 10% off.
+* Enhance: Added flash sale notice.
 * Compatibility: Checked compatibility with latest version of WordPress 7.0.
 
 = 2.2.9 (20th Apr 2026) =
