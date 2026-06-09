@@ -1,159 +1,231 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\Admin;
+namespace PluginEver\MinMaxQuantities\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Settings.
+ * Handles the settings page.
  *
- * @since   1.1.4
- * @package WooCommerceMinMaxQuantities\Admin
+ * Renders the tabbed settings screen and registers its admin page. Field values
+ * are persisted through WooCommerce so the legacy `wcmmq_*` option keys are preserved.
+ *
+ * @since   2.3.0
+ * @package PluginEver\MinMaxQuantities\Admin
  */
-class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
+class Settings extends \PluginEver\MinMaxQuantities\B8\SettingsUI {
+
 	/**
-	 * Get settings tabs.
+	 * Capability required to manage the settings.
 	 *
-	 * @since 1.1.4
-	 * @return array
+	 * @since 2.3.0
+	 * @var string
 	 */
-	public function get_tabs() {
-		$tabs = array(
-			'general' => __( 'General', 'wc-min-max-quantities' ),
-		);
-
-		return apply_filters( 'wc_min_max_quantities_settings_tabs', $tabs );
-	}
+	protected string $capability = 'manage_woocommerce';
 
 	/**
-	 * Get settings.
+	 * Register hooks.
 	 *
-	 * @param string $tab Current tab.
-	 *
-	 * @since 1.0.0
-	 * @return array
-	 */
-	public function get_settings( $tab ) {
-		$settings = array();
-		switch ( $tab ) {
-			case 'general':
-				$settings = array(
-					array(
-						// Product restrictions section.
-						'title' => __( 'Product Limits', 'wc-min-max-quantities' ),
-						'type'  => 'title',
-						'id'    => 'wcmmq_product_restrictions',
-						'desc'  => __( 'Set the minimum and maximum limits for products. Restrictions will be applied to every product individually.', 'wc-min-max-quantities' ),
-					),
-					// set the minimum quantity.
-					array(
-						'title'   => __( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_min_qty',
-						'default' => 0,
-						'type'    => 'number',
-					),
-					// set the maximum quantity.
-					array(
-						'title'   => __( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_max_qty',
-						'default' => 0,
-						'type'    => 'number',
-					),
-					// Quantity step.
-					array(
-						'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
-						'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'id'      => 'wcmmq_step',
-						'default' => 0,
-						'type'    => 'number',
-					),
-					// end product restrictions section.
-					array(
-						'type' => 'sectionend',
-						'id'   => 'wcmmq_product_restrictions',
-					),
-					array(
-						'title' => esc_html__( 'Cart Limits', 'wc-min-max-quantities' ),
-						'type'  => 'title',
-						'id'    => 'wcmmq_order_restrictions',
-						'desc'  => __( 'Set the minimum and maximum limits for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
-					),
-					array(
-						'title'    => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_min_cart_qty',
-						'default'  => 0,
-						'type'     => 'number',
-					),
-					array(
-						'title'    => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
-						'desc'     => __( 'Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
-						'id'       => 'wcmmq_max_cart_qty',
-						'default'  => 0,
-						'type'     => 'number',
-					),
-					array(
-						'title'             => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
-						'desc'              => __( 'Set minimum order total. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'                => 'wcmmq_min_cart_total',
-						'default'           => 0,
-						'type'              => 'number',
-						'custom_attributes' => array(
-							'step' => 'any',
-							'min'  => '0',
-						),
-					),
-					array(
-						'title'             => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
-						'desc'              => __( 'Set maximum order amount. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
-						'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
-						'id'                => 'wcmmq_max_cart_total',
-						'default'           => 0,
-						'type'              => 'number',
-						'custom_attributes' => array(
-							'step' => 'any',
-							'min'  => '0',
-						),
-					),
-					array(
-						'type' => 'sectionend',
-						'id'   => 'wcmmq_order_restrictions',
-					),
-				);
-				break;
-		}
-
-		/**
-		 * Filter the settings for the plugin.
-		 *
-		 * @param array $settings The settings.
-		 */
-		$settings = apply_filters( 'wc_min_max_quantities_' . $tab . '_settings', $settings );
-
-		/**
-		 * Filter the settings for the plugin.
-		 *
-		 * @param array  $settings The settings.
-		 * @param string $tab The current tab.
-		 *
-		 * @since 1.1.4
-		 */
-		return apply_filters( 'wc_min_max_quantities_settings', $settings, $tab );
-	}
-
-	/**
-	 * Output premium widget.
-	 *
-	 * @since 1.0.0
+	 * @since 2.3.0
 	 * @return void
 	 */
-	protected function output_premium_widget() {
-		if ( wc_min_max_quantities()->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+	public function register(): void {
+		$this->app->on_filter( 'admin_pages', array( $this, 'register_page' ) );
+		$this->app->on_filter( 'settings_wrap_classes', array( $this, 'wrap_classes' ) );
+		$this->app->on_filter( 'settings', array( $this, 'register_settings' ) );
+	}
+
+	/**
+	 * Register the settings admin page.
+	 *
+	 * @since 2.3.0
+	 * @param array<int, array<string, mixed>> $pages Admin page configurations.
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function register_page( array $pages ): array {
+		$pages[] = array(
+			'title'    => __( 'Min Max Quantities', 'wc-min-max-quantities' ),
+			'slug'     => 'wc-min-max-quantities',
+			'callback' => array( $this, 'render' ),
+			'position' => 90,
+		);
+
+		return $pages;
+	}
+
+	/**
+	 * Add the WooCommerce class to the settings page wrapper.
+	 *
+	 * @since 2.3.0
+	 * @param array<int, string> $classes Wrapper class names.
+	 * @return array<int, string>
+	 */
+	public function wrap_classes( array $classes ): array {
+		$classes[] = 'woocommerce';
+
+		return $classes;
+	}
+
+	/**
+	 * Register the plugin settings.
+	 *
+	 * @since 2.3.0
+	 * @param array<string, mixed> $settings Settings definition keyed by tab.
+	 * @return array<string, mixed>
+	 */
+	public function register_settings( array $settings ): array {
+		$fields = array(
+			array(
+				'title' => __( 'Product Limits', 'wc-min-max-quantities' ),
+				'type'  => 'title',
+				'id'    => 'wcmmq_product_restrictions',
+				'desc'  => __( 'Set the minimum and maximum limits for products. Restrictions will be applied to every product individually.', 'wc-min-max-quantities' ),
+			),
+			array(
+				'title'   => __( 'Minimum quantity', 'wc-min-max-quantities' ),
+				'desc'    => __( 'Set minimum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'id'      => 'wcmmq_min_qty',
+				'default' => 0,
+				'type'    => 'number',
+			),
+			array(
+				'title'   => __( 'Maximum quantity', 'wc-min-max-quantities' ),
+				'desc'    => __( 'Set maximum quantity for each product. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'id'      => 'wcmmq_max_qty',
+				'default' => 0,
+				'type'    => 'number',
+			),
+			array(
+				'title'   => __( 'Quantity step', 'wc-min-max-quantities' ),
+				'desc'    => __( 'Each time the quantity is changed, it will be increased or decreased by this value. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'id'      => 'wcmmq_step',
+				'default' => 0,
+				'type'    => 'number',
+			),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'wcmmq_product_restrictions',
+			),
+			array(
+				'title' => esc_html__( 'Cart Limits', 'wc-min-max-quantities' ),
+				'type'  => 'title',
+				'id'    => 'wcmmq_order_restrictions',
+				'desc'  => __( 'Set the minimum and maximum limits for the order. Restrictions will be applied to the order total.', 'wc-min-max-quantities' ),
+			),
+			array(
+				'title'    => esc_html__( 'Minimum quantity', 'wc-min-max-quantities' ),
+				'desc'     => __( 'Set minimum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
+				'id'       => 'wcmmq_min_cart_qty',
+				'default'  => 0,
+				'type'     => 'number',
+			),
+			array(
+				'title'    => esc_html__( 'Maximum quantity', 'wc-min-max-quantities' ),
+				'desc'     => __( 'Set maximum quantity for the order. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'desc_tip' => __( 'This will be calculated by adding the quantity of all products in the cart.', 'wc-min-max-quantities' ),
+				'id'       => 'wcmmq_max_cart_qty',
+				'default'  => 0,
+				'type'     => 'number',
+			),
+			array(
+				'title'             => esc_html__( 'Minimum total', 'wc-min-max-quantities' ),
+				'desc'              => __( 'Set minimum order total. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
+				'id'                => 'wcmmq_min_cart_total',
+				'default'           => 0,
+				'type'              => 'number',
+				'custom_attributes' => array(
+					'step' => 'any',
+					'min'  => '0',
+				),
+			),
+			array(
+				'title'             => esc_html__( 'Maximum total', 'wc-min-max-quantities' ),
+				'desc'              => __( 'Set maximum order amount. Keep it blank if you don’t want to set any rule for this.', 'wc-min-max-quantities' ),
+				'desc_tip'          => __( 'This will be calculated by adding the total of all products in the cart before any discounts have been applied.', 'wc-min-max-quantities' ),
+				'id'                => 'wcmmq_max_cart_total',
+				'default'           => 0,
+				'type'              => 'number',
+				'custom_attributes' => array(
+					'step' => 'any',
+					'min'  => '0',
+				),
+			),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'wcmmq_order_restrictions',
+			),
+		);
+
+		/**
+		 * Filter the general settings fields.
+		 *
+		 * Preserved from the pre-b8 release so the Pro add-on can inject fields.
+		 *
+		 * @since 1.1.4
+		 * @param array<int, array<string, mixed>> $fields The general settings fields.
+		 */
+		$fields = apply_filters( 'wc_min_max_quantities_general_settings', $fields );
+
+		$settings['general'] = array(
+			'title'  => __( 'General', 'wc-min-max-quantities' ),
+			'fields' => $fields,
+		);
+
+		/**
+		 * Filter the full settings definition.
+		 *
+		 * Preserved from the pre-b8 release for the Pro add-on (which adds its own tabs).
+		 *
+		 * @since 1.1.4
+		 * @param array<string, mixed> $settings The settings definition keyed by tab.
+		 */
+		return apply_filters( 'wc_min_max_quantities_settings', $settings );
+	}
+
+	/**
+	 * Output the settings fields through WooCommerce so the `wcmmq_*` option keys persist.
+	 *
+	 * @since 2.3.0
+	 * @param array<int, array<string, mixed>> $fields Prepared field declarations.
+	 * @return void
+	 */
+	protected function render_fields( array $fields ): void {
+		if ( function_exists( 'woocommerce_admin_fields' ) ) {
+			woocommerce_admin_fields( $fields );
+			return;
+		}
+
+		parent::render_fields( $fields );
+	}
+
+	/**
+	 * Persist the submitted settings fields through WooCommerce.
+	 *
+	 * @since 2.3.0
+	 * @param array<int, array<string, mixed>> $fields Field declarations for the current tab.
+	 * @param array<string, mixed>             $data   Unslashed request data.
+	 * @return bool True when the fields were saved.
+	 */
+	protected function save_fields( array $fields, array $data ): bool {
+		if ( ! function_exists( 'woocommerce_update_options' ) ) {
+			return false;
+		}
+
+		woocommerce_update_options( $fields );
+
+		return true;
+	}
+
+	/**
+	 * Output the settings sidebar with the premium upsell.
+	 *
+	 * @since 2.3.0
+	 * @return void
+	 */
+	protected function render_sidebar(): void {
+		if ( $this->app->is_pro_active() ) {
 			return;
 		}
 
@@ -163,10 +235,9 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 			__( 'Set restrictions for all products from a category.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions based on product categories.', 'wc-min-max-quantities' ),
 			__( 'Set restrictions for the order total.', 'wc-min-max-quantities' ),
-			__( 'Set restrictions for based on the user role.', 'wc-min-max-quantities' ),
+			__( 'Set restrictions based on the user role.', 'wc-min-max-quantities' ),
 			__( 'Allow your vendors to set their own minimum and maximum restrictions. Supports MultiVendorX and WCFM Marketplace.', 'wc-min-max-quantities' ),
 		);
-
 		?>
 		<div class="b8-card promo-panel">
 			<div class="b8-card__header">
@@ -182,57 +253,5 @@ class Settings extends \WooCommerceMinMaxQuantities\ByteKit\Admin\Settings {
 			</div>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Get promo plugins.
-	 *
-	 * @since 2.1.3
-	 * @return array
-	 */
-	public function get_promo_plugins() {
-		$promo_plugins = parent::get_promo_plugins();
-
-		$other_plugins = array(
-			array(
-				'name'        => 'Key Manager',
-				'slug'        => 'wc-key-manager',
-				'description' => 'Manage WooCommerce product keys and licenses with ease.',
-				'link'        => 'https://wordpress.org/plugins/wc-key-manager/',
-				'badge'       => esc_html__( 'Recommended', 'wc-min-max-quantities' ),
-				'button'      => esc_html__( 'Install Now', 'wc-min-max-quantities' ),
-			),
-		);
-
-		return array_merge( $promo_plugins, $other_plugins );
-	}
-
-	/**
-	 * Output tabs.
-	 *
-	 * @param array $tabs Tabs.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function output_tabs( $tabs ) {
-		parent::output_tabs( $tabs );
-		if ( wc_min_max_quantities()->docs_url ) {
-			printf( '<a href="%s" class="nav-tab" target="_blank">%s</a>', esc_url( wc_min_max_quantities()->docs_url ), esc_html__( 'Documentation', 'wc-min-max-quantities' ) );
-		}
-	}
-
-	/**
-	 * Output settings form.
-	 *
-	 * @param array $settings Settings.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	protected function output_form( $settings ) {
-		$current_tab = $this->get_current_tab();
-		do_action( 'wc_min_max_quantities_settings_' . $current_tab );
-		parent::output_form( $settings );
 	}
 }

@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: limit cost, limit quantity, min and max to purchase, cart limits, woocommerce limits
 Tested up to: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,9 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.4.0 =
+* Enhance: Migrated to the modern b8 framework and refactored the codebase. No changes to existing functionality.
+
 = 2.3.0 (21st May 2026) =
 * Enhance: Added flash sale notice.
 * Compatibility: Checked compatibility with latest version of WordPress 7.0.

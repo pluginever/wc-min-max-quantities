@@ -1,6 +1,6 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities;
+namespace PluginEver\MinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,9 +8,9 @@ defined( 'ABSPATH' ) || exit;
  * Class Installer.
  *
  * @since 1.1.4
- * @package WooCommerceMinMaxQuantities
+ * @package PluginEver\MinMaxQuantities
  */
-class Installer {
+class Installer extends B8\Component {
 
 	/**
 	 * Update callbacks.
@@ -25,11 +25,12 @@ class Installer {
 	);
 
 	/**
-	 * Installer constructor.
+	 * Register hooks.
 	 *
-	 * @since 1.1.4
+	 * @since 2.3.0
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'init', array( $this, 'check_update' ), 0 );
 	}
 
@@ -98,7 +99,6 @@ class Installer {
 			return;
 		}
 
-		Admin\Settings::instance()->save_defaults();
 		wc_min_max_quantities()->options->update_db_version( wc_min_max_quantities()->version, true );
 		add_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		set_transient( 'wc_min_max_quantities_activated', true, 30 );

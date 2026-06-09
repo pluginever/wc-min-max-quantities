@@ -3,7 +3,7 @@
  * Admin notice for review.
  *
  * @since 2.0.0
- * @package WooCommerceMinMaxQuantities\Admin\Notices
+ * @package PluginEver\MinMaxQuantities\Admin\Notices
  * @return void
  */
 

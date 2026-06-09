@@ -3,7 +3,7 @@
  * Admin notice for special offer.
  *
  * @since 2.2.5
- * @package WooCommerceMinMaxQuantities\Admin\Views\Notices
+ * @package PluginEver\MinMaxQuantities\Admin\Views\Notices
  * @return void
  */
 
