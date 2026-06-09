@@ -1,6 +1,8 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\Admin;
+namespace PluginEver\MinMaxQuantities\Admin;
+
+use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -9,14 +11,15 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  *
  * @since 2.0.0
  */
-class Notices {
+class Notices extends Component {
 
 	/**
-	 * Notices constructor.
+	 * Register hooks.
 	 *
-	 * @since 2.0.0
+	 * @since 2.3.0
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'admin_init', array( $this, 'admin_notices' ) );
 	}
 

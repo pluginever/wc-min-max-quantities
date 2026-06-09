@@ -3,7 +3,7 @@
  * Backwards compat.
  *
  * @since 1.2.0
- * @package WooCommerceMinMaxQuantities
+ * @package PluginEver\MinMaxQuantities
  */
 
 defined( 'ABSPATH' ) || exit;
