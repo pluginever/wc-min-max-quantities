@@ -19,7 +19,7 @@
 		"@byteever/scripts": "^3.0.4",
 		"@wordpress/browserslist-config": "^6.39.0",
 		"@wordpress/prettier-config": "^4.39.0",
-		"@wordpress/scripts": "^31.7.0"
+		"@wordpress/scripts": "^33.0.0"
 	},
 	"scripts": {
 		"build": "wp-scripts build && composer run makepot",
