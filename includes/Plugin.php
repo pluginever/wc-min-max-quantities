@@ -38,7 +38,6 @@ final class Plugin extends \WooCommerceMinMaxQuantities\B8\App {
 		register_activation_hook( $this->file, array( Installer::class, 'install' ) );
 		add_filter( 'plugin_action_links_' . $this->basename(), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
-		//add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility' ) );
 		add_action( 'woocommerce_loaded', array( $this, 'register_services' ), 0 );
 	}
 
@@ -94,19 +93,6 @@ final class Plugin extends \WooCommerceMinMaxQuantities\B8\App {
 		);
 
 		return array_merge( $links, $row_meta );
-	}
-
-	/**
-	 * Declare WooCommerce compatibility.
-	 *
-	 * @since 1.1.5
-	 * @return void
-	 */
-	public function declare_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $this->file, true );
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', $this->file, true );
-		}
 	}
 
 	/**
