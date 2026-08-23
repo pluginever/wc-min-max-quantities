@@ -1,6 +1,6 @@
 <?php
 
-use WooCommerceMinMaxQuantities\Plugin;
+use PluginEver\MinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
 
@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
  * Get the plugin instance.
  *
  * @since 1.0.0
- * @return \WooCommerceMinMaxQuantities\Plugin
+ * @return \PluginEver\MinMaxQuantities\Plugin
  */
 function wc_min_max_quantities() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	return Plugin::instance();

@@ -35,8 +35,11 @@
  * @author              Sultan Nasir Uddin <manikdrmc@gmail.com>
  * @copyright           2026 ByteEver
  * @license             GPL-2.0+
- * @package             WooCommerceMinMaxQuantities
+ * @package             PluginEver\MinMaxQuantities
  */
+
+use PluginEver\MinMaxQuantities\Installer;
+use PluginEver\MinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,20 +47,26 @@ defined( 'ABSPATH' ) || exit;
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/includes/functions.php';
 
-// Instantiate the plugin.
-WooCommerceMinMaxQuantities\Plugin::create(
-	__FILE__,
-	array(
-		'version'       => '2.3.1',
-		'option_prefix' => 'wcmmq',
-		'hook_prefix'   => 'wc_min_max_quantities',
-		'settings_url'  => admin_url( 'admin.php?page=wc-min-max-quantities' ),
-		'support_url'   => 'https://pluginever.com/support/',
-		'docs_url'      => 'https://pluginever.com/docs/min-max-quantities-for-woocommerce/',
-		'premium_url'   => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
-		'review_url'    => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post',
-	)
+$data = array(
+	'version'       => '2.3.1',
+	'name'          => 'Min Max Quantities',
+	'option_prefix' => 'wcmmq',
+	'hook_prefix'   => 'wc_min_max_quantities',
+	'settings_url'  => admin_url( 'admin.php?page=wc-min-max-quantities' ),
+	'support_url'   => 'https://pluginever.com/support/',
+	'docs_url'      => 'https://pluginever.com/docs/min-max-quantities-for-woocommerce/',
+	'upgrade_url'   => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/',
+	'pro_basename'  => 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php',
+	'review_url'    => 'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post',
 );
+
+Plugin::create( __FILE__, $data );
+
+// Register the plugin activation and deactivation hooks.
+wc_min_max_quantities()->on_activation( array( Installer::class, 'install' ) );
+wc_min_max_quantities()->on_deactivation( array( Installer::class, 'deactivate' ) );
+
+// Declare WooCommerce feature compatibility.
 add_action(
 	'before_woocommerce_init',
 	function () {
@@ -67,3 +76,6 @@ add_action(
 		}
 	}
 );
+
+// Boot the plugin.
+wc_min_max_quantities()->bootstrap();

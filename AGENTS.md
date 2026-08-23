@@ -2,14 +2,15 @@
 
 ## Overview
 
-WooCommerce plugin (`wc-min-max-quantities`) that enforces min/max quantity, step, and price limits on products and cart. Free + Pro model. Namespace: `WooCommerceMinMaxQuantities`. Text domain: `wc-min-max-quantities`.
+WooCommerce plugin (`wc-min-max-quantities`) that enforces min/max quantity, step, and price limits on products and cart. Free + Pro model. Namespace: `PluginEver\MinMaxQuantities`. Text domain: `wc-min-max-quantities`.
 
 ## Architecture
 
-- **Entry point:** `wc-min-max-quantities.php` → loads Composer autoloader + `includes/functions.php`, then boots `Plugin::create()`.
-- **Plugin class** (`includes/Plugin.php`) extends `B8\Plugin\App` (vendored `byteever/plugin` framework). Services are registered on `woocommerce_loaded` via `$this->make()`.
-- **Service layer:** `Cart` (frontend quantity enforcement + WC Store API block compatibility), `Installer` (versioned migrations), `Admin\Admin` (settings page + meta boxes).
-- **Settings** extend `ByteKit\Admin\Settings` (vendored `byteever/bytekit-settings`). Settings page is under WooCommerce menu at `admin.php?page=wc-min-max-quantities`.
+- **Entry point:** `wc-min-max-quantities.php` → loads Composer autoloader + `includes/functions.php`, then `Plugin::create( __FILE__, $data )` + explicit `bootstrap()`. Activation/deactivation callbacks are wired via `on_activation`/`on_deactivation`.
+- **Plugin class** (`includes/Plugin.php`) extends `B8\App` (vendored `byteever/plugin`, Strauss-prefixed). Components are declared in `protected array $components` and booted on `woocommerce_loaded`.
+- **Component layer:** `Cart` (frontend quantity enforcement + WC Store API block compatibility), `Installer` (versioned migrations + activation/deactivation lifecycle), `Admin\Admin` (admin shell; children: `Menu`, `Settings`, `MetaBoxes`, `Actions`, `Notices`, `Feedback`).
+- **Settings** extend `B8\SettingsUI`. Settings page is under WooCommerce menu at `admin.php?page=wc-min-max-quantities`. Fields render/save through WooCommerce's own `woocommerce_admin_fields()` / `woocommerce_update_options()`. Legacy filters/actions (`wc_min_max_quantities_settings_tabs`, `wc_min_max_quantities_settings_{tab}`) are bridged inside `Admin\Settings`.
+- **Templates** live in `templates/` and are rendered via `$this->app->template->render('admin.pro-panel', $data)` / `->view('admin.notices.feedback', $data)` (dot paths map to directories).
 - **Functions file** (`includes/functions.php`) contains all `wcmmq_*` helper functions — these are the primary API surface used across the codebase.
 
 ## Key Data Model
@@ -26,32 +27,33 @@ Product limits are cached with `wp_cache_set("wcmmq-{$product_id}-{$variation_id
 
 ## Conventions
 
-- **PHP namespace:** `WooCommerceMinMaxQuantities` (PSR-4 mapped to `includes/`). Admin classes under `WooCommerceMinMaxQuantities\Admin`.
+- **PHP namespace:** `PluginEver\MinMaxQuantities` (PSR-4 mapped to `includes/`). Admin classes under `PluginEver\MinMaxQuantities\Admin`.
 - **Prefix:** Options/meta use `wcmmq_` / `_wcmmq_`. Hooks use `wc_min_max_quantities_` (e.g., `wc_min_max_quantities_product_limits`).
 - **Static vs instance methods:** Cart/Admin classes mix `__CLASS__` static callbacks and `$this` instance callbacks. Block-compatible Store API filters use `$this`; classic WC hooks use `__CLASS__`.
 - **PHPCS:** Uses `ByteEver-Default` ruleset (see `phpcs.xml`). Run: `composer phpcs` / `composer phpcbf`.
-- **JS/CSS:** WordPress coding standards via `@wordpress/scripts` + `@byteever/scripts`. ESLint extends `@wordpress/eslint-plugin/recommended-with-formatting`.
+- **PHPStan:** Level 8 (`phpstan.neon.dist`, baseline in `phpstan-baseline.neon` for legacy debt). Run: `composer phpstan`.
+- **JS/CSS:** Plain SCSS compiled with `sass`; no JS build.
 - **Indentation:** Tabs for PHP/JSON, spaces for YAML/MD (see `.editorconfig`).
 - **i18n:** All user-facing strings must use `__()` / `esc_html__()` with domain `wc-min-max-quantities`.
 
 ## Build & Dev Commands
 
 ```bash
-npm run start          # Watch mode (webpack dev)
-npm run build          # Production build + makepot
+npm run start          # Watch SCSS (sass --watch)
+npm run build          # Compile assets/src → assets/build (compressed)
 composer phpcs         # Lint PHP
 composer phpcbf        # Auto-fix PHP
+composer phpstan       # Static analysis
 composer strauss       # Vendor prefixing (namespace isolation)
 ```
 
 ## Vendor Prefixing (Strauss)
 
-Dependencies `byteever/plugin` and `byteever/bytekit-settings` are namespace-prefixed into `WooCommerceMinMaxQuantities\` via Strauss. After `composer install/update`, Strauss runs automatically. The text domain in vendored files is replaced to `wc-min-max-quantities`.
+The `byteever/plugin` dependency is namespace-prefixed into `PluginEver\MinMaxQuantities\B8\` via Strauss (`vendor/byteever/plugin/src` is rewritten in place). After `composer install/update`, Strauss runs automatically. If the prefix looks doubled (e.g. `...\WooCommerceMinMaxQuantities\...`), delete `vendor/byteever/plugin` and run `composer update byteever/plugin` to force a pristine re-install before Strauss runs.
 
 ## Adding New Functionality
 
-- New service classes go in `includes/` and are registered in `Plugin::register_services()` with `$this->make(ClassName::class)`.
-- Admin-only classes go in `includes/Admin/` and are guarded by `is_admin()`.
+- New components go in `includes/` and are added to `$components` in `includes/Plugin.php`; admin-only components go under `includes/Admin/` and into `Admin\Admin::$components`.
 - Product limit logic should use `wcmmq_get_product_limits()` and `wcmmq_is_product_excluded()` — never read meta directly.
 - Cart validation notices use `wcmmq_add_cart_notice()` which tags notices with `source => 'wcmmq'`.
 - WC Cart/Checkout Block compatibility is handled via `woocommerce_store_api_product_quantity_*` filters in `Cart.php`.
