@@ -14,7 +14,7 @@
 	],
 	"require": {
 		"php": ">=7.4",
-		"byteever/plugin": "dev-trunk",
+		"byteever/plugin": "^1.0",
 		"byteever/bytekit-settings": "dev-trunk"
 	},
 	"require-dev": {

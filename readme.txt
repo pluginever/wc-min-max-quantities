@@ -215,6 +215,10 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
+= 2.3.1 (23rd August 2026) =
+* Minor maintenance update.
+* Compatibility: Check compatibility with the latest version of WooCommerce and WordPress.
+
 = 2.3.0 (21st May 2026) =
 * Enhance: Added flash sale notice.
 * Compatibility: Checked compatibility with latest version of WordPress 7.0.

@@ -3,7 +3,6 @@
 namespace WooCommerceMinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit;
-
 /**
  * Class Plugin.
  *
@@ -14,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @property-read string $docs_url     Documentation URL.
  * @property-read string $support_url  Support page URL.
  */
-final class Plugin extends B8\Plugin\App {
+final class Plugin extends \WooCommerceMinMaxQuantities\B8\App {
 
 	/**
 	 * Bootstraps the plugin.
@@ -22,7 +21,7 @@ final class Plugin extends B8\Plugin\App {
 	 * @since 2.2.4
 	 * @return void
 	 */
-	protected function bootstrap(): void {
+	public function bootstrap(): void {
 		define( 'WCMMQ_FILE', $this->file );
 		define( 'WCMMQ_VERSION', $this->version );
 		define( 'WCMMQ_PLUGIN_PATH', $this->plugin_path() );
@@ -39,7 +38,7 @@ final class Plugin extends B8\Plugin\App {
 		register_activation_hook( $this->file, array( Installer::class, 'install' ) );
 		add_filter( 'plugin_action_links_' . $this->basename(), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
-		add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility' ) );
+		//add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility' ) );
 		add_action( 'woocommerce_loaded', array( $this, 'register_services' ), 0 );
 	}
 
