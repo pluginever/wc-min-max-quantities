@@ -1,45 +1,23 @@
 <?php
 /**
- * Admin notice for review.
+ * Review request notice.
  *
- * @since 2.0.0
+ * @since   1.0.0
  * @package PluginEver\MinMaxQuantities
  */
 
 defined( 'ABSPATH' ) || exit;
-
 ?>
-<div class="notice-body">
-	<div class="notice-icon">
-		<img src="<?php echo esc_attr( wc_min_max_quantities()->assets_url( 'images/plugin-icon.png' ) ); ?>" alt="Min Max Quantities">
-	</div>
-	<div class="notice-content">
-		<h3><?php esc_html_e( 'Enjoying Min Max Quantities?', 'wc-min-max-quantities' ); ?></h3>
-		<p>
-			<?php
-			echo wp_kses_post(
-				sprintf(
-				// translators: %1$s: Min Max Quantities Pro link, %2$s: Coupon code.
-					__( 'We hope you had a wonderful experience using %1$s. Please take a moment to show us your support by leaving a 5-star review on <a href="%2$s" target="_blank"><strong>WordPress.org</strong></a>. Thank you! 😊', 'wc-min-max-quantities' ),
-					'<a href="https://wordpress.org/plugins/wc-min-max-quantities/" target="_blank"><strong>Min Max Quantities</strong></a>',
-					'https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post'
-				)
-			);
-			?>
-		</p>
-	</div>
-</div>
-<div class="notice-footer">
-	<a class="primary" href="https://wordpress.org/support/plugin/wc-min-max-quantities/reviews/#new-post" target="_blank">
-		<span class="dashicons dashicons-heart"></span>
-		<?php esc_html_e( 'Sure, I\'d love to help!', 'wc-min-max-quantities' ); ?>
-	</a>
-	<a href="#" data-snooze="<?php echo esc_attr( MONTH_IN_SECONDS ); ?>">
-		<span class="dashicons dashicons-clock"></span>
-		<?php esc_html_e( 'Maybe later', 'wc-min-max-quantities' ); ?>
-	</a>
-	<a href="#" data-dismiss>
-		<span class="dashicons dashicons-smiley"></span>
-		<?php esc_html_e( 'I\'ve already left a review', 'wc-min-max-quantities' ); ?>
-	</a>
-</div>
+<p>
+	<?php
+	echo wp_kses_post(
+		sprintf(
+		/* translators: 1: opening anchor tag, 2: closing anchor tag. */
+			__( 'Enjoying Min Max Quantities?? A %1$sfive-star review%2$s helps other store owners find it and means a lot to our team.', 'wc-min-max-quantities' ),
+			'<a href="' . esc_url( (string) wc_min_max_quantities()->review_url ) . '" target="_blank" rel="noopener noreferrer"><strong>',
+			'</strong></a>'
+		)
+	);
+	?>
+</p>
+

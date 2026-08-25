@@ -252,6 +252,44 @@ class Settings extends SettingsUI {
 	 * @return void
 	 */
 	protected function render_sidebar(): void {
+		if ( ! $this->app->is_pro_active() ) {
+			$this->show_premium_card();
+		}
+
+		if ( ! is_plugin_active( 'wc-key-manager/wc-key-manager.php' ) ) {
+			$install_url = wp_nonce_url(
+				admin_url( 'update.php?action=install-plugin&plugin=wc-key-manager' ),
+				'install-plugin_wc-key-manager'
+			);
+
+			$this->app->template->render(
+				'admin.promo-panel',
+				array(
+					'title'       => __( 'Key Manager', 'wc-min-max-quantities' ),
+					'description' => __( 'Manage WooCommerce product keys and licenses with ease.', 'wc-min-max-quantities' ),
+					'install_url' => $install_url,
+					'label'       => __( 'Install Now', 'wc-min-max-quantities' ),
+				)
+			);
+		}
+
+		$this->app->template->render(
+			'admin.support-panel',
+			array(
+				'title'         => __( 'Need Help?', 'wc-min-max-quantities' ),
+				'community_url' => 'https://www.facebook.com/groups/pluginever',
+				'contact_url'   => 'https://www.pluginever.com/contact/',
+			)
+		);
+	}
+
+	/**
+	 * Render the premium card.
+	 *
+	 * @return void
+	 * @throws \Exception If the premium card template cannot be rendered.
+	 */
+	protected function show_premium_card(): void {
 		if ( $this->app->is_pro_active() ) {
 			return;
 		}
@@ -273,6 +311,20 @@ class Settings extends SettingsUI {
 				'features' => $features,
 				'url'      => 'https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/?utm_source=plugin-settings&utm_medium=banner&utm_campaign=upgrade&utm_id=wc-min-max-quantities',
 				'label'    => __( 'Get Premium', 'wc-min-max-quantities' ),
+				'links'    => array(
+					array(
+						'label' => __( 'Join our Community', 'wc-min-max-quantities' ),
+						'url'   => esc_url( 'https://www.facebook.com/groups/pluginever' ),
+					),
+					array(
+						'label' => __( 'Request a Feature', 'wc-min-max-quantities' ),
+						'url'   => $this->app->get( 'support_url' ),
+					),
+					array(
+						'label' => __( 'Report a Bug', 'wc-min-max-quantities' ),
+						'url'   => $this->app->get( 'support_url' ),
+					),
+				),
 			)
 		);
 	}

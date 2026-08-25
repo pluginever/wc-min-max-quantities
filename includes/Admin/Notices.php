@@ -12,12 +12,6 @@ use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
-/**
- * Notices class.
- *
- * @since 2.0.0
- * @package PluginEver\MinMaxQuantities\Admin
- */
 class Notices extends Component {
 
 	/**
