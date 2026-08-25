@@ -23,7 +23,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="wc-starter-plugin"/>
+				<element value="wc-min-max-quantities"/>
 			</property>
 		</properties>
 	</rule>
