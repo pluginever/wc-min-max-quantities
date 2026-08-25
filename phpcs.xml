@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="ByteEver Coding Standards">
+	<description>ByteEver PHPCS extended.</description>
+	<rule ref="ByteEver-Default"/>
+
+	<!-- Supported PHP versions (matches plugin header). -->
+	<config name="testVersion" value="7.4-"/>
+
+	<!-- Minimum supported WordPress version. -->
+	<config name="minimum_wp_version" value="6.4"/>
+
+	<!-- Check all PHP files in directory tree by default. -->
+	<arg name="extensions" value="php"/>
+	<file>.</file>
+	<exclude-pattern>languages/</exclude-pattern>
+	<exclude-pattern>tests/</exclude-pattern>
+	<exclude-pattern>assets/</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*\.(css|js|xml)</exclude-pattern>
+
+	<!-- Check that the proper text domain(s) is used everywhere. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wc-starter-plugin"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Relax method-declaration and naming rules for test files. -->
+	<rule ref="PSR2.Methods.MethodDeclaration">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+</ruleset>
