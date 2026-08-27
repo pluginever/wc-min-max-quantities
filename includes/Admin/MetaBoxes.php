@@ -1,20 +1,26 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\Admin;
+namespace PluginEver\MinMaxQuantities\Admin;
+
+use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class MetaBoxes
  *
- * @package WooCommerceMinMaxQuantities\Admin
+ * @since 1.0.0
+ * @package PluginEver\MinMaxQuantities\Admin
  */
-class MetaBoxes {
+class MetaBoxes extends Component {
 
 	/**
-	 * MetaBoxes constructor.
+	 * Register hooks.
+	 *
+	 * @since 2.3.2
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'woocommerce_product_options_general_product_data', array( __CLASS__, 'write_tab_options' ) );
 	}
 

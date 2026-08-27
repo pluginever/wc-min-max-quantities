@@ -3,10 +3,17 @@
 	<description>ByteEver PHPCS extended.</description>
 	<rule ref="ByteEver-Default"/>
 
+	<!-- Supported PHP versions (matches plugin header). -->
+	<config name="testVersion" value="7.4-"/>
+
+	<!-- Minimum supported WordPress version. -->
+	<config name="minimum_wp_version" value="6.4"/>
+
 	<!-- Check all PHP files in directory tree by default. -->
 	<arg name="extensions" value="php"/>
 	<file>.</file>
 	<exclude-pattern>languages/</exclude-pattern>
+	<exclude-pattern>tests/</exclude-pattern>
 	<exclude-pattern>assets/</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
@@ -21,4 +28,11 @@
 		</properties>
 	</rule>
 
+	<!-- Relax method-declaration and naming rules for test files. -->
+	<rule ref="PSR2.Methods.MethodDeclaration">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
 </ruleset>

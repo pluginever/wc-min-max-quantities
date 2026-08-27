@@ -1,23 +1,26 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\Admin;
+namespace PluginEver\MinMaxQuantities\Admin;
+
+use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Admin
+ * Class Actions
  *
- * @package WooCommerceMinMaxQuantities\Admin
  * @since 1.1.4
+ * @package PluginEver\MinMaxQuantities\Admin
  */
-class Actions {
+class Actions extends Component {
 
 	/**
-	 * Actions constructor.
+	 * Register hooks.
 	 *
-	 * @since 1.1.4
+	 * @since 2.3.2
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save_product_meta' ) );
 	}
 
