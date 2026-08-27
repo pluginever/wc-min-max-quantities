@@ -1,27 +1,27 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
 defined('ABSPATH') || exit;
 /**
- * Request sanitization and helper service for WordPress.
+ * Handles request data.
  *
  * Provides data cleaning via pipe-separated rule strings.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Request
 {
     /**
-     * Sanitize data using specified rules.
+     * Sanitize the data.
      *
      * @since 1.0.0
      *
-     * @param array $data Data to sanitize.
-     * @param array $rules Sanitization rules (field => rule_string).
+     * @param array<string, mixed>  $data Data to sanitize.
+     * @param array<string, string> $rules Sanitization rules (field => rule_string).
      *
-     * @return array Sanitized data.
+     * @return array<string, mixed> Sanitized data.
      */
     public function sanitize($data, $rules): array
     {
@@ -51,15 +51,15 @@ class Request
         return $sanitized;
     }
     /**
-     * Apply single sanitization rule.
+     * Sanitize a value.
      *
      * Supports callable rules for custom sanitization (e.g. 'my_custom_sanitizer').
      *
      * @since 1.0.0
      *
-     * @param mixed  $value Value to sanitize.
-     * @param string $rule Rule name.
-     * @param array  $parameters Rule parameters.
+     * @param mixed              $value Value to sanitize.
+     * @param string             $rule Rule name.
+     * @param array<int, string> $parameters Rule parameters.
      *
      * @return mixed Sanitized value.
      */
@@ -131,7 +131,7 @@ class Request
         }
     }
     /**
-     * Default sanitization for values without specific rules.
+     * Clean a value.
      *
      * @since 1.0.0
      *
@@ -147,7 +147,7 @@ class Request
         return is_scalar($value) ? sanitize_text_field($value) : $value;
     }
     /**
-     * Get client IP address with proxy detection.
+     * Get the client IP address.
      *
      * @since 1.0.0
      *

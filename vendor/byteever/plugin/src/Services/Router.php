@@ -1,17 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress REST API router with Laravel-inspired syntax.
+ * Handles routing.
  *
  * Provides route registration, grouping, and automatic WordPress
  * REST API integration with permission handling.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Router
 {
@@ -54,7 +54,7 @@ class Router
      * Route group stack.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<int, array<string, mixed>>
      */
     protected array $group_stack = array();
     /**
@@ -72,8 +72,8 @@ class Router
     /**
      * Register a GET route.
      *
-     * @param string                $route Route pattern.
-     * @param callable|string|array $handler Route handler or configuration array.
+     * @param string                               $route   Route pattern.
+     * @param callable|string|array<string, mixed> $handler Route handler or configuration array.
      *
      * @since 1.0.0
      * @return self
@@ -85,8 +85,8 @@ class Router
     /**
      * Register a POST route.
      *
-     * @param string                $route Route pattern.
-     * @param callable|string|array $handler Route handler or configuration array.
+     * @param string                               $route   Route pattern.
+     * @param callable|string|array<string, mixed> $handler Route handler or configuration array.
      *
      * @since 1.0.0
      * @return self
@@ -98,8 +98,8 @@ class Router
     /**
      * Register a PUT route.
      *
-     * @param string                $route Route pattern.
-     * @param callable|string|array $handler Route handler or configuration array.
+     * @param string                               $route   Route pattern.
+     * @param callable|string|array<string, mixed> $handler Route handler or configuration array.
      *
      * @since 1.0.0
      * @return self
@@ -111,8 +111,8 @@ class Router
     /**
      * Register a DELETE route.
      *
-     * @param string                $route Route pattern.
-     * @param callable|string|array $handler Route handler or configuration array.
+     * @param string                               $route   Route pattern.
+     * @param callable|string|array<string, mixed> $handler Route handler or configuration array.
      *
      * @since 1.0.0
      * @return self
@@ -124,8 +124,8 @@ class Router
     /**
      * Register a PATCH route.
      *
-     * @param string                $route Route pattern.
-     * @param callable|string|array $handler Route handler or configuration array.
+     * @param string                               $route   Route pattern.
+     * @param callable|string|array<string, mixed> $handler Route handler or configuration array.
      *
      * @since 1.0.0
      * @return self
@@ -135,7 +135,7 @@ class Router
         return $this->add_route('PATCH', $route, $handler);
     }
     /**
-     * Register a resourceful route to a controller.
+     * Register a resource route.
      *
      * Creates standard resource routes following WordPress REST API conventions.
      * Only registers routes for methods that exist on the controller.
@@ -147,14 +147,14 @@ class Router
      * | GET         | /name/{id}       | get_item     |
      * | PUT, PATCH  | /name/{id}       | update_item  |
      * | DELETE      | /name/{id}       | delete_item  |
-     * | GET         | /name/options    | get_options   |
+     * | GET         | /name/options    | get_options  |
      * | POST        | /name/batch      | batch_items  |
      * | GET, POST   | /name/import     | import_items |
      * | GET         | /name/export     | export_items |
      *
-     * @param string $name       Resource name used as route prefix.
-     * @param string $controller Controller class name.
-     * @param array  $options {
+     * @param string               $name       Resource name used as route prefix.
+     * @param string               $controller Controller class name.
+     * @param array<string, mixed> $options {
      *     Optional. Resource configuration options.
      *
      *     @type array  $only       Actions to include. Default all.
@@ -204,10 +204,10 @@ class Router
         return $this;
     }
     /**
-     * Create a route group with shared attributes.
+     * Create a route group.
      *
-     * @param array|string $attributes Group attributes (prefix, permission, controller).
-     * @param callable     $callback Callback to define routes.
+     * @param array<string, mixed>|string $attributes Group attributes (prefix, permission, controller).
+     * @param callable                    $callback   Callback to define routes.
      *
      * @since 1.0.0
      * @return self
@@ -230,7 +230,7 @@ class Router
         try {
             call_user_func($callback, $this);
         } finally {
-            $previous = array_pop($this->group_stack) ?? array();
+            $previous = array_pop($this->group_stack);
             $this->prefix = $previous['prefix'] ?? '';
             $this->permission = $previous['permission'] ?? '__return_true';
             $this->controller = $previous['controller'] ?? null;
@@ -238,13 +238,13 @@ class Router
         return $this;
     }
     /**
-     * Make an internal REST API request.
+     * Make an internal REST request.
      *
      * @since 1.0.0
      *
-     * @param string $endpoint REST API endpoint path.
-     * @param array  $params   Request parameters.
-     * @param string $method   HTTP method (GET, POST, PUT, PATCH, DELETE).
+     * @param string               $endpoint REST API endpoint path.
+     * @param array<string, mixed> $params   Request parameters.
+     * @param string               $method   HTTP method (GET, POST, PUT, PATCH, DELETE).
      *
      * @return mixed Response data.
      */
@@ -262,10 +262,10 @@ class Router
         return json_decode($json, true);
     }
     /**
-     * Add and register a route with WordPress REST API.
+     * Register a route.
      *
-     * @param string          $method HTTP method.
-     * @param string          $route Route pattern.
+     * @param string          $method  HTTP method.
+     * @param string          $route   Route pattern.
      * @param callable|string $handler Route handler (callable or controller method name).
      *
      * @since 1.0.0

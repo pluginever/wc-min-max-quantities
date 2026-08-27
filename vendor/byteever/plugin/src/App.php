@@ -1,30 +1,36 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin;
+namespace PluginEver\MinMaxQuantities\B8;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\Container\Container;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Cache;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Filesystem;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Flash;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Router;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Logger;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Notices;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Options;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Queue;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Request;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Scripts;
-use WooCommerceMinMaxQuantities\B8\Plugin\Services\Template;
-use WooCommerceMinMaxQuantities\B8\Plugin\Traits\HookableTrait;
-use WooCommerceMinMaxQuantities\B8\Plugin\Traits\PathableTrait;
+use PluginEver\MinMaxQuantities\B8\Container\Container;
+use PluginEver\MinMaxQuantities\B8\Services\Cache;
+use PluginEver\MinMaxQuantities\B8\Services\Filesystem;
+use PluginEver\MinMaxQuantities\B8\Services\Flash;
+use PluginEver\MinMaxQuantities\B8\Services\Router;
+use PluginEver\MinMaxQuantities\B8\Services\Logger;
+use PluginEver\MinMaxQuantities\B8\Services\Notices;
+use PluginEver\MinMaxQuantities\B8\Services\Options;
+use PluginEver\MinMaxQuantities\B8\Services\Queue;
+use PluginEver\MinMaxQuantities\B8\Services\Request;
+use PluginEver\MinMaxQuantities\B8\Services\Scripts;
+use PluginEver\MinMaxQuantities\B8\Services\Settings;
+use PluginEver\MinMaxQuantities\B8\Services\Template;
+use PluginEver\MinMaxQuantities\B8\Traits\HookableTrait;
+use PluginEver\MinMaxQuantities\B8\Traits\PathableTrait;
 defined('ABSPATH') || exit;
 /**
- * Main App class that need to be extended by the plugin.
+ * Base plugin application.
+ *
+ * Serves as the base class each plugin extends. Wires up the service
+ * container, exposes framework services as read-only properties, and
+ * bootstraps the plugin onload.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  *
  * @property string     $file               Main plugin file path.
  * @property string     $slug               Plugin slug (directory name).
+ * @property string     $namespace          Plugin root namespace.
  * @property string     $version            Plugin version.
  * @property string     $short_name         Base alphanumeric identifier used to generate default prefixes (e.g., 'myplugin').
  * @property string     $rest_prefix        REST API namespace prefix.
@@ -32,9 +38,11 @@ defined('ABSPATH') || exit;
  * @property string     $option_prefix      Database options prefix.
  * @property string     $cache_group        Object cache group identifier.
  * @property string     $hook_prefix        Custom WordPress hooks prefix.
+ * @property string     $hook_separator     Separator used when building hook names.
  * @property string     $text_domain        Plugin text domain.
  * @property string     $domain_path        Domain path for translations.
  * @property string     $assets_dir         Assets directory name.
+ * @property string     $build_dir          Compiled assets directory name.
  * @property string     $templates_dir      Templates directory name.
  * @property int        $cache_ttl          Cache lifetime in seconds.
  * @property string     $log_level          Minimum log level (default: 'error').
@@ -51,6 +59,7 @@ defined('ABSPATH') || exit;
  * @property Template   $template           Template service.
  * @property Request    $request            Request service.
  * @property Scripts    $scripts            Scripts service.
+ * @property Settings   $settings           Settings service.
  */
 abstract class App extends Container
 {
@@ -62,7 +71,7 @@ abstract class App extends Container
      * @since 1.0.0
      * @var string
      */
-    const FW_VERSION = '0.0.1';
+    const FW_VERSION = '1.0.0';
     /**
      * Singleton instances.
      *
@@ -71,11 +80,11 @@ abstract class App extends Container
      */
     protected static $instances = array();
     /**
-     * Creates and returns the singleton instance.
+     * Create the singleton instance.
      *
      * @since 1.0.0
-     * @param string $file The main plugin file path (__FILE__).
-     * @param array  $data Plugin configuration array.
+     * @param string               $file The main plugin file path (__FILE__).
+     * @param array<string, mixed> $data Plugin configuration array.
      *
      * @return static The instance of the plugin.
      */
@@ -85,12 +94,11 @@ abstract class App extends Container
         if (!isset(static::$instances[$p])) {
             $data['file'] = $file;
             static::$instances[$p] = new static($data);
-            static::$instances[$p]->bootstrap();
         }
         return static::$instances[$p];
     }
     /**
-     * Retrieves the singleton instance.
+     * Get the singleton instance.
      *
      * @since 1.0.0
      * @return static The instance of the plugin.
@@ -104,11 +112,10 @@ abstract class App extends Container
         return static::$instances[$p];
     }
     /**
-     * Plugin constructor.
-     *
-     * @param array $data The plugin data.
+     * Constructor.
      *
      * @since 1.0.0
+     * @param array<string, mixed> $data The plugin data.
      */
     protected function __construct($data)
     {
@@ -116,10 +123,10 @@ abstract class App extends Container
         $this->preflight();
     }
     /**
-     * Configures application properties.
+     * Configure the application.
      *
      * @since 1.0.0
-     * @param array $data The plugin data.
+     * @param array<string, mixed> $data The plugin data.
      * @return void
      */
     protected function configure(array $data): void
@@ -127,7 +134,10 @@ abstract class App extends Container
         $slug = basename(dirname($data['file']));
         $short_slug = strtolower(preg_replace('/[^a-z0-9]/i', '', $slug));
         $short_name = !empty($data['short_name']) ? $data['short_name'] : $short_slug;
-        $defaults = array('file' => $data['file'], 'slug' => $slug, 'version' => '1.0.0', 'short_name' => $short_name, 'rest_prefix' => $short_name, 'rest_version' => '', 'option_prefix' => $short_name, 'cache_group' => $short_name, 'hook_prefix' => str_replace('-', '_', $slug), 'hook_separator' => '_', 'text_domain' => str_replace('_', '-', $slug), 'domain_path' => '/languages', 'assets_dir' => 'assets', 'build_dir' => 'build', 'templates_dir' => 'templates', 'cache_ttl' => 3600, 'log_level' => 'error', 'log_max_size' => 5 * 1024 * 1024);
+        $class = get_class($this);
+        $separator = strrpos($class, '\\');
+        $namespace = false !== $separator ? substr($class, 0, $separator) : '';
+        $defaults = array('file' => $data['file'], 'slug' => $slug, 'namespace' => $namespace, 'version' => '1.0.0', 'short_name' => $short_name, 'rest_prefix' => $short_name, 'rest_version' => '', 'option_prefix' => $short_name, 'cache_group' => $short_name, 'hook_prefix' => str_replace('-', '_', $slug), 'hook_separator' => '_', 'text_domain' => str_replace('_', '-', $slug), 'domain_path' => '/languages', 'assets_dir' => 'assets', 'build_dir' => 'build', 'templates_dir' => 'templates', 'cache_ttl' => 3600, 'log_level' => 'error', 'log_max_size' => 5 * 1024 * 1024);
         $config = array_merge($defaults, $data);
         foreach ($config as $key => $value) {
             $this->set($key, $value);
@@ -140,7 +150,7 @@ abstract class App extends Container
         }
     }
     /**
-     * Registers framework services.
+     * Register the framework services.
      *
      * @since 1.0.0
      * @return void
@@ -164,34 +174,52 @@ abstract class App extends Container
         $this->bind('request', Request::class);
         $this->bind('scripts', Scripts::class);
         $this->bind('template', Template::class);
-        // Initialize services with hooks.
-        $this->make('flash');
-        $this->make('logger');
-        $this->make('notices');
-        $this->make('queue');
-        $this->make('router');
-        $this->make('scripts');
+        // Prefer the plugin's own Services\Settings when it extends the base.
+        $settings = $this->namespace . '\Services\Settings';
+        $this->bind('settings', is_subclass_of($settings, Settings::class) ? $settings : Settings::class);
+        $this->flash->register();
+        $this->notices->register();
+        $this->queue->register();
         add_action('init', function () {
             if (wp_style_is('b8-components', 'registered')) {
                 return;
             }
-            $css_url = plugin_dir_url(__FILE__) . 'assets/css/';
-            $this->scripts->register_style('b8-components', $css_url . 'components.css');
-            $this->scripts->register_style('b8-layout', $css_url . 'layout.css');
+            $assets_url = plugin_dir_url(__FILE__) . 'assets/';
+            $this->scripts->register_style('b8-components', $assets_url . 'components.css');
+            $this->scripts->register_style('b8-layout', $assets_url . 'layout.css');
+            $this->scripts->register_script('b8-settings', $assets_url . 'settings.js');
         }, 1);
     }
     /**
-     * Bootstraps the plugin.
+     * Bootstrap the plugin.
      *
      * @since 1.0.0
      * @return void
      */
-    protected function bootstrap(): void
+    abstract public function bootstrap(): void;
+    /**
+     * Boot the components.
+     *
+     * @since 1.0.0
+     * @param array<int|string, class-string> $components Components to boot.
+     * @return void
+     */
+    public function boot(array $components): void
     {
-        // Implement in the extending class.
+        foreach ($components as $alias => $class) {
+            if (is_string($alias)) {
+                $this->bind($alias, $class);
+                $class = $alias;
+            }
+            $component = $this->make($class);
+            if ($component instanceof Component && $component->autoload()) {
+                $component->register();
+                $this->boot($component->components);
+            }
+        }
     }
     /**
-     * Check if a plugin is installed.
+     * Whether a plugin is installed.
      *
      * @since 1.0.0
      * @param string $plugin The plugin slug or basename.
@@ -202,11 +230,14 @@ abstract class App extends Container
         if (!str_contains($plugin, '/')) {
             $plugin = $plugin . '/' . $plugin . '.php';
         }
+        if (!function_exists('get_plugins')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
         $plugins = get_plugins();
         return array_key_exists($plugin, $plugins);
     }
     /**
-     * Check if a plugin is active.
+     * Whether a plugin is active.
      *
      * @since 1.0.0
      * @param string $plugin The plugin slug or basename.

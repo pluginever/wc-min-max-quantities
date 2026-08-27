@@ -1,18 +1,18 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress background queue processing with async dispatch.
+ * Handles the background queue.
  *
  * Provides a reliable queue system for background task processing with
  * automatic retries, priority ordering, and scheduled execution. Built
  * on battle-tested patterns from WP Background Processing and Action Scheduler.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Queue
 {
@@ -69,7 +69,15 @@ class Queue
         $this->app = $app;
         $this->identifier = $this->app->option_prefix . '_queue';
         $this->hook_prefix = $this->app->hook_prefix;
-        // Register hooks, and actions.
+    }
+    /**
+     * Register hooks.
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function register(): void
+    {
         add_action('wp_ajax_' . $this->identifier, array($this, 'maybe_handle'));
         add_action('wp_ajax_nopriv_' . $this->identifier, array($this, 'maybe_handle'));
         add_action('shutdown', array($this, 'maybe_dispatch'));
@@ -79,7 +87,7 @@ class Queue
         add_action('init', array($this, 'schedule_cron'));
     }
     /**
-     * Maybe handle async request.
+     * Handle the async request.
      *
      * @since 1.0.0
      * @return void
@@ -95,7 +103,7 @@ class Queue
         wp_die();
     }
     /**
-     * Maybe dispatch async request on shutdown.
+     * Maybe dispatch the async request.
      *
      * @since 1.0.0
      * @return void
@@ -111,7 +119,7 @@ class Queue
         $this->dispatch();
     }
     /**
-     * Handle cron healthcheck.
+     * Handle the cron healthcheck.
      *
      * @since 1.0.0
      * @return void
@@ -127,13 +135,13 @@ class Queue
         $this->handle();
     }
     /**
-     * Add custom cron interval.
+     * Add a custom cron interval.
      *
      * @since 1.0.0
      *
-     * @param array $schedules Existing cron schedules.
+     * @param array<string, mixed> $schedules Existing cron schedules.
      *
-     * @return array Modified cron schedules.
+     * @return array<string, mixed> Modified cron schedules.
      */
     public function add_cron_interval($schedules): array
     {
@@ -149,7 +157,7 @@ class Queue
         return $schedules;
     }
     /**
-     * Schedule cron event if queue has pending tasks.
+     * Schedule the cron event.
      *
      * @since 1.0.0
      * @return void
@@ -161,13 +169,13 @@ class Queue
         }
     }
     /**
-     * Add action to run immediately.
+     * Add an action.
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name to trigger.
-     * @param array  $args Arguments to pass to hook.
-     * @param string $group Optional. Action group identifier.
+     * @param string               $hook Hook name to trigger.
+     * @param array<string, mixed> $args Arguments to pass to hook.
+     * @param string               $group Optional. Action group identifier.
      *
      * @return string Action ID on success, empty string on failure.
      */
@@ -176,14 +184,14 @@ class Queue
         return $this->push(time(), $hook, $args, $group);
     }
     /**
-     * Schedule action for future execution.
+     * Schedule an action.
      *
      * @since 1.0.0
      *
-     * @param int    $timestamp Unix timestamp for when to run.
-     * @param string $hook Hook name to trigger.
-     * @param array  $args Arguments to pass to hook.
-     * @param string $group Optional. Action group identifier.
+     * @param int                  $timestamp Unix timestamp for when to run.
+     * @param string               $hook Hook name to trigger.
+     * @param array<string, mixed> $args Arguments to pass to hook.
+     * @param string               $group Optional. Action group identifier.
      *
      * @return string Action ID on success, empty string on failure.
      */
@@ -192,13 +200,13 @@ class Queue
         return $this->push($timestamp, $hook, $args, $group);
     }
     /**
-     * Check if action is scheduled.
+     * Whether an action is scheduled.
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name.
-     * @param array  $args Arguments to match.
-     * @param string $group Group to match.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments to match.
+     * @param string               $group Group to match.
      *
      * @return bool True if scheduled, false otherwise.
      */
@@ -214,13 +222,13 @@ class Queue
         return false;
     }
     /**
-     * Get next scheduled time for hook.
+     * Get the next scheduled time.
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name.
-     * @param array  $args Arguments to match.
-     * @param string $group Group to match.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments to match.
+     * @param string               $group Group to match.
      *
      * @return int|null Unix timestamp or null if not found.
      */
@@ -236,13 +244,13 @@ class Queue
         return null;
     }
     /**
-     * Get all pending actions.
+     * Get the pending actions.
      *
      * @since 1.0.0
      *
      * @param string $group Optional. Filter by group.
      *
-     * @return array Array of action data.
+     * @return array<int, array<string, mixed>> Array of action data.
      */
     public function get_tasks($group = ''): array
     {
@@ -256,13 +264,13 @@ class Queue
         return array_values($actions);
     }
     /**
-     * Get specific action by ID.
+     * Get an action by ID.
      *
      * @since 1.0.0
      *
      * @param string $action_id Action ID.
      *
-     * @return array|null Action data or null if not found.
+     * @return array<string, mixed>|null Action data or null if not found.
      */
     public function get_task($action_id): ?array
     {
@@ -276,13 +284,13 @@ class Queue
         return null;
     }
     /**
-     * Cancel next occurrence of action.
+     * Cancel an action.
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name.
-     * @param array  $args Arguments to match.
-     * @param string $group Group to match.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments to match.
+     * @param string               $group Group to match.
      *
      * @return void
      */
@@ -304,9 +312,9 @@ class Queue
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name.
-     * @param array  $args Arguments to match.
-     * @param string $group Group to match.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments to match.
+     * @param string               $group Group to match.
      *
      * @return void
      */
@@ -321,7 +329,7 @@ class Queue
         $this->update_queue_data($data);
     }
     /**
-     * Cancel specific action by ID.
+     * Cancel an action by ID.
      *
      * @since 1.0.0
      *
@@ -344,7 +352,7 @@ class Queue
         return false;
     }
     /**
-     * Clear all actions from queue.
+     * Clear the queue.
      *
      * @since 1.0.0
      * @return void
@@ -355,14 +363,14 @@ class Queue
         wp_clear_scheduled_hook($this->identifier . '_cron');
     }
     /**
-     * Push action to queue.
+     * Push an action to the queue.
      *
      * @since 1.0.0
      *
-     * @param int    $timestamp Unix timestamp for when to run.
-     * @param string $hook Hook name to trigger.
-     * @param array  $args Arguments to pass to hook.
-     * @param string $group Action group identifier.
+     * @param int                  $timestamp Unix timestamp for when to run.
+     * @param string               $hook Hook name to trigger.
+     * @param array<string, mixed> $args Arguments to pass to hook.
+     * @param string               $group Action group identifier.
      *
      * @return string Action ID on success, empty string on failure.
      */
@@ -378,7 +386,7 @@ class Queue
         return $action['id'];
     }
     /**
-     * Dispatch async request to process queue.
+     * Dispatch the async request.
      *
      * @since 1.0.0
      * @return void
@@ -399,7 +407,7 @@ class Queue
             'blocking' => false,
             'body' => array(),
             'cookies' => isset($_COOKIE) ? wp_unslash($_COOKIE) : array(),
-            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cookies are forwarded as-is to authenticate the loopback request.
             'sslverify' => apply_filters('https_local_ssl_verify', false),
         );
         /**
@@ -413,7 +421,7 @@ class Queue
         wp_remote_post(esc_url_raw($url), $args);
     }
     /**
-     * Handle queue processing.
+     * Process the queue.
      *
      * @since 1.0.0
      * @return void
@@ -436,7 +444,7 @@ class Queue
             $this->dispatch();
         } else {
             /**
-             * Fires when queue processing is completed.
+             * Fires when the queue processing is completed.
              *
              * @since 1.0.0
              */
@@ -444,14 +452,13 @@ class Queue
         }
     }
     /**
-     * Process individual action.
+     * Process an action.
      *
      * @since 1.0.0
      *
-     * @param array $action Action data.
+     * @param array<string, mixed> $action Action data.
      *
      * @return void
-     * @throws \Exception If action processing fails.
      */
     protected function process_action($action): void
     {
@@ -479,7 +486,7 @@ class Queue
              * @param array  $args Action arguments.
              */
             do_action($this->hook_prefix . '_action_complete', $action['id'], $action['hook'], $action['args']);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             ++$action['attempts'];
             if ($action['attempts'] >= $action['max_attempts']) {
                 /**
@@ -501,10 +508,10 @@ class Queue
         }
     }
     /**
-     * Get next action to process.
+     * Get the next action.
      *
      * @since 1.0.0
-     * @return array|null Action data or null if none available.
+     * @return array<string, mixed>|null Action data or null if none available.
      */
     protected function get_next_action(): ?array
     {
@@ -527,7 +534,7 @@ class Queue
         return null;
     }
     /**
-     * Remove action from queue.
+     * Remove an action.
      *
      * @since 1.0.0
      *
@@ -546,36 +553,14 @@ class Queue
         $this->update_queue_data($data);
     }
     /**
-     * Update action in queue.
+     * Whether an action matches.
      *
      * @since 1.0.0
      *
-     * @param array $updated_action Updated action data.
-     *
-     * @return void
-     */
-    protected function update_action($updated_action): void
-    {
-        $data = $this->get_queue_data();
-        $actions = $data['actions'] ?? array();
-        foreach ($actions as $index => $action) {
-            if ($action['id'] === $updated_action['id']) {
-                $actions[$index] = $updated_action;
-                break;
-            }
-        }
-        $data['actions'] = $actions;
-        $this->update_queue_data($data);
-    }
-    /**
-     * Check if action matches criteria.
-     *
-     * @since 1.0.0
-     *
-     * @param array  $action Action data.
-     * @param string $hook Hook name.
-     * @param array  $args Arguments to match.
-     * @param string $group Group to match.
+     * @param array<string, mixed> $action Action data.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments to match.
+     * @param string               $group Group to match.
      *
      * @return bool True if matches, false otherwise.
      */
@@ -593,12 +578,12 @@ class Queue
         return true;
     }
     /**
-     * Generate unique action ID.
+     * Generate an action ID.
      *
      * @since 1.0.0
      *
-     * @param string $hook Hook name.
-     * @param array  $args Arguments.
+     * @param string               $hook Hook name.
+     * @param array<string, mixed> $args Arguments.
      *
      * @return string Action ID.
      */
@@ -607,7 +592,7 @@ class Queue
         return md5($hook . wp_json_encode($args) . microtime());
     }
     /**
-     * Check if queue is empty.
+     * Whether the queue is empty.
      *
      * @since 1.0.0
      * @return bool True if empty, false otherwise.
@@ -627,7 +612,7 @@ class Queue
         return true;
     }
     /**
-     * Check if queue is processing.
+     * Whether the queue is processing.
      *
      * @since 1.0.0
      * @return bool True if processing, false otherwise.
@@ -640,7 +625,7 @@ class Queue
         return false;
     }
     /**
-     * Lock queue for processing.
+     * Lock the queue.
      *
      * @since 1.0.0
      * @return void
@@ -658,14 +643,14 @@ class Queue
         $lock_duration = apply_filters($this->hook_prefix . '_queue_lock_time', 60);
         set_site_transient($this->identifier . '_process_lock', microtime(), $lock_duration);
         /**
-         * Fires when queue processing is locked.
+         * Fires when the queue processing is locked.
          *
          * @since 1.0.0
          */
         do_action($this->hook_prefix . '_queue_process_locked');
     }
     /**
-     * Unlock queue after processing.
+     * Unlock the queue.
      *
      * @since 1.0.0
      * @return void
@@ -674,14 +659,14 @@ class Queue
     {
         delete_site_transient($this->identifier . '_process_lock');
         /**
-         * Fires when queue processing is unlocked.
+         * Fires when the queue processing is unlocked.
          *
          * @since 1.0.0
          */
         do_action($this->hook_prefix . '_queue_process_unlocked');
     }
     /**
-     * Check if time limit exceeded.
+     * Whether the time limit is exceeded.
      *
      * @since 1.0.0
      * @return bool True if exceeded, false otherwise.
@@ -702,12 +687,12 @@ class Queue
          *
          * @since 1.0.0
          *
-         * @param bool $exceeded Whether time limit exceeded.
+         * @param bool $exceeded Whether the time limit has been exceeded.
          */
         return apply_filters($this->hook_prefix . '_queue_time_exceeded', $return);
     }
     /**
-     * Check if memory limit exceeded.
+     * Whether the memory limit is exceeded.
      *
      * @since 1.0.0
      * @return bool True if exceeded, false otherwise.
@@ -722,12 +707,12 @@ class Queue
          *
          * @since 1.0.0
          *
-         * @param bool $exceeded Whether memory limit exceeded.
+         * @param bool $exceeded Whether the memory limit has been exceeded.
          */
         return apply_filters($this->hook_prefix . '_queue_memory_exceeded', $return);
     }
     /**
-     * Get memory limit in bytes.
+     * Get the memory limit.
      *
      * @since 1.0.0
      * @return int Memory limit in bytes.
@@ -745,10 +730,10 @@ class Queue
         return wp_convert_hr_to_bytes($memory_limit);
     }
     /**
-     * Get queue data from database.
+     * Get the queue data.
      *
      * @since 1.0.0
-     * @return array Queue data.
+     * @return array<string, mixed> Queue data.
      */
     protected function get_queue_data(): array
     {
@@ -759,11 +744,11 @@ class Queue
         return $data;
     }
     /**
-     * Update queue data in database.
+     * Update the queue data.
      *
      * @since 1.0.0
      *
-     * @param array $data Queue data.
+     * @param array<string, mixed> $data Queue data.
      *
      * @return void
      */

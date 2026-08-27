@@ -1,14 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress admin notices management with dismissible functionality.
+ * Handles admin notices.
+ *
+ * Registers, displays, and persists admin notices, storing per-user
+ * dismissals in user meta so dismissed notices stay hidden.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Notices
 {
@@ -37,7 +40,7 @@ class Notices
      * The notices.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected array $notices = array();
     /**
@@ -59,19 +62,28 @@ class Notices
         $this->ajax_action = $this->app->hook_prefix . '_dismiss_notice';
         $this->script_handle = $this->app->short_name . '-dismiss-notices';
         $this->dismissed_key = $this->app->option_prefix . '_dismissed_notices';
+    }
+    /**
+     * Register hooks.
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function register(): void
+    {
         add_action('admin_notices', array($this, 'render_notices'));
         add_action('admin_footer', array($this, 'render_notices'));
         add_action('admin_enqueue_scripts', array($this, 'register_scripts'));
         add_action('wp_ajax_' . $this->ajax_action, array($this, 'ajax_dismiss_notice'));
     }
     /**
-     * Get all active notices ready for display.
+     * Get the active notices.
      *
      * Returns notices filtered by should_display() with processed messages.
      * Useful for REST API responses in React-based admin pages.
      *
      * @since 1.0.0
-     * @return array Array of prepared notice objects.
+     * @return array<int, array<string, mixed>> Array of prepared notice objects.
      */
     public function get_notices(): array
     {
@@ -100,7 +112,7 @@ class Notices
         return $prepared;
     }
     /**
-     * Display the admin notices.
+     * Render the notices.
      *
      * @since 1.0.0
      * @return void
@@ -126,7 +138,7 @@ class Notices
         }
     }
     /**
-     * Register the admin scripts.
+     * Register the scripts.
      *
      * @since 1.0.0
      * @return void
@@ -150,7 +162,7 @@ class Notices
         wp_add_inline_script($this->script_handle, trim($script), 'after');
     }
     /**
-     * Dismisses the notice via AJAX.
+     * Handle the dismiss notice request.
      *
      * @since 1.0.0
      * @return void
@@ -172,9 +184,9 @@ class Notices
      *
      * @since 1.0.0
      *
-     * @param string|array $args The notice arguments or message.
+     * @param string|array<string, mixed> $args The notice arguments or message.
      *
-     * @return bool True if notice was added.
+     * @return bool True if the notice was added.
      */
     public function add($args): bool
     {
@@ -197,11 +209,11 @@ class Notices
         return true;
     }
     /**
-     * Is the notice dismissed?
+     * Whether a notice is dismissed.
      *
      * @since 1.0.0
      *
-     * @param string $id The notice id.
+     * @param string $id The notice ID.
      *
      * @return bool
      */
@@ -210,11 +222,11 @@ class Notices
         return in_array($id, get_option($this->dismissed_key, array()), true);
     }
     /**
-     * Should the notice be displayed?
+     * Whether a notice should be displayed.
      *
      * @since 1.0.0
      *
-     * @param array $notice The notice options.
+     * @param array<string, mixed> $notice The notice options.
      *
      * @return bool
      */
@@ -254,7 +266,7 @@ class Notices
      *
      * @since 1.0.0
      *
-     * @param string $id The notice id.
+     * @param string $id The notice ID.
      *
      * @return void
      */

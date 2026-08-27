@@ -1,6 +1,6 @@
 <?php
 
-use WooCommerceMinMaxQuantities\Plugin;
+use PluginEver\MinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
 
@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
  * Get the plugin instance.
  *
  * @since 1.0.0
- * @return \WooCommerceMinMaxQuantities\Plugin
+ * @return \PluginEver\MinMaxQuantities\Plugin
  */
 function wc_min_max_quantities() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	return Plugin::instance();
@@ -206,5 +206,32 @@ function wcmmq_is_allow_combination( $product_id ) {
 function wcmmq_add_cart_notice( $message, $type = 'error' ) {
 	if ( ! empty( $message ) && ! wc_has_notice( $message, $type ) ) {
 		wc_add_notice( $message, $type, array( 'source' => 'wcmmq' ) );
+	}
+}
+
+if ( ! function_exists( 'wc_min_max_quantities_upgrade_url' ) ) {
+	/**
+	 * Build a UTM-tagged upgrade URL.
+	 *
+	 * @since 1.0.0
+	 * @param string $campaign Placement identifier, used as the utm_campaign value.
+	 * @param string $medium   Link medium, used as the utm_medium value.
+	 * @return string Upgrade URL, or an empty string when no upgrade URL is configured.
+	 */
+	function wc_min_max_quantities_upgrade_url( string $campaign = 'upgrade', string $medium = 'link' ): string {
+		$base = (string) wc_min_max_quantities()->upgrade_url;
+
+		if ( '' === $base ) {
+			return '';
+		}
+
+		return add_query_arg(
+			array(
+				'utm_source'   => 'wc-min-max-quantities',
+				'utm_medium'   => $medium,
+				'utm_campaign' => $campaign,
+			),
+			$base
+		);
 	}
 }

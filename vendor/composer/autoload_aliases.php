@@ -2,209 +2,220 @@
 
 
 
-namespace WooCommerceMinMaxQuantities {
+namespace PluginEver\MinMaxQuantities {
 
     class AliasAutoloader
     {
         private string $includeFilePath;
 
         private array $autoloadAliases = array (
-  'ByteKit\\Admin\\Settings' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Settings',
-    'isabstract' => true,
-    'namespace' => 'ByteKit\\Admin',
-    'extends' => 'WooCommerceMinMaxQuantities\\ByteKit\\Admin\\Settings',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\App' => 
+  'B8\\App' => 
   array (
     'type' => 'class',
     'classname' => 'App',
     'isabstract' => true,
-    'namespace' => 'B8\\Plugin',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\App',
+    'namespace' => 'B8',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\App',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Container\\Container' => 
+  'B8\\Component' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Component',
+    'isabstract' => true,
+    'namespace' => 'B8',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Component',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Container\\Container' => 
   array (
     'type' => 'class',
     'classname' => 'Container',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Container',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Container\\Container',
-    'implements' => 
-    array (
-      0 => 'B8\\Plugin\\Container\\ContainerInterface',
-      1 => 'ArrayAccess',
-    ),
-  ),
-  'B8\\Plugin\\Container\\ContainerException' => 
-  array (
-    'type' => 'class',
-    'classname' => 'ContainerException',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Container',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Container\\ContainerException',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Cache' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Cache',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Cache',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Filesystem' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Filesystem',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Filesystem',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Flash' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Flash',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Flash',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Logger' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Logger',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Logger',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Notices' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Notices',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Notices',
-    'implements' => 
-    array (
-    ),
-  ),
-  'B8\\Plugin\\Services\\Options' => 
-  array (
-    'type' => 'class',
-    'classname' => 'Options',
-    'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Options',
+    'namespace' => 'B8\\Container',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Container\\Container',
     'implements' => 
     array (
       0 => 'ArrayAccess',
     ),
   ),
-  'B8\\Plugin\\Services\\Queue' => 
+  'B8\\Container\\ContainerException' => 
+  array (
+    'type' => 'class',
+    'classname' => 'ContainerException',
+    'isabstract' => false,
+    'namespace' => 'B8\\Container',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Container\\ContainerException',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Cache' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Cache',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Cache',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Filesystem' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Filesystem',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Filesystem',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Flash' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Flash',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Flash',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Logger' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Logger',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Logger',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Notices' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Notices',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Notices',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Options' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Options',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Options',
+    'implements' => 
+    array (
+      0 => 'ArrayAccess',
+    ),
+  ),
+  'B8\\Services\\Queue' => 
   array (
     'type' => 'class',
     'classname' => 'Queue',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Queue',
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Queue',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Request' => 
+  'B8\\Services\\Request' => 
   array (
     'type' => 'class',
     'classname' => 'Request',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Request',
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Request',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Router' => 
+  'B8\\Services\\Router' => 
   array (
     'type' => 'class',
     'classname' => 'Router',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Router',
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Router',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Scripts' => 
+  'B8\\Services\\Scripts' => 
   array (
     'type' => 'class',
     'classname' => 'Scripts',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Scripts',
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Scripts',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Services\\Template' => 
+  'B8\\Services\\Settings' => 
+  array (
+    'type' => 'class',
+    'classname' => 'Settings',
+    'isabstract' => false,
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Settings',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Services\\Template' => 
   array (
     'type' => 'class',
     'classname' => 'Template',
     'isabstract' => false,
-    'namespace' => 'B8\\Plugin\\Services',
-    'extends' => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Services\\Template',
+    'namespace' => 'B8\\Services',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\Services\\Template',
     'implements' => 
     array (
     ),
   ),
-  'B8\\Plugin\\Traits\\HookableTrait' => 
+  'B8\\SettingsUI' => 
+  array (
+    'type' => 'class',
+    'classname' => 'SettingsUI',
+    'isabstract' => false,
+    'namespace' => 'B8',
+    'extends' => 'PluginEver\\MinMaxQuantities\\B8\\SettingsUI',
+    'implements' => 
+    array (
+    ),
+  ),
+  'B8\\Traits\\HookableTrait' => 
   array (
     'type' => 'trait',
     'traitname' => 'HookableTrait',
-    'namespace' => 'B8\\Plugin\\Traits',
+    'namespace' => 'B8\\Traits',
     'use' => 
     array (
-      0 => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Traits\\HookableTrait',
+      0 => 'PluginEver\\MinMaxQuantities\\B8\\Traits\\HookableTrait',
     ),
   ),
-  'B8\\Plugin\\Traits\\PathableTrait' => 
+  'B8\\Traits\\PathableTrait' => 
   array (
     'type' => 'trait',
     'traitname' => 'PathableTrait',
-    'namespace' => 'B8\\Plugin\\Traits',
+    'namespace' => 'B8\\Traits',
     'use' => 
     array (
-      0 => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Traits\\PathableTrait',
-    ),
-  ),
-  'B8\\Plugin\\Container\\ContainerInterface' => 
-  array (
-    'type' => 'interface',
-    'interfacename' => 'ContainerInterface',
-    'namespace' => 'B8\\Plugin\\Container',
-    'extends' => 
-    array (
-      0 => 'WooCommerceMinMaxQuantities\\B8\\Plugin\\Container\\ContainerInterface',
+      0 => 'PluginEver\\MinMaxQuantities\\B8\\Traits\\PathableTrait',
     ),
   ),
 );

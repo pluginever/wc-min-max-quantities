@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'WooCommerceMinMaxQuantities\\ByteKit\\' => array($vendorDir . '/byteever/bytekit-settings/src'),
-    'WooCommerceMinMaxQuantities\\B8\\Plugin\\' => array($vendorDir . '/byteever/plugin/src'),
-    'WooCommerceMinMaxQuantities\\' => array($baseDir . '/includes'),
+    'PluginEver\\MinMaxQuantities\\B8\\' => array($vendorDir . '/byteever/plugin/src'),
+    'PluginEver\\MinMaxQuantities\\' => array($baseDir . '/includes'),
 );

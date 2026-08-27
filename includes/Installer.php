@@ -1,6 +1,12 @@
 <?php
+/**
+ * Handles plugin installation and upgrades.
+ *
+ * @since   1.1.4
+ * @package PluginEver\MinMaxQuantities
+ */
 
-namespace WooCommerceMinMaxQuantities;
+namespace PluginEver\MinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,15 +14,15 @@ defined( 'ABSPATH' ) || exit;
  * Class Installer.
  *
  * @since 1.1.4
- * @package WooCommerceMinMaxQuantities
+ * @package PluginEver\MinMaxQuantities
  */
-class Installer {
+class Installer extends B8\Component {
 
 	/**
 	 * Update callbacks.
 	 *
 	 * @since 1.1.4
-	 * @var array
+	 * @var array<string, string|array<int, string>>
 	 */
 	protected $updates = array(
 		'1.0.8' => 'update_108',
@@ -25,11 +31,12 @@ class Installer {
 	);
 
 	/**
-	 * Installer constructor.
+	 * Register hooks.
 	 *
-	 * @since 1.1.4
+	 * @since 2.3.2
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'init', array( $this, 'check_update' ), 0 );
 	}
 
@@ -42,18 +49,18 @@ class Installer {
 	 * @return void
 	 */
 	public function check_update() {
-		$db_version      = wc_min_max_quantities()->options->get_db_version();
-		$current_version = wc_min_max_quantities()->version;
+		$db_version      = $this->app->options->get_db_version();
+		$current_version = $this->app->version;
 		$requires_update = version_compare( $db_version, $current_version, '<' );
 		$can_install     = ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && ! defined( 'IFRAME_REQUEST' );
 		if ( $can_install && $requires_update ) {
-			static::install();
+			$this->install();
 			$update_versions = array_keys( $this->updates );
 			usort( $update_versions, 'version_compare' );
 			if ( ! is_null( $db_version ) && version_compare( $db_version, end( $update_versions ), '<' ) ) {
 				$this->update();
 			} else {
-				wc_min_max_quantities()->options->update_db_version( $current_version, true );
+				$this->app->options->update_db_version( $current_version, true );
 			}
 		}
 	}
@@ -65,22 +72,22 @@ class Installer {
 	 * @return void
 	 */
 	public function update() {
-		$db_version = wc_min_max_quantities()->options->get_db_version();
+		$db_version = $this->app->options->get_db_version();
 		foreach ( $this->updates as $version => $callbacks ) {
 			$callbacks = (array) $callbacks;
 			if ( version_compare( $db_version, $version, '<' ) ) {
 				foreach ( $callbacks as $callback ) {
-					wc_min_max_quantities()->logger->info( sprintf( 'Updating to %s from %s', $version, $db_version ) );
+					$this->app->logger->info( sprintf( 'Updating to %s from %s', $version, $db_version ) );
 					$continue = call_user_func( array( $this, $callback ) );
 					if ( ! $continue ) {
-						wc_min_max_quantities()->options->update_db_version( $version, true );
+						$this->app->options->update_db_version( $version, true );
 						$notice = sprintf(
 						/* translators: 1: plugin name 2: version number */
 							__( '%1$s updated to version %2$s successfully.', 'wc-min-max-quantities' ),
 							'<strong>' . __( 'Min Max Quantities', 'wc-min-max-quantities' ) . '</strong>',
 							'<strong>' . $version . '</strong>'
 						);
-						wc_min_max_quantities()->flash->success( $notice );
+						$this->app->flash->success( $notice );
 					}
 				}
 			}
@@ -93,17 +100,28 @@ class Installer {
 	 * @since 1.1.4
 	 * @return void
 	 */
-	public static function install() {
+	public function install(): void {
 		if ( ! is_blog_installed() ) {
 			return;
 		}
 
-		Admin\Settings::instance()->save_defaults();
-		wc_min_max_quantities()->options->update_db_version( wc_min_max_quantities()->version, true );
+		$this->app->options->update_db_version( $this->app->version, true );
 		add_option( 'wc_min_max_quantities_install_date', current_time( 'mysql' ) );
 		set_transient( 'wc_min_max_quantities_activated', true, 30 );
 		set_transient( 'wc_min_max_quantities_activation_redirect', true, 30 );
 		add_option( 'wc_min_max_quantities_installed', wp_date( 'U' ) );
+	}
+
+	/**
+	 * Clean up the plugin's runtime state.
+	 *
+	 * @since 2.3.2
+	 * @return void
+	 */
+	public function deactivate(): void {
+		$this->app->queue->clear();
+
+		flush_rewrite_rules();
 	}
 
 	/**

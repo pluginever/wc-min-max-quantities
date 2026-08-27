@@ -1,28 +1,31 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Traits;
+namespace PluginEver\MinMaxQuantities\B8\Traits;
 
 defined('ABSPATH') || exit;
 /**
- * Provides plugin path and URL resolution methods.
+ * Pathable trait.
+ *
+ * Resolves filesystem paths and URLs relative to the plugin root,
+ * including the assets, build, and template directories.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 trait PathableTrait
 {
     /**
-     * Get the 'basename' for the plugin (e.g. my-plugin/my-plugin.php).
+     * Get the plugin basename.
      *
-     * @since  1.0.0
+     * @since 1.0.0
      * @return string The plugin basename.
      */
-    public function basename()
+    public function basename(): string
     {
         return plugin_basename($this->file);
     }
     /**
-     * Retrieves the plugin directory path.
+     * Get the plugin path.
      *
      * @since 1.0.0
      * @param string $path Optional. Path relative to the plugin directory.
@@ -33,7 +36,7 @@ trait PathableTrait
         return $this->join_path(plugin_dir_path($this->file), $path);
     }
     /**
-     * Retrieves the plugin directory URL.
+     * Get the plugin URL.
      *
      * @since 1.0.0
      * @param string $path Optional. Path relative to the plugin directory.
@@ -44,7 +47,7 @@ trait PathableTrait
         return $this->join_path(plugin_dir_url($this->file), $path);
     }
     /**
-     * Retrieves the assets directory path.
+     * Get the assets path.
      *
      * @since 1.0.0
      * @param string $path Optional. Path relative to the assets directory.
@@ -55,7 +58,7 @@ trait PathableTrait
         return $this->join_path($this->plugin_path(), $this->assets_dir, $path);
     }
     /**
-     * Retrieves the assets directory URL.
+     * Get the assets URL.
      *
      * @since 1.0.0
      * @param string $path Optional. Path relative to the assets directory.
@@ -66,7 +69,7 @@ trait PathableTrait
         return $this->join_path($this->plugin_url(), $this->assets_dir, $path);
     }
     /**
-     * Retrieves the templates directory path.
+     * Get the templates path.
      *
      * @since 1.0.0
      * @param string $path Optional. Path relative to the templates directory.
@@ -77,7 +80,7 @@ trait PathableTrait
         return $this->join_path($this->plugin_path(), $this->templates_dir, $path);
     }
     /**
-     * Join path segments into a complete path.
+     * Join the path segments.
      *
      * @since 1.0.0
      * @param string $base     Base path or URL.

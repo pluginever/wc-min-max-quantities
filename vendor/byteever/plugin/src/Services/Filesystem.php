@@ -1,16 +1,16 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
 defined('ABSPATH') || exit;
 /**
- * WordPress filesystem service.
+ * Handles filesystem access.
  *
  * Wraps WP_Filesystem with a clean API for file operations,
  * including path sanitization and stream downloads.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Filesystem
 {
@@ -29,7 +29,7 @@ class Filesystem
      */
     protected $direct;
     /**
-     * Initialize the filesystem.
+     * Constructor.
      *
      * @since 1.0.0
      * @throws \Exception If the filesystem fails to initialize.
@@ -47,7 +47,7 @@ class Filesystem
         $this->direct = $this->fs instanceof \WP_Filesystem_Direct;
     }
     /**
-     * Get the raw WordPress filesystem instance.
+     * Get the WordPress filesystem instance.
      *
      * @since 1.0.0
      * @return \WP_Filesystem_Base WordPress filesystem instance.
@@ -57,7 +57,7 @@ class Filesystem
         return $this->fs;
     }
     /**
-     * Check if a file exists.
+     * Whether a file exists.
      *
      * @since 1.0.0
      * @param string $path The file path to check.
@@ -72,7 +72,7 @@ class Filesystem
         return $this->fs->exists($path);
     }
     /**
-     * Get the contents of a file.
+     * Get the file contents.
      *
      * @since 1.0.0
      * @param string $path The file path to read.
@@ -109,7 +109,7 @@ class Filesystem
         return $this->fs->delete($path);
     }
     /**
-     * Get the size of a file in bytes.
+     * Get the file size.
      *
      * @since 1.0.0
      * @param string $path The file path.
@@ -121,7 +121,7 @@ class Filesystem
         return $this->fs->size($path);
     }
     /**
-     * Get the last modified time of a file.
+     * Get the file modified time.
      *
      * @since 1.0.0
      * @param string $path The file path.
@@ -133,11 +133,11 @@ class Filesystem
         return $this->fs->mtime($path);
     }
     /**
-     * Get file contents as an array of lines.
+     * Get the file lines.
      *
      * @since 1.0.0
      * @param string $path The file path.
-     * @return array|false Array of lines on success, false on failure.
+     * @return array<int, string>|false Array of lines on success, false on failure.
      */
     public function lines(string $path)
     {
@@ -172,7 +172,7 @@ class Filesystem
         return $this->fs->rmdir($path, $recursive);
     }
     /**
-     * Check if the filesystem is using direct file access.
+     * Whether direct file access is used.
      *
      * @since 1.0.0
      * @return bool True if using direct filesystem access.
@@ -182,11 +182,11 @@ class Filesystem
         return $this->direct;
     }
     /**
-     * Stream a file download to the browser.
+     * Stream a file download.
      *
      * @since 1.0.0
      * @param string      $file     Path to the file.
-     * @param string|null $filename Optional download filename.
+     * @param string|null $filename Optional. The download filename.
      * @return bool|\WP_Error True on success, WP_Error on failure.
      */
     public function download(string $file, $filename = null)
@@ -207,39 +207,36 @@ class Filesystem
         if (function_exists('gc_enable')) {
             gc_enable();
         }
-        // phpcs:disable WordPress.PHP.IniSet.Risky, WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_apache_setenv -- Required for file streaming.
+        // phpcs:disable WordPress.PHP.IniSet.Risky, WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_apache_setenv, Squiz.PHP.DiscouragedFunctions.Discouraged -- Required for file streaming.
         if (function_exists('apache_setenv')) {
             @apache_setenv('no-gzip', '1');
         }
         @ini_set('zlib.output_compression', 'Off');
         @ini_set('output_buffering', 'Off');
         @ini_set('output_handler', '');
-        // phpcs:enable WordPress.PHP.IniSet.Risky, WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_apache_setenv
         ignore_user_abort(true);
         set_time_limit(0);
+        // phpcs:enable WordPress.PHP.IniSet.Risky, WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_apache_setenv, Squiz.PHP.DiscouragedFunctions.Discouraged
         nocache_headers();
         header('Content-Type: ' . $mime_type . '; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Length: ' . $file_size);
-        $contents = $this->get($file);
-        if (false !== $contents) {
-            file_put_contents('php://output', $contents);
-            // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Streaming to php://output.
-        }
+        readfile($real_path);
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile -- Direct read of the validated path required to stream without buffering in memory.
         if (function_exists('fastcgi_finish_request')) {
             fastcgi_finish_request();
         }
         return true;
     }
     /**
-     * Protect a directory from direct HTTP access.
+     * Protect a directory from direct access.
      *
      * Creates .htaccess (deny from all) and index.php (silence) files
-     * to prevent directory listing and direct file access via browser.
+     * to prevent directory listing and direct file access via the browser.
      *
      * @since 1.0.0
-     * @param string $path      Directory path to protect.
-     * @param bool   $recursive Whether to protect subdirectories too.
+     * @param string $path      The directory path to protect.
+     * @param bool   $recursive Whether to also protect subdirectories.
      * @return void
      */
     public function protect(string $path, bool $recursive = false): void
@@ -267,7 +264,7 @@ class Filesystem
         }
     }
     /**
-     * Sanitize a file path by removing dangerous protocols.
+     * Sanitize a file path.
      *
      * @since 1.0.0
      * @param string $path The file path to sanitize.

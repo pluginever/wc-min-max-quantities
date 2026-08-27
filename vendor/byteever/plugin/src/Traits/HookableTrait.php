@@ -1,18 +1,21 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Traits;
+namespace PluginEver\MinMaxQuantities\B8\Traits;
 
 defined('ABSPATH') || exit;
 /**
- * Provides WordPress hook management with prefixed hook support.
+ * Hookable trait.
+ *
+ * Wraps the action and filter functions so hook names are automatically
+ * prefixed per plugin, keeping custom hooks namespaced and consistent.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 trait HookableTrait
 {
     /**
-     * Generates a prefixed hook name.
+     * Get the prefixed hook name.
      *
      * @since 1.0.0
      * @param string $name The hook name (without prefix).
@@ -27,7 +30,7 @@ trait HookableTrait
         return strtolower(trim($hook, $sep));
     }
     /**
-     * Fires a prefixed action hook.
+     * Fire a prefixed action.
      *
      * @since 1.0.0
      * @param string $hook The hook name (without prefix).
@@ -39,7 +42,7 @@ trait HookableTrait
         do_action($this->hook_name($hook), ...$args);
     }
     /**
-     * Adds an action hook with container support.
+     * Add an action.
      *
      * @since 1.0.0
      * @param string $hook The hook name.
@@ -56,7 +59,7 @@ trait HookableTrait
         return add_action($hook, $this->callback($callback), $priority, $accepted_args);
     }
     /**
-     * Adds a callback to a prefixed action hook.
+     * Add a prefixed action.
      *
      * @since 1.0.0
      * @param string $hook          The hook name (without prefix).
@@ -70,7 +73,7 @@ trait HookableTrait
         return $this->add_action($this->hook_name($hook), $callback, $priority, $accepted_args);
     }
     /**
-     * Removes an action hook.
+     * Remove an action.
      *
      * @since 1.0.0
      * @param string $hook The hook name.
@@ -86,7 +89,7 @@ trait HookableTrait
         return remove_action($hook, $this->callback($callback), $priority);
     }
     /**
-     * Applies a prefixed filter hook.
+     * Apply a prefixed filter.
      *
      * @since 1.0.0
      * @param string $hook  The hook name (without prefix).
@@ -99,7 +102,7 @@ trait HookableTrait
         return apply_filters($this->hook_name($hook), $value, ...$args);
     }
     /**
-     * Adds a filter hook with container support.
+     * Add a filter.
      *
      * @since 1.0.0
      * @param string $hook The hook name.
@@ -116,7 +119,7 @@ trait HookableTrait
         return add_filter($hook, $this->callback($callback), $priority, $accepted_args);
     }
     /**
-     * Adds a callback to a prefixed filter hook.
+     * Add a prefixed filter.
      *
      * @since 1.0.0
      * @param string $hook          The hook name (without prefix).
@@ -130,7 +133,7 @@ trait HookableTrait
         return $this->add_filter($this->hook_name($hook), $callback, $priority, $accepted_args);
     }
     /**
-     * Removes a filter hook.
+     * Remove a filter.
      *
      * @since 1.0.0
      * @param string $hook The hook name.
@@ -144,5 +147,35 @@ trait HookableTrait
             return remove_filter($hook, $callback, $priority);
         }
         return remove_filter($hook, $this->callback($callback), $priority);
+    }
+    /**
+     * Register the plugin activation hook.
+     *
+     * @since 1.0.0
+     * @param mixed $callback The callback to run on activation.
+     * @return void
+     */
+    public function on_activation($callback): void
+    {
+        if (is_callable($callback) && !is_string($callback)) {
+            register_activation_hook($this->file, $callback);
+            return;
+        }
+        register_activation_hook($this->file, $this->callback($callback));
+    }
+    /**
+     * Register the plugin deactivation hook.
+     *
+     * @since 1.0.0
+     * @param mixed $callback The callback to run on deactivation.
+     * @return void
+     */
+    public function on_deactivation($callback): void
+    {
+        if (is_callable($callback) && !is_string($callback)) {
+            register_deactivation_hook($this->file, $callback);
+            return;
+        }
+        register_deactivation_hook($this->file, $this->callback($callback));
     }
 }

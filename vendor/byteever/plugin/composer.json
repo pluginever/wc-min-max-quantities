@@ -7,7 +7,7 @@
   },
   "autoload": {
     "psr-4": {
-      "B8\\Plugin\\": "src/"
+      "B8\\": "src/"
     }
   }
 }

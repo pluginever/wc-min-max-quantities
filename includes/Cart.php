@@ -1,6 +1,6 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities;
+namespace PluginEver\MinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,14 +8,17 @@ defined( 'ABSPATH' ) || exit;
  * Class Cart
  *
  * @since   1.1.4
- * @package WooCommerceMinMaxQuantities
+ * @package PluginEver\MinMaxQuantities
  */
-class Cart {
+class Cart extends B8\Component {
 
 	/**
-	 * Restrictions constructor.
+	 * Register hooks.
+	 *
+	 * @since 2.3.2
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );

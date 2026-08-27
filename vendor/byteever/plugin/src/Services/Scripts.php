@@ -1,14 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * Scripts and styles management for WordPress plugins.
+ * Handles asset registration.
+ *
+ * Handles registration and enqueuing of scripts and styles, resolving
+ * versioned asset URLs and paths from the build directory.
  *
  * @since 1.0.0
- * @package \WooCommerceMinMaxQuantities\B8\Plugin\Services
+ * @package \PluginEver\MinMaxQuantities\B8\Services
  */
 class Scripts
 {
@@ -20,7 +23,7 @@ class Scripts
      */
     protected $app;
     /**
-     * Constructor for Scripts class.
+     * Constructor.
      *
      * @param App $app The application instance.
      *
@@ -31,12 +34,12 @@ class Scripts
         $this->app = $app;
     }
     /**
-     * Register a script with automatic asset file handling.
+     * Register a script.
      *
-     * @param string $handle Script handle. Should be unique.
-     * @param string $src Script source path relative to assets directory or absolute URL.
-     * @param array  $deps Array of script dependencies. Default empty array.
-     * @param bool   $in_footer Whether to enqueue in footer. Default false.
+     * @param string             $handle Script handle. Should be unique.
+     * @param string             $src Script source path relative to assets directory or absolute URL.
+     * @param array<int, string> $deps Array of script dependencies. Default empty array.
+     * @param bool               $in_footer Whether to enqueue in footer. Default false.
      *
      * @since 1.0.0
      * @return bool True on success, false on failure.
@@ -56,12 +59,12 @@ class Scripts
         return $registered;
     }
     /**
-     * Register a stylesheet with automatic asset file handling and RTL support.
+     * Register a stylesheet.
      *
-     * @param string $handle Style handle. Should be unique.
-     * @param string $src Style source path relative to assets directory or absolute URL.
-     * @param array  $deps Array of style dependencies. Default empty array.
-     * @param string $media Media type for stylesheet. Default 'all'.
+     * @param string             $handle Style handle. Should be unique.
+     * @param string             $src Style source path relative to assets directory or absolute URL.
+     * @param array<int, string> $deps Array of style dependencies. Default empty array.
+     * @param string             $media Media type for stylesheet. Default 'all'.
      *
      * @since 1.0.0
      * @return bool True on success, false on failure.
@@ -80,12 +83,12 @@ class Scripts
         return $registered;
     }
     /**
-     * Enqueue a script, registering it first if necessary.
+     * Enqueue a script.
      *
-     * @param string      $handle Script handle.
-     * @param string|null $src Script source path. Required if not already registered.
-     * @param array       $deps Array of script dependencies. Default empty array.
-     * @param bool        $in_footer Whether to enqueue in footer. Default false.
+     * @param string             $handle Script handle.
+     * @param string|null        $src Script source path. Required if not already registered.
+     * @param array<int, string> $deps Array of script dependencies. Default empty array.
+     * @param bool               $in_footer Whether to enqueue in footer. Default false.
      *
      * @since 1.0.0
      * @return bool True on success, false on failure.
@@ -102,12 +105,12 @@ class Scripts
         return true;
     }
     /**
-     * Enqueue a stylesheet, registering it first if necessary.
+     * Enqueue a stylesheet.
      *
-     * @param string      $handle Style handle.
-     * @param string|null $src Style source path. Required if not already registered.
-     * @param array       $deps Array of style dependencies. Default empty array.
-     * @param string      $media Media type for stylesheet. Default 'all'.
+     * @param string             $handle Style handle.
+     * @param string|null        $src Style source path. Required if not already registered.
+     * @param array<int, string> $deps Array of style dependencies. Default empty array.
+     * @param string             $media Media type for stylesheet. Default 'all'.
      *
      * @since 1.0.0
      * @return bool True on success, false on failure.
@@ -124,7 +127,7 @@ class Scripts
         return true;
     }
     /**
-     * Get asset URL from source.
+     * Get the asset URL.
      *
      * @param string $src Asset source path or URL.
      *
@@ -136,7 +139,7 @@ class Scripts
         return preg_match('/^(https?:)?\/\//', $src) ? $src : $this->app->assets_url($this->app->build_dir . '/' . $src);
     }
     /**
-     * Get asset path from source.
+     * Get the asset path.
      *
      * @param string $src Asset source path or URL.
      *

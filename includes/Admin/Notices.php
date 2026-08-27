@@ -1,22 +1,32 @@
 <?php
+/**
+ * Handles the admin notices.
+ *
+ * @since   2.0.0
+ * @package PluginEver\MinMaxQuantities\Admin
+ */
 
-namespace WooCommerceMinMaxQuantities\Admin;
+namespace PluginEver\MinMaxQuantities\Admin;
+
+use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Notices class.
+ * Class Notices.
  *
  * @since 2.0.0
+ * @package PluginEver\MinMaxQuantities\Admin
  */
-class Notices {
+class Notices extends Component {
 
 	/**
-	 * Notices constructor.
+	 * Register hooks.
 	 *
-	 * @since 2.0.0
+	 * @since 2.3.2
+	 * @return void
 	 */
-	public function __construct() {
+	public function register(): void {
 		add_action( 'admin_init', array( $this, 'admin_notices' ) );
 	}
 
@@ -32,10 +42,10 @@ class Notices {
 
 		// Limited time special offer!
 		$special_offer_end_time = strtotime( '2026-02-28 00:00:00' );
-		if ( ! defined( 'WCMMQ_PRO_VERSION' ) && $current_time < $special_offer_end_time ) {
-			wc_min_max_quantities()->notices->add(
+		if ( ! $this->app->is_pro_active() && $current_time < $special_offer_end_time ) {
+			$this->app->notices->add(
 				array(
-					'message'     => __DIR__ . '/views/notices/special-offer.php',
+					'message'     => $this->app->templates_path( 'admin/notices/special-offer.php' ),
 					'dismissible' => false,
 					'notice_id'   => 'wcmmq_special_offer_feb_2026',
 					'style'       => 'border-left-color: #0542fa;',
@@ -47,11 +57,11 @@ class Notices {
 		// Show after 5 days.
 		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 
-			if ( ! defined( 'WCMMQ_PRO_VERSION' ) ) {
+			if ( ! $this->app->is_pro_active() ) {
 				// Upgrade notice.
-				wc_min_max_quantities()->notices->add(
+				$this->app->notices->add(
 					array(
-						'message'     => __DIR__ . '/views/notices/upgrade.php',
+						'message'     => $this->app->templates_path( 'admin/notices/upgrade.php' ),
 						'notice_id'   => 'wcmmq_upgrade',
 						'style'       => 'border-left-color:#0542fa;',
 						'dismissible' => false,
@@ -60,9 +70,9 @@ class Notices {
 			}
 
 			// Review notice.
-			wc_min_max_quantities()->notices->add(
+			$this->app->notices->add(
 				array(
-					'message'     => __DIR__ . '/views/notices/review.php',
+					'message'     => $this->app->templates_path( 'admin/notices/review.php' ),
 					'dismissible' => false,
 					'notice_id'   => 'wcmmq_review',
 					'style'       => 'border-left-color: #0542fa;',

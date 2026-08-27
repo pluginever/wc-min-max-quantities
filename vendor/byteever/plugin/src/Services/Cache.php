@@ -1,17 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress cache management with plugin integration.
+ * Handles caching.
  *
- * Provides unified interface for transients and object cache with
+ * Provides a unified interface for transients and object cache with
  * automatic prefixing and expiration handling.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Cache
 {
@@ -49,7 +49,7 @@ class Cache
         $this->lifetime = $this->app->cache_ttl;
     }
     /**
-     * Add cache entry only if key doesn't exist.
+     * Add a cache entry.
      *
      * @since 1.0.0
      *
@@ -67,7 +67,7 @@ class Cache
         return $this->set($key, $data, $expiration);
     }
     /**
-     * Store data in cache.
+     * Set a cache entry.
      *
      * @since 1.0.0
      *
@@ -81,17 +81,18 @@ class Cache
     {
         $expiration = 0 === $expiration ? $this->lifetime : $expiration;
         $cache_key = $this->get_key($key);
-        return wp_using_ext_object_cache() ? wp_cache_set($cache_key, $data, $this->app->cache_group, $expiration) : set_transient($cache_key, $data, $expiration);
+        $payload = array($data);
+        return wp_using_ext_object_cache() ? wp_cache_set($cache_key, $payload, $this->app->cache_group, $expiration) : set_transient($cache_key, $payload, $expiration);
     }
     /**
-     * Retrieve data from cache.
+     * Get a cache entry.
      *
      * @since 1.0.0
      *
      * @param string $key The cache key.
-     * @param mixed  $fallback Default value if cache miss.
+     * @param mixed  $fallback Default value if the cache misses.
      *
-     * @return mixed The cached data or default value.
+     * @return mixed The cached data or the default value.
      */
     public function get($key, $fallback = null)
     {
@@ -101,10 +102,11 @@ class Cache
         } else {
             $data = get_transient($cache_key);
         }
-        return false !== $data ? $data : $fallback;
+        // A wrapped value (array with key 0) is a hit; a raw miss returns the fallback.
+        return is_array($data) && array_key_exists(0, $data) ? $data[0] : $fallback;
     }
     /**
-     * Check if cache key exists.
+     * Whether a cache key exists.
      *
      * @since 1.0.0
      *
@@ -114,10 +116,11 @@ class Cache
      */
     public function has($key): bool
     {
-        return '__CACHE_HAS_FALLBACK__' !== $this->get($key, '__CACHE_HAS_FALLBACK__');
+        $sentinel = new \stdClass();
+        return $sentinel !== $this->get($key, $sentinel);
     }
     /**
-     * Delete data from cache.
+     * Delete a cache entry.
      *
      * @since 1.0.0
      *
@@ -134,23 +137,24 @@ class Cache
         return delete_transient($cache_key);
     }
     /**
-     * Get or set cache data with callback.
+     * Remember a cache entry.
      *
-     * If cache exists, return cached data. Otherwise, execute callback,
-     * cache the result, and return it.
+     * If the cache exists, returns the cached data. Otherwise, executes the callback,
+     * caches the result, and returns it.
      *
      * @since 1.0.0
      *
      * @param string   $key The cache key.
-     * @param callable $callback Callback to generate data if cache miss.
+     * @param callable $callback Callback to generate data on a cache miss.
      * @param int      $expiration Expiration time in seconds.
      *
      * @return mixed The cached or generated data.
      */
     public function remember($key, $callback, $expiration = 0)
     {
-        $data = $this->get($key);
-        if (null !== $data) {
+        $sentinel = new \stdClass();
+        $data = $this->get($key, $sentinel);
+        if ($sentinel !== $data) {
             return $data;
         }
         $data = call_user_func($callback);
@@ -158,7 +162,7 @@ class Cache
         return $data;
     }
     /**
-     * Increment numeric cache value.
+     * Increment a cache value.
      *
      * @since 1.0.0
      *
@@ -178,7 +182,7 @@ class Cache
         return $new_value;
     }
     /**
-     * Decrement numeric cache value.
+     * Decrement a cache value.
      *
      * @since 1.0.0
      *
@@ -192,9 +196,9 @@ class Cache
         return $this->increment($key, -$offset);
     }
     /**
-     * Clear all plugin cache entries.
+     * Flush the cache.
      *
-     * Note: This only works reliably with external object cache.
+     * Note: This only works reliably with an external object cache.
      * With transients, it clears plugin-specific transients from the database.
      *
      * @since 1.0.0
@@ -209,10 +213,10 @@ class Cache
         $prefix = $this->prefix . '%';
         $query = $wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s", '_transient_' . $prefix, '_transient_timeout_' . $prefix);
         return false !== $wpdb->query($query);
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- no user input involved.
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- bulk transient cleanup by prefix; no core API and caching a flush is moot.
     }
     /**
-     * Get cache key with prefix.
+     * Get the prefixed cache key.
      *
      * @since 1.0.0
      *

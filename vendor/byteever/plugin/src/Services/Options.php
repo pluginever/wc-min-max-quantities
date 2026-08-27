@@ -1,17 +1,19 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress options management with prefixing and array access.
+ * Handles plugin options.
  *
- * Provides unified interface for WordPress options with automatic prefixing,
- * dot notation support, and bulk operations.
+ * Provides a unified interface for WordPress options with automatic prefixing
+ * and ArrayAccess support.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
+ *
+ * @implements \ArrayAccess<string, mixed>
  */
 class Options implements \ArrayAccess
 {
@@ -44,7 +46,7 @@ class Options implements \ArrayAccess
     // Basic CRUD Operations
     // ==============================================
     /**
-     * Add option only if it doesn't exist.
+     * Add an option.
      *
      * @since 1.0.0
      *
@@ -59,7 +61,7 @@ class Options implements \ArrayAccess
         return null === $autoload ? add_option($this->key($key), $value) : add_option($this->key($key), $value, '', $autoload);
     }
     /**
-     * Get option value.
+     * Get the option value.
      *
      * @since 1.0.0
      *
@@ -73,7 +75,7 @@ class Options implements \ArrayAccess
         return get_option($this->key($key), $fallback);
     }
     /**
-     * Update option value (creates if doesn't exist).
+     * Update the option value.
      *
      * @since 1.0.0
      *
@@ -88,7 +90,7 @@ class Options implements \ArrayAccess
         return null === $autoload ? update_option($this->key($key), $value) : update_option($this->key($key), $value, $autoload);
     }
     /**
-     * Delete option.
+     * Delete the option.
      *
      * @since 1.0.0
      *
@@ -101,7 +103,7 @@ class Options implements \ArrayAccess
         return delete_option($this->key($key));
     }
     /**
-     * Check if option exists.
+     * Whether the option exists.
      *
      * @since 1.0.0
      *
@@ -117,7 +119,7 @@ class Options implements \ArrayAccess
     // Database Version Helpers
     // ==============================================
     /**
-     * Get plugin database version.
+     * Get the database version.
      *
      * @since 1.0.0
      * @return string The database version.
@@ -127,14 +129,14 @@ class Options implements \ArrayAccess
         return $this->get('db_version', '1.0.0');
     }
     /**
-     * Update plugin database version.
+     * Update the database version.
      *
      * @since 1.0.0
      *
      * @param string $version The version to set.
-     * @param bool   $force Force update even if the version is the same.
+     * @param bool   $force Whether to force the update even if the version is the same.
      *
-     * @return bool True if the value was updated, false otherwise.
+     * @return bool True on success, false on failure.
      */
     public function update_db_version($version, $force = false): bool
     {
@@ -144,7 +146,7 @@ class Options implements \ArrayAccess
     // Cleanup Operations
     // ==============================================
     /**
-     * Delete all plugin options from database.
+     * Delete all plugin options.
      *
      * @since 1.0.0
      *
@@ -154,15 +156,23 @@ class Options implements \ArrayAccess
     {
         global $wpdb;
         $pattern = $wpdb->esc_like(rtrim($this->prefix, '_')) . '_%';
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- bulk delete of prefixed options by pattern; no core API, object cache evicted below.
+        $names = $wpdb->get_col($wpdb->prepare("SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s", $pattern));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- see above.
         $deleted = $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $pattern));
-        wp_cache_flush();
+        // Evict each deleted option from the object cache; alloptions/notoptions cover autoloaded keys.
+        foreach ($names as $name) {
+            wp_cache_delete($name, 'options');
+        }
+        wp_cache_delete('alloptions', 'options');
+        wp_cache_delete('notoptions', 'options');
         return (int) $deleted;
     }
     // ==============================================
     // Utility Methods
     // ==============================================
     /**
-     * Get option key with prefix.
+     * Get the prefixed option key.
      *
      * @since 1.0.0
      *
@@ -182,7 +192,7 @@ class Options implements \ArrayAccess
     // ArrayAccess Implementation
     // ==============================================
     /**
-     * Get the value at a given offset.
+     * Get the offset value.
      *
      * @param string $offset The key to get.
      *
@@ -196,7 +206,7 @@ class Options implements \ArrayAccess
         return $this->get($offset);
     }
     /**
-     * Set the value at a given offset.
+     * Set the offset value.
      *
      * @param string $offset The key to set.
      * @param mixed  $value The value to set.
@@ -211,7 +221,7 @@ class Options implements \ArrayAccess
         $this->update($offset, $value);
     }
     /**
-     * Remove the value at a given offset.
+     * Remove the offset value.
      *
      * @param string $offset The key to remove.
      *
@@ -225,7 +235,7 @@ class Options implements \ArrayAccess
         $this->delete($offset);
     }
     /**
-     * Whether an offset exists.
+     * Whether the offset exists.
      *
      * @param mixed $offset The key to check.
      *

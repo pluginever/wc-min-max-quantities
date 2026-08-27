@@ -1,6 +1,12 @@
 <?php
+/**
+ * Main plugin class.
+ *
+ * @since   1.1.4
+ * @package PluginEver\MinMaxQuantities
+ */
 
-namespace WooCommerceMinMaxQuantities;
+namespace PluginEver\MinMaxQuantities;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -8,13 +14,27 @@ defined( 'ABSPATH' ) || exit;
  * Class Plugin.
  *
  * @since 1.1.4
- * @package WooCommerceMinMaxQuantities
+ * @package PluginEver\MinMaxQuantities
  *
  * @property-read string $settings_url Settings page URL.
  * @property-read string $docs_url     Documentation URL.
  * @property-read string $support_url  Support page URL.
+ * @property-read string $review_url   Review URL.
+ * @property-read string $upgrade_url  Upgrade URL.
  */
-final class Plugin extends B8\Plugin\App {
+final class Plugin extends B8\App {
+
+	/**
+	 * Components to boot.
+	 *
+	 * @since 2.3.2
+	 * @var array<int, class-string>
+	 */
+	protected array $components = array(
+		Installer::class,
+		Cart::class,
+		Admin\Admin::class,
+	);
 
 	/**
 	 * Bootstraps the plugin.
@@ -22,7 +42,7 @@ final class Plugin extends B8\Plugin\App {
 	 * @since 2.2.4
 	 * @return void
 	 */
-	protected function bootstrap(): void {
+	public function bootstrap(): void {
 		define( 'WCMMQ_FILE', $this->file );
 		define( 'WCMMQ_VERSION', $this->version );
 		define( 'WCMMQ_PLUGIN_PATH', $this->plugin_path() );
@@ -36,11 +56,30 @@ final class Plugin extends B8\Plugin\App {
 		// Redis/Memcached/etc. would leak one user's limits to another.
 		wp_cache_add_non_persistent_groups( array( 'wc-min-max-quantities' ) );
 
-		register_activation_hook( $this->file, array( Installer::class, 'install' ) );
+		add_action( 'woocommerce_loaded', array( $this, 'woocommerce_loaded' ), 0 );
 		add_filter( 'plugin_action_links_' . $this->basename(), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
-		add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility' ) );
-		add_action( 'woocommerce_loaded', array( $this, 'register_services' ), 0 );
+	}
+
+	/**
+	 * Initialize the plugin.
+	 *
+	 * Boots every component and fires the legacy loaded action.
+	 *
+	 * @since 2.3.2
+	 * @return void
+	 */
+	public function woocommerce_loaded(): void {
+		$this->boot( $this->components );
+
+		/**
+		 * Fires after the plugin has registered its services.
+		 *
+		 * @since 2.0.0
+		 */
+		do_action( 'wc_min_max_quantities_loaded' );
+
+		$this->do_action( 'loaded' );
 	}
 
 	/**
@@ -60,7 +99,7 @@ final class Plugin extends B8\Plugin\App {
 			),
 		);
 
-		if ( ! $this->plugin_active( 'wc-min-max-quantities-pro/wc-min-max-quantities-pro.php' ) ) {
+		if ( ! $this->is_pro_active() ) {
 			$plugin_links['go_pro'] = '<a href="https://pluginever.com/plugins/woocommerce-min-max-quantities-pro/" target="_blank" style="color: #39b54a; font-weight: bold;">' . esc_html__( 'Go Pro', 'wc-min-max-quantities' ) . '</a>';
 		}
 
@@ -98,32 +137,13 @@ final class Plugin extends B8\Plugin\App {
 	}
 
 	/**
-	 * Declare WooCommerce compatibility.
+	 * Whether the Pro add-on is active.
 	 *
-	 * @since 1.1.5
-	 * @return void
+	 * @since 2.3.2
+	 * @return bool True when the Pro add-on is active.
 	 */
-	public function declare_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $this->file, true );
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', $this->file, true );
-		}
-	}
-
-	/**
-	 * Register plugin services.
-	 *
-	 * @since 2.2.4
-	 * @return void
-	 */
-	public function register_services(): void {
-		$this->make( Installer::class );
-		$this->make( Cart::class );
-
-		if ( is_admin() ) {
-			$this->make( Admin\Admin::class );
-		}
-
-		do_action( 'wc_min_max_quantities_loaded' );
+	public function is_pro_active(): bool {
+		$pro_basename = $this->get( 'pro_basename', '' );
+		return ! empty( $pro_basename ) && $this->plugin_active( (string) $pro_basename );
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Container;
+namespace PluginEver\MinMaxQuantities\B8\Container;
 
 use ArrayAccess;
 use BadMethodCallException;
@@ -12,50 +12,55 @@ use ReflectionException;
 use ReflectionParameter;
 defined('ABSPATH') || exit;
 /**
- * Simple dependency injection container.
+ * Dependency injection container.
+ *
+ * Supports bindings, shared singletons, factories, and aliases, with
+ * automatic constructor injection resolved through reflection.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
+ *
+ * @implements ArrayAccess<string, mixed>
  */
-class Container implements ContainerInterface, ArrayAccess
+class Container implements ArrayAccess
 {
     /**
      * Registry of service bindings.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, mixed>
      */
     private $bindings = array();
     /**
      * Cache for shared instances.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, mixed>
      */
     private $instances = array();
     /**
      * Registry of aliases.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, string>
      */
     private $aliases = array();
     /**
      * The stack of concretions currently being built.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<int, string>
      */
     private $build_stack = array();
     /**
      * A map from class name and static methods to the built callback.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, Closure>
      */
     private $callbacks = array();
     /**
-     * Magic method for property access - delegates to container.
+     * Get a container property.
      *
      * Enables: $app->utilities, $app->request, etc.
      *
@@ -69,7 +74,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->get($name, null);
     }
     /**
-     * Magic method for property setting - delegates to container.
+     * Set a container property.
      *
      * Enables: $app->utilities = $value, $app->request = $value, etc.
      *
@@ -84,16 +89,16 @@ class Container implements ContainerInterface, ArrayAccess
         $this->set($name, $value);
     }
     /**
-     * Magic method for method calls - delegates to container.
+     * Call a container binding.
      *
      * Enables: $app->utilities(), $app->request(), etc.
      *
-     * @param string $name Method name.
-     * @param array  $arguments Method arguments.
+     * @param string            $name Method name.
+     * @param array<int, mixed> $arguments Method arguments.
      *
      * @since 1.0.0
      * @return mixed
-     * @throws BadMethodCallException If method not found in container.
+     * @throws BadMethodCallException If the method is not found in the container.
      */
     public function __call($name, $arguments)
     {
@@ -104,20 +109,23 @@ class Container implements ContainerInterface, ArrayAccess
         throw new BadMethodCallException(esc_html("Method {$name} not found"));
     }
     /**
-     * Get service from container.
-     *
-     * @param string $key Service key.
-     * @param mixed  $fallback Fallback value.
+     * Get a service from the container.
      *
      * @since 1.0.0
-     * @return mixed
+     *
+     * @template T of object
+     *
+     * @param class-string<T>|string $key      Service key or class name.
+     * @param mixed                  $fallback Fallback value when the key is not bound.
+     *
+     * @return ($key is class-string<T> ? T : mixed) Resolved instance for a class name, otherwise the stored value or fallback.
      */
     public function get($key, $fallback = null)
     {
         return $this->has($key) ? $this->make($key) : $fallback;
     }
     /**
-     * Set service in container.
+     * Set a service in the container.
      *
      * @param string $key Service key.
      * @param mixed  $value Service value.
@@ -135,7 +143,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->bind($key, $value);
     }
     /**
-     * Check if service exists in container.
+     * Whether a service is bound.
      *
      * @param string $key Service key.
      *
@@ -147,13 +155,13 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->bound($key);
     }
     /**
-     * Register a binding with the container.
+     * Bind a service.
      *
      * @since 1.0.0
      *
-     * @param Closure|string|array $id The abstract type or array with alias (e.g., array('alias' => AbstractClass::class)).
-     * @param Closure|string|null  $concrete The concrete implementation.
-     * @param bool                 $shared Whether the binding should be shared (default: true).
+     * @param Closure|string|array<string, mixed> $id The abstract type or array with alias (e.g., array('alias' => AbstractClass::class)).
+     * @param Closure|string|null                 $concrete The concrete implementation.
+     * @param bool                                $shared Whether the binding should be shared (default: true).
      *
      * @return static Static instance for method chaining.
      * @throws ContainerException If the concrete type is not a string or Closure.
@@ -216,7 +224,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $this;
     }
     /**
-     * Register a non-shared binding (fresh instance each time).
+     * Bind a non-shared service.
      *
      * @since 1.0.0
      *
@@ -230,7 +238,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->bind($id, $concrete, false);
     }
     /**
-     * Share an existing instance in the container.
+     * Share an instance.
      *
      * @since 1.0.0
      *
@@ -253,9 +261,11 @@ class Container implements ContainerInterface, ArrayAccess
         return $instance;
     }
     /**
-     * Generate a callable that resolves a class and invokes the specified method.
+     * Build a resolver callback.
      *
-     * @param string|array|callable $callback The callback to convert to callable.
+     * @since 1.0.0
+     *
+     * @param string|array<int, mixed>|callable $callback The callback to convert to callable.
      *
      * @return Closure A closure that resolves the instance and calls the specified method.
      * @throws ContainerException If the callback format is invalid.
@@ -284,14 +294,16 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->callbacks[$key];
     }
     /**
-     * Resolve the given type from the container.
+     * Resolve a service.
      *
      * @since 1.0.0
      *
-     * @param string $id The abstract type to resolve.
-     * @param array  $parameters Optional parameters to pass to the constructor.
+     * @template T of object
      *
-     * @return mixed The resolved instance.
+     * @param class-string<T>|string $id         The abstract type to resolve.
+     * @param array<string, mixed>   $parameters Optional parameters to pass to the constructor.
+     *
+     * @return ($id is class-string<T> ? T : mixed) The resolved instance.
      *
      * @throws ContainerException If the type cannot be resolved.
      */
@@ -300,7 +312,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->resolve($id, $parameters);
     }
     /**
-     * Register an alias for an abstract type in the container.
+     * Register an alias.
      *
      * @since 1.0.0
      *
@@ -336,7 +348,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->aliases[$alias] = $id;
     }
     /**
-     * Determine whether the given abstract type is bound in the container.
+     * Whether a type is bound.
      *
      * @since 1.0.0
      *
@@ -349,12 +361,12 @@ class Container implements ContainerInterface, ArrayAccess
         return isset($this->bindings[$id]) || isset($this->instances[$id]) || isset($this->aliases[$id]);
     }
     /**
-     * Resolve the given type from the container.
+     * Resolve the given type.
      *
      * @since 1.0.0
      *
-     * @param string $id The abstract type to resolve.
-     * @param array  $parameters Optional parameters to pass to the constructor.
+     * @param string               $id The abstract type to resolve.
+     * @param array<string, mixed> $parameters Optional parameters to pass to the constructor.
      *
      * @return mixed The resolved instance.
      * @throws ContainerException If the type cannot be resolved.
@@ -385,12 +397,12 @@ class Container implements ContainerInterface, ArrayAccess
         return $object;
     }
     /**
-     * Instantiate a concrete implementation of the given type.
+     * Build a concrete instance.
      *
      * @since 1.0.0
      *
-     * @param string|Closure $concrete The class name or closure to instantiate.
-     * @param array          $parameters Optional parameters to pass to the constructor.
+     * @param string|Closure       $concrete The class name or closure to instantiate.
+     * @param array<string, mixed> $parameters Optional parameters to pass to the constructor.
      *
      * @return mixed The instantiated object.
      *
@@ -435,7 +447,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $reflector->newInstanceArgs($instances);
     }
     /**
-     * Get the alias for an abstract if available.
+     * Get the alias.
      *
      * @since 1.0.0
      *
@@ -458,7 +470,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $current;
     }
     /**
-     * Get the class name for the given parameter.
+     * Get the parameter class name.
      *
      * @since 1.0.0
      *
@@ -496,7 +508,7 @@ class Container implements ContainerInterface, ArrayAccess
         return null;
     }
     /**
-     * Determine if a given type is shared.
+     * Whether a type is shared.
      *
      * @since 1.0.0
      *
@@ -509,7 +521,7 @@ class Container implements ContainerInterface, ArrayAccess
         return isset($this->instances[$id]) || !isset($this->bindings[$id]) || isset($this->bindings[$id]['shared']) && true === $this->bindings[$id]['shared'];
     }
     /**
-     * Throw an exception for an unresolvable primitive.
+     * Throw for an unresolvable primitive.
      *
      * @since 1.0.0
      *
@@ -524,14 +536,14 @@ class Container implements ContainerInterface, ArrayAccess
         throw new ContainerException(esc_html($message));
     }
     /**
-     * Resolve a class based dependency from the container.
+     * Resolve a class dependency.
      *
      * @since 1.0.0
      *
      * @param ReflectionParameter $parameter The reflection parameter instance.
      *
      * @return mixed
-     * @throws ContainerException  If the class cannot be resolved.
+     * @throws ContainerException If the class cannot be resolved.
      */
     private function resolve_class($parameter)
     {
@@ -548,7 +560,7 @@ class Container implements ContainerInterface, ArrayAccess
         }
     }
     /**
-     * Get the value at a given offset.
+     * Get the offset value.
      *
      * @param string $offset The key to get.
      *
@@ -565,7 +577,7 @@ class Container implements ContainerInterface, ArrayAccess
         return $this->make((string) $offset);
     }
     /**
-     * Set the value at a given offset.
+     * Set the offset value.
      *
      * @param string $offset The key to set.
      * @param mixed  $value The value to set. If it's not a Closure, it will be wrapped in one.
@@ -586,7 +598,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->bind((string) $offset, $wrapped_value);
     }
     /**
-     * Remove the value at a given offset.
+     * Remove the offset value.
      *
      * @param string $offset The key to remove.
      *
@@ -603,7 +615,7 @@ class Container implements ContainerInterface, ArrayAccess
         unset($this->bindings[$offset], $this->instances[$offset], $this->aliases[$offset]);
     }
     /**
-     * Whether an offset exists.
+     * Whether the offset exists.
      *
      * @param mixed $offset The key to check.
      *

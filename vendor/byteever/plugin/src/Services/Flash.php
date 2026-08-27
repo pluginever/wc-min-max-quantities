@@ -1,17 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * Flash messages management for WordPress admin.
+ * Handles flash messages.
  *
  * Handles temporary messages across page redirects using WordPress user meta
  * and URL parameters for display control.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Flash
 {
@@ -40,7 +40,7 @@ class Flash
      * Messages to display.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $messages = array();
     /**
@@ -55,14 +55,22 @@ class Flash
         $this->app = $app;
         $this->meta_key = $this->app->option_prefix . '_flash_messages';
         $this->query_param = $this->app->option_prefix . '_messages';
-        // Register hooks, and actions.
+    }
+    /**
+     * Register hooks.
+     *
+     * @since 1.0.0
+     * @return void
+     */
+    public function register(): void
+    {
         add_action('admin_init', array($this, 'load_messages'));
         add_action('admin_notices', array($this, 'display_messages'));
         add_action('admin_footer', array($this, 'display_messages'));
         add_filter('wp_redirect', array($this, 'save_messages'));
     }
     /**
-     * Load the messages from user meta.
+     * Load the messages.
      *
      * @since 1.0.0
      * @return void
@@ -84,7 +92,7 @@ class Flash
         }
     }
     /**
-     * Display the messages as admin notices.
+     * Display the messages.
      *
      * @since 1.0.0
      * @return void
@@ -100,7 +108,7 @@ class Flash
         }
     }
     /**
-     * Save the messages to user meta before redirect.
+     * Save the messages.
      *
      * @param string $location The location to redirect to.
      *
@@ -117,7 +125,7 @@ class Flash
         return $location;
     }
     /**
-     * Add success message.
+     * Add a success message.
      *
      * @since 1.0.0
      *
@@ -130,7 +138,7 @@ class Flash
         $this->add('success', $message);
     }
     /**
-     * Add info message.
+     * Add an info message.
      *
      * @since 1.0.0
      *
@@ -143,7 +151,7 @@ class Flash
         $this->add('info', $message);
     }
     /**
-     * Add warning message.
+     * Add a warning message.
      *
      * @since 1.0.0
      *
@@ -156,7 +164,7 @@ class Flash
         $this->add('warning', $message);
     }
     /**
-     * Add error message.
+     * Add an error message.
      *
      * @since 1.0.0
      *
@@ -169,7 +177,7 @@ class Flash
         $this->add('error', $message);
     }
     /**
-     * Add message to the list of messages.
+     * Add a message.
      *
      * @param string $type Message type. Must be 'success', 'info', 'warning', or 'error'.
      * @param string $message The message to add.
@@ -187,7 +195,7 @@ class Flash
         $this->messages[$id] = array('message' => $message, 'type' => $type);
     }
     /**
-     * Clear all messages.
+     * Clear the messages.
      *
      * @since 1.0.0
      * @return void

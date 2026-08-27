@@ -1,14 +1,17 @@
 <?php
 
-namespace WooCommerceMinMaxQuantities\B8\Plugin\Services;
+namespace PluginEver\MinMaxQuantities\B8\Services;
 
-use WooCommerceMinMaxQuantities\B8\Plugin\App;
+use PluginEver\MinMaxQuantities\B8\App;
 defined('ABSPATH') || exit;
 /**
- * WordPress debug log integration.
+ * Handles logging.
+ *
+ * Provides PSR-3 style logging to a plugin-specific file with level
+ * filtering, message interpolation, and automatic log rotation.
  *
  * @since 1.0.0
- * @package \B8\Plugin
+ * @package \B8
  */
 class Logger
 {
@@ -30,7 +33,7 @@ class Logger
      * Log levels with numeric values.
      *
      * @since 1.0.0
-     * @var array
+     * @var array<string, int>
      */
     protected $levels = array('emergency' => 0, 'alert' => 1, 'critical' => 2, 'error' => 3, 'warning' => 4, 'notice' => 5, 'info' => 6, 'debug' => 7);
     /**
@@ -57,8 +60,8 @@ class Logger
     /**
      * Log an emergency message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -70,8 +73,8 @@ class Logger
     /**
      * Log an alert message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -83,8 +86,8 @@ class Logger
     /**
      * Log a critical message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -96,8 +99,8 @@ class Logger
     /**
      * Log an error message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -109,8 +112,8 @@ class Logger
     /**
      * Log a warning message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -122,8 +125,8 @@ class Logger
     /**
      * Log a notice message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -135,8 +138,8 @@ class Logger
     /**
      * Log an info message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -148,8 +151,8 @@ class Logger
     /**
      * Log a debug message.
      *
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -159,11 +162,11 @@ class Logger
         $this->log('debug', $message, $context);
     }
     /**
-     * Log a message with arbitrary level.
+     * Log a message.
      *
-     * @param string $level The log level.
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $level   The log level.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return void
@@ -177,7 +180,7 @@ class Logger
         $this->write_log($formatted_message);
     }
     /**
-     * Get log file path.
+     * Get the log file path.
      *
      * @since 1.0.0
      * @return string
@@ -195,7 +198,7 @@ class Logger
         return $log_dir . '/' . $filename;
     }
     /**
-     * Cleanup all log files for this plugin.
+     * Remove the log files.
      *
      * @since 1.0.0
      * @return bool
@@ -210,7 +213,7 @@ class Logger
         return $this->app->fs->rmdir($log_dir, true);
     }
     /**
-     * Check if message should be logged based on minimum log level.
+     * Whether a message should be logged.
      *
      * @param string $level The log level.
      *
@@ -228,11 +231,11 @@ class Logger
         return $this->levels[$level] <= $this->levels[$this->log_level];
     }
     /**
-     * Format log message.
+     * Format a log message.
      *
-     * @param string $level The log level.
-     * @param string $message The log message.
-     * @param array  $context Additional context data.
+     * @param string               $level   The log level.
+     * @param string               $message The log message.
+     * @param array<string, mixed> $context Additional context data.
      *
      * @since 1.0.0
      * @return string
@@ -250,10 +253,10 @@ class Logger
         return $formatted;
     }
     /**
-     * Interpolate context values into message placeholders.
+     * Interpolate the message placeholders.
      *
-     * @param string $message The message with placeholders.
-     * @param array  $context Context values.
+     * @param string               $message The message with placeholders.
+     * @param array<string, mixed> $context Context values.
      *
      * @since 1.0.0
      * @return string
@@ -269,7 +272,7 @@ class Logger
         return strtr($message, $replace);
     }
     /**
-     * Rotate log file if it exceeds max size.
+     * Rotate the log file.
      *
      * @since 1.0.0
      * @return void
@@ -283,11 +286,11 @@ class Logger
         }
         $size = $this->app->fs->size($log_file);
         if (false !== $size && $size >= $max_size) {
-            $this->app->fs->delete($log_file);
+            $this->app->fs->wp()->move($log_file, $log_file . '.1', true);
         }
     }
     /**
-     * Write log to custom log file.
+     * Write to the log file.
      *
      * @param string $message The formatted message.
      *
