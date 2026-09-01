@@ -46,7 +46,7 @@ class Notices extends Component {
 			$this->app->notices->add(
 				array(
 					'message'     => $this->app->templates_path( 'admin/notices/special-offer.php' ),
-					'dismissible' => false,
+					'dismissible' => true,
 					'notice_id'   => 'wcmmq_special_offer_feb_2026',
 					'style'       => 'border-left-color: #0542fa;',
 					'class'       => 'notice-special-offer',
@@ -64,7 +64,7 @@ class Notices extends Component {
 						'message'     => $this->app->templates_path( 'admin/notices/upgrade.php' ),
 						'notice_id'   => 'wcmmq_upgrade',
 						'style'       => 'border-left-color:#0542fa;',
-						'dismissible' => false,
+						'dismissible' => true,
 					)
 				);
 			}
@@ -73,7 +73,7 @@ class Notices extends Component {
 			$this->app->notices->add(
 				array(
 					'message'     => $this->app->templates_path( 'admin/notices/review.php' ),
-					'dismissible' => false,
+					'dismissible' => true,
 					'notice_id'   => 'wcmmq_review',
 					'style'       => 'border-left-color: #0542fa;',
 				)
