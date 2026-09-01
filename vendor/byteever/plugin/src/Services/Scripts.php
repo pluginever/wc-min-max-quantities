@@ -8,7 +8,7 @@ defined('ABSPATH') || exit;
  * Handles asset registration.
  *
  * Handles registration and enqueuing of scripts and styles, resolving
- * versioned asset URLs and paths from the build directory.
+ * versioned URLs and paths from the build directory.
  *
  * @since 1.0.0
  * @package \PluginEver\MinMaxQuantities\B8\Services
@@ -37,7 +37,7 @@ class Scripts
      * Register a script.
      *
      * @param string             $handle Script handle. Should be unique.
-     * @param string             $src Script source path relative to assets directory or absolute URL.
+     * @param string             $src Script source path relative to the build directory or absolute URL.
      * @param array<int, string> $deps Array of script dependencies. Default empty array.
      * @param bool               $in_footer Whether to enqueue in footer. Default false.
      *
@@ -62,7 +62,7 @@ class Scripts
      * Register a stylesheet.
      *
      * @param string             $handle Style handle. Should be unique.
-     * @param string             $src Style source path relative to assets directory or absolute URL.
+     * @param string             $src Style source path relative to the build directory or absolute URL.
      * @param array<int, string> $deps Array of style dependencies. Default empty array.
      * @param string             $media Media type for stylesheet. Default 'all'.
      *
@@ -136,7 +136,7 @@ class Scripts
      */
     protected function get_asset_url($src): string
     {
-        return preg_match('/^(https?:)?\/\//', $src) ? $src : $this->app->assets_url($this->app->build_dir . '/' . $src);
+        return preg_match('/^(https?:)?\/\//', $src) ? $src : $this->app->plugin_url($this->app->build_dir . '/' . $src);
     }
     /**
      * Get the asset path.
@@ -148,6 +148,6 @@ class Scripts
      */
     protected function get_asset_path($src): string
     {
-        return preg_match('/^(https?:)?\/\//', $src) ? str_replace($this->app->plugin_url(), $this->app->plugin_path(), $src) : $this->app->assets_path($this->app->build_dir . '/' . $src);
+        return preg_match('/^(https?:)?\/\//', $src) ? str_replace($this->app->plugin_url(), $this->app->plugin_path(), $src) : $this->app->plugin_path($this->app->build_dir . '/' . $src);
     }
 }

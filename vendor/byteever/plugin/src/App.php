@@ -42,7 +42,7 @@ defined('ABSPATH') || exit;
  * @property string     $text_domain        Plugin text domain.
  * @property string     $domain_path        Domain path for translations.
  * @property string     $assets_dir         Assets directory name.
- * @property string     $build_dir          Compiled assets directory name.
+ * @property string     $build_dir          Compiled output directory, relative to the plugin root.
  * @property string     $templates_dir      Templates directory name.
  * @property int        $cache_ttl          Cache lifetime in seconds.
  * @property string     $log_level          Minimum log level (default: 'error').
@@ -157,6 +157,9 @@ abstract class App extends Container
      */
     protected function preflight(): void
     {
+        if (!is_dir($this->plugin_path($this->build_dir))) {
+            $this->set('build_dir', trim($this->assets_dir . '/' . $this->build_dir, '/'));
+        }
         // Register application instance with alias.
         $this->share(static::class, $this);
         $this->alias(static::class, 'app');

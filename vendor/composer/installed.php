@@ -3,7 +3,7 @@
         'name' => 'pluginever/wc-min-max-quantities',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'd083e07316fa14c5fd35755ea176ac575b50ee01',
+        'reference' => '0451db57d9af45e2425a80c32baff5f2e404d67b',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'byteever/plugin' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => '10a12c5d685f04a28132defc863e7493e0085308',
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => 'f476604063a124d202beee142897b14d6e2637c4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../byteever/plugin',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'pluginever/wc-min-max-quantities' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'd083e07316fa14c5fd35755ea176ac575b50ee01',
+            'reference' => '0451db57d9af45e2425a80c32baff5f2e404d67b',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

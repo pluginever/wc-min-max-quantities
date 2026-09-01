@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
  * Pathable trait.
  *
  * Resolves filesystem paths and URLs relative to the plugin root,
- * including the assets, build, and template directories.
+ * including the assets and template directories.
  *
  * @since 1.0.0
  * @package \B8
