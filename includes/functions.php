@@ -48,16 +48,16 @@ function wcmmq_get_product_limits( $product_id, $variation_id = 0 ) {
 
 		if ( $override ) {
 			$limits = array(
-				'step'    => (int) get_post_meta( $product->get_id(), '_wcmmq_step', true ),
-				'min_qty' => (int) get_post_meta( $product->get_id(), '_wcmmq_min_qty', true ),
-				'max_qty' => (int) get_post_meta( $product->get_id(), '_wcmmq_max_qty', true ),
+				'step'    => (float) get_post_meta( $product->get_id(), '_wcmmq_step', true ),
+				'min_qty' => (float) get_post_meta( $product->get_id(), '_wcmmq_min_qty', true ),
+				'max_qty' => (float) get_post_meta( $product->get_id(), '_wcmmq_max_qty', true ),
 				'rule'    => 'product',
 			);
 		} else {
 			$limits = array(
-				'step'    => (int) get_option( 'wcmmq_step', 1 ),
-				'min_qty' => (int) get_option( 'wcmmq_min_qty', 1 ),
-				'max_qty' => (int) get_option( 'wcmmq_max_qty', 0 ),
+				'step'    => (float) get_option( 'wcmmq_step', 1 ),
+				'min_qty' => (float) get_option( 'wcmmq_min_qty', 1 ),
+				'max_qty' => (float) get_option( 'wcmmq_max_qty', 0 ),
 				'rule'    => 'global',
 			);
 		}
@@ -79,10 +79,10 @@ function wcmmq_get_cart_limits() {
 	$limits = apply_filters(
 		'wc_min_max_quantities_cart_limits',
 		array(
-			'min_qty'   => (int) get_option( 'wcmmq_min_cart_qty' ),
-			'max_qty'   => (int) get_option( 'wcmmq_max_cart_qty' ),
-			'min_total' => (int) get_option( 'wcmmq_min_cart_total' ),
-			'max_total' => (int) get_option( 'wcmmq_max_cart_total' ),
+			'min_qty'   => (float) get_option( 'wcmmq_min_cart_qty' ),
+			'max_qty'   => (float) get_option( 'wcmmq_max_cart_qty' ),
+			'min_total' => (float) get_option( 'wcmmq_min_cart_total' ),
+			'max_total' => (float) get_option( 'wcmmq_max_cart_total' ),
 		)
 	);
 

@@ -88,12 +88,16 @@ class MetaBoxes extends Component {
 
 			woocommerce_wp_text_input(
 				array(
-					'id'          => '_wcmmq_step',
-					'label'       => __( 'Quantity step', 'wc-min-max-quantities' ),
-					'description' => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
-					'desc_tip'    => true,
-					'type'        => 'number',
-					'min'         => '0',
+					'id'                => '_wcmmq_step',
+					'label'             => __( 'Quantity step', 'wc-min-max-quantities' ),
+					'description'       => __( 'Enter a number that will increment or decrement every time a quantity is changed for this product.', 'wc-min-max-quantities' ),
+					'desc_tip'          => true,
+					'type'              => 'number',
+					'min'               => '0',
+					'custom_attributes' => array(
+						'step' => 'any',
+						'min'  => '0',
+					),
 				)
 			);
 

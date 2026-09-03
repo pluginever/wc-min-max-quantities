@@ -19,9 +19,15 @@ class Cart extends B8\Component {
 	 * @return void
 	 */
 	public function register(): void {
+		// Preserve decimal quantities: WooCommerce casts all stock amounts to int via this hook.
+		remove_filter( 'woocommerce_stock_amount', 'intval' );
+
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
+		add_filter( 'woocommerce_quantity_input_min', array( __CLASS__, 'quantity_input_min' ), 10, 2 );
+		add_filter( 'woocommerce_quantity_input_max', array( __CLASS__, 'quantity_input_max' ), 10, 2 );
+		add_filter( 'woocommerce_quantity_input_step', array( __CLASS__, 'quantity_input_step' ), 10, 2 );
 		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart_validation' ), 20, 4 );
 		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ), 20 );
 		add_filter( 'woocommerce_add_to_cart_product_id', array( __CLASS__, 'set_cart_quantity' ) );
@@ -101,6 +107,25 @@ class Cart extends B8\Component {
 		}
 
 		return $default_limit;
+	}
+
+	/**
+	 * Check if a value is a multiple of the given step.
+	 *
+	 * @param int|float $value The value to check.
+	 * @param int|float $step  The step (group) value.
+	 *
+	 * @return bool True when the value is a multiple of the step (or step is not set).
+	 */
+	protected static function is_multiple_of( $value, $step ) {
+		$step = (float) $step;
+		if ( $step <= 0 ) {
+			return true;
+		}
+
+		$remainder = fmod( (float) $value, $step );
+
+		return abs( $remainder ) < 0.000001 || abs( $remainder - $step ) < 0.000001;
 	}
 
 	/**
@@ -202,7 +227,7 @@ class Cart extends B8\Component {
 		$limits = wcmmq_get_product_limits( $product_id, $variation_id );
 		if ( $limits['min_qty'] > 0 ) {
 
-			if ( $product->managing_stock() && ! $product->backorders_allowed() && absint( $limits['min_qty'] ) > $product->get_stock_quantity() ) {
+			if ( $product->managing_stock() && ! $product->backorders_allowed() && (float) $limits['min_qty'] > $product->get_stock_quantity() ) {
 				$data['min_value'] = $product->get_stock_quantity();
 
 			} else {
@@ -215,7 +240,7 @@ class Cart extends B8\Component {
 			if ( $product->managing_stock() && $product->backorders_allowed() ) {
 				$data['max_value'] = $limits['max_qty'];
 
-			} elseif ( $product->managing_stock() && absint( $limits['max_qty'] ) > $product->get_stock_quantity() ) {
+			} elseif ( $product->managing_stock() && (float) $limits['max_qty'] > $product->get_stock_quantity() ) {
 				$data['max_value'] = $product->get_stock_quantity();
 
 			} else {
@@ -226,7 +251,7 @@ class Cart extends B8\Component {
 		if ( $limits['step'] > 0 ) {
 			$data['step'] = 1;
 			// If both minimum and maximum quantity are set, make sure both are equally divisible by group of quantity.
-			if ( ( empty( $limits['max_qty'] ) || absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) && ( empty( $limits['min_qty'] ) || absint( $limits['min_qty'] ) % absint( $limits['step'] ) === 0 ) ) {
+			if ( ( empty( $limits['max_qty'] ) || self::is_multiple_of( $limits['max_qty'], $limits['step'] ) ) && ( empty( $limits['min_qty'] ) || self::is_multiple_of( $limits['min_qty'], $limits['step'] ) ) ) {
 				$data['step'] = $limits['step'];
 			}
 		}
@@ -236,6 +261,95 @@ class Cart extends B8\Component {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Filter the product level minimum quantity so core quantity functions return decimals.
+	 *
+	 * @param int|float   $min_value The minimum quantity.
+	 * @param \WC_Product $product Product object.
+	 *
+	 * @since 2.4.1
+	 * @return int|float
+	 */
+	public static function quantity_input_min( $min_value, $product ) {
+		$limits = self::get_core_quantity_limits( $product );
+
+		if ( isset( $limits['min_qty'] ) && $limits['min_qty'] > 0 ) {
+			return (float) $limits['min_qty'];
+		}
+
+		if ( isset( $limits['step'] ) && $limits['step'] > 0 ) {
+			return (float) $limits['step'];
+		}
+
+		return $min_value;
+	}
+
+	/**
+	 * Filter the product level maximum quantity so core quantity functions return decimals.
+	 *
+	 * @param int|float   $max_value The maximum quantity.
+	 * @param \WC_Product $product Product object.
+	 *
+	 * @since 2.4.1
+	 * @return int|float
+	 */
+	public static function quantity_input_max( $max_value, $product ) {
+		$limits = self::get_core_quantity_limits( $product );
+
+		if ( isset( $limits['max_qty'] ) && $limits['max_qty'] > 0 ) {
+			return (float) $limits['max_qty'];
+		}
+
+		return $max_value;
+	}
+
+	/**
+	 * Filter the product level quantity step so core quantity functions return decimals.
+	 *
+	 * @param int|float   $step_value The quantity step.
+	 * @param \WC_Product $product Product object.
+	 *
+	 * @since 2.4.1
+	 * @return int|float
+	 */
+	public static function quantity_input_step( $step_value, $product ) {
+		$limits = self::get_core_quantity_limits( $product );
+
+		if ( isset( $limits['step'] ) && $limits['step'] > 0 ) {
+			return (float) $limits['step'];
+		}
+
+		return $step_value;
+	}
+
+	/**
+	 * Resolve the product limits for the core quantity input filters.
+	 *
+	 * @param \WC_Product $product Product object.
+	 *
+	 * @since 2.4.1
+	 * @return array|bool Array of limits or false when the product is excluded or has no limits.
+	 */
+	protected static function get_core_quantity_limits( $product ) {
+		if ( ! $product instanceof \WC_Product ) {
+			return false;
+		}
+
+		$product_id   = $product->get_id();
+		$variation_id = 0;
+
+		if ( $product->is_type( 'variation' ) ) {
+			$variation_id = $product->get_id();
+			$product_id   = $product->get_parent_id();
+		}
+
+		if ( wcmmq_is_product_excluded( $product_id, $variation_id ) || wcmmq_is_allow_combination( $product_id ) ) {
+			return false;
+		}
+
+		return wcmmq_get_product_limits( $product_id, $variation_id );
 	}
 
 	/**
@@ -274,7 +388,7 @@ class Cart extends B8\Component {
 
 		if ( $product_limits['max_qty'] > 0 && ( $total_quantity > $product_limits['max_qty'] ) ) {
 			/* translators: %1$s: Product name, %2$d: Maximum quantity */
-			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), number_format( $product_limits['max_qty'] ) );
+			$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), wc_format_decimal( $product_limits['max_qty'] ) );
 			wcmmq_add_cart_notice( $message );
 
 			return false;
@@ -282,14 +396,14 @@ class Cart extends B8\Component {
 
 		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['min_qty'] > 0 && $total_quantity < $product_limits['min_qty'] ) {
 			/* translators: %1$s: Product name, %2$d: Minimum quantity */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), number_format( $product_limits['min_qty'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['min_qty'] ) ) );
 
 			return false;
 		}
 
-		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['step'] > 0 && ( (int) $quantity % (int) $product_limits['step'] > 0 ) ) {
+		if ( ! wcmmq_is_allow_combination( $product_id ) && $product_limits['step'] > 0 && ! self::is_multiple_of( $quantity, $product_limits['step'] ) ) {
 			/* translators: %1$s: Product name, %2$d: Group amount */
-			wcmmq_add_cart_notice( sprintf( __( 'The quantity of %1$s must be purchased in groups of %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The quantity of %1$s must be purchased in groups of %2$s.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['step'] ), wc_format_decimal( $product_limits['step'] - fmod( $quantity, $product_limits['step'] ) ) ) );
 
 			return false;
 		}
@@ -299,7 +413,7 @@ class Cart extends B8\Component {
 
 		if ( $cart_limits['max_qty'] > 1 && WC()->cart->cart_contents_count > $cart_limits['max_qty'] ) {
 			/* translators: %d: Maximum quantity */
-			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), number_format( $cart_limits['max_qty'] ) ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s.', 'wc-min-max-quantities' ), wc_format_decimal( $cart_limits['max_qty'] ) ) );
 
 			return false;
 		}
@@ -362,7 +476,7 @@ class Cart extends B8\Component {
 
 			if ( $product_limits['max_qty'] > 0 && ( $quantity > $product_limits['max_qty'] ) ) {
 				/* translators: %1$s: Product name, %2$d: Maximum quantity */
-				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_title() ), number_format( $product_limits['max_qty'] ) );
+				$message = sprintf( __( 'The maximum allowed quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_title() ), wc_format_decimal( $product_limits['max_qty'] ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 				wcmmq_add_cart_notice( $message );
 
@@ -371,14 +485,14 @@ class Cart extends B8\Component {
 
 			if ( $product_limits['min_qty'] > 0 && $quantity < $product_limits['min_qty'] ) {
 				/* translators: %1$s: Product name, %2$d: Minimum quantity */
-				wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), number_format( $product_limits['min_qty'] ) ) );
+				wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity for %1$s is %2$s.', 'wc-min-max-quantities' ), esc_html( $product->get_formatted_name() ), wc_format_decimal( $product_limits['min_qty'] ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				return;
 			}
-			if ( $product_limits['step'] > 0 && ( (float) $quantity % (float) $product_limits['step'] > 0 ) ) {
+			if ( $product_limits['step'] > 0 && ! self::is_multiple_of( $quantity, $product_limits['step'] ) ) {
 				/* translators: %1$s: Product name, %2$d: quantity amount */
-				wcmmq_add_cart_notice( sprintf( __( '%1$s must be bought in groups of %2$s. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), $product_limits['step'], $product_limits['step'] - ( $quantity % $product_limits['step'] ) ) );
+				wcmmq_add_cart_notice( sprintf( __( '%1$s must be bought in groups of %2$s. Please increase or decrease the quantity to continue.', 'wc-min-max-quantities' ), $product->get_formatted_name(), wc_format_decimal( $product_limits['step'] ), wc_format_decimal( $product_limits['step'] - fmod( $quantity, $product_limits['step'] ) ) ) );
 				remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 				return;
@@ -389,24 +503,24 @@ class Cart extends B8\Component {
 		$order_total    = array_sum( array_values( $line_amount ) );
 		$cart_limits    = wcmmq_get_cart_limits();
 
-		if ( (int) $cart_limits['min_qty'] > 0 && $order_quantity < (int) $cart_limits['min_qty'] ) {
+		if ( (float) $cart_limits['min_qty'] > 0 && $order_quantity < (float) $cart_limits['min_qty'] ) {
 			/* translators: %d: Minimum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity in the cart is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['min_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The minimum required quantity in the cart is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), (float) $cart_limits['min_qty'] ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 
 		}
 
-		if ( (int) $cart_limits['max_qty'] > 0 && $order_quantity > (int) $cart_limits['max_qty'] ) {
+		if ( (float) $cart_limits['max_qty'] > 0 && $order_quantity > (float) $cart_limits['max_qty'] ) {
 			/* translators: %d: Maximum amount of items in the cart */
-			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), (int) $cart_limits['max_qty'] ) );
+			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order quantity is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), (float) $cart_limits['max_qty'] ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
 			return;
 		}
 
-		if ( (int) $cart_limits['min_total'] > 0 && $order_total < (int) $cart_limits['min_total'] ) {
+		if ( (float) $cart_limits['min_total'] > 0 && $order_total < (float) $cart_limits['min_total'] ) {
 			/* translators: %d: Minimum amount of items in the cart */
 			wcmmq_add_cart_notice( sprintf( __( 'The minimum allowed order total value is %s. Please consider increasing the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['min_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
@@ -415,7 +529,7 @@ class Cart extends B8\Component {
 
 		}
 
-		if ( (int) $cart_limits['max_total'] > 0 && $order_total > (int) $cart_limits['max_total'] ) {
+		if ( (float) $cart_limits['max_total'] > 0 && $order_total > (float) $cart_limits['max_total'] ) {
 			/* translators: %d: Maximum amount of items in the cart */
 			wcmmq_add_cart_notice( sprintf( __( 'The maximum allowed order total value is %s. Please reduce the quantity in your cart.', 'wc-min-max-quantities' ), wc_price( $cart_limits['max_total'] ) ) );
 			remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
@@ -436,7 +550,7 @@ class Cart extends B8\Component {
 		if ( 'add_to_cart' !== $add_to_cart ) {
 			return $product_id;
 		}
-		$quantity = isset( $_POST['quantity'] ) ? absint( $_POST['quantity'] ) : 1;
+		$quantity = isset( $_POST['quantity'] ) ? max( 0, floatval( wc_clean( wp_unslash( $_POST['quantity'] ) ) ) ) : 1; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( empty( $quantity ) ) {
 			return $quantity;
 		}
@@ -473,9 +587,9 @@ class Cart extends B8\Component {
 				return $product_id;
 			}
 
-			$remainder = $quantity % $product_limits['step'];
+			$remainder = fmod( $quantity, $product_limits['step'] );
 
-			if ( 0 === $remainder ) {
+			if ( abs( $remainder ) < 0.000001 ) {
 				$_REQUEST['quantity'] = $product_limits['step'];
 			} else {
 				$_REQUEST['quantity'] = $product_limits['step'] - $remainder;
@@ -545,7 +659,7 @@ class Cart extends B8\Component {
 		$product_limits = wcmmq_get_product_limits( $product->get_id(), $variation->get_id() );
 
 		if ( ! empty( $product_limits['min_qty'] ) ) {
-			if ( $product->managing_stock() && $product->backorders_allowed() && absint( $product_limits['min_qty'] ) > $product->get_stock_quantity() ) {
+			if ( $product->managing_stock() && $product->backorders_allowed() && (float) $product_limits['min_qty'] > $product->get_stock_quantity() ) {
 				$data['min_qty'] = $product->get_stock_quantity();
 
 			} else {
@@ -558,7 +672,7 @@ class Cart extends B8\Component {
 			if ( $product->managing_stock() && $product->backorders_allowed() ) {
 				$data['max_qty'] = $product_limits['max_qty'];
 
-			} elseif ( $product->managing_stock() && absint( $product_limits['max_qty'] ) > $product->get_stock_quantity() ) {
+			} elseif ( $product->managing_stock() && (float) $product_limits['max_qty'] > $product->get_stock_quantity() ) {
 				$data['max_qty'] = $product->get_stock_quantity();
 
 			} else {
@@ -570,10 +684,10 @@ class Cart extends B8\Component {
 			$data['step'] = 1;
 			// If both minimum and maximum quantity are set, make sure both are equally divisible by quantity step of quantity.
 			if ( $product_limits['max_qty'] && $product_limits['min_qty'] ) {
-				if ( absint( $product_limits['max_qty'] ) % absint( $product_limits['min_qty'] ) === 0 && absint( $product_limits['max_qty'] ) % absint( $product_limits['step'] ) === 0 ) {
+				if ( self::is_multiple_of( $product_limits['max_qty'], $product_limits['min_qty'] ) && self::is_multiple_of( $product_limits['max_qty'], $product_limits['step'] ) ) {
 					$data['step'] = $product_limits['step'];
 				}
-			} elseif ( ! $product_limits['max_qty'] || absint( $product_limits['max_qty'] ) % absint( $product_limits['step'] ) === 0 ) {
+			} elseif ( ! $product_limits['max_qty'] || self::is_multiple_of( $product_limits['max_qty'], $product_limits['step'] ) ) {
 				$data['step'] = $product_limits['step'];
 			}
 
