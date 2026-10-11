@@ -215,7 +215,7 @@ For support, visit our [support page](https://pluginever.com/support/) or use th
 12. Product > Categories (Pro)
 
 == Changelog ==
-= 2.4.1 ( 11th October 2026 ) =
+= 2.4.2 ( 11th October 2026 ) =
 * Enhance - Extended the limited-time special offer with an increased 40% discount.
 * Compatibility - Checked compatibility with the latest version of WooCommerce.
 
