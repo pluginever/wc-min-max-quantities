@@ -41,7 +41,7 @@ class Notices extends Component {
 		$current_time   = absint( wp_date( 'U' ) );
 
 		// Limited time special offer!
-		$special_offer_end_time = strtotime( '2026-02-28 00:00:00' );
+		$special_offer_end_time = strtotime( '2026-11-01 00:00:00' );
 		if ( ! $this->app->is_pro_active() && $current_time < $special_offer_end_time ) {
 			$this->app->notices->add(
 				array(
@@ -55,29 +55,30 @@ class Notices extends Component {
 		}
 
 		// Show after 5 days.
-		if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 
-			if ( ! $this->app->is_pro_active() ) {
-				// Upgrade notice.
+		if ( ! $this->app->is_pro_active() ) {
+			// Upgrade notice.
+			$this->app->notices->add(
+				array(
+					'message'     => $this->app->templates_path( 'admin/notices/upgrade.php' ),
+					'notice_id'   => 'wcmmq_upgrade',
+					'style'       => 'border-left-color:#0542fa;',
+					'dismissible' => true,
+				)
+			);
+
+			// Review notice.
+			// Show after 5 days.
+			if ( $installed_time && $current_time > ( $installed_time + ( 5 * DAY_IN_SECONDS ) ) ) {
 				$this->app->notices->add(
 					array(
-						'message'     => $this->app->templates_path( 'admin/notices/upgrade.php' ),
-						'notice_id'   => 'wcmmq_upgrade',
-						'style'       => 'border-left-color:#0542fa;',
+						'message'     => $this->app->templates_path( 'admin/notices/review.php' ),
 						'dismissible' => true,
+						'notice_id'   => 'wcmmq_review',
+						'style'       => 'border-left-color: #0542fa;',
 					)
 				);
 			}
-
-			// Review notice.
-			$this->app->notices->add(
-				array(
-					'message'     => $this->app->templates_path( 'admin/notices/review.php' ),
-					'dismissible' => true,
-					'notice_id'   => 'wcmmq_review',
-					'style'       => 'border-left-color: #0542fa;',
-				)
-			);
 		}
 	}
 }
