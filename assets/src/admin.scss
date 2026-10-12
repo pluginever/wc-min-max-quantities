@@ -1,21 +1,64 @@
-@forward "layout"; // TODO: remove when the old card (bk) is removed
-.bk-card, // TODO: remove when the old card (bk) is removed
+@forward "layout";
+
 .b8-card {
-	&.promo-panel{
-		background: #2563eb;
-		.bk-card__header,
-		.b8-card__header {
-			color: #fff;
-			background: #1048c4;
-		}
+	&__title {
+		margin: 0;
+		font-size: 14px;
+		font-weight: 600;
 	}
+
 	&__body {
-		li{
-			color: #fff;
-		}
-		.button{
+		.button,
+		.b8-button {
 			width: 100%;
 			text-align: center;
 		}
 	}
+
+	&.promo-panel {
+		background: #2563eb;
+		border-color: #1048c4;
+
+		.b8-card__header {
+			color: #fff;
+			background: #1048c4;
+		}
+
+		.b8-card__body li {
+			color: #fff;
+		}
+	}
+}
+
+.b8-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 2px;
+	font-size: 11px;
+	line-height: 1.6;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.b8-badge--primary {
+	color: #fff;
+	background: #2271b1;
+}
+
+.b8-button {
+	display: inline-block;
+	padding: 6px 12px;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	font-size: 13px;
+	line-height: 1.5;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.b8-button--secondary {
+	color: #2271b1;
+	background: #f6f7f7;
+	border-color: #2271b1;
 }
