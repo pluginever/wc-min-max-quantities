@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  * @property-read string $review_url   Review URL.
  * @property-read string $upgrade_url  Upgrade URL.
  */
-final class Plugin extends B8\App {
+class Plugin extends B8\App {
 
 	/**
 	 * Components to boot.
