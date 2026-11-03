@@ -202,6 +202,7 @@ class Cart extends B8\Component {
 	 * @param int|float $default_quantity Quantity to use when no valid starting quantity is available.
 	 * @param array     $limits           Product quantity limits.
 	 *
+	 * @since 2.4.3
 	 * @return int|float
 	 */
 	private static function get_initial_quantity( $default_quantity, $limits ) {
