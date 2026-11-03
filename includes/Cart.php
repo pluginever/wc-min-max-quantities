@@ -21,6 +21,7 @@ class Cart extends B8\Component {
 	public function register(): void {
 		add_action( 'woocommerce_cart_has_errors', array( __CLASS__, 'output_errors' ) );
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'add_to_cart_link' ), 10, 2 );
+		add_filter( 'woocommerce_add_to_cart_quantity', array( __CLASS__, 'set_loop_add_to_cart_quantity' ), 10, 3 );
 		add_filter( 'woocommerce_quantity_input_args', array( __CLASS__, 'set_quantity_args' ), 10, 2 );
 		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'add_to_cart_validation' ), 20, 4 );
 		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'check_cart_items' ), 20 );
@@ -153,10 +154,7 @@ class Cart extends B8\Component {
 		if ( 'variable' !== $product->get_type() && ! wcmmq_is_product_excluded( $product->get_id() ) ) {
 			$limits = wcmmq_get_product_limits( $product->get_id() );
 			if ( ! empty( $limits['min_qty'] ) || ! empty( $limits['step'] ) ) {
-				$quantity_attribute = $limits['min_qty'];
-				if ( $limits['step'] > 0 && $limits['min_qty'] < $limits['step'] ) {
-					$quantity_attribute = $limits['step'];
-				}
+				$quantity_attribute = self::get_initial_quantity( 1, $limits );
 
 				$html = str_replace( '<a ', '<a data-quantity="' . esc_attr( $quantity_attribute ) . '" ', $html );
 
@@ -176,6 +174,55 @@ class Cart extends B8\Component {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Set the default quantity for shop loop add-to-cart buttons.
+	 *
+	 * @param int|float $quantity     Default quantity.
+	 * @param int       $product_id   Product ID.
+	 * @param int       $variation_id Variation ID.
+	 *
+	 * @return int|float
+	 */
+	public static function set_loop_add_to_cart_quantity( $quantity, $product_id, $variation_id = 0 ) {
+		if ( wcmmq_is_product_excluded( $product_id, $variation_id ) || wcmmq_is_allow_combination( $product_id ) ) {
+			return $quantity;
+		}
+
+		return self::get_initial_quantity(
+			$quantity,
+			wcmmq_get_product_limits( $product_id, $variation_id )
+		);
+	}
+
+	/**
+	 * Get the smallest quantity that satisfies the product's minimum and step.
+	 *
+	 * @param int|float $default_quantity Quantity to use when no valid starting quantity is available.
+	 * @param array     $limits           Product quantity limits.
+	 *
+	 * @return int|float
+	 */
+	private static function get_initial_quantity( $default_quantity, $limits ) {
+		$minimum = absint( $limits['min_qty'] ?? 0 );
+		$step    = absint( $limits['step'] ?? 0 );
+		$maximum = absint( $limits['max_qty'] ?? 0 );
+
+		if ( $step > 0 ) {
+			$minimum   = $minimum > 0 ? $minimum : $step;
+			$remainder = $minimum % $step;
+
+			if ( $remainder > 0 ) {
+				$minimum += $step - $remainder;
+			}
+		}
+
+		if ( $minimum < 1 || ( $maximum > 0 && $minimum > $maximum ) ) {
+			return $default_quantity;
+		}
+
+		return $minimum;
 	}
 
 	/**
