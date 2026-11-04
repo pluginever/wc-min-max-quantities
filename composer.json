@@ -10,7 +10,7 @@
 	],
 	"require": {
 		"php": ">=7.4",
-		"byteever/plugin": "^1.0"
+		"byteever/plugin": "dev-trunk"
 	},
 	"require-dev": {
 		"byteever/byteever-sniffs": "^1.1.3"

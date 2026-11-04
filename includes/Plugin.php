@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  * @property-read string $review_url   Review URL.
  * @property-read string $upgrade_url  Upgrade URL.
  */
-final class Plugin extends B8\App {
+class Plugin extends B8\App {
 
 	/**
 	 * Components to boot.
@@ -145,5 +145,23 @@ final class Plugin extends B8\App {
 	public function is_pro_active(): bool {
 		$pro_basename = $this->get( 'pro_basename', '' );
 		return ! empty( $pro_basename ) && $this->plugin_active( (string) $pro_basename );
+	}
+
+	/**
+	 * Run on plugin activation.
+	 *
+	 * @return void
+	 */
+	public function activate(): void {
+		$this->make( Installer::class )->install();
+	}
+
+	/**
+	 * Run on plugin deactivation.
+	 *
+	 * @return void
+	 */
+	public function deactivate(): void {
+		$this->make( Installer::class )->deactivate();
 	}
 }
