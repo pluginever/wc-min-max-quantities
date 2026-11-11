@@ -8,45 +8,55 @@
 
 namespace PluginEver\MinMaxQuantities\Admin;
 
-use PluginEver\MinMaxQuantities\B8\SettingsUI;
+use PluginEver\MinMaxQuantities\B8\Component;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Settings.
  *
+ * Renders the tabbed settings screen with the plugin's WooCommerce-format
+ * fields and persists submissions through `woocommerce_update_options()`.
+ *
  * @since 1.1.4
  * @package PluginEver\MinMaxQuantities\Admin
  */
-class Settings extends SettingsUI {
+class Settings extends Component {
 
 	/**
 	 * Capability required to manage the settings.
 	 *
-	 * @since 2.3.2
+	 * @since 1.1.4
 	 * @var string
 	 */
 	protected string $capability = 'manage_options';
 
 	/**
-	 * Register hooks.
+	 * Admin-post action name for the settings form.
+	 *
+	 * @since 2.3.2
+	 * @var string
+	 */
+	protected string $action = '';
+
+	/**
+	 * Register hooks and the admin-post handler.
 	 *
 	 * @since 2.3.2
 	 * @return void
 	 */
 	public function register(): void {
+		$this->action = $this->app->hook_name( 'save_settings' );
+
+		add_action( 'admin_post_' . $this->action, array( $this, 'handle_save' ) );
 		$this->app->on_filter( 'admin_pages', array( $this, 'register_page' ) );
-		$this->app->on_filter( 'settings', array( $this, 'register_settings' ) );
-		$this->app->on_filter( 'settings_wrap_classes', array( $this, 'wrap_classes' ) );
-		$this->app->on_action( 'settings_nav_extras', array( $this, 'render_nav_extras' ) );
 	}
 
 	/**
-	 * Filter the admin pages.
-	 *
-	 * @param array<int, array<string, mixed>> $pages Admin page configurations.
+	 * Register the settings admin page.
 	 *
 	 * @since 2.3.2
+	 * @param array<int, array<string, mixed>> $pages Admin page configurations.
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function register_page( array $pages ): array {
@@ -59,6 +69,197 @@ class Settings extends SettingsUI {
 		);
 
 		return $pages;
+	}
+
+	/**
+	 * The tabs and their WooCommerce-format fields.
+	 *
+	 * @since 2.3.2
+	 * @return array<string, array{title: string, fields: array<int, array<string, mixed>>}>
+	 */
+	public function get_tabs(): array {
+		return $this->register_settings( array() );
+	}
+
+	/**
+	 * Render the settings page.
+	 *
+	 * @since 2.3.2
+	 * @return void
+	 */
+	public function render(): void {
+		$tabs = $this->get_tabs();
+		if ( empty( $tabs ) ) {
+			return;
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only tab navigation.
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : 'wc-min-max-quantities';
+		$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		if ( ! isset( $tabs[ $tab ] ) ) {
+			$tab = (string) array_key_first( $tabs );
+		}
+
+		/**
+		 * Filters the settings page wrapper classes.
+		 *
+		 * @since 2.3.2
+		 * @param array<int, string> $classes Wrapper class names.
+		 */
+		$classes = (array) apply_filters( 'settings_wrap_classes', array( 'wrap', 'woocommerce', 'b8-wrap' ) );
+		?>
+		<div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $classes ) ) ); ?>">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<nav class="nav-tab-wrapper b8-navbar">
+				<?php
+				foreach ( $tabs as $id => $data ) {
+					printf(
+						'<a href="%1$s" class="nav-tab %2$s">%3$s</a>',
+						esc_url( admin_url( 'admin.php?page=' . $page . '&tab=' . $id ) ),
+						esc_attr( $tab === $id ? 'nav-tab-active' : '' ),
+						esc_html( $data['title'] )
+					);
+				}
+
+				$this->render_nav_extras();
+				?>
+			</nav>
+			<hr class="wp-header-end">
+
+			<div class="b8-poststuff">
+				<div class="column-1">
+					<?php $this->render_content( (string) $tab, $tabs[ $tab ]['fields'] ); ?>
+				</div>
+				<div class="column-2">
+					<?php $this->render_sidebar(); ?>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render the content area for a tab.
+	 *
+	 * @since 2.3.2
+	 * @param string                           $tab    Current tab id.
+	 * @param array<int, array<string, mixed>> $fields Field declarations for the tab.
+	 * @return void
+	 */
+	protected function render_content( string $tab, array $fields ): void {
+		/**
+		 * Fires inside the content area for a settings tab.
+		 *
+		 * @since 2.3.2
+		 * @param string $tab Current tab id.
+		 */
+		do_action( 'wc_min_max_quantities_settings_' . $tab );
+
+		if ( empty( $fields ) ) {
+			return;
+		}
+		?>
+		<form method="post" id="mainform" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data">
+			<input type="hidden" name="action" value="<?php echo esc_attr( $this->action ); ?>" />
+			<input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>" />
+			<?php
+			wp_nonce_field( $this->action );
+			$this->render_fields( $fields );
+			submit_button();
+			?>
+		</form>
+		<?php
+	}
+
+	/**
+	 * Persist the submitted tab.
+	 *
+	 * @since 2.3.2
+	 * @return void
+	 */
+	public function handle_save(): void {
+		if ( ! current_user_can( $this->capability ) ) {
+			wp_die( esc_html__( 'You are not allowed to save these settings.', 'wc-min-max-quantities' ) );
+		}
+
+		check_admin_referer( $this->action );
+
+		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
+
+		if ( '' !== $tab && $this->save_fields( $tab ) ) {
+			$this->app->flash->success( __( 'Settings saved.', 'wc-min-max-quantities' ) );
+		}
+
+		wp_safe_redirect( add_query_arg( 'tab', $tab, wp_get_referer() ) );
+		exit;
+	}
+
+	/**
+	 * Persist the fields of a tab through WooCommerce.
+	 *
+	 * @since 2.3.2
+	 * @param string $tab Current tab id.
+	 * @return bool True when the fields were saved.
+	 */
+	protected function save_fields( string $tab ): bool {
+		if ( ! function_exists( 'woocommerce_update_options' ) ) {
+			return false;
+		}
+
+		$tabs = $this->get_tabs();
+		if ( ! isset( $tabs[ $tab ] ) ) {
+			return false;
+		}
+
+		woocommerce_update_options( $tabs[ $tab ]['fields'] );
+
+		return true;
+	}
+
+	/**
+	 * Output the settings fields.
+	 *
+	 * @since 2.3.2
+	 * @param array<int, array<string, mixed>> $fields Field declarations.
+	 * @return void
+	 */
+	protected function render_fields( array $fields ): void {
+		if ( function_exists( 'woocommerce_admin_fields' ) ) {
+			woocommerce_admin_fields( $fields );
+			return;
+		}
+
+		echo '<table class="form-table" role="presentation">';
+		foreach ( $fields as $field ) {
+			$type = isset( $field['type'] ) ? (string) $field['type'] : 'text';
+
+			if ( 'sectionend' === $type ) {
+				continue;
+			}
+
+			if ( 'title' === $type ) {
+				printf(
+					'<tr><td colspan="2" style="padding-left:0;"><h2 style="margin-bottom:5px;">%1$s</h2>%2$s</td></tr>',
+					esc_html( isset( $field['title'] ) ? $field['title'] : '' ),
+					isset( $field['desc'] ) ? '<p>' . wp_kses_post( $field['desc'] ) . '</p>' : ''
+				);
+				continue;
+			}
+
+			$id    = isset( $field['id'] ) ? (string) $field['id'] : '';
+			$value = $this->app->options->get( $id, isset( $field['default'] ) ? $field['default'] : '' );
+
+			printf(
+				'<tr><th scope="row"><label for="%1$s">%2$s</label></th><td><input type="%3$s" name="%1$s" id="%1$s" value="%4$s" class="regular-text" /></td></tr>',
+				esc_attr( $id ),
+				esc_html( isset( $field['title'] ) ? $field['title'] : '' ),
+				esc_attr( in_array( $type, array( 'text', 'number', 'email', 'url', 'tel', 'password' ), true ) ? $type : 'text' ),
+				esc_attr( (string) $value )
+			);
+		}
+		echo '</table>';
 	}
 
 	/**
@@ -173,74 +374,17 @@ class Settings extends SettingsUI {
 			}
 		}
 
+		// Back-compat: fire the per-group field filters used by extensions (e.g. the Pro add-on).
+		foreach ( $settings as $group => $data ) {
+			$fields = isset( $data['fields'] ) && is_array( $data['fields'] ) ? $data['fields'] : array();
+
+			$settings[ $group ]['fields'] = (array) apply_filters(
+				$this->app->hook_name( sanitize_key( (string) $group ) . '_settings' ),
+				$fields
+			);
+		}
+
 		return $settings;
-	}
-
-	/**
-	 * Add the WooCommerce class to the settings page wrapper.
-	 *
-	 * @param array<int, string> $classes Wrapper class names.
-	 *
-	 * @since 2.3.2
-	 * @return array<int, string>
-	 */
-	public function wrap_classes( array $classes ): array {
-		$classes[] = 'woocommerce';
-
-		return $classes;
-	}
-
-	/**
-	 * Render the content area for the current tab.
-	 *
-	 * Fires the legacy per-tab action before rendering so extensions
-	 * hooked to wc_min_max_quantities_settings_{tab} keep working.
-	 *
-	 * @param string $tab Current tab id.
-	 *
-	 * @since 2.3.2
-	 * @return void
-	 */
-	protected function render_content( string $tab ): void {
-		do_action( 'wc_min_max_quantities_settings_' . $tab );
-
-		parent::render_content( $tab );
-	}
-
-	/**
-	 * Output the settings fields.
-	 *
-	 * @param array<int, array<string, mixed>> $fields Prepared field declarations.
-	 *
-	 * @since 2.3.2
-	 * @return void
-	 */
-	protected function render_fields( array $fields ): void {
-		if ( function_exists( 'woocommerce_admin_fields' ) ) {
-			woocommerce_admin_fields( $fields );
-			return;
-		}
-
-		parent::render_fields( $fields );
-	}
-
-	/**
-	 * Persist the submitted settings fields.
-	 *
-	 * @param array<int, array<string, mixed>> $fields Field declarations for the current tab.
-	 * @param array<string, mixed>             $data   Unslashed request data.
-	 *
-	 * @since 2.3.2
-	 * @return bool True when the fields were saved.
-	 */
-	protected function save_fields( array $fields, array $data ): bool {
-		if ( ! function_exists( 'woocommerce_update_options' ) ) {
-			return false;
-		}
-
-		woocommerce_update_options( $fields );
-
-		return true;
 	}
 
 	/**
