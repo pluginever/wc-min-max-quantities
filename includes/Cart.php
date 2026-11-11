@@ -272,11 +272,7 @@ class Cart extends B8\Component {
 		}
 
 		if ( $limits['step'] > 0 ) {
-			$data['step'] = 1;
-			// If both minimum and maximum quantity are set, make sure both are equally divisible by group of quantity.
-			if ( ( empty( $limits['max_qty'] ) || absint( $limits['max_qty'] ) % absint( $limits['step'] ) === 0 ) && ( empty( $limits['min_qty'] ) || absint( $limits['min_qty'] ) % absint( $limits['step'] ) === 0 ) ) {
-				$data['step'] = $limits['step'];
-			}
+			$data['step'] = $limits['step'];
 		}
 
 		if ( empty( $limits['min_qty'] ) && ! $product->is_type( 'group' ) && $limits['step'] > 0 ) {
@@ -615,15 +611,7 @@ class Cart extends B8\Component {
 		}
 
 		if ( ! empty( $product_limits['step'] ) ) {
-			$data['step'] = 1;
-			// If both minimum and maximum quantity are set, make sure both are equally divisible by quantity step of quantity.
-			if ( $product_limits['max_qty'] && $product_limits['min_qty'] ) {
-				if ( absint( $product_limits['max_qty'] ) % absint( $product_limits['min_qty'] ) === 0 && absint( $product_limits['max_qty'] ) % absint( $product_limits['step'] ) === 0 ) {
-					$data['step'] = $product_limits['step'];
-				}
-			} elseif ( ! $product_limits['max_qty'] || absint( $product_limits['max_qty'] ) % absint( $product_limits['step'] ) === 0 ) {
-				$data['step'] = $product_limits['step'];
-			}
+			$data['step'] = $product_limits['step'];
 
 			// Set the minimum only when minimum is not set.
 			if ( ! $product_limits['min_qty'] ) {
