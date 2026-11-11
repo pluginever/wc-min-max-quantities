@@ -177,12 +177,18 @@ class Cart extends B8\Component {
 	}
 
 	/**
-	 * Set the default quantity for shop loop add-to-cart buttons.
+	 * Adjust the add-to-cart quantity so it satisfies the product's minimum and step.
+	 *
+	 * This filter fires for every add-to-cart (loop buttons, single product form,
+	 * AJAX and Store API requests), so quantities that already satisfy the limits
+	 * must be left untouched, otherwise quantities explicitly chosen on the single
+	 * product page would be overwritten with the minimum quantity.
 	 *
 	 * @param int|float $quantity     Default quantity.
 	 * @param int       $product_id   Product ID.
 	 * @param int       $variation_id Variation ID.
 	 *
+	 * @since 2.4.3
 	 * @return int|float
 	 */
 	public static function set_loop_add_to_cart_quantity( $quantity, $product_id, $variation_id = 0 ) {
@@ -190,10 +196,21 @@ class Cart extends B8\Component {
 			return $quantity;
 		}
 
-		return self::get_initial_quantity(
-			$quantity,
-			wcmmq_get_product_limits( $product_id, $variation_id )
-		);
+		$limits  = wcmmq_get_product_limits( $product_id, $variation_id );
+		$minimum = absint( $limits['min_qty'] ?? 0 );
+		$step    = absint( $limits['step'] ?? 0 );
+
+		// Round the quantity up to the nearest multiple of the step.
+		if ( $step > 1 && 0 !== (int) $quantity % $step ) {
+			$quantity = (int) ceil( (int) $quantity / $step ) * $step;
+		}
+
+		// Bump up to the minimum when the quantity is below it.
+		if ( $minimum > $quantity ) {
+			$quantity = self::get_initial_quantity( $quantity, $limits );
+		}
+
+		return $quantity;
 	}
 
 	/**
