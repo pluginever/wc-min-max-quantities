@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="b8-card promo-panel">
 	<div class="b8-card__header">
-		<h2 class="b8-card__title"><?php echo esc_html( $title ); ?></h2>
+		<h2 class="b8-card__title" style="color: white"><?php echo esc_html( $title ); ?></h2>
 	</div>
 	<div class="b8-card__body">
 		<ul>

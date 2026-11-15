@@ -67,7 +67,7 @@ class Admin extends Component {
 	 * @return void
 	 */
 	public function enqueue_scripts( $hook ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
-		$this->app->scripts->enqueue_style( 'wcmmq-admin', 'admin.css', array( 'b8-layout', 'b8-components' ) );
+		$this->app->scripts->enqueue_style( 'wcmmq-admin', 'admin.css' );
 	}
 
 	/**
