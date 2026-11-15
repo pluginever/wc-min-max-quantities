@@ -72,13 +72,6 @@ class Plugin extends B8\App {
 	public function woocommerce_loaded(): void {
 		$this->boot( $this->components );
 
-		/**
-		 * Fires after the plugin has registered its services.
-		 *
-		 * @since 2.0.0
-		 */
-		do_action( 'wc_min_max_quantities_loaded' );
-
 		$this->do_action( 'loaded' );
 	}
 

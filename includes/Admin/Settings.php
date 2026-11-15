@@ -108,7 +108,7 @@ class Settings extends Component {
 		 * @since 2.3.2
 		 * @param array<int, string> $classes Wrapper class names.
 		 */
-		$classes = (array) apply_filters( 'settings_wrap_classes', array( 'wrap', 'woocommerce', 'b8-wrap' ) );
+		$classes = (array) $this->app->apply_filters( 'settings_wrap_classes', array( 'wrap', 'woocommerce', 'b8-wrap' ) );
 		?>
 		<div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $classes ) ) ); ?>">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
