@@ -38,7 +38,6 @@
  * @package             PluginEver\MinMaxQuantities
  */
 
-use PluginEver\MinMaxQuantities\Installer;
 use PluginEver\MinMaxQuantities\Plugin;
 
 defined( 'ABSPATH' ) || exit;
@@ -61,10 +60,6 @@ $data = array(
 );
 
 Plugin::create( __FILE__, $data );
-
-// Register the plugin activation and deactivation hooks.
-wc_min_max_quantities()->on_activation( array( Installer::class, 'install' ) );
-wc_min_max_quantities()->on_deactivation( array( Installer::class, 'deactivate' ) );
 
 // Declare WooCommerce feature compatibility.
 add_action(
